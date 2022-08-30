@@ -54,6 +54,12 @@ namespace EmployeeEvaluation.Controllers
         //{
         //    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         //}
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return Ok(users);
+        }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
