@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
+//test
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EmployeeEvaluation.Controllers
@@ -54,6 +56,12 @@ namespace EmployeeEvaluation.Controllers
         //{
         //    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         //}
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            return Ok(users);
+        }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
