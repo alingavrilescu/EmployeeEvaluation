@@ -1,4 +1,5 @@
-﻿using EmployeeEvaluation.Models;
+﻿using EmployeeEvaluation.ViewModels;
+using EmployeeEvaluation.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -62,13 +63,7 @@ namespace EmployeeEvaluation.Controllers
             return Ok(users);
         }
 
-        // GET api/<UsersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-            /// MESAJ
-        }
+       
 
         // POST api/<UsersController>
         [HttpPost]
@@ -89,18 +84,91 @@ namespace EmployeeEvaluation.Controllers
             }
         }
 
-        // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-
-        }
 
         // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("DeleteUser{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
-
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                var result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "User Not Found");
+                return BadRequest();
+            }
         }
+
+
+        /*[HttpPut]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UserViewModel user)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                if (!string.IsNullOrEmpty(email))
+                    user.Email = email;
+                else
+                    ModelState.AddModelError("", "Email cannot be empty");
+            }
+            else
+                ModelState.AddModelError("", "User Not Found");
+            return Ok();
+        }
+        */
+        [HttpPut]
+        public async Task<IActionResult> Update(string id, string email, string name)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                if (!string.IsNullOrEmpty(email))
+                {
+                    user.Email = email;
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email cannot be empty");
+                }
+
+                if (!string.IsNullOrEmpty(name))
+                {
+                    user.UserName = name;
+                }
+                else
+                {
+                    ModelState.AddModelError("", "UserName cannot be empty");
+                }
+
+                if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(name))
+                {
+                    IdentityResult result = await _userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
+                }
+            }
+            else
+            {
+
+                return BadRequest();
+            }
+        }
+
     }
 }
