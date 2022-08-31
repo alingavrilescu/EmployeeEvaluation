@@ -1,4 +1,6 @@
+using EmployeeEvaluation.ApplicationLogic;
 using EmployeeEvaluation.Data;
+using EmployeeEvaluation.DataAccess.Abstractions;
 using EmployeeEvaluation.DataAccess.EntityFramework;
 using EmployeeEvaluation.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -24,6 +26,9 @@ builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
 builder.Services.AddDbContext<ProjectDbcontext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ProjectService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
