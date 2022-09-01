@@ -63,7 +63,7 @@ namespace EmployeeEvaluation.Controllers
             return Ok(users);
         }
 
-       
+
 
         // POST api/<UsersController>
         [HttpPost]
@@ -90,85 +90,60 @@ namespace EmployeeEvaluation.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            if (user != null)
+            if (user == null)
             {
-                var result = await _userManager.DeleteAsync(user);
+                ModelState.AddModelError("", "User Not Found");
+                return BadRequest();
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> Update(ApplicationUser updatedUser)
+        {
+            var user = await _userManager.FindByIdAsync(updatedUser.Id);
+            if (user == null)
+                return BadRequest();
+            if (!string.IsNullOrEmpty(updatedUser.PasswordHash))
+            {
+                user.PasswordHash = updatedUser.PasswordHash;
+            }
+            if (!string.IsNullOrEmpty(updatedUser.Email))
+            {
+                user.Email =updatedUser.Email;
+            }
+
+            if (!string.IsNullOrEmpty(updatedUser.UserName))
+            {
+                user.UserName = updatedUser.UserName;
+            }
+    
+
+            if (!string.IsNullOrEmpty(user.Email) && !string.IsNullOrEmpty(user.UserName)&& !string.IsNullOrEmpty(user.PasswordHash))
+            {
+                IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
-                    return Ok();
+                    return Ok(user);
                 }
                 else
                 {
                     return BadRequest();
                 }
             }
-            else
-            {
-                ModelState.AddModelError("", "User Not Found");
-                return BadRequest();
-            }
+            return BadRequest();
         }
-
-
-        /*[HttpPut]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UserViewModel user)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user != null)
-            {
-                if (!string.IsNullOrEmpty(email))
-                    user.Email = email;
-                else
-                    ModelState.AddModelError("", "Email cannot be empty");
-            }
-            else
-                ModelState.AddModelError("", "User Not Found");
-            return Ok();
-        }
-        */
-        [HttpPut]
-        public async Task<IActionResult> Update(string id, string email, string name)
-        {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user != null)
-            {
-                if (!string.IsNullOrEmpty(email))
-                {
-                    user.Email = email;
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Email cannot be empty");
-                }
-
-                if (!string.IsNullOrEmpty(name))
-                {
-                    user.UserName = name;
-                }
-                else
-                {
-                    ModelState.AddModelError("", "UserName cannot be empty");
-                }
-
-                if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(name))
-                {
-                    IdentityResult result = await _userManager.UpdateAsync(user);
-                    if (result.Succeeded)
-                    {
-                        return RedirectToAction("Index");
-                    }
-                    else
-                    {
-                        return BadRequest();
-                    }
-                }
-            }
-            else
-            {
-
-                return BadRequest();
-            }
-        }
-
+           
+        
     }
 }
