@@ -12,14 +12,17 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectsService } from './services/projects.service';
+import { UsersButtonsComponent } from './components/users/users-buttons/users-buttons.component';
+import { UsersTableComponent } from './components/users/users-table/users-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    ProjectsComponent
-
+    ProjectsComponent,
+    UsersButtonsComponent,
+    UsersTableComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -27,16 +30,15 @@ import { ProjectsService } from './services/projects.service';
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
-
-      { path: 'projects', component:ProjectsComponent},
-      { path: '', component: HomeComponent, pathMatch: 'full' }
-
-    ])
+      { path: 'projects', component: ProjectsComponent },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'users', component: UsersTableComponent },
+    ]),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
-    ProjectsService
+    ProjectsService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule  { }
+export class AppModule {}
