@@ -10,7 +10,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 {
     public class ProjectDbcontext : DbContext
     {
-        public ProjectDbcontext(DbContextOptions options) : base(options)
+        public ProjectDbcontext(DbContextOptions<ProjectDbcontext>options) : base(options)
         {
         }
 

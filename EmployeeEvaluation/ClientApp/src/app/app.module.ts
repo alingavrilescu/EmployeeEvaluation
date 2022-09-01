@@ -13,10 +13,7 @@ import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
-import { Project } from './models/project.model/project.model.component';
-import { ProjectComponent } from './models/project/project.component';
-import { ProjectModule } from './models/project/project.module';
-import { ModelComponent } from './models/model/model.component';
+import { ProjectsService } from './services/projects.service';
 
 @NgModule({
   declarations: [
@@ -26,9 +23,6 @@ import { ModelComponent } from './models/model/model.component';
     CounterComponent,
     FetchDataComponent,
     ProjectsComponent,
-    Project.ModelComponent,
-    ProjectComponent,
-    ModelComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,12 +33,13 @@ import { ModelComponent } from './models/model/model.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
-    ]),
-    ProjectModule
+      { path: 'projects', component:ProjectsComponent},
+    ])
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    ProjectsService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule  { }
