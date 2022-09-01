@@ -15,5 +15,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         }
 
         DbSet<Project> Projects { get; set; }
+        DbSet<User> User { get; set; }
     }
 }
