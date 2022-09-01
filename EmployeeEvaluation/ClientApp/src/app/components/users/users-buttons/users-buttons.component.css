@@ -1,0 +1,11 @@
+#buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 3vw;
+  width: 100%;
+  margin-top: 10vh;
+  margin-bottom: 2vh;
+  height: fit-content;
+  font-size: 1.2vw;
+}
