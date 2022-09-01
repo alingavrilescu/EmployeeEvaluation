@@ -1,4 +1,5 @@
-﻿using EmployeeEvaluation.Models;
+﻿using EmployeeEvaluation.ViewModels;
+using EmployeeEvaluation.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -63,13 +64,7 @@ namespace EmployeeEvaluation.Controllers
             return Ok(users);
         }
 
-        // GET api/<UsersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-            /// MESAJ
-        }
+
 
         // POST api/<UsersController>
         [HttpPost]
@@ -90,18 +85,66 @@ namespace EmployeeEvaluation.Controllers
             }
         }
 
-        // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-
-        }
 
         // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("DeleteUser{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                ModelState.AddModelError("", "User Not Found");
+                return BadRequest();
+            }
 
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
+
+
+        [HttpPut]
+        public async Task<IActionResult> Update(ApplicationUser updatedUser)
+        {
+            var user = await _userManager.FindByIdAsync(updatedUser.Id);
+            if (user == null)
+                return BadRequest();
+            if (!string.IsNullOrEmpty(updatedUser.PasswordHash))
+            {
+                user.PasswordHash = updatedUser.PasswordHash;
+            }
+            if (!string.IsNullOrEmpty(updatedUser.Email))
+            {
+                user.Email =updatedUser.Email;
+            }
+
+            if (!string.IsNullOrEmpty(updatedUser.UserName))
+            {
+                user.UserName = updatedUser.UserName;
+            }
+    
+
+            if (!string.IsNullOrEmpty(user.Email) && !string.IsNullOrEmpty(user.UserName)&& !string.IsNullOrEmpty(user.PasswordHash))
+            {
+                IdentityResult result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return Ok(user);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
+           
+        
     }
 }
