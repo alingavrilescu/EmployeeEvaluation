@@ -39,7 +39,8 @@ export class ProjectsService {
      let apiUrl = `${this.apiBase}projects/${project.id}`;
        let updatedProject  = {
            id: project.id,
-           name: project.name,     
+           name: project.name,   
+           description: project.description,  
        };
        return this.httpClient.put<Project>(apiUrl, updatedProject);
    }
