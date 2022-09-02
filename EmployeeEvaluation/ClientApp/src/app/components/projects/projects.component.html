@@ -1,71 +1,14 @@
-<div class="container">
-    <div class="card">
-      <div class="card-body">
-        <h3>
-          Project 2
-        </h3>
-        <div class="card-description">
-          Project 2 description lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-          lorem ipsum.
-        </div>
-        <div class="user">
-          <div class="user-info">
-            <h5>Members on project:</h5>
-            <h6>User9</h6>
-            <h6>User10</h6>
-            <h6>User11</h6>
-            <h6>User12</h6>
-            <h6>User13</h6>
-            <h6>User14</h6>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-          <h3>
-            Project 1
-          </h3>
-          <div class="card-description">
-            Project1 description lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-            lorem ipsum.
-          </div>
-          <div class="user">
-            <div class="user-info">
-              <h5>Members on project:</h5>
-              <h6>User1</h6>
-              <h6>User2</h6>
-              <h6>User3</h6>
-              <h6>User4</h6>
-              <h6>User5</h6>
-              <h6>User6</h6>
-              <h6>User7</h6>
-              <h6>User8</h6>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <h3>
-            Project 1
-          </h3>
-          <div class="card-description">
-            Project1 description lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-            lorem ipsum.
-          </div>
-          <div class="user">
-            <div class="user-info">
-              <h5>Members on project:</h5>
-              <h6>User1</h6>
-              <h6>User2</h6>
-              <h6>User3</h6>
-              <h6>User4</h6>
-              <h6>User5</h6>
-              <h6>User6</h6>
-              <h6>User7</h6>
-              <h6>User8</h6>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- <div *ngFor="let project of projectList"> -->
+  <p-card header="Project name" subheader="Project leader" [style]="{width: '360px'}" styleClass="p-card-shadow">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+        quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+    <ng-template pTemplate="footer">
+      <span class="p-buttonset">
+        <button [style]="{width: '150px', height: '50px'}" pButton pRipple label="Edit Project" icon="pi pi-pencil"></button>
+        <button [style]="{width: '150px', height: '50px'}" pButton pRipple label="Delete Project" icon="pi pi-trash"></button>
+    </span>
+    </ng-template>
+  </p-card>
+<!-- </div> -->
