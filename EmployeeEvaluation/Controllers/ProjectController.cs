@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EmployeeEvaluation.ApplicationLogic;
+using EmployeeEvaluation.DataAccess.Model;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +10,46 @@ namespace EmployeeEvaluation.Controllers
     [ApiController]
     public class ProjectController : ControllerBase
     {
+        private readonly ProjectService _projectService;
+
+        public ProjectController(ProjectService projectService)
+        {
+            this._projectService=projectService;
+        }
+
         // GET: api/<ProjectController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Project> Get()
         {
-            return new string[] { "value1", "value2" };
+            return this._projectService.GetProjects();
         }
 
         // GET api/<ProjectController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Project Get(Guid id)
         {
-            return "value";
+            return this._projectService.GetProjectById(id);
         }
 
         // POST api/<ProjectController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public Project Post([FromBody] Project project)
         {
+            return this._projectService.AddProject(project);
         }
 
         // PUT api/<ProjectController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public Project Put(int id, [FromBody] Project project)
         {
+            return this._projectService.UpdateProject(project);
         }
 
         // DELETE api/<ProjectController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+            this._projectService.DeleteProject(id);
         }
     }
 }
