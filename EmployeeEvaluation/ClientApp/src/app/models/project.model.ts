@@ -1,5 +1,8 @@
+import { Guid } from "guid-typescript";
 
 export class Project {
-    id!:string;
-    name!:string;
+    id?:Guid;
+    name:string = "";
+    description: string = "";
+    
 }
