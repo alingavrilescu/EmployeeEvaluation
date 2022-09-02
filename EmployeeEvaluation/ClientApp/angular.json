@@ -129,7 +129,6 @@
       }
     }
   },
-  "defaultProject": "EmployeeEvaluation",
   "cli": {
     "analytics": false
   }
