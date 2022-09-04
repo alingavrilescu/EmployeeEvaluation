@@ -14,7 +14,6 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectsService } from './services/projects.service';
 import { UsersButtonsComponent } from './components/users/users-buttons/users-buttons.component';
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
-import { FormTemplateComponent } from './components/form-template/form-template.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +23,6 @@ import { FormTemplateComponent } from './components/form-template/form-template.
     ProjectsComponent,
     UsersButtonsComponent,
     UsersTableComponent,
-    FormTemplateComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
