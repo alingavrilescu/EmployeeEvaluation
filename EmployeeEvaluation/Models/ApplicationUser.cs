@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace EmployeeEvaluation.Models
 {
-    public class ApplicationUser
+    public class ApplicationUser:IdentityUser
     {
-        ApplicationUser IdentityUser {get;set;}
-        Project Project { get; set; }
-
     }
 }
