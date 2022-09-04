@@ -18,7 +18,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             var formTemplates = dbContext.Set<FormTemplate>().Where(f => f.Id == id)
                                                              .Include(f => f.TemplateSections)
                                                              .ThenInclude(s => s.TemplateCriteria)
-                                                             .First();
+                                                             .FirstOrDefault();
                                                              
             return formTemplates;
 
