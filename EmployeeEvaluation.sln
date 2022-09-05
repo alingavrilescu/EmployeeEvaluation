@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeEvaluation.DataAcce
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeEvaluation.DataAccess.EntityFramework", "EmployeeEvaluation.DataAccess.EntityFramework\EmployeeEvaluation.DataAccess.EntityFramework.csproj", "{A67861B7-52F9-4178-AC3A-4C85BF620609}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeEvaluation.ApplicationLogic", "EmployeeEvaluation.ApplicationLogic\EmployeeEvaluation.ApplicationLogic.csproj", "{DBF882F0-986D-4CBF-A99C-9D7964D7CDFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeEvaluation.ApplicationLogic", "EmployeeEvaluation.ApplicationLogic\EmployeeEvaluation.ApplicationLogic.csproj", "{DBF882F0-986D-4CBF-A99C-9D7964D7CDFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
