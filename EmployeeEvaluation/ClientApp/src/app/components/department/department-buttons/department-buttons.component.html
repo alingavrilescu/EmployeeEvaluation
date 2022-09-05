@@ -17,9 +17,9 @@
     />
   </svg>
   <svg
-    id="addUser"
+    id="addDepartment"
     data-bs-toggle="modal"
-    data-bs-target="#addUserModal"
+    data-bs-target="#addDepartmentModal"
     xmlns="http://www.w3.org/2000/svg"
     width="25"
     height="25"
@@ -40,15 +40,17 @@
 <!-------------------------------------- ADD MODAL  --------------------------------------->
 <div
   class="modal fade"
-  id="addUserModal"
+  id="addDepartmentModal"
   tabindex="-1"
-  aria-labelledby="addUserModalLabel"
+  aria-labelledby="addDepartmentModalLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addUserModalLabel">Add new user</h5>
+        <h5 class="modal-title" id="addDepartmentModalLabel">
+          Add new department
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -57,29 +59,24 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form id="createNewTeamForm">
+        <form id="createNewDepartmentForm">
           <div class="mb-3">
-            <label for="teamName" class="form-label">Name</label>
+            <label for="departmentName" class="form-label"
+              >Name of the department</label
+            >
             <input
               type="text"
               class="form-control"
-              id="userName"
+              id="departmentName"
               aria-describedby="emailHelp"
             />
           </div>
           <div class="mb-3">
-            <label for="teamName" class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="userEmail"
-              aria-describedby="emailHelp"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Role</label>
+            <label for="headOfDepartment" class="form-label"
+              >Head of Department</label
+            >
             <select
-              id="exampleInputPassword1"
+              id="headOfDepartment"
               class="form-select"
               aria-label="Default select example"
             >
@@ -89,36 +86,7 @@
               <option value="3">Three</option>
             </select>
           </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Project</label
-            >
-            <select
-              id="exampleInputPassword1"
-              class="form-select"
-              aria-label="Default select example"
-            >
-              <option selected></option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Department</label
-            >
-            <select
-              id="exampleInputPassword1"
-              class="form-select"
-              aria-label="Default select example"
-            >
-              <option selected></option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
+
           <div
             style="
               display: flex;

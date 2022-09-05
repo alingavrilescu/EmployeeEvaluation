@@ -1,1 +1,14 @@
-<p>projects works!</p>
+<!-- <div *ngFor="let project of projectList"> -->
+  <p-card header="Project name" subheader="Project leader" [style]="{width: '360px'}" styleClass="p-card-shadow">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+        quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!</p>
+    <ng-template pTemplate="footer">
+      <span class="p-buttonset">
+        <button [style]="{width: '150px', height: '50px'}" pButton pRipple label="Edit Project" icon="pi pi-pencil"></button>
+        <button [style]="{width: '150px', height: '50px'}" pButton pRipple label="Delete Project" icon="pi pi-trash"></button>
+    </span>
+    </ng-template>
+  </p-card>
+<!-- </div> -->
