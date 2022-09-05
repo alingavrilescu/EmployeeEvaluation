@@ -26,17 +26,15 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return _projectRepository.Add(toAdd);
         }
+        public Project UpdateProject(Project project)
+        {
+            return _projectRepository.Update(project);
+        }
 
         public void DeleteProject(Guid id)
         {
             this._projectRepository.DeleteById(id);
         }
 
-        public Project UpdateProject(Project project)
-        {
-            var existingProject = _projectRepository.GetById(project.Id);
-            existingProject.Name = project.Name;
-            return existingProject;
-        }
     }
 }
