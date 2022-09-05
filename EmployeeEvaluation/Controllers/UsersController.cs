@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
+using Swashbuckle.AspNetCore.Annotations;
 
 //test
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -51,13 +53,12 @@ namespace EmployeeEvaluation.Controllers
         }
 
 
-        // GET: api/<UsersController>
-        //[HttpGet]
-        //public async Task Get()
-        //{
-        //    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        //}
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, "Action was successful")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Server error ocurred and is logged")]
+        [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -65,8 +66,6 @@ namespace EmployeeEvaluation.Controllers
         }
 
 
-
-        // POST api/<UsersController>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] string value)
         {
@@ -86,7 +85,6 @@ namespace EmployeeEvaluation.Controllers
         }
 
 
-        // DELETE api/<UsersController>/5
         [HttpDelete("DeleteUser{id}")]
         public async Task<IActionResult> Delete(string id)
         {
