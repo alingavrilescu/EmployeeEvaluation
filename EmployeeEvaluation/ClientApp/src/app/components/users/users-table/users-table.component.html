@@ -1,6 +1,5 @@
 <div style="width: 80%; margin-left: auto; margin-right: auto">
   <app-users-buttons></app-users-buttons>
-
   <table class="table table-striped">
     <thead>
       <tr>
@@ -9,6 +8,7 @@
         <th scope="col">Email</th>
         <th scope="col">Role</th>
         <th scope="col">Project</th>
+        <th scope="col">Department</th>
         <th scope="col">Edit</th>
         <th scope="col">Remove</th>
       </tr>
@@ -20,6 +20,7 @@
         <td>mark@gmail.com</td>
         <td>Software developer</td>
         <td>EmployeeEvaluation</td>
+        <td>1</td>
         <td>
           <svg
             id="editUser"
@@ -84,21 +85,6 @@
       <div class="modal-body">
         <form id="createNewTeamForm">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label"
-              >Choose user to edit</label
-            >
-            <select
-              id="exampleInputEmail1"
-              class="form-select"
-              aria-label="Default select example"
-            >
-              <option selected></option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-          <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
               >Change name</label
             >
@@ -138,6 +124,21 @@
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"
               >Change project</label
+            >
+            <select
+              id="exampleInputEmail1"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option selected></option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"
+              >Change department</label
             >
             <select
               id="exampleInputEmail1"
