@@ -10,7 +10,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 {
     public class FormCriteriaRepository
     {
-
+      /*
         public readonly FormDbcontext dbContext;
         public FormCriteriaRepository(FormDbcontext dbContext)
         {
@@ -50,5 +50,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             dbContext.SaveChanges();
             return toUpdate;
         }
+      */
     }
 }
