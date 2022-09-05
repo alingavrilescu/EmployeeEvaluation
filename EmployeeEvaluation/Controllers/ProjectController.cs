@@ -1,5 +1,6 @@
 ﻿using EmployeeEvaluation.ApplicationLogic;
 using EmployeeEvaluation.DataAccess.Model;
+using EmployeeEvaluation.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -33,16 +34,27 @@ namespace EmployeeEvaluation.Controllers
 
         // POST api/<ProjectController>
         [HttpPost]
-        public Project Post([FromBody] Project project)
+        public Project Post([FromBody] ProjectDTO project)
         {
-            return this._projectService.AddProject(project);
+            var projectToAdd = new Project
+            {
+                Name = project.Name,
+                Description = project.Description
+            };
+            return this._projectService.AddProject(projectToAdd);
         }
 
         // PUT api/<ProjectController>/5
         [HttpPut("{id}")]
-        public Project Put(int id, [FromBody] Project project)
+        public Project Put(Guid id, [FromBody] ProjectDTO project)
         {
-            return this._projectService.UpdateProject(project);
+            var projectToEdit = new Project
+            {
+                Id = id,
+                Name = project.Name,
+                Description = project.Description
+            };
+            return this._projectService.UpdateProject(projectToEdit);
         }
 
         // DELETE api/<ProjectController>/5
