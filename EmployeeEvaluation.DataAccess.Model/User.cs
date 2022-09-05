@@ -12,5 +12,6 @@ namespace EmployeeEvaluation.DataAccess.Model
         public Guid AppUserId { get; set; }
         public Guid? ProjectId { get; set; }
         public Project? Project { get; set; }
+        public ICollection<EvaluationForm>? EvaluationForms { get; set; }
     }
 }
