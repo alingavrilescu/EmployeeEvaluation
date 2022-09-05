@@ -1,0 +1,245 @@
+<!---------------------------- BUTTONS ------------------------------>
+<app-department-buttons></app-department-buttons>
+<!---------------------------- CONTAINER OF CARDS ------------------------------>
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
+  <!---------------------------- FIRST CARD ------------------------------>
+  <div>
+    <div class="card text-bg-light mb-3" style="max-width: 18rem">
+      <div class="card-header">
+        <div style="display: flex; flex-direction: row">
+          <p style="margin-top: 10px; margin-left: 15px">
+            <b>Department #1</b>
+          </p>
+          <svg
+            id="editDepartment"
+            data-bs-toggle="modal"
+            data-bs-target="#editDepartmentModal"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-pencil"
+            viewBox="0 0 16 16"
+            style="cursor: pointer; margin-top: 15px; margin-left: 50px"
+          >
+            <path
+              d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-trash"
+            viewBox="0 0 16 16"
+            style="cursor: pointer; margin-top: 15px; margin-left: 15px"
+          >
+            <path
+              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title" style="padding-left: 12px">
+          Head of department: Mark
+        </h6>
+        <div style="max-width: 13rem">
+          <button
+            class="btn btn-light"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            Number of users: 13
+          </button>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mark Dennet</td>
+                    <td>Head of Department</td>
+                  </tr>
+                  <tr>
+                    <td>Jacob Brad</td>
+                    <td>Software Developer</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!---------------------------- SECOND CARD ------------------------------>
+  <div>
+    <div class="card text-bg-light mb-3" style="max-width: 18rem">
+      <div class="card-header">
+        <div style="display: flex; flex-direction: row">
+          <p style="margin-top: 10px">Department #1</p>
+          <svg
+            id="editDepartment"
+            data-bs-toggle="modal"
+            data-bs-target="#editDepartmentModal"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-pencil"
+            viewBox="0 0 16 16"
+            style="cursor: pointer; margin-top: 15px; margin-left: 50px"
+          >
+            <path
+              d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-trash"
+            viewBox="0 0 16 16"
+            style="cursor: pointer; margin-top: 15px; margin-left: 15px"
+          >
+            <path
+              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title" style="padding-left: 12px">
+          Head of department: Mark
+        </h6>
+        <div style="max-width: 13rem">
+          <button
+            class="btn btn-light"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseExample2"
+            aria-expanded="false"
+            aria-controls="collapseExample2"
+          >
+            Number of users: 13
+          </button>
+          <div class="collapse" id="collapseExample2">
+            <div class="card card-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mark Dennet</td>
+                    <td>Head of Department</td>
+                  </tr>
+                  <tr>
+                    <td>Jacob Brad</td>
+                    <td>Software Developer</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------------------- EDIT DEPARTMENT MODAL  --------------------------------------->
+<div
+  class="modal fade"
+  id="editDepartmentModal"
+  tabindex="-1"
+  aria-labelledby="editDepartmentModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editDepartmentModalLabel">
+          Edit department
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="createNewDepartmentForm">
+          <div class="mb-3">
+            <label for="departmentName" class="form-label"
+              >Name of the department</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="departmentName"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="headOfDepartment" class="form-label"
+              >Head of Department</label
+            >
+            <select
+              id="headOfDepartment"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option selected></option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              margin-top: 50px;
+            "
+          >
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

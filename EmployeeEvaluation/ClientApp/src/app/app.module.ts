@@ -15,6 +15,8 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectsService } from './services/projects.service';
 import { UsersButtonsComponent } from './components/users/users-buttons/users-buttons.component';
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
+import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
+import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { UsersTableComponent } from './components/users/users-table/users-table.
     ProjectsComponent,
     UsersButtonsComponent,
     UsersTableComponent,
+    DepartmentTableComponent,
+    DepartmentButtonsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,6 +40,7 @@ import { UsersTableComponent } from './components/users/users-table/users-table.
       { path: 'projects', component: ProjectsComponent },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersTableComponent },
+      { path: 'departments', component: DepartmentTableComponent },
     ]),
   ],
   providers: [
