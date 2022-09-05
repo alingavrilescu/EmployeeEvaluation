@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,6 +18,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDbContext<ProjectDbcontext>(options =>
     options.UseSqlServer(connectionString));
+
+builder.Services.AddDbContext<FormTemplateDbContext>(options =>
+    options.UseSqlServer(connectionString,b=>b.MigrationsAssembly("EmployeeEvaluation")));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
