@@ -16,11 +16,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDbContext<ProjectDbcontext>(options =>
+builder.Services.AddDbContext <EmployeeEvaluationDbContext>(options =>
     options.UseSqlServer(connectionString));
-
-builder.Services.AddDbContext<FormTemplateDbContext>(options =>
-    options.UseSqlServer(connectionString,b=>b.MigrationsAssembly("EmployeeEvaluation")));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -33,7 +30,6 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
-builder.Services.AddDbContext<ProjectDbcontext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ProjectService>();
