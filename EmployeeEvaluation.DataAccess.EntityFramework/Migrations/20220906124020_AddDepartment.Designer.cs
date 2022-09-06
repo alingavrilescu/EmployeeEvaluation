@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
     [DbContext(typeof(EmployeeEvaluationDbContext))]
-    [Migration("20220906115802_AddDepartment")]
+    [Migration("20220906124020_AddDepartment")]
     partial class AddDepartment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
