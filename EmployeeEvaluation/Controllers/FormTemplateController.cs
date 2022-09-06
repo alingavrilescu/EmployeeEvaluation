@@ -40,9 +40,9 @@ namespace EmployeeEvaluation.Controllers
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] FormTemplate formTemplate)
+        public void Put( [FromBody] FormTemplate formTemplate)
         {
-            formTemplateService.UpdateFormTemplate(id,formTemplate);
+            formTemplateService.UpdateFormTemplate(formTemplate);
         }
         
 
