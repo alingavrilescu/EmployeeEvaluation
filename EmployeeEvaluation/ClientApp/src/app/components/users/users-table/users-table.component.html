@@ -1,5 +1,8 @@
 <div style="width: 80%; margin-left: auto; margin-right: auto">
-  <app-users-buttons></app-users-buttons>
+  <app-users-buttons
+    (notifyUsers)="refreshUsers($event)"
+    (notifyProjects)="refreshProjects($event)"
+  ></app-users-buttons>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -14,12 +17,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr *ngFor="let user of users">
         <th scope="row">1</th>
-        <td>Mark</td>
-        <td>mark@gmail.com</td>
-        <td>Software developer</td>
-        <td>EmployeeEvaluation</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>Rol</td>
+        <td>Proiect</td>
         <td>1</td>
         <td>
           <svg
@@ -48,6 +51,7 @@
             class="bi bi-trash"
             viewBox="0 0 16 16"
             style="cursor: pointer"
+            (click)="httpDeleteUser(user.id)"
           >
             <path
               d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
@@ -116,9 +120,12 @@
               aria-label="Default select example"
             >
               <option selected></option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="Software Developer">Software Developer</option>
+              <option value="Project Manager">Project Manager</option>
+              <option value="Technical Lead">Technical Lead</option>
+              <option value="Technical Lead">Head of Department</option>
+              <option value="Technical Lead">Director of Department</option>
+              <option value="Technical Lead">Human Resources</option>
             </select>
           </div>
           <div class="mb-3">
@@ -131,9 +138,9 @@
               aria-label="Default select example"
             >
               <option selected></option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option *ngFor="let project of projects">
+                {{ project.name }}
+              </option>
             </select>
           </div>
           <div class="mb-3">

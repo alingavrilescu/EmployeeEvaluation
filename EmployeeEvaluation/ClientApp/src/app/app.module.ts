@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import {CardModule} from 'primeng/card';
-import {ButtonModule} from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -35,6 +35,8 @@ import { DepartmentButtonsComponent } from './components/department/department-b
     FormsModule,
     ApiAuthorizationModule,
     CardModule,
+    FormsModule,
+    ReactiveFormsModule,
     ButtonModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },

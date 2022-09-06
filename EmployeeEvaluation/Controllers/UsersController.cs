@@ -52,6 +52,19 @@ namespace EmployeeEvaluation.Controllers
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
+        private List<UserDTO> createUsersDTO(List<ApplicationUser> applicationUsers)
+        {
+            List<UserDTO> usersDTO = new List<UserDTO>();
+            for (int i = 0; i < applicationUsers.Count; i++)
+            {
+                var newUser = new UserDTO();
+                newUser.Id = applicationUsers[i].Id;
+                newUser.Name = applicationUsers[i].UserName;
+                newUser.Email = applicationUsers[i].Email;
+                usersDTO.Add(newUser);
+            }
+            return usersDTO;
+        }
 
         [HttpGet]
         [SwaggerResponse(StatusCodes.Status200OK, "Action was successful")]
@@ -62,85 +75,79 @@ namespace EmployeeEvaluation.Controllers
         public async Task<IActionResult> GetAllUsers()
         {
             var users = await _userManager.Users.ToListAsync();
-            return Ok(users);
+            return Ok(createUsersDTO(users));
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] UserDTO newUser)
         {
             var user = CreateUser();
-            await _userStore.SetUserNameAsync(user, "hr2@gmail.com", CancellationToken.None);
-            await _emailStore.SetEmailAsync(user, "hr2@gmail.com", CancellationToken.None);
-            var result = await _userManager.CreateAsync(user, "HRRR123");
-
-            if (result != IdentityResult.Success)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                return Ok();
-            }
+            await _userStore.SetUserNameAsync(user, newUser.Name, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, newUser.Email, CancellationToken.None);
+            var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
+            if (result != IdentityResult.Success) return BadRequest();
+            else return Ok();
         }
 
 
-        [HttpDelete("DeleteUser{id}")]
-        public async Task<IActionResult> Delete(string id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-            if (user == null)
-            {
-                ModelState.AddModelError("", "User Not Found");
-                return BadRequest();
-            }
-
-            var result = await _userManager.DeleteAsync(user);
-            if (result.Succeeded)
-            {
-                return Ok();
-            }
+            if (user == null) return BadRequest();
             else
             {
-                return BadRequest();
+                var result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded) return Ok();
+                else return BadRequest();
             }
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> Update(ApplicationUser updatedUser)
+        public async Task<IActionResult> EditUser(string id, [FromBody]UserDTO user)
         {
-            var user = await _userManager.FindByIdAsync(updatedUser.Id);
-            if (user == null)
-                return BadRequest();
-            if (!string.IsNullOrEmpty(updatedUser.PasswordHash))
+            var identityUser = await _userManager.FindByIdAsync(id);
+            if (identityUser == null) return BadRequest();
+            else
             {
-                user.PasswordHash = updatedUser.PasswordHash;
-            }
-            if (!string.IsNullOrEmpty(updatedUser.Email))
-            {
-                user.Email =updatedUser.Email;
+                identityUser.UserName = user.Name;
+                identityUser.Email = user.Email;
+                return Ok();
             }
 
-            if (!string.IsNullOrEmpty(updatedUser.UserName))
-            {
-                user.UserName = updatedUser.UserName;
-            }
+            //var user = await _userManager.FindByIdAsync(updatedUser.Id);
+            //if (user == null)
+            //    return BadRequest();
+            //if (!string.IsNullOrEmpty(updatedUser.PasswordHash))
+            //{
+            //    user.PasswordHash = updatedUser.PasswordHash;
+            //}
+            //if (!string.IsNullOrEmpty(updatedUser.Email))
+            //{
+            //    user.Email =updatedUser.Email;
+            //}
+
+            //if (!string.IsNullOrEmpty(updatedUser.UserName))
+            //{
+            //    user.UserName = updatedUser.UserName;
+            //}
     
 
-            if (!string.IsNullOrEmpty(user.Email) && !string.IsNullOrEmpty(user.UserName)&& !string.IsNullOrEmpty(user.PasswordHash))
-            {
-                IdentityResult result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded)
-                {
-                    return Ok(user);
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            return BadRequest();
+            //if (!string.IsNullOrEmpty(user.Email) && !string.IsNullOrEmpty(user.UserName)&& !string.IsNullOrEmpty(user.PasswordHash))
+            //{
+            //    IdentityResult result = await _userManager.UpdateAsync(user);
+            //    if (result.Succeeded)
+            //    {
+            //        return Ok(user);
+            //    }
+            //    else
+            //    {
+            //        return BadRequest();
+            //    }
+            //}
+            //return BadRequest();
         }
            
         
