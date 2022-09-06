@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule} from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import {CardModule} from 'primeng/card';
@@ -17,6 +17,7 @@ import { UsersButtonsComponent } from './components/users/users-buttons/users-bu
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
 import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { DepartmentButtonsComponent } from './components/department/department-b
     ApiAuthorizationModule,
     CardModule,
     ButtonModule,
+    DialogModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
       { path: '', component: HomeComponent, pathMatch: 'full' },

@@ -17,6 +17,35 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   constructor(private projectsService:ProjectsService) { 
   }
 
+  projectsList: Project[]=[];
+  projectName = "";
+  projectDescription = "";
+  display = "none";
+  displayModal: boolean = false;
+
+  displayBasic: boolean = false;
+
+  displayBasic2: boolean = false;
+
+  displayMaximizable: boolean = false;
+
+  displayPosition: boolean = false;
+
+  position: string = "";
+
+  addProject(){
+    var temp={
+      name:this.projectName,
+      description:this.projectDescription
+    };
+
+    this.projectsService.createProject(temp).subscribe(res => {alert(res.toString());
+    });
+    this.display = "none";
+    window.location.reload();
+
+  }
+
   ngOnInit(): void {
     this.projects = this.projectsService.getProjects();
   }
@@ -32,4 +61,32 @@ export class ProjectsComponent implements OnInit, OnDestroy {
                               this.projects = this.projectsService.getProjects();
                             }, error=>{});
   }
+
+  openModal(){
+    this.display = "block";
+  }
+  onCloseModal(){
+    this.display = "none";
+  }
+  showModalDialog() {
+    this.displayModal = true;
+}
+
+  showBasicDialog() {
+      this.displayBasic = true;
+  }
+
+  showBasicDialog2() {
+      this.displayBasic2 = true;
+  }
+
+  showMaximizableDialog() {
+      this.displayMaximizable = true;
+  }
+
+  showPositionDialog(position: string) {
+      this.position = position;
+      this.displayPosition = true;
+  }
+
 }
