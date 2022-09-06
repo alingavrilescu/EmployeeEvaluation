@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace EmployeeEvaluation.DataAccess.Model
 {
     public class FormTemplate:BaseTemplateEntity
-    {
-
-        public SoftwareDeveloperType Type { get; set; }
+    {   
+        public string Type { get; set; }
         public Guid DepartmentId { get; set; }
         public ICollection <FormTemplateSection>? TemplateSections { get; set; }
 
