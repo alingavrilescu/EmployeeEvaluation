@@ -19,6 +19,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         DbSet<FormSection> FormSections { get; set; }
         DbSet<FormCriteria> FormCriteria { get; set; }
         DbSet<CriteriaComments> CriteriaComments { get; set; }
-
+        DbSet<Department> Departments { get; set; }
     }
 }
