@@ -34,6 +34,9 @@ builder.Services.AddAuthentication()
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ProjectService>();
 
+builder.Services.AddScoped<IEvaluationFormRepository, EvaluationFormRepository>();
+builder.Services.AddScoped<EvaluationFormService>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 builder.Services.AddRazorPages();

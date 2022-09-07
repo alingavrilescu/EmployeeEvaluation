@@ -11,9 +11,18 @@ namespace EmployeeEvaluation.DataAccess.Abstractions
     {
 
         public IEnumerable<EvaluationForm> GetAll();
-        public EvaluationForm GetById(Guid id);
-
-        public EvaluationForm AddEvaluationForm (EvaluationForm toAdd);
-
+        public EvaluationForm GetEvaluationFormById(Guid id);
+        public FormSection GetFormSectionById(Guid id);
+        public FormCriteria GetFormCriteriaById(Guid id);
+        public CriteriaComments GetCriteriaCommentsById(Guid id);
+        public EvaluationForm AddEvaluationForm (EvaluationForm evaluationFormToAdd);
+        public FormSection AddFormSection(FormSection formSectionToAdd);
+        public FormCriteria AddFormCriteria(FormCriteria formCriteriaToAdd);
+        public CriteriaComments AddCriteriaComments(CriteriaComments criteriaCommentsToAdd);
+        public EvaluationForm UpdateEvaluationForm (EvaluationForm evaluationFormToUpdate);
+        public FormSection UpdateFormSection(FormSection formSectionToUpdate);
+        public FormCriteria UpdateFormCriteria(FormCriteria formCriteriaToUpdate);
+        public CriteriaComments UpdateCriteriaComments(CriteriaComments criteriaCommentsToUpdate);
+        
     }
 }
