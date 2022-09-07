@@ -17,6 +17,7 @@ import { UsersButtonsComponent } from './components/users/users-buttons/users-bu
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
 import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { DepartmentButtonsComponent } from './components/department/department-b
     FormsModule,
     ReactiveFormsModule,
     ButtonModule,
+    DialogModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
       { path: '', component: HomeComponent, pathMatch: 'full' },
