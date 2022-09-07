@@ -1,4 +1,5 @@
-﻿using EmployeeEvaluation.DataAccess.Model;
+﻿using EmployeeEvaluation.DataAccess.Abstractions;
+using EmployeeEvaluation.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeEvaluation.DataAccess.EntityFramework
 {
-    public class EvaluationFormRepository
+    public class EvaluationFormRepository: IEvaluationFormRepository
     {
         private readonly EmployeeEvaluationDbContext _employeeEvaluationDbContext;
         public EvaluationFormRepository(EmployeeEvaluationDbContext employeeEvaluationDbContext)
@@ -25,7 +26,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return evaluationForm;
         }
 
-        public EvaluationForm GetById(Guid id)
+        public EvaluationForm GetEvaluationFormById(Guid id)
         {
             var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>().Where(f => f.Id == id)
                                                              .Include(f => f.FormSections)
@@ -37,11 +38,85 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 
         }
 
-        public EvaluationForm AddEvaluationForm(EvaluationForm toAdd)
+        public FormSection GetFormSectionById(Guid id)
         {
-            var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>().Add(toAdd);
+            var formSection = _employeeEvaluationDbContext.Set<FormSection>().Where(f => f.Id == id)
+                                                             .Include(s => s.FormCriteria)
+                                                             .ThenInclude(c => c.CriteriaComments)
+                                                             .FirstOrDefault();
+
+            return formSection;
+
+        }
+        public FormCriteria GetFormCriteriaById(Guid id)
+        {
+            var formCriteria = _employeeEvaluationDbContext.Set<FormCriteria>().Where(f => f.Id == id)
+                                                             .Include(c => c.CriteriaComments)
+                                                             .FirstOrDefault();
+
+            return formCriteria;
+
+        }
+        public CriteriaComments GetCriteriaCommentsById(Guid id)
+        {
+            var criteriaComments = _employeeEvaluationDbContext.Set<CriteriaComments>().Where(f => f.Id == id)
+                                                             .FirstOrDefault();
+
+            return criteriaComments;
+
+        }
+        public EvaluationForm AddEvaluationForm(EvaluationForm evaluationFormToAdd)
+        {
+            var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>().Add(evaluationFormToAdd);
             _employeeEvaluationDbContext.SaveChanges();
             return evaluationForm.Entity;
         }
+
+        public FormSection AddFormSection(FormSection formSectionToAdd)
+        {
+            var formSection = _employeeEvaluationDbContext.Set<FormSection>().Add(formSectionToAdd);
+            _employeeEvaluationDbContext.SaveChanges();
+            return formSection.Entity;
+        }
+        public FormCriteria AddFormCriteria(FormCriteria formCriteriaToAdd)
+        {
+            var formCriteria = _employeeEvaluationDbContext.Set<FormCriteria>().Add(formCriteriaToAdd);
+            _employeeEvaluationDbContext.SaveChanges();
+            return formCriteria.Entity;
+        }
+
+        public CriteriaComments AddCriteriaComments (CriteriaComments criteriaCommentsToAdd)
+        {
+            var criteriaComments = _employeeEvaluationDbContext.Set<CriteriaComments>().Add(criteriaCommentsToAdd);
+            _employeeEvaluationDbContext.SaveChanges();
+            return criteriaComments.Entity;
+        }
+
+        public EvaluationForm UpdateEvaluationForm(EvaluationForm evaluationFormToUpdate)
+        {
+            _employeeEvaluationDbContext.Set<EvaluationForm>().Update(evaluationFormToUpdate);
+            _employeeEvaluationDbContext.SaveChanges();
+            return evaluationFormToUpdate;
+        }
+        public FormSection UpdateFormSection(FormSection formSectionToUpdate)
+        {
+            _employeeEvaluationDbContext.Set<FormSection>().Update(formSectionToUpdate);
+            _employeeEvaluationDbContext.SaveChanges();
+            return formSectionToUpdate;
+        }
+        public FormCriteria UpdateFormCriteria(FormCriteria formCriteriaToUpdate)
+        {
+            _employeeEvaluationDbContext.Set<FormCriteria>().Update(formCriteriaToUpdate);
+            _employeeEvaluationDbContext.SaveChanges();
+            return formCriteriaToUpdate;
+        }
+
+        public CriteriaComments UpdateCriteriaComments(CriteriaComments criteriaCommentsToUpdate)
+        {
+            _employeeEvaluationDbContext.Set<CriteriaComments>().Update(criteriaCommentsToUpdate);
+            _employeeEvaluationDbContext.SaveChanges();
+            return criteriaCommentsToUpdate;
+        }
+
     }
 }
