@@ -8,23 +8,23 @@ import { UserDTO } from '../models/users.model';
   providedIn: 'root',
 })
 export class UsersService {
-  apiBase: string;
+  private readonly url="Users"
   constructor(private httpClient: HttpClient) {
-    this.apiBase = environment.apiBase;
   }
   public getUsers(): Observable<UserDTO[]> {
-    return this.httpClient.get<UserDTO[]>(this.apiBase + 'api/Users');
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}`);
   }
-  public deleteUser(id: string): Observable<UserDTO> {
-    return this.httpClient.delete<UserDTO>(this.apiBase + 'api/Users/' + id);
+  public getUserById(id: string): Observable<UserDTO>
+  {
+    return this.httpClient.get<UserDTO>(`${environment.apiUrl}/${this.url}/${id}`);
   }
   public addUser(newUser: UserDTO): Observable<UserDTO> {
-    return this.httpClient.post<UserDTO>(this.apiBase + 'api/Users', newUser);
+    return this.httpClient.post<UserDTO>(`${environment.apiUrl}/${this.url}`, newUser);
   }
-  public editUser(id: string, newUser: UserDTO): Observable<UserDTO> {
-    return this.httpClient.put<UserDTO>(
-      this.apiBase + 'api/Users' + id,
-      newUser
-    );
+  public editUser(id: string, userToEdit: UserDTO): Observable<UserDTO> {
+  return this.httpClient.put<UserDTO>(`${environment.apiUrl}/${this.url}/${id}`,userToEdit);
+  }
+  public deleteUser(id: string): Observable<UserDTO> {
+    return this.httpClient.delete<UserDTO>(`${environment.apiUrl}/${this.url}/${id}`);
   }
 }

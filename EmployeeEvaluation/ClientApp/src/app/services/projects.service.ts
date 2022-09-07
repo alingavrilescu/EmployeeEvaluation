@@ -9,45 +9,40 @@ import { Project } from '../models/project.model';
 })
 export class ProjectsService {
 
-  apiBase: string;
-  constructor(private httpClient:HttpClient) {
-    this.apiBase = environment.apiBase;
-   }
+  private readonly url = "Project";
+
+  constructor(private httpClient:HttpClient) { }
    public getProjects(): Observable<Project[]>
    {
-       let apiUrl = `${this.apiBase}projects`;
-       return this.httpClient.get<Project[]>(apiUrl);
+       return this.httpClient.get<Project[]>(`${environment.apiUrl}/${this.url}`);
+   }
+   public getProjectById(id: string): Observable<Project>
+   {
+     return this.httpClient.get<Project>(`${environment.apiUrl}/${this.url}/${id}`);
    }
    public createProject(project:Project): Observable<Project>
    {
-     let apiUrl = `${this.apiBase}projects`;
-       let newProject  = {
-           id: project.id,
-           name: project.name,  
-       };
-       return this.httpClient.post<Project>(apiUrl,newProject);
+      let newProject  = {
+          id: project.id,
+          name: project.name,  
+          description: project.description
+      };
+      return this.httpClient.post<Project>(`${environment.apiUrl}/${this.url}`,newProject);
    }
  
-   public getProjectById(id: string): Observable<Project>
-   {
-     let apiUrl = `${this.apiBase}projects/${id}`;
-     return this.httpClient.get<Project>(apiUrl);
-   }
  
-   public updateProject(project:Project): Observable<Project>
+   public updateProject(project:Project, id: string): Observable<Project>
    {
-     let apiUrl = `${this.apiBase}projects/${project.id}`;
        let updatedProject  = {
            id: project.id,
            name: project.name,   
-           description: project.description,  
+           description: project.description 
        };
-       return this.httpClient.put<Project>(apiUrl, updatedProject);
+       return this.httpClient.put<Project>(`${environment.apiUrl}/${this.url}/${id}`, updatedProject);
    }
  
    public deleteProject(id: string): Observable<any>
    {
-     let apiUrl = `${this.apiBase}projects/${id}`;
-     return this.httpClient.delete(apiUrl);
+     return this.httpClient.delete(`${environment.apiUrl}/${this.url}/${id}`);
    }
 }
