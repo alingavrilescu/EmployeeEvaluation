@@ -1,12 +1,13 @@
 ﻿using EmployeeEvaluation.ApplicationLogic;
 using EmployeeEvaluation.DataAccess.Model;
+using EmployeeEvaluation.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EmployeeEvaluation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/Department/[controller]")]
     [ApiController]
     public class FormTemplateController : ControllerBase
     {
@@ -19,40 +20,145 @@ namespace EmployeeEvaluation.Controllers
         }
         
         [HttpGet]
-        public IEnumerable<FormTemplate> Get()
+        public IEnumerable<FormTemplate> GetFormTemplates()
         {
             return formTemplateService.GetFormTemplates();
         }
 
         // GET api/<FormTemplateController>/5
         [HttpGet("{id}")]
-        public FormTemplate Get(Guid id)
+        public FormTemplate GetFormTemplateById(Guid id)
         {
-            return formTemplateService.GetFormTemplate(id);
+            return formTemplateService.GetFormTemplateById(id);
         }
 
         // POST api/<FormTemplateController>
         [HttpPost]
-        public void Post([FromBody] FormTemplate formTemplate)
+        public FormTemplate PostFormTemplate([FromBody] FormTemplateDTO formTemplate)
         {
-            formTemplateService.AddFormTemplate(formTemplate);
+            var formTemplateToAdd = new FormTemplate
+            {
+                Name = formTemplate.Name,
+                Type = formTemplate.Type,
+                DepartmentId = formTemplate.DepartmentId
+            };
+            return formTemplateService.AddFormTemplate(formTemplateToAdd);
         }
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{id}")]
-        public void Put( [FromBody] FormTemplate formTemplate)
+        public FormTemplate PutFormTemplate( [FromBody] FormTemplateDTO formTemplate)
         {
-            formTemplateService.UpdateFormTemplate(formTemplate);
+            var formTemplateToEdit = new FormTemplate
+            {
+                Name = formTemplate.Name,
+                Type = formTemplate.Type
+                
+            };
+            return formTemplateService.UpdateFormTemplate(formTemplateToEdit);
+            
         }
-        
 
         // DELETE api/<FormTemplateController>/5
         [HttpDelete("{id}")]
-        public void Delete(Guid id)
+        public void DeleteFormTemplate (Guid id)
         {
             formTemplateService.DeleteFormTemplate(id);
         }
-        
+
+        /*
+        [HttpGet]
+        //---------************
+        public IEnumerable<FormTemplateSection> GetTemplateSections(Guid formTemplateId)
+        {
+            return formTemplateService.GetAllSections(formTemplateId);
+        }
+
+        // GET api/<FormTemplateController>/5
+        [HttpGet("{id}")]
+        public FormTemplateSection GetTemplateSectionById(Guid id)
+        {
+            return formTemplateService.GetSectionById(id);
+        }
+
+        // POST api/<FormTemplateController>
+        [HttpPost]
+        public FormTemplateSection PostTemplateSection([FromBody] FormTemplateSectionDTO formTemplateSection)
+        {
+            var formTemplateSectionToAdd = new FormTemplateSection
+            {
+                Name = formTemplateSection.Name,
+                Description = formTemplateSection.Description
+            };
+            return formTemplateService.AddTemplateSection(formTemplateSectionToAdd);
+        }
+
+        // PUT api/<FormTemplateController>/5
+        [HttpPut("{id}")]
+        public FormTemplateSection PutTemplateSection([FromBody] FormTemplateSectionDTO formTemplateSection)
+        {
+            var formTemplateSectionToEdit = new FormTemplateSection
+            {
+                Name = formTemplateSection.Name,
+                Description = formTemplateSection.Description
+            };
+            return formTemplateService.UpdateSection(formTemplateSectionToEdit);
+
+        }
+
+        // DELETE api/<FormTemplateController>/5
+        [HttpDelete("{id}")]
+        public void DeleteSection(Guid id)
+        {
+            formTemplateService.DeleteSection(id);
+        }
+
+
+        [HttpGet]
+        public IEnumerable<FormTemplateCriteria> GetAllCriteria(Guid sectionId)
+        {
+            return formTemplateService.GetAllCriteria(sectionId);
+        }
+
+        // GET api/<FormTemplateController>/5
+        [HttpGet("{id}")]
+        public FormTemplateCriteria GetCriteriaById(Guid id)
+        {
+            return formTemplateService.GetCriteriaById(id);
+        }
+
+        // POST api/<FormTemplateController>
+        [HttpPost]
+        public FormTemplateCriteria PostFormTemplate([FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
+        {
+            var formTemplateCriteriaToAdd = new FormTemplateCriteria
+            {
+                Name = formTemplateCriteria.Name,
+                Description = formTemplateCriteria.Description
+            };
+            return formTemplateService.AddTemplateCriteria(formTemplateCriteriaToAdd);
+        }
+
+        // PUT api/<FormTemplateController>/5
+        [HttpPut("{id}")]
+        public FormTemplateCriteria PutFormTemplate([FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
+        {
+            var formTemplateCriteriaToEdit = new FormTemplateCriteria
+            {
+                Name = formTemplateCriteria.Name,
+                Description = formTemplateCriteria.Description
+            };
+            return formTemplateService.UpdateCriteria(formTemplateCriteriaToEdit);
+
+        }
+
+        // DELETE api/<FormTemplateController>/5
+        [HttpDelete("{id}")]
+        public void DeleteCriteria(Guid id)
+        {
+            formTemplateService.DeleteCriteria(id);
+        }
+        */
     }
         
 }
