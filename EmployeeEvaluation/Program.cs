@@ -34,8 +34,13 @@ builder.Services.AddAuthentication()
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ProjectService>();
 
+<<<<<<< HEAD
 builder.Services.AddScoped<IEvaluationFormRepository, EvaluationFormRepository>();
 builder.Services.AddScoped<EvaluationFormService>();
+=======
+builder.Services.AddScoped<FormTemplateRepository>();
+builder.Services.AddScoped<FormTemplateService>();
+>>>>>>> feature/testRaluca
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
