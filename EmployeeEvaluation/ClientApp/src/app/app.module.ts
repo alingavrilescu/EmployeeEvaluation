@@ -51,6 +51,7 @@ import {AccordionModule} from 'primeng/accordion';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersTableComponent },
       { path: 'departments', component: DepartmentTableComponent },
+      {path: 'form-templates',component:FormTemplateComponent}
     ]),
   ],
   providers: [
