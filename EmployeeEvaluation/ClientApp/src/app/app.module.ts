@@ -17,15 +17,12 @@ import { UsersButtonsComponent } from './components/users/users-buttons/users-bu
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
 import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
-<<<<<<< HEAD
 import {DialogModule} from 'primeng/dialog';
-=======
 import { FormTemplateComponent } from './components/form-template/form-template.component';
 import {TabViewModule} from 'primeng/tabview';
 import {AccordionModule} from 'primeng/accordion';
 
 
->>>>>>> feature/testRaluca
 
 @NgModule({
   declarations: [
