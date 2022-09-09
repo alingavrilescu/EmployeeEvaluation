@@ -18,6 +18,7 @@ import { UsersTableComponent } from './components/users/users-table/users-table.
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
 import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
 import {DialogModule} from 'primeng/dialog';
+import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {DialogModule} from 'primeng/dialog';
     UsersTableComponent,
     DepartmentTableComponent,
     DepartmentButtonsComponent,
+    ProjectDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

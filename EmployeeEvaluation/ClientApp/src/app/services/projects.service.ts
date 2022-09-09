@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { Project } from '../models/project.model';
+import { Guid } from 'guid-typescript';
 
 @Injectable({
   providedIn: 'root'
@@ -16,22 +17,17 @@ export class ProjectsService {
    {
        return this.httpClient.get<Project[]>(`${environment.apiUrl}/${this.url}`);
    }
-   public getProjectById(id: string): Observable<Project>
+   public getProjectById(id: Guid): Observable<Project>
    {
      return this.httpClient.get<Project>(`${environment.apiUrl}/${this.url}/${id}`);
    }
    public createProject(project:Project): Observable<Project>
    {
-      let newProject  = {
-          id: project.id,
-          name: project.name,  
-          description: project.description
-      };
-      return this.httpClient.post<Project>(`${environment.apiUrl}/${this.url}`,newProject);
+      return this.httpClient.post<Project>(`${environment.apiUrl}/${this.url}`,project);
    }
  
  
-   public updateProject(project:Project, id: string): Observable<Project>
+   public updateProject(project:Project, id: Guid): Observable<Project>
    {
        let updatedProject  = {
            id: project.id,
@@ -41,8 +37,8 @@ export class ProjectsService {
        return this.httpClient.put<Project>(`${environment.apiUrl}/${this.url}/${id}`, updatedProject);
    }
  
-   public deleteProject(id: string): Observable<any>
+   public deleteProject(id: Guid): Observable<Project>
    {
-     return this.httpClient.delete(`${environment.apiUrl}/${this.url}/${id}`);
+     return this.httpClient.delete<Project>(`${environment.apiUrl}/${this.url}/${id}`);
    }
 }
