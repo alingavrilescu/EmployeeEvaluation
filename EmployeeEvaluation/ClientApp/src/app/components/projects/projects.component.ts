@@ -3,7 +3,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Project } from '../../models/project.model';
 import { ProjectsService } from '../../services/projects.service';
 
-
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -21,17 +20,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   projectName = "";
   projectDescription = "";
   display = "none";
-  displayModal: boolean = false;
-
-  displayBasic: boolean = false;
-
-  displayBasic2: boolean = false;
-
-  displayMaximizable: boolean = false;
-
-  displayPosition: boolean = false;
-
-  position: string = "";
 
   addProject(){
     var temp={
@@ -68,25 +56,4 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   onCloseModal(){
     this.display = "none";
   }
-  showModalDialog() {
-    this.displayModal = true;
-}
-
-  showBasicDialog() {
-      this.displayBasic = true;
-  }
-
-  showBasicDialog2() {
-      this.displayBasic2 = true;
-  }
-
-  showMaximizableDialog() {
-      this.displayMaximizable = true;
-  }
-
-  showPositionDialog(position: string) {
-      this.position = position;
-      this.displayPosition = true;
-  }
-
 }

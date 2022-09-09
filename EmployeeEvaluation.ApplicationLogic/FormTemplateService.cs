@@ -12,14 +12,14 @@ namespace EmployeeEvaluation.ApplicationLogic
     public class FormTemplateService
     {
         private readonly FormTemplateRepository formTemplateRepository;
-       
+
 
         public FormTemplateService(FormTemplateRepository formTemplateRepository)
         {
             this.formTemplateRepository = formTemplateRepository;
-           
+
         }
-        public FormTemplate GetFormTemplate(Guid id)
+        public FormTemplate GetFormTemplateById(Guid id)
         {
             return formTemplateRepository.GetFormTemplateById(id);
         }
@@ -29,23 +29,61 @@ namespace EmployeeEvaluation.ApplicationLogic
         }
         public FormTemplate AddFormTemplate(FormTemplate toAdd)
         {
-            return formTemplateRepository.Add(toAdd);
+            return formTemplateRepository.AddFormTemplate(toAdd);
+        }
+       
+        public FormTemplate UpdateFormTemplate(FormTemplate formTemplate)
+        {
+            return formTemplateRepository.UpdateFormTemplate(formTemplate);
         }
         public void DeleteFormTemplate(Guid formTemplateId)
         {
-            formTemplateRepository.DeleteFormTemplateById(formTemplateId);
+            formTemplateRepository.DeleteFormTemplate(formTemplateId);
         }
 
-        public FormTemplate UpdateFormTemplate(FormTemplate formTemplate)
+        public FormTemplateSection GetSectionById(Guid sectionId)
         {
-            var existingFormTemplate = formTemplateRepository.GetFormTemplateById(formTemplate.Id);
-            existingFormTemplate.Type=formTemplate.Type;
-            existingFormTemplate.Name = formTemplate.Name;
-            return existingFormTemplate;
+            return formTemplateRepository.GetSectionById(sectionId);
         }
-        //public IEnumerable<FormTemplateSection> GetSections
+        public IEnumerable<FormTemplateSection> GetAllSections(Guid formTemplateId)
+        {
+            return formTemplateRepository.GetSections(formTemplateId);
+        }
+        public FormTemplateSection AddTemplateSection(FormTemplateSection toAdd)
+        {
+            return formTemplateRepository.AddSectionTemplate(toAdd);
+        }
+        public FormTemplateSection UpdateSection(FormTemplateSection section)
+        {
+            return formTemplateRepository.UpdateSection(section);
+        }
+        public void DeleteSection(Guid sectionId)
+        {
+            formTemplateRepository.DeleteSection(sectionId);
+        }
        
+        public FormTemplateCriteria GetCriteriaById( Guid criteriaId)
+        {
+           return formTemplateRepository.GetCriteriaById( criteriaId);
+        }
+        public IEnumerable<FormTemplateCriteria> GetAllCriteria(Guid sectionId)
+        {
+            return formTemplateRepository.GetCriteria(sectionId);
+        }
+        public FormTemplateCriteria AddTemplateCriteria(FormTemplateCriteria toAdd)
+        {
+            return formTemplateRepository.AddCriteriaTemplate(toAdd);
+        }
+        public FormTemplateCriteria UpdateCriteria(FormTemplateCriteria criteria)
+        {
+            return formTemplateRepository.UpdateCriteria(criteria);
+        }
+        public void DeleteCriteria(Guid criteriaId)
+        {
+            formTemplateRepository.DeleteCriteria(criteriaId);
+        }
+
+
     }
-        
-}
+} 
         

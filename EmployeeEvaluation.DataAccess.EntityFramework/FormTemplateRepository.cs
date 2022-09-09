@@ -11,8 +11,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 {
     public class FormTemplateRepository
     {
-        private readonly FormTemplateDbContext dbContext;
-        public FormTemplateRepository(FormTemplateDbContext dbContext) 
+        private readonly EmployeeEvaluationDbContext dbContext;
+        public FormTemplateRepository(EmployeeEvaluationDbContext dbContext) 
         { 
             this.dbContext = dbContext;
         }
@@ -22,7 +22,10 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                              .Include(f => f.TemplateSections)
                                                              .ThenInclude(s => s.TemplateCriteria)
                                                              .FirstOrDefault();
-                                                             
+            if(formTemplates == null)
+            {
+                throw new KeyNotFoundException("Form template not found.");
+            }
             return formTemplates;
 
         }
@@ -34,7 +37,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                              .ToList();
             return formTemplates;
         }
-        public FormTemplate Add(FormTemplate toAdd)
+        public FormTemplate AddFormTemplate(FormTemplate toAdd)
         {
             var entity = dbContext.Set<FormTemplate>().Add(toAdd);
             dbContext.SaveChanges();
@@ -46,19 +49,22 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             dbContext.SaveChanges();
             return toUpdate;
         }
-        public void DeleteFormTemplateById(Guid id)
+        public void DeleteFormTemplate(Guid id)
         {
             var toDelete = GetFormTemplateById(id);
             dbContext.Set<FormTemplate>().Remove(toDelete);
             dbContext.SaveChanges();
         }
 
-        public FormTemplateSection GetSectionById(Guid formTemplateId, Guid sectionId )
+        public FormTemplateSection GetSectionById( Guid sectionId )
         {
-            var formTemplateSection = dbContext.Set<FormTemplateSection>().Where(s => s.FormTemplateId == formTemplateId)
-                                                                          .Where(s => s.Id==sectionId)
+            var formTemplateSection = dbContext.Set<FormTemplateSection>().Where(s => s.Id==sectionId)
                                                                           .Include(s => s.TemplateCriteria)
                                                                           .FirstOrDefault();
+            if(formTemplateSection == null)
+            {
+                throw new KeyNotFoundException("Section not found.");
+            }
             return formTemplateSection;
         }
 
@@ -69,7 +75,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                                            .ToList();
             return formTemplateSections;
         }
-        public FormTemplateSection Add(FormTemplateSection toAdd)
+        public FormTemplateSection AddSectionTemplate(FormTemplateSection toAdd)
         {
             var entity = dbContext.Set<FormTemplateSection>().Add(toAdd);
             dbContext.SaveChanges();
@@ -81,18 +87,21 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             dbContext.SaveChanges();
             return toUpdate;
         }
-        public void DeleteSectionById(Guid formTemplateId, Guid sectionId)
+        public void DeleteSection(Guid sectionId)
         {
-            var toDelete = GetSectionById(formTemplateId, sectionId);
+            var toDelete = GetSectionById(sectionId);
             dbContext.Set<FormTemplateSection>().Remove(toDelete);
             dbContext.SaveChanges();
         }
 
-        public FormTemplateCriteria GetCriteriaById(Guid sectionId, Guid criteriaId)
+        public FormTemplateCriteria GetCriteriaById( Guid criteriaId)
         {
-            var criteria = dbContext.Set<FormTemplateCriteria>().Where(c => c.FormTemplateSectionId == sectionId)
-                                                                .Where(c => c.Id == criteriaId)
+            var criteria = dbContext.Set<FormTemplateCriteria>().Where(c => c.Id == criteriaId)
                                                                 .FirstOrDefault();
+            if(criteria == null)
+            {
+                throw new KeyNotFoundException("Criteria not found");
+            }
             return criteria;
         }
         public IEnumerable<FormTemplateCriteria> GetCriteria(Guid sectionId)
@@ -101,7 +110,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                                .ToList();
             return criteria;
         }
-        public FormTemplateCriteria Add(FormTemplateCriteria toAdd)
+        public FormTemplateCriteria AddCriteriaTemplate(FormTemplateCriteria toAdd)
         {
             var entity = dbContext.Set<FormTemplateCriteria>().Add(toAdd);
             dbContext.SaveChanges();
@@ -113,9 +122,9 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             dbContext.SaveChanges();
             return toUpdate;
         }
-        public void DeleteCriteriaById(Guid sectionId, Guid criteriaId)
+        public void DeleteCriteria(Guid criteriaId)
         {
-            var toDelete= GetCriteriaById(sectionId, criteriaId);
+            var toDelete= GetCriteriaById(criteriaId);
             dbContext.Set<FormTemplateCriteria>().Remove(toDelete);
             dbContext.SaveChanges();
         }

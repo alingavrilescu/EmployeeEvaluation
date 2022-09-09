@@ -36,6 +36,8 @@ builder.Services.AddScoped<ProjectService>();
 
 builder.Services.AddScoped<IEvaluationFormRepository, EvaluationFormRepository>();
 builder.Services.AddScoped<EvaluationFormService>();
+builder.Services.AddScoped<FormTemplateRepository>();
+builder.Services.AddScoped<FormTemplateService>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
