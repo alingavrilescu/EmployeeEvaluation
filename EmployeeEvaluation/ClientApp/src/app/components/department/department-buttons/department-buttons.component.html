@@ -59,7 +59,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form id="createNewDepartmentForm">
+        <form id="createNewDepartmentForm" [formGroup]="addDepartmentFormGroup">
           <div class="mb-3">
             <label for="departmentName" class="form-label"
               >Name of the department</label
@@ -69,6 +69,7 @@
               class="form-control"
               id="departmentName"
               aria-describedby="emailHelp"
+              formControlName="nameControl"
             />
           </div>
           <div class="mb-3">
@@ -79,6 +80,7 @@
               id="headOfDepartment"
               class="form-select"
               aria-label="Default select example"
+              formControlName="headOfDepartmentControl"
             >
               <option selected></option>
               <option value="1">One</option>
@@ -102,7 +104,13 @@
             >
               Close
             </button>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              (click)="httpAddDepartment()"
+            >
+              Submit
+            </button>
           </div>
         </form>
       </div>

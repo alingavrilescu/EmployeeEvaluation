@@ -8,6 +8,7 @@ namespace EmployeeEvaluation.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string Role { get; set; }
-        public Project project { get; set; }
+        public Guid ProjectId { get; set; }
+        public Guid DepartmentId { get; set; }
     }
 }

@@ -57,7 +57,7 @@ export class UsersButtonsComponent implements OnInit {
     this.httpGetUsers();
   }
 
-  submit() {
+  httpAddUser() {
     var newUser = new UserDTO();
     newUser.name = this.addUserFormGroup.controls.nameControl.value!;
     newUser.email = this.addUserFormGroup.controls.emailControl.value!;

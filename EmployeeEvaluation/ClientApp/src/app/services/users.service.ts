@@ -15,6 +15,9 @@ export class UsersService {
   public getUsers(): Observable<UserDTO[]> {
     return this.httpClient.get<UserDTO[]>(this.apiBase + 'api/Users');
   }
+  public getUserById(id: string): Observable<UserDTO> {
+    return this.httpClient.get<UserDTO>(this.apiBase + 'api/Users/' + id);
+  }
   public deleteUser(id: string): Observable<UserDTO> {
     return this.httpClient.delete<UserDTO>(this.apiBase + 'api/Users/' + id);
   }

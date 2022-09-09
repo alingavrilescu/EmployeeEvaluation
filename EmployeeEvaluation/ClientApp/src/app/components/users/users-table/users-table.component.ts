@@ -17,6 +17,7 @@ export class UsersTableComponent implements OnInit {
     roleControl: new FormControl(''),
   });
   users: UserDTO[] = [];
+  user!: UserDTO;
   projects: Project[] = [];
   constructor(
     private usersService: UsersService,
@@ -46,6 +47,16 @@ export class UsersTableComponent implements OnInit {
       },
     });
   }
+  httpGetUserById(id: string) {
+    this.usersService.getUserById(id).subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
 
   httpDeleteUser(id: string) {
     for (let i = 0; i < this.users.length; i++) {
@@ -58,11 +69,12 @@ export class UsersTableComponent implements OnInit {
     });
   }
 
-  httpEditUser(id: string, user: UserDTO) {
-    user.name = this.addUserFormGroup.controls.nameControl.value!;
-    user.email = this.addUserFormGroup.controls.emailControl.value!;
-    user.role = this.addUserFormGroup.controls.roleControl.value!;
-    this.usersService.editUser(id, user).subscribe({
+  httpEditUser(id: string) {
+    this.httpGetUserById(id);
+    this.user.name = this.addUserFormGroup.controls.nameControl.value!;
+    this.user.email = this.addUserFormGroup.controls.emailControl.value!;
+    this.user.role = this.addUserFormGroup.controls.roleControl.value!;
+    this.usersService.editUser(id, this.user).subscribe({
       next: (response) => {
         console.log(response);
       },
