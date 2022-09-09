@@ -17,6 +17,12 @@ import { UsersButtonsComponent } from './components/users/users-buttons/users-bu
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
 import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
+import {DialogModule} from 'primeng/dialog';
+import { FormTemplateComponent } from './components/form-template/form-template.component';
+import {TabViewModule} from 'primeng/tabview';
+import {AccordionModule} from 'primeng/accordion';
+
+
 
 @NgModule({
   declarations: [
@@ -28,6 +34,7 @@ import { DepartmentButtonsComponent } from './components/department/department-b
     UsersTableComponent,
     DepartmentTableComponent,
     DepartmentButtonsComponent,
+    FormTemplateComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,13 +43,17 @@ import { DepartmentButtonsComponent } from './components/department/department-b
     ApiAuthorizationModule,
     CardModule,
     FormsModule,
+    TabViewModule,
+    AccordionModule,
     ReactiveFormsModule,
     ButtonModule,
+    DialogModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersTableComponent },
       { path: 'departments', component: DepartmentTableComponent },
+      {path: 'form-templates',component:FormTemplateComponent}
     ]),
   ],
   providers: [
