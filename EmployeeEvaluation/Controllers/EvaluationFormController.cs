@@ -39,13 +39,19 @@ namespace EmployeeEvaluation.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, EvaluationFormDTO evaluationForm)
+        public EvaluationForm Put(Guid id, EvaluationFormDTO evaluationForm)
         {
+            var evaluationFormToUpdate = this._evaluationFormService.GetEvaluationFormById(id);
+            evaluationFormToUpdate.Name = evaluationForm.Name;
+            evaluationFormToUpdate.Type = evaluationForm.Type;
+
+            return this._evaluationFormService.UpdateEvaluationForm(evaluationFormToUpdate);
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
+            this._evaluationFormService.DeleteeEvaluationFormById(id);
         }
     }
 }

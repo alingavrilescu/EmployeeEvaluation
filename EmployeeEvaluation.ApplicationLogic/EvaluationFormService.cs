@@ -75,6 +75,10 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return _evaluationFormRepository.UpdateCriteriaComments(criteriaComments);
         }
+        public void DeleteeEvaluationFormById(Guid id)
+        {
+            this._evaluationFormRepository.DeleteEvaluationFormById(id);
+        }
 
     }
 }

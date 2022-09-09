@@ -118,5 +118,12 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return criteriaCommentsToUpdate;
         }
 
+        public void DeleteEvaluationFormById(Guid id)
+        {
+            var evaluationFormToDelete = GetEvaluationFormById(id);
+            _employeeEvaluationDbContext.Set<EvaluationForm>().Remove(evaluationFormToDelete);
+            _employeeEvaluationDbContext.SaveChanges();
+        }
+
     }
 }
