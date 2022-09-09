@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using Swashbuckle.AspNetCore.Annotations;
+using EmployeeEvaluation.DataAccess.Model;
+using EmployeeEvaluation.ApplicationLogic;
 
 //test
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -20,13 +22,15 @@ namespace EmployeeEvaluation.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
+        private readonly UserService _userService;
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
-        public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserStore<ApplicationUser> userStore)
+        public UsersController(UserService userService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserStore<ApplicationUser> userStore)
         {
             this._userManager = userManager;
             this._signInManager = signInManager;
             this._userStore = userStore;
             this._emailStore = GetEmailStore();
+            this._userService = userService;
         }
 
         private ApplicationUser CreateUser()
@@ -52,15 +56,18 @@ namespace EmployeeEvaluation.Controllers
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
-        private List<UserDTO> createUsersDTO(List<ApplicationUser> applicationUsers)
+        private List<UserDTO> createUsersDTO(List<ApplicationUser> identityUsers, List<User> users)
         {
             List<UserDTO> usersDTO = new List<UserDTO>();
-            for (int i = 0; i < applicationUsers.Count; i++)
+            for (int i = 0; i < identityUsers.Count; i++)
             {
                 var newUser = new UserDTO();
-                newUser.Id = applicationUsers[i].Id;
-                newUser.Name = applicationUsers[i].UserName;
-                newUser.Email = applicationUsers[i].Email;
+                newUser.Id = identityUsers[i].Id;
+                newUser.Name = identityUsers[i].UserName;
+                newUser.Email = identityUsers[i].Email;
+                newUser.Role = users[i].Role;
+                newUser.DepartmentId = users[i].DepartmentId.HasValue ? users[i].DepartmentId.Value : new Guid("null");
+                newUser.ProjectId = users[i].ProjectId.HasValue ? users[i].ProjectId.Value : new Guid("null");
                 usersDTO.Add(newUser);
             }
             return usersDTO;
@@ -74,82 +81,59 @@ namespace EmployeeEvaluation.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetAllUsers()
         {
-            var users = await _userManager.Users.ToListAsync();
-            return Ok(createUsersDTO(users));
+            var identityUsers = await _userManager.Users.ToListAsync();
+            var users = _userService.GetUsers();
+            return Ok(createUsersDTO(identityUsers, (List<User>)users));
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserDTO newUser)
+        public async Task<IActionResult> Post([FromBody] UserPostDTO newUser)
         {
-            var user = CreateUser();
-            await _userStore.SetUserNameAsync(user, newUser.Name, CancellationToken.None);
-            await _emailStore.SetEmailAsync(user, newUser.Email, CancellationToken.None);
-            var result = await _userManager.CreateAsync(user, "P@ssw0rd!");
-            if (result != IdentityResult.Success) return BadRequest();
-            else return Ok();
+            var identityUser = CreateUser();
+            await _userStore.SetUserNameAsync(identityUser, newUser.Name, CancellationToken.None);
+            await _emailStore.SetEmailAsync(identityUser, newUser.Email, CancellationToken.None);
+            var result = await _userManager.CreateAsync(identityUser, "P@ssw0rd!");
+            if (result == IdentityResult.Success)
+            {
+                var userToAdd = new User();
+                userToAdd.Id = new Guid(identityUser.Id);
+                userToAdd.Role = newUser.Role;
+                this._userService.AddUser(userToAdd);
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            if (user == null) return BadRequest();
-            else
-            {
-                var result = await _userManager.DeleteAsync(user);
-                if (result.Succeeded) return Ok();
-                else return BadRequest();
-            }
+            var identityUser = await _userManager.FindByIdAsync(id.ToString());
+            var user = _userService.GetUserById(id);
+            if (identityUser == null || user == null) return BadRequest();
+            var result = await _userManager.DeleteAsync(identityUser);
+            if (!result.Succeeded) return BadRequest();
+            this._userService.DeleteUser(id);
+            return Ok();
         }
 
 
         [HttpPut]
-        public async Task<IActionResult> EditUser(string id, [FromBody]UserDTO user)
+        public async Task<IActionResult> EditUser(Guid id, [FromBody]UserDTO DTOuser)
         {
-            var identityUser = await _userManager.FindByIdAsync(id);
-            if (identityUser == null) return BadRequest();
-            else
-            {
-                identityUser.UserName = user.Name;
-                identityUser.Email = user.Email;
-                return Ok();
-            }
-
-            //var user = await _userManager.FindByIdAsync(updatedUser.Id);
-            //if (user == null)
-            //    return BadRequest();
-            //if (!string.IsNullOrEmpty(updatedUser.PasswordHash))
-            //{
-            //    user.PasswordHash = updatedUser.PasswordHash;
-            //}
-            //if (!string.IsNullOrEmpty(updatedUser.Email))
-            //{
-            //    user.Email =updatedUser.Email;
-            //}
-
-            //if (!string.IsNullOrEmpty(updatedUser.UserName))
-            //{
-            //    user.UserName = updatedUser.UserName;
-            //}
-    
-
-            //if (!string.IsNullOrEmpty(user.Email) && !string.IsNullOrEmpty(user.UserName)&& !string.IsNullOrEmpty(user.PasswordHash))
-            //{
-            //    IdentityResult result = await _userManager.UpdateAsync(user);
-            //    if (result.Succeeded)
-            //    {
-            //        return Ok(user);
-            //    }
-            //    else
-            //    {
-            //        return BadRequest();
-            //    }
-            //}
-            //return BadRequest();
+            var identityUser = await _userManager.FindByIdAsync(id.ToString());
+            var user = _userService.GetUserById(id);
+            if (identityUser == null || user == null) return BadRequest();
+            identityUser.UserName = DTOuser.Name;
+            identityUser.Email = DTOuser.Email;
+            user.Role = DTOuser.Role;
+            user.DepartmentId = DTOuser.DepartmentId;
+            user.ProjectId = DTOuser.ProjectId;
+            return Ok();
         }
-           
-        
     }
 }

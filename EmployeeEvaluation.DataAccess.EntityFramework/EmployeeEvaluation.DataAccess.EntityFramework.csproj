@@ -16,8 +16,4 @@
     <ProjectReference Include="..\EmployeeEvaluation.DataAccess.Abstractions\EmployeeEvaluation.DataAccess.Abstractions.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\EmployeeEvaluationDb\" />
-  </ItemGroup>
-
 </Project>

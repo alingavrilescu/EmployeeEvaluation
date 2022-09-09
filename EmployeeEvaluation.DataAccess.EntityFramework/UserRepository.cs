@@ -23,7 +23,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         }
         public User GetById(Guid id)
         {
-            var userToReturn = dbContext.Set<User>().Where(u => u.Id == id).Include(p => p.Project).FirstOrDefault();
+            var userToReturn = dbContext.Set<User>().Where(u => u.Id == id).FirstOrDefault();
             if(userToReturn == null)
             {
                 throw new KeyNotFoundException("User not found");
