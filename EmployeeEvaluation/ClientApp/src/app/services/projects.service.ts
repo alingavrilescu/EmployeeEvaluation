@@ -27,7 +27,7 @@ export class ProjectsService {
    }
  
  
-   public updateProject(project:Project, id: Guid): Observable<Project>
+   public updateProject(id: Guid,project:Project): Observable<Project>
    {
        let updatedProject  = {
            id: project.id,

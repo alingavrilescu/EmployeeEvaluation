@@ -40,7 +40,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   updateProject(project:Project, id: Guid)
   {
-    this.projectService.updateProject(project,id).subscribe(res => {alert(res.toString());
+    this.projectService.updateProject(id, project).subscribe(res => {alert(res.toString());
     });
     this.refreshProjectList();
   }
