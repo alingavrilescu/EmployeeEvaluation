@@ -23,6 +23,7 @@ import {TabViewModule} from 'primeng/tabview';
 import {AccordionModule} from 'primeng/accordion';
 
 
+import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {AccordionModule} from 'primeng/accordion';
     DepartmentTableComponent,
     DepartmentButtonsComponent,
     FormTemplateComponent,
+    ProjectDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

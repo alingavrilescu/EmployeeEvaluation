@@ -1,4 +1,5 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Guid } from 'guid-typescript';
 import { Observable, Subscription } from 'rxjs';
 import { Project } from '../../models/project.model';
 import { ProjectsService } from '../../services/projects.service';
@@ -10,50 +11,55 @@ import { ProjectsService } from '../../services/projects.service';
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
 
-  projects!: Observable<Project[]>;
   deleteSubscription!: Subscription;
 
-  constructor(private projectsService:ProjectsService) { 
+  constructor(private projectService:ProjectsService) { 
   }
 
   projectsList: Project[]=[];
   projectName = "";
   projectDescription = "";
-  display = "none";
+  
+  ngOnInit(): void {
+    this.refreshProjectList();
+  }
+
+  ngOnDestroy(): void {
+    this.deleteSubscription?.unsubscribe();
+  }
 
   addProject(){
     var temp={
       name:this.projectName,
       description:this.projectDescription
     };
-
-    this.projectsService.createProject(temp).subscribe(res => {alert(res.toString());
+    this.projectService.createProject(temp).subscribe(res => {alert(res.toString());
     });
-    this.display = "none";
-    window.location.reload();
-
+    this.refreshProjectList();
   }
 
-  ngOnInit(): void {
-    this.projects = this.projectsService.getProjects();
-  }
-
-  ngOnDestroy(): void {
-    this.deleteSubscription?.unsubscribe();
-  }
-  deleteProject(id: string)
+  updateProject(project:Project, id: Guid)
   {
-      this.deleteSubscription?.unsubscribe();
-      this.deleteSubscription = this.projectsService.deleteProject(id)
-                            .subscribe(()=>{
-                              this.projects = this.projectsService.getProjects();
-                            }, error=>{});
+    this.projectService.updateProject(project,id).subscribe(res => {alert(res.toString());
+    });
+    this.refreshProjectList();
+  }
+  
+  deleteProject(id?: Guid)
+  {
+    if(id!==undefined)
+    {
+      this.projectService.deleteProject(id).subscribe(data=>{
+        alert(data.toString());
+      })
+      this.refreshProjectList();
+    }
   }
 
-  openModal(){
-    this.display = "block";
-  }
-  onCloseModal(){
-    this.display = "none";
+  refreshProjectList()
+  {
+    this.projectService.getProjects().subscribe(data=>{
+      this.projectsList=data;
+    })
   }
 }

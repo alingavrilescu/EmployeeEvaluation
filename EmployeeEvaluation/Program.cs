@@ -50,7 +50,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.InjectStylesheet("/swagger-ui/SwaggerDark.css");
+    });
 }
 else
 {
