@@ -66,24 +66,25 @@ namespace EmployeeEvaluation.Controllers
             formTemplateService.DeleteFormTemplate(id);
         }
 
-        /*
-        [HttpGet]
-        //---------************
+       //-------------------------------------------------------------------------------
+
+
+        [HttpGet("{formTemplateId}/FormTemplateSection")]
         public IEnumerable<FormTemplateSection> GetTemplateSections(Guid formTemplateId)
         {
             return formTemplateService.GetAllSections(formTemplateId);
         }
 
         // GET api/<FormTemplateController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{formTemplateId}/FormTemplateSection/{id}")]
         public FormTemplateSection GetTemplateSectionById(Guid id)
         {
             return formTemplateService.GetSectionById(id);
         }
 
         // POST api/<FormTemplateController>
-        [HttpPost]
-        public FormTemplateSection PostTemplateSection([FromBody] FormTemplateSectionDTO formTemplateSection)
+        [HttpPost("{formTemplateId}/FormTemplateSection")]
+        public FormTemplateSection PostTemplateSection(Guid formTemplateId,[FromBody] FormTemplateSectionDTO formTemplateSection)
         {
             var formTemplateSectionToAdd = new FormTemplateSection
             {
@@ -94,7 +95,7 @@ namespace EmployeeEvaluation.Controllers
         }
 
         // PUT api/<FormTemplateController>/5
-        [HttpPut("{id}")]
+        [HttpPut("{formTemplateId}/FormTemplateSection/{id}")]
         public FormTemplateSection PutTemplateSection([FromBody] FormTemplateSectionDTO formTemplateSection)
         {
             var formTemplateSectionToEdit = new FormTemplateSection
@@ -107,29 +108,30 @@ namespace EmployeeEvaluation.Controllers
         }
 
         // DELETE api/<FormTemplateController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{formTemplateId}/FormTemplateSection/{id}")]
         public void DeleteSection(Guid id)
         {
             formTemplateService.DeleteSection(id);
         }
 
+        //----------------------------------------------------------------------------
 
-        [HttpGet]
+        [HttpGet("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria")]
         public IEnumerable<FormTemplateCriteria> GetAllCriteria(Guid sectionId)
         {
             return formTemplateService.GetAllCriteria(sectionId);
         }
 
         // GET api/<FormTemplateController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria/{id}")]
         public FormTemplateCriteria GetCriteriaById(Guid id)
         {
             return formTemplateService.GetCriteriaById(id);
         }
 
         // POST api/<FormTemplateController>
-        [HttpPost]
-        public FormTemplateCriteria PostFormTemplate([FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
+        [HttpPost("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria")]
+        public FormTemplateCriteria PostFormTemplate(Guid formTemplateSectionId,[FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
         {
             var formTemplateCriteriaToAdd = new FormTemplateCriteria
             {
@@ -140,8 +142,8 @@ namespace EmployeeEvaluation.Controllers
         }
 
         // PUT api/<FormTemplateController>/5
-        [HttpPut("{id}")]
-        public FormTemplateCriteria PutFormTemplate([FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
+        [HttpPut("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria/{id}")]
+        public FormTemplateCriteria PutFormTemplate(Guid formTemplateSectionId,[FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
         {
             var formTemplateCriteriaToEdit = new FormTemplateCriteria
             {
@@ -153,12 +155,12 @@ namespace EmployeeEvaluation.Controllers
         }
 
         // DELETE api/<FormTemplateController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria/{id}")]
         public void DeleteCriteria(Guid id)
         {
             formTemplateService.DeleteCriteria(id);
         }
-        */
+   
     }
         
 }
