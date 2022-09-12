@@ -11,8 +11,8 @@ namespace EmployeeEvaluation.Controllers
     [ApiController]
     public class DepartmentController : Controller
     {
-        private readonly DepartmentService departmentService;
-        DepartmentController(DepartmentService departmentService)
+        public readonly DepartmentService departmentService;
+        public DepartmentController(DepartmentService departmentService)
         {
             this.departmentService = departmentService;
         }

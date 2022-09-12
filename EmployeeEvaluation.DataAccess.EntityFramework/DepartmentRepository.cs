@@ -10,7 +10,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 {
     public class DepartmentRepository
     {
-        public readonly EmployeeEvaluationDbContext dbContext;
+        protected readonly EmployeeEvaluationDbContext dbContext;
 
         public DepartmentRepository(EmployeeEvaluationDbContext dbContext)
         {
