@@ -62,15 +62,26 @@ namespace EmployeeEvaluation.Controllers
             for (int i = 0; i < identityUsers.Count; i++)
             {
                 var newUser = new UserDTO();
-                newUser.Id = identityUsers[i].Id;
+                newUser.Id = new Guid(identityUsers[i].Id);
                 newUser.Name = identityUsers[i].UserName;
                 newUser.Email = identityUsers[i].Email;
                 newUser.Role = users[i].Role;
-                newUser.DepartmentId = users[i].DepartmentId.HasValue ? users[i].DepartmentId.Value : new Guid("null");
-                newUser.ProjectId = users[i].ProjectId.HasValue ? users[i].ProjectId.Value : new Guid("null");
+                newUser.DepartmentId = users[i].DepartmentId;
+                newUser.ProjectId = users[i].ProjectId;
                 usersDTO.Add(newUser);
             }
             return usersDTO;
+        }
+        private UserDTO createUserDTO(ApplicationUser identityUser, User user)
+        {
+            var newUser = new UserDTO();
+            newUser.Id = new Guid(identityUser.Id);
+            newUser.Name = identityUser.UserName;
+            newUser.Email = identityUser.Email;
+            newUser.Role = user.Role;
+            newUser.DepartmentId = user.DepartmentId;
+            newUser.ProjectId = user.ProjectId;
+            return newUser;
         }
 
         [HttpGet]
@@ -84,6 +95,14 @@ namespace EmployeeEvaluation.Controllers
             var identityUsers = await _userManager.Users.ToListAsync();
             var users = _userService.GetUsers();
             return Ok(createUsersDTO(identityUsers, (List<User>)users));
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            var identityUser = await _userManager.FindByIdAsync(id.ToString());
+            var user = _userService.GetUserById(id);
+            return Ok(this.createUserDTO(identityUser, user));
         }
 
 
@@ -122,7 +141,7 @@ namespace EmployeeEvaluation.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> EditUser(Guid id, [FromBody]UserDTO DTOuser)
         {
             var identityUser = await _userManager.FindByIdAsync(id.ToString());
@@ -130,9 +149,11 @@ namespace EmployeeEvaluation.Controllers
             if (identityUser == null || user == null) return BadRequest();
             identityUser.UserName = DTOuser.Name;
             identityUser.Email = DTOuser.Email;
+            await _userManager.UpdateAsync(identityUser);
             user.Role = DTOuser.Role;
             user.DepartmentId = DTOuser.DepartmentId;
             user.ProjectId = DTOuser.ProjectId;
+            this._userService.EditUser(user);
             return Ok();
         }
     }

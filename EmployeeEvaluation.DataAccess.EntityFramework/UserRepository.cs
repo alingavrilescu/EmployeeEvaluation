@@ -32,6 +32,13 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return userToReturn;
         }
 
+        public User Update(User toUpdate)
+        {
+            dbContext.Set<User>().Update(toUpdate);
+            dbContext.SaveChanges();
+            return toUpdate;
+        }
+
         public void DeleteById(Guid id)
         {
             var toDelete = GetById(id);
