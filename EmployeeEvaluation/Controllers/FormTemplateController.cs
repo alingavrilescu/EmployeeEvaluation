@@ -47,7 +47,7 @@ namespace EmployeeEvaluation.Controllers
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{id}")]
-        public FormTemplate PutFormTemplate( [FromBody] FormTemplateDTO formTemplate)
+        public FormTemplate PutFormTemplate(Guid id, [FromBody] FormTemplateDTO formTemplate)
         {
             var formTemplateToEdit = new FormTemplate
             {
@@ -96,7 +96,7 @@ namespace EmployeeEvaluation.Controllers
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{formTemplateId}/FormTemplateSection/{id}")]
-        public FormTemplateSection PutTemplateSection([FromBody] FormTemplateSectionDTO formTemplateSection)
+        public FormTemplateSection PutTemplateSection(Guid id,[FromBody] FormTemplateSectionDTO formTemplateSection)
         {
             var formTemplateSectionToEdit = new FormTemplateSection
             {
@@ -143,7 +143,7 @@ namespace EmployeeEvaluation.Controllers
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria/{id}")]
-        public FormTemplateCriteria PutFormTemplate([FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
+        public FormTemplateCriteria PutFormTemplate(Guid id,[FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
         {
             var formTemplateCriteriaToEdit = new FormTemplateCriteria
             {
