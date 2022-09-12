@@ -13,5 +13,6 @@ namespace EmployeeEvaluation.DataAccess.Model
         public Guid HeadOfDepartmentId { get; set; }
         public ICollection<User>? Users { get; set; }
         public ICollection<FormTemplate>? FormTemplates { get; set; }
+        public ICollection<Project>? Projects { get; set; }
     }
 }
