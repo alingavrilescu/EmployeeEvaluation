@@ -6,8 +6,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 {
     public class UserRepository
     {
-        public readonly ProjectDbcontext dbContext;
-        public UserRepository(ProjectDbcontext dbContext)
+        public readonly EmployeeEvaluationDbContext dbContext;
+        public UserRepository(EmployeeEvaluationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
