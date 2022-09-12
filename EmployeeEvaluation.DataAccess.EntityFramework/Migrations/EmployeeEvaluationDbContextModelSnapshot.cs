@@ -36,10 +36,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CriteriaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("FormCriteriaId")
+                    b.Property<Guid>("FormCriteriaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -262,7 +259,9 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 {
                     b.HasOne("EmployeeEvaluation.DataAccess.Model.FormCriteria", null)
                         .WithMany("CriteriaComments")
-                        .HasForeignKey("FormCriteriaId");
+                        .HasForeignKey("FormCriteriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.EvaluationForm", b =>

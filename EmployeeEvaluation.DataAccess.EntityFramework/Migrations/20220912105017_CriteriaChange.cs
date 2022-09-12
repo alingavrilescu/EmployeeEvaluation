@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
-    public partial class UpdateDatabase : Migration
+    public partial class CriteriaChange : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -187,8 +187,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Attachment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CriteriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FormCriteriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    FormCriteriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,7 +196,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         name: "FK_CriteriaComments_FormCriteria_FormCriteriaId",
                         column: x => x.FormCriteriaId,
                         principalTable: "FormCriteria",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

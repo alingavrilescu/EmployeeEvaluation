@@ -81,7 +81,7 @@ namespace EmployeeEvaluation.Controllers
             {
                 Comment = criteriaComments.Comment,
                 Attachment = criteriaComments.Attachment,
-                CriteriaId = criteriaComments.CriteriaId
+                FormCriteriaId = criteriaComments.CriteriaId
             };
             return this._evaluationFormService.AddCriteriaComments(criteriaCommentsToAdd);
         }
