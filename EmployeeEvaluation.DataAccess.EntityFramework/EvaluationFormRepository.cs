@@ -19,7 +19,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 
         public IEnumerable<EvaluationForm> GetAll()
         {
-            var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>().Include(f => f.FormSections)
+            var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>()
+                                                             .Include(f => f.FormSections)
                                                              .ThenInclude(s => s.FormCriteria)
                                                              .ThenInclude(c => c.CriteriaComments)
                                                              .ToList();
@@ -122,6 +123,24 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         {
             var evaluationFormToDelete = GetEvaluationFormById(id);
             _employeeEvaluationDbContext.Set<EvaluationForm>().Remove(evaluationFormToDelete);
+            _employeeEvaluationDbContext.SaveChanges();
+        }
+        public void DeleteFormSectionById(Guid id)
+        {
+            var formSectionToDelete= GetFormSectionById(id);
+            _employeeEvaluationDbContext.Set<FormSection>().Remove(formSectionToDelete);
+            _employeeEvaluationDbContext.SaveChanges();
+        }
+        public void DeleteFormCriteriaById(Guid id)
+        {
+            var formCriteriaToDelete = GetFormCriteriaById(id);
+            _employeeEvaluationDbContext.Set<FormCriteria>().Remove(formCriteriaToDelete);
+            _employeeEvaluationDbContext.SaveChanges();
+        }
+        public void DeleteCriteriaCommentsById(Guid id)
+        {
+            var criteriaCommentsToDelete = GetCriteriaCommentsById(id);
+            _employeeEvaluationDbContext.Set<CriteriaComments>().Remove(criteriaCommentsToDelete);
             _employeeEvaluationDbContext.SaveChanges();
         }
 
