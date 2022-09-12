@@ -11,7 +11,7 @@ namespace EmployeeEvaluation.ApplicationLogic
     public class DepartmentService
     {
         private readonly DepartmentRepository departmentRepository;
-        DepartmentService(DepartmentRepository departmentRepository)
+        public DepartmentService(DepartmentRepository departmentRepository)
         {
             this.departmentRepository = departmentRepository;
         }
