@@ -28,6 +28,10 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return _userRepository.Add(toAdd);
         }
+        public User EditUser(User toEdit)
+        {
+            return _userRepository.Update(toEdit);
+        }
 
         public void DeleteUser(Guid id)
         {
