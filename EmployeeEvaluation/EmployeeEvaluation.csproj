@@ -41,6 +41,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="identityshop.pfx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EmployeeEvaluation.ApplicationLogic\EmployeeEvaluation.ApplicationLogic.csproj" />
     <ProjectReference Include="..\EmployeeEvaluation.DataAccess.EntityFramework\EmployeeEvaluation.DataAccess.EntityFramework.csproj" />
   </ItemGroup>
