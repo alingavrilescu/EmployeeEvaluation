@@ -1,7 +1,11 @@
+<!-- =====================================ADD PROJECT BUTTON=============================== -->
+
 <div class="add-button-container">
   <button data-bs-toggle="modal" data-bs-target="#addProjectModal" type="button" label="help" class="p=button-raised p-button-help" [style]="{width: '150px', height: '40px'}" 
       pButton pRipple label="Add Project" icon="pi pi-plus"></button>
 </div>
+
+<!-- =============================MODAL FOR ADDING A PROJECT================================= -->
 
 <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -17,17 +21,19 @@
             <label for="projectName" class="form-label">
 		          Name of the project
 	          </label>
-            <input type="text" class="form-control" id="projectName" aria-describedby="emailHelp"/>
+            <input [(ngModel)]="projectName" name="projectName" placeholder="Project's Name" type="text" 
+              class="form-control" id="projectName" aria-describedby="emailHelp"/>
           </div>
           <div class="mb-3">
             <label for="projectDescription" class="form-label">
 		          Description of project
 	          </label>
-            <input type="text" class="form-control" id="projectDescription" aria-describedby="emailHelp" />
+            <input [(ngModel)]="projectDescription" name="projectDescription" 
+              placeholder="Project's Description" class="form-control" id="projectDescription" aria-describedby="emailHelp" />
           </div>
           <div class="buttons-container">
             <button pButton pRipple type="button" label="Close" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-danger"></button>
-            <button pButton pRipple type="button" label="Submit" class="modal-button p-button-raised p-button-success"></button>
+            <button pButton pRipple type="button" label="Submit" (click)="addProject()" class="modal-button p-button-raised p-button-success"></button>
           </div>
         </form>
       </div>
@@ -35,15 +41,20 @@
   </div>
 </div>
 
-<div *ngFor="let project of projectsList">
- <p-card header={{project.name}} subheader="Project Leader: Grig Va dati cu seama" [style]="{width: '480px'}" styleClass="p-card-shadow">
+<!-- ================================CARD================================= -->
+
+<div class="card-container" *ngFor="let project of projectsList">
+ <p-card class="card-content" header={{project.name}} subheader="Project Leader: Grig Va dati cu seama" [style]="{width: '360px'}" styleClass="p-card-shadow">
     <ng-template pTemplate="header">
     </ng-template>
-    <p>{{project.description}}</p>
+    <ng-template pTemplate="content">
+      <textarea rows="5" cols="40" readonly>{{project.description}}</textarea>
+      <!-- <p>{{project.description}}</p> -->
+    </ng-template>
     <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" class="p-button-raised"></button>
-        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" class="p-button-raised p-button-secondary"></button>
-        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" class="p-button-raised p-button-danger" (onclick)="deleteProject(project.id)"></button>
+        <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" class="p-button-raised btn-pos"></button>
+        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" class="p-button-raised p-button-secondary btn-pos"></button>
+        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" class="p-button-raised p-button-danger btn-pos" (onclick)="deleteProject(project.id)"></button>
     </ng-template>
   </p-card> 
 </div>
