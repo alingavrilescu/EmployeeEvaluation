@@ -43,15 +43,18 @@
 
 <!-- ================================CARD================================= -->
 
-<div *ngFor="let project of projectsList">
- <p-card header={{project.name}} subheader="Project Leader: Grig Va dati cu seama" [style]="{width: '480px'}" styleClass="p-card-shadow">
+<div class="card-container" *ngFor="let project of projectsList">
+ <p-card class="card-content" header={{project.name}} subheader="Project Leader: Grig Va dati cu seama" [style]="{width: '360px'}" styleClass="p-card-shadow">
     <ng-template pTemplate="header">
     </ng-template>
-    <p>{{project.description}}</p>
+    <ng-template pTemplate="content">
+      <textarea rows="5" cols="40" readonly>{{project.description}}</textarea>
+      <!-- <p>{{project.description}}</p> -->
+    </ng-template>
     <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" class="p-button-raised"></button>
-        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" class="p-button-raised p-button-secondary"></button>
-        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" class="p-button-raised p-button-danger" (onclick)="deleteProject(project.id)"></button>
+        <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" class="p-button-raised btn-pos"></button>
+        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" class="p-button-raised p-button-secondary btn-pos"></button>
+        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" class="p-button-raised p-button-danger btn-pos" (onclick)="deleteProject(project.id)"></button>
     </ng-template>
   </p-card> 
 </div>

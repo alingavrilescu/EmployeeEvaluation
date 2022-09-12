@@ -11,15 +11,11 @@
 .p-button-raised{
   margin-left: 10px;
   padding: 5px;
-  width: 120px;
+  padding-right: 10px;
+  width: 90px;
   height: 50px;
 }
 
-.footer{
-  display: flex;
-  flex-direction: row;
-  border: 3px solid red;
-}
 .buttons-container{
   margin-top: 50px;
   display: flex;
@@ -33,4 +29,27 @@
 
 .modal-title{
   align-items: center;
+}
+
+.btn-pos{
+  bottom: 0;
+}
+.card-container{
+  display: inline-block;
+  margin-right: 2%;
+  margin-bottom: 2%;
+}
+
+textarea {
+  outline: none;
+  text-decoration: none;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  outline: none;
+  text-align:left;
+}
+
+textarea:hover{
+  overflow:visible;
 }

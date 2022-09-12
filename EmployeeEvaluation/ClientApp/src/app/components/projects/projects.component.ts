@@ -47,7 +47,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   
   deleteProject(id?: Guid)
   {
-    if(id!==undefined)
+    if(id!==undefined) 
     {
       this.projectService.deleteProject(id).subscribe(data=>{
         alert(data.toString());
