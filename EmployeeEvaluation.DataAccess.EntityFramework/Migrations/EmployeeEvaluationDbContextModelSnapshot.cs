@@ -155,8 +155,9 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -238,14 +239,15 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("DepartmentId")
+                    b.Property<Guid?>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ProjectId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -321,15 +323,11 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 {
                     b.HasOne("EmployeeEvaluation.DataAccess.Model.Department", null)
                         .WithMany("Users")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
-                    b.HasOne("EmployeeEvaluation.DataAccess.Model.Project", "Project")
+                    b.HasOne("EmployeeEvaluation.DataAccess.Model.Project", null)
                         .WithMany("Users")
                         .HasForeignKey("ProjectId");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.Department", b =>
