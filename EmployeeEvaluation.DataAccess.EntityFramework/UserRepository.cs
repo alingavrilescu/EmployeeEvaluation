@@ -1,10 +1,11 @@
-﻿using EmployeeEvaluation.DataAccess.Model;
+﻿using EmployeeEvaluation.DataAccess.Abstractions;
+using EmployeeEvaluation.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace EmployeeEvaluation.DataAccess.EntityFramework
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         public readonly EmployeeEvaluationDbContext dbContext;
         public UserRepository(EmployeeEvaluationDbContext dbContext)
