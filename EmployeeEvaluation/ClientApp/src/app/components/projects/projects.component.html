@@ -1,7 +1,11 @@
+<!-- =====================================ADD PROJECT BUTTON=============================== -->
+
 <div class="add-button-container">
   <button data-bs-toggle="modal" data-bs-target="#addProjectModal" type="button" label="help" class="p=button-raised p-button-help" [style]="{width: '150px', height: '40px'}" 
       pButton pRipple label="Add Project" icon="pi pi-plus"></button>
 </div>
+
+<!-- =============================MODAL FOR ADDING A PROJECT================================= -->
 
 <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -17,15 +21,15 @@
             <label for="projectName" class="form-label">
 		          Name of the project
 	          </label>
-            <input [(ngModel)]="projectName" placeholder="Project's Name" type="text" 
+            <input [(ngModel)]="projectName" name="projectName" placeholder="Project's Name" type="text" 
               class="form-control" id="projectName" aria-describedby="emailHelp"/>
           </div>
           <div class="mb-3">
             <label for="projectDescription" class="form-label">
 		          Description of project
 	          </label>
-            <input type="text" [(ngModel)]="projectDescription" placeholder="Project's Description" 
-              class="form-control" id="projectDescription" aria-describedby="emailHelp" />
+            <input [(ngModel)]="projectDescription" name="projectDescription" 
+              placeholder="Project's Description" class="form-control" id="projectDescription" aria-describedby="emailHelp" />
           </div>
           <div class="buttons-container">
             <button pButton pRipple type="button" label="Close" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-danger"></button>
@@ -36,6 +40,8 @@
     </div>
   </div>
 </div>
+
+<!-- ================================CARD================================= -->
 
 <div *ngFor="let project of projectsList">
  <p-card header={{project.name}} subheader="Project Leader: Grig Va dati cu seama" [style]="{width: '480px'}" styleClass="p-card-shadow">
