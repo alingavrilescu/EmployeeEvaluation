@@ -117,9 +117,9 @@ namespace EmployeeEvaluation.Controllers
         //----------------------------------------------------------------------------
 
         [HttpGet("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria")]
-        public IEnumerable<FormTemplateCriteria> GetAllCriteria(Guid sectionId)
+        public IEnumerable<FormTemplateCriteria> GetAllCriteria(Guid formSectionId)
         {
-            return formTemplateService.GetAllCriteria(sectionId);
+            return formTemplateService.GetAllCriteria(formSectionId);
         }
 
         // GET api/<FormTemplateController>/5
