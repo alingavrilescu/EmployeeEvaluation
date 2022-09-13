@@ -21,6 +21,7 @@ import {DialogModule} from 'primeng/dialog';
 import { FormTemplateComponent } from './components/form-template/form-template.component';
 import {TabViewModule} from 'primeng/tabview';
 import {AccordionModule} from 'primeng/accordion';
+import {DropdownModule} from 'primeng/dropdown';
 
 
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
@@ -47,6 +48,7 @@ import { ProjectDetailsComponent } from './components/projects/projectDetails/pr
     FormsModule,
     TabViewModule,
     AccordionModule,
+    DropdownModule,
     ReactiveFormsModule,
     ButtonModule,
     DialogModule,

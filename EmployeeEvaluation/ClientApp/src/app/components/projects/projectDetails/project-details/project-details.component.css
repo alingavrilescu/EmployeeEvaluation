@@ -1,0 +1,12 @@
+.add-button-container{
+    display: flex;
+    justify-content: flex-end;
+  }
+
+.p-button-raised{
+margin-left: 10px;
+padding: 10px;
+padding-right: 10px;
+width: 150px;
+height: 40px;
+}

@@ -4,5 +4,5 @@ export class Project {
     id?:Guid;
     name:string = "";
     description: string = "";
-    
+    departmentId?: Guid;
 }
