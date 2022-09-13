@@ -33,9 +33,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       name:this.projectName,
       description:this.projectDescription
     };
-    this.projectService.createProject(temp).subscribe(res => {alert(res.toString());
-    });
-    this.refreshProjectList();
+    this.projectService.createProject(temp).subscribe(()=>{this.refreshProjectList();});
   }
 
   updateProject(project:Project, id: Guid)
@@ -49,10 +47,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   {
     if(id!==undefined) 
     {
-      this.projectService.deleteProject(id).subscribe(data=>{
-        alert(data.toString());
-      })
-      this.refreshProjectList();
+      this.projectService.deleteProject(id).subscribe(()=>{this.refreshProjectList();});
     }
   }
 

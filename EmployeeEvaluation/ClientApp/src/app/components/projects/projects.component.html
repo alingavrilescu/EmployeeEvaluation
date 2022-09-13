@@ -22,7 +22,7 @@
 		          Name of the project
 	          </label>
             <input [(ngModel)]="projectName" name="projectName" placeholder="Project's Name" type="text" 
-              class="form-control" id="projectName" aria-describedby="emailHelp"/>
+              class="form-control" id="projectName" aria-describedby="emailHelp" />
           </div>
           <div class="mb-3">
             <label for="projectDescription" class="form-label">
@@ -33,7 +33,7 @@
           </div>
           <div class="buttons-container">
             <button pButton pRipple type="button" label="Close" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-danger"></button>
-            <button pButton pRipple type="button" label="Submit" (click)="addProject()" class="modal-button p-button-raised p-button-success"></button>
+            <button pButton pRipple type="button" label="Submit" (click)="addProject()" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-success"></button>
           </div>
         </form>
       </div>
@@ -53,8 +53,8 @@
     </ng-template>
     <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" class="p-button-raised btn-pos"></button>
-        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" class="p-button-raised p-button-secondary btn-pos"></button>
-        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" class="p-button-raised p-button-danger btn-pos" (onclick)="deleteProject(project.id)"></button>
+        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" class="p-button-raised p-button-secondary btn-pos" routerLink="projectDetails/{{project.id}}"></button>
+        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" class="p-button-raised p-button-danger btn-pos" (click)="deleteProject(project.id)"></button>
     </ng-template>
   </p-card> 
 </div>

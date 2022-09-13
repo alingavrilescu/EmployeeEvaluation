@@ -52,10 +52,11 @@ import { ProjectDetailsComponent } from './components/projects/projectDetails/pr
     DialogModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
+      { path: 'projects/projectDetails/:id',component: ProjectDetailsComponent},
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersTableComponent },
       { path: 'departments', component: DepartmentTableComponent },
-      {path: 'form-templates',component:FormTemplateComponent}
+      { path: 'form-templates',component:FormTemplateComponent}
     ]),
   ],
   providers: [
