@@ -61,7 +61,6 @@ export class UsersButtonsComponent implements OnInit {
     var newUser = new UserDTO();
     newUser.name = this.addUserFormGroup.controls.nameControl.value!;
     newUser.email = this.addUserFormGroup.controls.emailControl.value!;
-    newUser.id = '';
     newUser.role = this.addUserFormGroup.controls.roleControl.value!;
     // newUser.project = this.addUserFormGroup.controls.projectControl.value!;
     this.usersService.addUser(newUser).subscribe({

@@ -1,0 +1,22 @@
+#userDetails {
+  display: flex;
+  flex-direction: row;
+  height: 50vh;
+  background: rgb(217, 217, 217);
+  margin-top: 50px;
+}
+#userInfo {
+  width: 50%;
+  border: 1px solid rgb(142, 140, 140);
+  padding-top: 25px;
+  padding-left: 25px;
+}
+#projectInfo {
+  width: 50%;
+  border: 1px solid rgb(142, 140, 140);
+
+  padding: 25px;
+}
+p {
+  text-align: justify;
+}
