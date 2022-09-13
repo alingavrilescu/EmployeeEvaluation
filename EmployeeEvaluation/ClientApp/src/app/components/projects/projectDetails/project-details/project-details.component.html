@@ -1,11 +1,11 @@
 <!-- =====================================ADD PROJECT BUTTON=============================== -->
-<div class="add-button-container">
+<!-- <div class="add-button-container">
     <button data-bs-toggle="modal" data-bs-target="#addDepartmentModal" type="button" label="help" class="p-button-raised p-button-help" 
     [style]="{width: '150px', height: '60px'}" pButton pRipple label="Assign Department" icon="pi pi-plus"></button>
-</div>
+</div> -->
 
 <!-- =============================MODAL FOR ASSIGNING A DEPARTMENT================================= -->
-<div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-hidden="true">
+<!-- <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -16,8 +16,8 @@
         <div class="modal-body">
           <form id="createNewProjectForm">
             <div class="mb-3">
-              <!-- Dropdown with Departments -->
-              <p-dropdown [options]="departments" [(ngModel)]="department" optionLabel="name"></p-dropdown>
+              Dropdown with Departments
+              <p-dropdown [options]="departments" [(ngModel)]="department" optionLabel="name" [ngModelOptions]="{standalone: true}"></p-dropdown>
             </div>
             <div class="buttons-container">
               <button pButton pRipple type="button" label="Close" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-danger"></button>
@@ -27,12 +27,12 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 
-<h1>{{project.name}}</h1>
-<h4 *ngIf="departmentToDisplay">{{departmentToDisplay}}</h4>
+<h1 *ngIf="project">{{project.name}}</h1>
+<h4 *ngIf="departmentToDisplay">{{departmentToDisplay.name}}</h4>
 <hr style="width: 400px;"/>
-<p>{{project.description}}</p>
+<p *ngIf="project">{{project.description}}</p>
 <hr/>
-<h6>List of users:</h6>
+<h6>List of members:</h6>
