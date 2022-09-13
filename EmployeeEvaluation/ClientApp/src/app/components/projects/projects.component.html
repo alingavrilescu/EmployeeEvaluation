@@ -22,7 +22,7 @@
 		          Name of the project
 	          </label>
             <input [(ngModel)]="projectName" name="projectName" onfocus="this.value=''" value="" type="text" 
-              placeholder="Project's Name" class="form-control" id="projectName" aria-describedby="emailHelp" />
+              placeholder="Project's Name" class="form-control" id="projectName" aria-describedby="emailHelp" >
           </div>
           <div class="mb-3">
             <label for="projectDescription" class="form-label">
@@ -32,8 +32,11 @@
                 placeholder="Project's Description" onfocus="this.value=''" value="" id="projectDescription" aria-describedby="emailHelp" rows="5" cols="61" ></textarea>
           </div>
           <div class="buttons-container">
-            <button pButton pRipple type="button" label="Close" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-danger"></button>
-            <button pButton pRipple type="button" label="Submit" (click)="addProject()" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-success"></button>
+            <button pButton pRipple type="submit" label="Close" data-bs-dismiss="modal" 
+              class="modal-button p-button-raised p-button-danger"></button>
+
+            <button pButton pRipple type="button" label="Submit" (click)="addProject()" data-bs-dismiss="modal"
+             class="modal-button p-button-raised p-button-success"></button>
           </div>
         </form>
       </div>
