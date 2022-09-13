@@ -29,13 +29,7 @@ export class ProjectsService {
  
    public updateProject(id: Guid,project:Project): Observable<Project>
    {
-       let updatedProject  = {
-           id: project.id,
-           name: project.name,   
-           description: project.description,
-           departmentId:project.departmentId 
-       };
-       return this.httpClient.put<Project>(`${environment.apiUrl}/${this.url}/${id}`, updatedProject);
+       return this.httpClient.put<Project>(`${environment.apiUrl}/${this.url}/${id}`, project);
    }
  
    public deleteProject(id: Guid): Observable<Project>
