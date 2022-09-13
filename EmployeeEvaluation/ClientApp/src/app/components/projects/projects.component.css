@@ -1,6 +1,14 @@
+/* ====================================BUTTONS STYLE========================== */
+
 .add-button-container{
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 2%;
+}
+
+.modal-button{
+  width: 120px;
+  height: 50px;
 }
 
 .p-button-help,
@@ -22,23 +30,22 @@
   flex-direction: row;
   justify-content:flex-end;
 }
-.modal-button{
-  width: 120px;
-  height: 50px;
-}
+
+/* ====================================MODAL STYLE========================== */
 
 .modal-title{
   align-items: center;
 }
 
-.btn-pos{
-  bottom: 0;
-}
+/* ====================================CARDS STYLE========================== */
+
 .card-container{
   display: inline-block;
   margin-right: 2%;
   margin-bottom: 2%;
 }
+
+/* ====================================TEXTAREA STYLE========================== */
 
 textarea {
   outline: none;
@@ -52,4 +59,8 @@ textarea {
 
 textarea:hover{
   overflow:visible;
+}
+.input-textarea{
+  border: 0.1px solid #a6a6a6;
+  border-radius: 5px;
 }
