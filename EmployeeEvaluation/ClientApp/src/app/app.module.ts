@@ -57,10 +57,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     DialogModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
-      {
-        path: 'projects/projectDetails/:id',
-        component: ProjectDetailsComponent,
-      },
+      { path: 'projects/projectDetails/:id',component: ProjectDetailsComponent },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersTableComponent },
       { path: 'departments', component: DepartmentTableComponent },

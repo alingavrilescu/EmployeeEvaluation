@@ -52,7 +52,8 @@ namespace EmployeeEvaluation.Controllers
             {
                 Id = id,
                 Name = project.Name,
-                Description = project.Description
+                Description = project.Description,
+                DepartmentId = project.DepartmentId
             };
             return this._projectService.UpdateProject(projectToEdit);
         }
