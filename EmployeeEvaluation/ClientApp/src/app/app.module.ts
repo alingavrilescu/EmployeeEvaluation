@@ -24,6 +24,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { DropdownModule } from 'primeng/dropdown';
 
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @NgModule({
@@ -51,6 +52,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     AccordionModule,
     DropdownModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     ButtonModule,
     DialogModule,
     RouterModule.forRoot([

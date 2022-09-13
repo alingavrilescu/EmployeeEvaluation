@@ -1,7 +1,7 @@
 <!-- =====================================ADD PROJECT BUTTON=============================== -->
 <div class="add-button-container">
     <button data-bs-toggle="modal" data-bs-target="#addDepartmentModal" type="button" label="help" class="p-button-raised p-button-help" 
-    [style]="{width: '150px', height: '60px'}" pButton pRipple label="Assign Departament" icon="pi pi-plus"></button>
+    [style]="{width: '150px', height: '60px'}" pButton pRipple label="Assign Department" icon="pi pi-plus"></button>
 </div>
 
 <!-- =============================MODAL FOR ASSIGNING A DEPARTMENT================================= -->
@@ -21,7 +21,7 @@
             </div>
             <div class="buttons-container">
               <button pButton pRipple type="button" label="Close" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-danger"></button>
-              <button pButton pRipple type="button" label="Submit" data-bs-dismiss="modal" (click)="updateProject()" class="modal-button p-button-raised p-button-success"></button>
+              <button pButton pRipple type="button" label="Submit" data-bs-dismiss="modal" (click)="updateProjectDepartment()" class="modal-button p-button-raised p-button-success"></button>
             </div>
           </form>
         </div>
@@ -31,7 +31,7 @@
 
 
 <h1>{{project.name}}</h1>
-<h4>Department</h4>
+<h4 *ngIf="departmentToDisplay">{{departmentToDisplay}}</h4>
 <hr style="width: 400px;"/>
 <p>{{project.description}}</p>
 <hr/>

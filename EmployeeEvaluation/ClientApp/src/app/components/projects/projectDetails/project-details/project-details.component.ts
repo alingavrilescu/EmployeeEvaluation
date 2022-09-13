@@ -21,6 +21,7 @@ export class ProjectDetailsComponent implements OnInit {
   project!:Project;
   department!:Department;
   departments:Department[]=[];
+  departmentToDisplay!:Department;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -36,13 +37,21 @@ export class ProjectDetailsComponent implements OnInit {
     })
   }
 
-  updateProject(){
+  updateProjectDepartment(){
     this.project.departmentId=this.department.id;
     this.projectService.updateProject(this.projectId, this.project).subscribe({
       next: (response) =>{
         console.log(response);
       }
     })
+  }
+
+  getAssignedDepartment(){
+    if(this.project.departmentId){
+      this.departmentService.getDepartmentById(this.project.departmentId).subscribe((res)=>{
+        this.departmentToDisplay=res;
+      })
+    }
   }
 
   getDepartments(){
