@@ -44,6 +44,45 @@
   </div>
 </div>
 
+<!-- =============================MODAL FOR ADDING A PROJECT================================= -->
+
+<div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="editProjectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProjectModal">
+          Edit Project
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form id="createNewProjectForm" [formGroup]="editProjectFormGroup">
+          <div class="mb-3">
+            <label for="projectName" class="form-label">
+		          Change Name
+	          </label>
+            <input type="text" class="form-control" id="projectName" aria-describedby="emailHelp" 
+              formControlName="nameControl" placeholder="{{projectName}}" />
+          </div>
+          <div class="mb-3">
+            <label for="projectDescription" class="form-label">
+		          Change Description
+	          </label>
+              <textarea type="text" class="input-textarea" id="projectDescription" aria-describedby="emailHelp" 
+                formControlName="descriptionControl" rows="5" cols="61" ></textarea>
+          </div>
+          <div class="buttons-container">
+            <button pButton pRipple type="submit" label="Close" data-bs-dismiss="modal" 
+              class="modal-button p-button-raised p-button-danger"></button>
+
+            <button pButton pRipple type="button" label="Submit" (click)="addProject()" data-bs-dismiss="modal"
+             class="modal-button p-button-raised p-button-success"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ================================CARD================================= -->
 
 <div class="card-container" *ngFor="let project of projectsList">
@@ -55,9 +94,14 @@
       <!-- <p>{{project.description}}</p> -->
     </ng-template>
     <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" class="p-button-raised btn-pos"></button>
-        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" class="p-button-raised p-button-secondary btn-pos" routerLink="projectDetails/{{project.id}}"></button>
-        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" class="p-button-raised p-button-danger btn-pos" (click)="deleteProject(project.id)"></button>
+        <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" 
+          class="p-button-raised btn-pos" id="editProject" data-bs-toggle="modal" data-bs-target="#editProjectModal"></button>
+
+        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" 
+          class="p-button-raised p-button-secondary btn-pos" routerLink="projectDetails/{{project.id}}"></button>
+
+        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" 
+          class="p-button-raised p-button-danger btn-pos" (click)="deleteProject(project.id)"></button>
     </ng-template>
   </p-card> 
 </div>
