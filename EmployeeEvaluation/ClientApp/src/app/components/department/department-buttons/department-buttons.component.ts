@@ -23,7 +23,8 @@ export class DepartmentButtonsComponent implements OnInit {
       this.addDepartmentFormGroup.controls.nameControl.value!;
     newDepartment.headOfDepartment =
       this.addDepartmentFormGroup.controls.headOfDepartmentControl.value!;
-    newDepartment.id = '';
+      // AICI TREBUIE SCHIMBAT CU GUID
+    // newDepartment.id = '';
     this.departmentsService.addDepartment(newDepartment).subscribe({
       next: (department) => {
         alert('Department successfuly created!');

@@ -29,17 +29,17 @@ export class DepartmentTableComponent implements OnInit {
       },
     });
   }
-
-  httpDeleteDepartment(id: string) {
-    for (let i = 0; i < this.departments.length; i++) {
-      if (this.departments[i].id == id) this.departments.splice(i, 1);
-    }
-    this.departmentsService.deleteDepartment(id).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-    });
-  }
+  // AICI TREBUIE SCHIMBAT CU GUID
+  // httpDeleteDepartment(id: string) {
+  //   for (let i = 0; i < this.departments.length; i++) {
+  //     if (this.departments[i].id == id) this.departments.splice(i, 1);
+  //   }
+  //   this.departmentsService.deleteDepartment(id).subscribe({
+  //     next: (response) => {
+  //       console.log(response);
+  //     },
+  //   });
+  // }
 
   httpEditDepartment(id: string) {
     // var department = this.httpGetDepartmentById(id);
