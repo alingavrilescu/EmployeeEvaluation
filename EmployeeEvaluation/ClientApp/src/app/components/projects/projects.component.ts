@@ -19,7 +19,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     descriptionControl: new FormControl(''),
   });
 
-  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService) { }
+  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService, 
+    private formBuilder: FormBuilder) { }
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
