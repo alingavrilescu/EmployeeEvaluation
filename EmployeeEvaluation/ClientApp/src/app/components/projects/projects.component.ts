@@ -23,6 +23,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
+  department!:Department;
   departmentsList:Department[]=[];
   projectsList: Project[]=[];
   projectName = "";
@@ -42,7 +43,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   addProject(){
     var temp={
       name:this.projectName,
-      description:this.projectDescription
+      description:this.projectDescription,
+      departmentId:this.department.id
     };
     this.projectService.createProject(temp).subscribe(()=>{this.refreshProjectList();});
   }
