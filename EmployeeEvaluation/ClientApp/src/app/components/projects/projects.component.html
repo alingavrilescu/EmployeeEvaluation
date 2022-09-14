@@ -31,6 +31,13 @@
               <textarea class="input-textarea" [(ngModel)]="projectDescription" name="projectDescription" 
                 placeholder="Project's Description" onfocus="this.value=''" value="" id="projectDescription" aria-describedby="emailHelp" rows="5" cols="61" ></textarea>
           </div>
+          <div class="mb-3">
+            <label for="projectDescription" class="form-label">
+		          Description of project
+	          </label>
+              <textarea class="input-textarea" [(ngModel)]="projectDescription" name="projectDescription" 
+                placeholder="Project's Description" onfocus="this.value=''" value="" id="projectDescription" aria-describedby="emailHelp" rows="5" cols="61" ></textarea>
+          </div>
           <div class="buttons-container">
             <button pButton pRipple type="submit" label="Close" data-bs-dismiss="modal" 
               class="modal-button p-button-raised p-button-danger"></button>
@@ -44,7 +51,7 @@
   </div>
 </div>
 
-<!-- =============================MODAL FOR ADDING A PROJECT================================= -->
+<!-- =============================MODAL FOR EDITING A PROJECT================================= -->
 
 <div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="editProjectModalLabel" aria-hidden="true">
   <div class="modal-dialog">
