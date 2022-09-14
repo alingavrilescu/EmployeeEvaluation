@@ -24,9 +24,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
+  refreshProjectsSubscription!:Subscription;
+  addProjectSubscription!:Subscription;
+  updateProjectSubscription!:Subscription;
   department!:Department;
   departmentsList:Department[]=[];
   projectsList: Project[]=[];
+  projectId!:Guid;
+  projectNameEdit = "";
+  projectDescriptionEdit = "";
   projectName = "";
   projectDescription = "";
 
@@ -37,8 +43,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.deleteSubscription?.unsubscribe();
-    this.getDepartmentsSubscription.unsubscribe();
+    // this.deleteSubscription.unsubscribe();
+    // this.getDepartmentsSubscription.unsubscribe();
+    // this.refreshProjectsSubscription.unsubscribe();
+    // this.addProjectSubscription.unsubscribe();
+    // this.updateProjectSubscription.unsubscribe();
   }
 
   addProject(){
@@ -47,27 +56,31 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       description:this.projectDescription,
       departmentId:this.department.id
     };
-    this.projectService.createProject(temp).subscribe(()=>{this.refreshProjectList();});
+    this.addProjectSubscription=this.projectService.createProject(temp).subscribe(()=>{this.refreshProjectList();});
+    this.projectName="";
+    this.projectDescription="";
   }
 
-  updateProject(project:Project, id: Guid)
+  updateProject()
   {
-    this.projectService.updateProject(id, project).subscribe(res => {alert(res.toString());
-    });
-    this.refreshProjectList();
+    var project ={
+      name:this.projectNameEdit,
+      description:this.projectDescriptionEdit
+    }
+    this.updateProjectSubscription=this.projectService.updateProject(this.projectId, project).subscribe(()=>{this.refreshProjectList();});
   }
   
   deleteProject(id?: Guid)
   {
     if(id!==undefined) 
     {
-      this.projectService.deleteProject(id).subscribe(()=>{this.refreshProjectList();});
+      this.deleteSubscription=this.projectService.deleteProject(id).subscribe(()=>{this.refreshProjectList();});
     }
   }
 
   refreshProjectList()
   {
-    this.projectService.getProjects().subscribe(data=>{
+    this.refreshProjectsSubscription=this.projectService.getProjects().subscribe(data=>{
       this.projectsList=data;
     })
   }
@@ -76,5 +89,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.getDepartmentsSubscription=this.departmentService.getDepartments().subscribe((data)=>{
       this.departmentsList=data;
     })
+  }
+
+  getData(project:Project)
+  {
+    if(project.id)
+    {
+      this.projectId=project.id;
+    }
+    this.projectNameEdit = project.name;
+    this.projectDescriptionEdit = project.description;
   }
 }

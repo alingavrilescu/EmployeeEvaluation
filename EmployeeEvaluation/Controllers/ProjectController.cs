@@ -12,10 +12,12 @@ namespace EmployeeEvaluation.Controllers
     public class ProjectController : ControllerBase
     {
         private readonly ProjectService _projectService;
+        private readonly DepartmentService _departmentService;
 
-        public ProjectController(ProjectService projectService)
+        public ProjectController(ProjectService projectService, DepartmentService departmentService)
         {
-            this._projectService=projectService;
+            this._projectService = projectService;
+            this._departmentService = departmentService;
         }
 
         // GET: api/<ProjectController>
@@ -36,11 +38,13 @@ namespace EmployeeEvaluation.Controllers
         [HttpPost]
         public Project Post([FromBody] ProjectDTO project)
         {
+            var department = _departmentService.GetDepartmentById(project.DepartmentId);
             var projectToAdd = new Project
             {
                 Name = project.Name,
                 Description = project.Description,
-                DepartmentId = project.DepartmentId
+                DepartmentId = project.DepartmentId,
+                Department=department
             };
             return this._projectService.AddProject(projectToAdd);
         }
@@ -49,12 +53,9 @@ namespace EmployeeEvaluation.Controllers
         [HttpPut("{id}")]
         public Project Put(Guid id, [FromBody] ProjectDTO project)
         {
-            var projectToEdit = new Project
-            {
-                Id = id,
-                Name = project.Name,
-                Description = project.Description
-            };
+            var projectToEdit = _projectService.GetProjectById(id);
+            projectToEdit.Name = project.Name;
+            projectToEdit.Description = project.Description;
             return this._projectService.UpdateProject(projectToEdit);
         }
 
