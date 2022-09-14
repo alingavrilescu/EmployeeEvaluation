@@ -32,7 +32,6 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectId=params.get('id');
     })
     this.getProject();
-    this.getDepartments();
   }
 
   ngOnDestroy(): void{
@@ -63,11 +62,4 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   //     })
   //   }
   // }
-
-
-  getDepartments(){
-    this.getDepartmentsSubscription=this.departmentService.getDepartments().subscribe((res)=>{
-      this.departments=res;
-    })
-  }
 }

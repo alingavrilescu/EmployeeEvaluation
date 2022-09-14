@@ -39,7 +39,8 @@ namespace EmployeeEvaluation.Controllers
             var projectToAdd = new Project
             {
                 Name = project.Name,
-                Description = project.Description
+                Description = project.Description,
+                DepartmentId = project.DepartmentId
             };
             return this._projectService.AddProject(projectToAdd);
         }
@@ -52,8 +53,7 @@ namespace EmployeeEvaluation.Controllers
             {
                 Id = id,
                 Name = project.Name,
-                Description = project.Description,
-                DepartmentId = project.DepartmentId
+                Description = project.Description
             };
             return this._projectService.UpdateProject(projectToEdit);
         }
