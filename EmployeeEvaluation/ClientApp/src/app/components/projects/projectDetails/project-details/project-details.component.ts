@@ -22,9 +22,9 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   project!:Project;
   department!:Department;
   departments:Department[]=[];
-  departmentToDisplay!:Department;
+  // departmentToDisplay!:Department;
   getProjecSubscription!:Subscription;
-  getAssignedDepartmentSubscription!:Subscription;
+  // getAssignedDepartmentSubscription!:Subscription;
   getDepartmentsSubscription!:Subscription;
 
   ngOnInit(): void {
@@ -36,18 +36,18 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void{
     this.getProjecSubscription?.unsubscribe();
-    this.getAssignedDepartmentSubscription?.unsubscribe();
+    // this.getAssignedDepartmentSubscription?.unsubscribe();
     this.getDepartmentsSubscription?.unsubscribe();
   }
 
   getProject(){
     this.getProjecSubscription=this.projectService.getProjectById(this.projectId).subscribe((res)=>{
       this.project=res;     
-      if(this.project && this.project.departmentId){
-        this.getAssignedDepartmentSubscription=this.departmentService.getDepartmentById(this.project.departmentId).subscribe((res)=>{
-          this.departmentToDisplay=res;
-        })
-      }
+      // if(this.project && this.project.departmentId){
+      //   this.getAssignedDepartmentSubscription=this.departmentService.getDepartmentById(this.project.departmentId).subscribe((res)=>{
+      //     this.departmentToDisplay=res;
+      //   })
+      // }
     });
   }
   
