@@ -7,40 +7,8 @@
 
 <!-- =============================MODAL FOR ADDING A PROJECT================================= -->
 
-<div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addProjectModal">
-          Add Project
-        </h5>
-      </div>
-      <div class="modal-body">
-        <form id="createNewProjectForm">
-          <div class="mb-3">
-            <label for="projectName" class="form-label">
-		          Name of the project
-	          </label>
-            <input [(ngModel)]="projectName" name="projectName" placeholder="Project's Name" type="text" 
-              class="form-control" id="projectName" aria-describedby="emailHelp"/>
-          </div>
-          <div class="mb-3">
-            <label for="projectDescription" class="form-label">
-		          Description of project
-	          </label>
-            <input [(ngModel)]="projectDescription" name="projectDescription" 
-              placeholder="Project's Description" class="form-control" id="projectDescription" aria-describedby="emailHelp" />
-          </div>
-          <div class="buttons-container">
-            <button pButton pRipple type="button" label="Close" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-danger"></button>
-            <button pButton pRipple type="button" label="Submit" (click)="addProject()" class="modal-button p-button-raised p-button-success"></button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+  
 <!-- ================================CARD================================= -->
 
 <div class="card-container" *ngFor="let project of projectsList">

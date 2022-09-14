@@ -18,9 +18,11 @@ import { UsersTableComponent } from './components/users/users-table/users-table.
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
 import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
 import {DialogModule} from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
 import { FormTemplateComponent } from './components/form-template/form-template.component';
 import {TabViewModule} from 'primeng/tabview';
 import {AccordionModule} from 'primeng/accordion';
+import {InputTextModule} from 'primeng/inputtext';
 
 
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
@@ -50,6 +52,8 @@ import { ProjectDetailsComponent } from './components/projects/projectDetails/pr
     ReactiveFormsModule,
     ButtonModule,
     DialogModule,
+    DropdownModule,
+    InputTextModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
       { path: '', component: HomeComponent, pathMatch: 'full' },
