@@ -64,7 +64,6 @@
       </div>
       <div class="modal-body">
         <form id="createNewProjectForm" [formGroup]="editProjectFormGroup">
-          <!-- Name input -->
           <div class="mb-3">
             <label for="projectName" class="form-label">
 		          Change Name
@@ -72,7 +71,6 @@
             <input type="text" class="form-control" id="projectName" aria-describedby="emailHelp" 
               formControlName="nameControl" placeholder="{{projectName}}" />
           </div>
-          <!-- Description input -->
           <div class="mb-3">
             <label for="projectDescription" class="form-label">
 		          Change Description
@@ -101,6 +99,7 @@
     </ng-template>
     <ng-template pTemplate="content">
       <textarea rows="5" cols="40" readonly>{{project.description}}</textarea>
+      <!-- <p>{{project.description}}</p> -->
     </ng-template>
     <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" 
