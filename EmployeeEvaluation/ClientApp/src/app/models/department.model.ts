@@ -1,7 +1,9 @@
-import { Guid } from "guid-typescript";
+import { Guid } from 'guid-typescript';
+import { UserDTO } from './users.model';
 
 export class Department {
   id?: Guid;
   name: string = '';
-  headOfDepartment: string = '';
+  headOfDepartment!: Guid;
+  users?: UserDTO[];
 }

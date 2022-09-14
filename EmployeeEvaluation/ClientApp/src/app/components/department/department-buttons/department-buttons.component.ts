@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Department } from 'src/app/models/department.model';
+import { UserDTO } from 'src/app/models/users.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-department-buttons',
@@ -13,18 +15,28 @@ export class DepartmentButtonsComponent implements OnInit {
     nameControl: new FormControl(''),
     headOfDepartmentControl: new FormControl(''),
   });
-  constructor(private departmentsService: DepartmentsService) {}
+  users!: UserDTO[];
+  constructor(
+    private departmentsService: DepartmentsService,
+    private usersService: UsersService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.usersService.getUsers().subscribe({
+      next: (users) => {
+        this.users = users;
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
 
   httpAddDepartment() {
     var newDepartment = new Department();
     newDepartment.name =
       this.addDepartmentFormGroup.controls.nameControl.value!;
-    newDepartment.headOfDepartment =
-      this.addDepartmentFormGroup.controls.headOfDepartmentControl.value!;
-      // AICI TREBUIE SCHIMBAT CU GUID
-    // newDepartment.id = '';
+    newDepartment.headOfDepartment = this.getHeadOfDepartment()!;
     this.departmentsService.addDepartment(newDepartment).subscribe({
       next: (department) => {
         alert('Department successfuly created!');
@@ -33,5 +45,13 @@ export class DepartmentButtonsComponent implements OnInit {
         console.log(response);
       },
     });
+  }
+  getHeadOfDepartment() {
+    var name =
+      this.addDepartmentFormGroup.controls.headOfDepartmentControl.value!;
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].name == name) return this.users[i].id;
+    }
+    return null;
   }
 }

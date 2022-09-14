@@ -25,6 +25,7 @@ import { DropdownModule } from 'primeng/dropdown';
 
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { DepartmentDetailsComponent } from './components/department-details/department-details.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     FormTemplateComponent,
     ProjectDetailsComponent,
     UserDetailsComponent,
+    DepartmentDetailsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -64,6 +66,10 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
       { path: 'departments', component: DepartmentTableComponent },
       { path: 'form-templates', component: FormTemplateComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
+      {
+        path: 'departments/details/:id',
+        component: DepartmentDetailsComponent,
+      },
     ]),
   ],
   providers: [
