@@ -17,16 +17,12 @@ import { UsersButtonsComponent } from './components/users/users-buttons/users-bu
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
 import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
-import {DialogModule} from 'primeng/dialog';
-import {DropdownModule} from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { FormTemplateComponent } from './components/form-template/form-template.component';
-import {TabViewModule} from 'primeng/tabview';
-import {AccordionModule} from 'primeng/accordion';
 import {InputTextModule} from 'primeng/inputtext';
-import { TabViewModule } from 'primeng/tabview';
-import { AccordionModule } from 'primeng/accordion';
-import { DropdownModule } from 'primeng/dropdown';
+import {TabViewModule } from 'primeng/tabview';
+import {AccordionModule } from 'primeng/accordion';
+import {DropdownModule } from 'primeng/dropdown';
 
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
