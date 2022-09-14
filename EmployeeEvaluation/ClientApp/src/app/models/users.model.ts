@@ -8,4 +8,5 @@ export class UserDTO {
   role: string = '';
   departmentId?: Guid;
   projectId?: Guid;
+  project?: Project;
 }
