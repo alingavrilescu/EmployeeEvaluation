@@ -26,7 +26,6 @@ export class ProjectsService {
       return this.httpClient.post<Project>(`${environment.apiUrl}/${this.url}`,project);
    }
  
- 
    public updateProject(id: Guid,project:Project): Observable<Project>
    {
        return this.httpClient.put<Project>(`${environment.apiUrl}/${this.url}/${id}`, project);
