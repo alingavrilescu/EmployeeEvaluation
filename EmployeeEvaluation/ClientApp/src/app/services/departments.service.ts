@@ -11,10 +11,11 @@ import { Department } from '../models/department.model';
 export class DepartmentsService {
   private readonly url = "Department";
 
-  constructor(private httpClient: HttpClient) {
-  }
+  constructor(private httpClient: HttpClient) {}
   public getDepartments(): Observable<Department[]> {
-    return this.httpClient.get<Department[]>(`${environment.apiUrl}/${this.url}`);
+    return this.httpClient.get<Department[]>(
+      `${environment.apiUrl}/${this.url}`
+    );
   }
   
   public getDepartmentById(id: Guid): Observable<Department>
@@ -23,13 +24,23 @@ export class DepartmentsService {
   }
 
   public addDepartment(newDepartment: Department): Observable<Department> {
-    return this.httpClient.post<Department>(`${environment.apiUrl}/${this.url}`, newDepartment);
-  }
-  public editDepartment(id: string, newDepartment: Department): Observable<Department> {
-    return this.httpClient.put<Department>(`${environment.apiUrl}/${this.url}/${id}`,newDepartment
+    return this.httpClient.post<Department>(
+      `${environment.apiUrl}/${this.url}`,
+      newDepartment
     );
   }
-  public deleteDepartment(id: string): Observable<Department> {
-    return this.httpClient.delete<Department>(`${environment.apiUrl}/${this.url}/${id}`);
+  public editDepartment(
+    id: Guid,
+    newDepartment: Department
+  ): Observable<Department> {
+    return this.httpClient.put<Department>(
+      `${environment.apiUrl}/${this.url}/${id}`,
+      newDepartment
+    );
+  }
+  public deleteDepartment(id: Guid): Observable<Department> {
+    return this.httpClient.delete<Department>(
+      `${environment.apiUrl}/${this.url}/${id}`
+    );
   }
 }
