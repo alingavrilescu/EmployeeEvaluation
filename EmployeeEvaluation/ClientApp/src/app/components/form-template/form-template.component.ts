@@ -38,7 +38,6 @@ export class FormTemplateComponent implements OnInit,OnDestroy {
  addFormTemplate(){
   var temp={
     name:this.formTemplateName,
-    description:this.formTemplateDescription,
     departmentId:this.formTemplateDepartmentId,
     type:this.formTemplateType
   };
