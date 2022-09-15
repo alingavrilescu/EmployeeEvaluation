@@ -43,11 +43,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.deleteSubscription.unsubscribe();
-    // this.getDepartmentsSubscription.unsubscribe();
-    // this.refreshProjectsSubscription.unsubscribe();
-    // this.addProjectSubscription.unsubscribe();
-    // this.updateProjectSubscription.unsubscribe();
+    this.deleteSubscription?.unsubscribe();
+    this.getDepartmentsSubscription?.unsubscribe();
+    this.refreshProjectsSubscription?.unsubscribe();
+    this.addProjectSubscription?.unsubscribe();
+    this.updateProjectSubscription?.unsubscribe();
   }
 
   addProject(){
