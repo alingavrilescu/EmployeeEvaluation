@@ -45,7 +45,11 @@ builder.Services.AddScoped<EvaluationFormService>();
 builder.Services.AddScoped<FormTemplateRepository>();
 builder.Services.AddScoped<FormTemplateService>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
 builder.Services.AddSwaggerGen();
 builder.Services.AddRazorPages();
 
