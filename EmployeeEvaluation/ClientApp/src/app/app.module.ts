@@ -27,6 +27,7 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { EvaluationFormComponent } from './components/evaluation-form/evaluation-form/evaluation-form.component';
 import { DepartmentDetailsComponent } from './components/department-details/department-details.component';
 
 
@@ -43,6 +44,7 @@ import { DepartmentDetailsComponent } from './components/department-details/depa
     FormTemplateComponent,
     ProjectDetailsComponent,
     UserDetailsComponent,
+    EvaluationFormComponent,
     DepartmentDetailsComponent,
   ],
   imports: [
@@ -70,6 +72,7 @@ import { DepartmentDetailsComponent } from './components/department-details/depa
       { path: 'departments', component: DepartmentTableComponent },
       { path: 'form-templates', component: FormTemplateComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
+      { path: 'evaluation-form', component: EvaluationFormComponent },
       {
         path: 'departments/details/:id',
         component: DepartmentDetailsComponent,

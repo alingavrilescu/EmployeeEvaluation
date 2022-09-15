@@ -1,0 +1,102 @@
+             
+     <h2 style="text-align: center"> Evaluation Form </h2>
+     <br>
+     <br>
+     <!-- ------------------ Add Evaluation Form Modal Button ---------------------- -->
+     <button pButton type="button" label="+ Add Evaluation Form" data-bs-toggle="modal" data-bs-target="#addEvaluationFormModal">
+     </button>
+     <!-- --------------------- Modal for adding form template --------------------------- -->
+     <div class="modal" id="addEvaluationFormModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add new evaluation form</h5>
+            </div>
+            <div class="modal-body">
+                <form id="createNewProjectForm">
+                    <div class="mb-3">
+                      <label for="projectName" class="form-label">
+                            Name of the project
+                        </label>
+                      <input [(ngModel)]="evaluationFormName" name="evaluationFormName" onfocus="this.value=''" value="" type="text" 
+                        placeholder="Name" class="form-control" id="evaluationFormName" aria-describedby="emailHelp" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="evaluationFormType">Software developer type </label>
+                    <select [(ngModel)]="evaluationFormType" id="type" onfocus="this.value=''" value="" name="type">
+                        <option value="junior">Junior</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="senior">Senior</option>
+                        <option value="expert">Expert</option>
+                    </select>
+
+                    </div>
+                  </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" (click)="addEvaluationForm()">Save changes</button>
+              <button type="submit" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+     <!-- ----------------------- Accordion form templates --------------------------- -->
+     <div class="accordion accordion-flush" id="accordionFlushExample"  *ngFor="let evaluationForm of evaluationFormList">
+         <h5 style="text-align: center;">{{evaluationForm.name}}</h5>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Section: Backend Technology Fundamentals (C#, Java, Python)
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              <p>Section description</p>
+              <div class="accordion accordion-flush" id="accordionFlushSection">
+               <div class="accordion-item">
+                 <h2 class="accordion-header" id="flush-headingCriteria">
+                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCriteria" aria-expanded="false" aria-controls="flush-collapseCriteria">
+                       Criteria name: Basic language concepts (synthax, classes, structs, enums, methods, properties, parameters, etc.)
+                   </button>
+                 </h2>
+                 <div id="flush-collapseCriteria" class="accordion-collapse collapse" aria-labelledby="flush-headingCriteria" data-bs-parent="#accordionFlushSection">
+                   <div class="accordion-body">
+                     <p>Criteria description</p>
+                     <ul>
+                        <li>Criteria comment1</li>
+                        <li>Criteria comment2</li>
+                      </ul>
+                      <ul>
+                        <li>Criteria attachment1</li>
+                        <li>Criteria criteria attachment2</li>
+                      </ul>
+                       
+                   </div>
+                 </div>
+               </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+              Accordion Item #2
+            </button>
+          </h2>
+          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+              Accordion Item #3
+            </button>
+          </h2>
+          <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ----------------------------------------------- -->

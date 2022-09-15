@@ -1,0 +1,18 @@
+.indent
+{
+    text-indent: 2em
+}
+input {
+    display: block;
+    box-sizing: border-box;
+    margin-top: 100 px;
+}
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
