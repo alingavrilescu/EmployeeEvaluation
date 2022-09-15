@@ -1,8 +1,18 @@
 <div style="width: 80%; margin-left: auto; margin-right: auto">
-  <app-users-buttons
+  <!-- <app-users-buttons
     (notifyUsers)="refreshUsers($event)"
     (notifyProjects)="refreshProjects($event)"
-  ></app-users-buttons>
+  ></app-users-buttons> -->
+  <div id="addUserButton">
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#addUserModal"
+    >
+      Add user
+    </button>
+  </div>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -12,15 +22,11 @@
         <th scope="col">Role</th>
         <th scope="col">Edit</th>
         <th scope="col">Remove</th>
+        <th scope="col">Details</th>
       </tr>
     </thead>
     <tbody>
-      <tr
-        class="users"
-        *ngFor="let user of users"
-        style="cursor: pointer"
-        routerLink="userDetails/{{ user.id }}"
-      >
+      <tr *ngFor="let user of users">
         <th scope="row">1</th>
         <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
@@ -61,6 +67,23 @@
             <path
               fill-rule="evenodd"
               d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+            />
+          </svg>
+        </td>
+        <td>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            fill="currentColor"
+            class="bi bi-list"
+            viewBox="0 0 16 16"
+            style="cursor: pointer; margin-top: 13px; margin-left: 15px"
+            routerLink="userDetails/{{ user.id }}"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
             />
           </svg>
         </td>
@@ -183,6 +206,94 @@
               class="btn btn-primary"
               data-bs-dismiss="modal"
               (click)="httpEditUser()"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------------------- ADD MODAL  --------------------------------------->
+<div
+  class="modal fade"
+  id="addUserModal"
+  tabindex="-1"
+  aria-labelledby="addUserModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addUserModalLabel">Add new user</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="createNewTeamForm" [formGroup]="addUserFormGroup">
+          <div class="mb-3">
+            <label for="teamName" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="userName"
+              aria-describedby="emailHelp"
+              formControlName="nameControl"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="teamName" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="userEmail"
+              aria-describedby="emailHelp"
+              formControlName="emailControl"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Role</label>
+            <select
+              id="exampleInputPassword1"
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="roleControl"
+            >
+              <option value="Software Developer">Software Developer</option>
+              <option value="Project Manager">Project Manager</option>
+              <option value="Technical Lead">Technical Lead</option>
+              <option value="Technical Lead">Head of Department</option>
+              <option value="Technical Lead">Director of Department</option>
+              <option value="Technical Lead">Human Resources</option>
+            </select>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              margin-top: 50px;
+            "
+          >
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              [disabled]="!addUserFormGroup.valid"
+              (click)="httpAddUser()"
             >
               Submit
             </button>

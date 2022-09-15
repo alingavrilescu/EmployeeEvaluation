@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
-    public partial class CriteriaChange : Migration
+    public partial class AnotherMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,19 +20,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Departments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,6 +38,46 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         name: "FK_FormTemplates_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Projects_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Departments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FormTemplateSections",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FormTemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FormTemplateSections", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FormTemplateSections_FormTemplates_FormTemplateId",
+                        column: x => x.FormTemplateId,
+                        principalTable: "FormTemplates",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -80,21 +107,21 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FormTemplateSections",
+                name: "FormTemplateCriteria",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FormTemplateId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FormTemplateSectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FormTemplateSections", x => x.Id);
+                    table.PrimaryKey("PK_FormTemplateCriteria", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FormTemplateSections_FormTemplates_FormTemplateId",
-                        column: x => x.FormTemplateId,
-                        principalTable: "FormTemplates",
+                        name: "FK_FormTemplateCriteria_FormTemplateSections_FormTemplateSectionId",
+                        column: x => x.FormTemplateSectionId,
+                        principalTable: "FormTemplateSections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -115,26 +142,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         name: "FK_EvaluationForm_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FormTemplateCriteria",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FormTemplateSectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FormTemplateCriteria", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FormTemplateCriteria_FormTemplateSections_FormTemplateSectionId",
-                        column: x => x.FormTemplateSectionId,
-                        principalTable: "FormTemplateSections",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -236,6 +243,11 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 column: "FormTemplateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Projects_DepartmentId",
+                table: "Projects",
+                column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_DepartmentId",
                 table: "User",
                 column: "DepartmentId");
@@ -273,10 +285,10 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "Departments");
+                name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "Departments");
         }
     }
 }

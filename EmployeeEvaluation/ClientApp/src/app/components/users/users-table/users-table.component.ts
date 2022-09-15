@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { Project } from 'src/app/models/project.model';
 import { UserDTO } from 'src/app/models/users.model';
@@ -16,6 +16,11 @@ export class UsersTableComponent implements OnInit {
     nameControl: new FormControl(''),
     emailControl: new FormControl(''),
     roleControl: new FormControl(''),
+  });
+  addUserFormGroup = new FormGroup({
+    nameControl: new FormControl('', [Validators.required]),
+    emailControl: new FormControl('', [Validators.required, Validators.email]),
+    roleControl: new FormControl('', [Validators.required]),
   });
   users: UserDTO[] = [];
   user!: UserDTO;
@@ -63,6 +68,21 @@ export class UsersTableComponent implements OnInit {
         },
       });
     }
+  }
+  httpAddUser() {
+    var newUser = new UserDTO();
+    newUser.name = this.addUserFormGroup.controls.nameControl.value!;
+    newUser.email = this.addUserFormGroup.controls.emailControl.value!;
+    newUser.role = this.addUserFormGroup.controls.roleControl.value!;
+    this.usersService.addUser(newUser).subscribe({
+      next: (user) => {
+        this.httpGetUsers();
+        alert('Account successfuly created!');
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
   }
 
   httpDeleteUser(id?: Guid) {

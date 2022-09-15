@@ -1,12 +1,10 @@
 #userDetails {
   display: flex;
   flex-direction: row;
-  height: 50vh;
   margin-top: 50px;
 }
 #userInfo {
-  width: 50%;
-  border-right: 1px solid rgb(142, 140, 140);
+  width: 80%;
   padding-top: 25px;
   padding-left: 25px;
 }
