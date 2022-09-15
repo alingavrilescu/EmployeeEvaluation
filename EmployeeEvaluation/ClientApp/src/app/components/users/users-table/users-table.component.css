@@ -1,4 +1,5 @@
-.users:hover {
-  filter: brightness(10%);
-  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+#addUserButton {
+  padding-left: 60vw;
+  padding-bottom: 2vh;
+  margin-top: 10vh;
 }
