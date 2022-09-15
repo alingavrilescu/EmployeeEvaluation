@@ -23,10 +23,10 @@ import {TabViewModule} from 'primeng/tabview';
 import {InputTextModule} from 'primeng/inputtext';
 import { AccordionModule } from 'primeng/accordion';
 import { DropdownModule } from 'primeng/dropdown';
-
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
+import { EvaluationFormComponent } from './components/evaluation-form/evaluation-form/evaluation-form.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
     FormTemplateComponent,
     ProjectDetailsComponent,
     UserDetailsComponent,
+    EvaluationFormComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -66,6 +67,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
       { path: 'departments', component: DepartmentTableComponent },
       { path: 'form-templates', component: FormTemplateComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
+      { path: 'evaluation-form', component: EvaluationFormComponent },
     ]),
   ],
   providers: [
