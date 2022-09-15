@@ -4,4 +4,5 @@ export class FormTemplate {
     name:string="";
     description:string="";
     departmentId?:Guid;
+    type:string="";
 }

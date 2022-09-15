@@ -23,11 +23,12 @@ import {TabViewModule} from 'primeng/tabview';
 import {InputTextModule} from 'primeng/inputtext';
 import { AccordionModule } from 'primeng/accordion';
 import { DropdownModule } from 'primeng/dropdown';
-
+import {InputTextareaModule} from 'primeng/inputtextarea';
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { DepartmentDetailsComponent } from './components/department-details/department-details.component';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { DepartmentDetailsComponent } from './components/department-details/depa
     ButtonModule,
     DialogModule,
     DropdownModule,
+    InputTextareaModule,
     InputTextModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },

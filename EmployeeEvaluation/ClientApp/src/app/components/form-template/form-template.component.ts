@@ -42,13 +42,14 @@ export class FormTemplateComponent implements OnInit,OnDestroy {
     departmentId:this.formTemplateDepartmentId,
     type:this.formTemplateType
   };
-  this.addFormTemplateSubscription=this.formTemplateService.createFormTemplate(temp).subscribe(()=>{this.refreshFormTemplateList();});
+  this.addFormTemplateSubscription=this.formTemplateService.createFormTemplate(temp)
+                                                           .subscribe(()=>{this.refreshFormTemplateList();});
 }
 
 updateFormTemplate(formTemplate:FormTemplate, id: Guid)
 {
-  this.updateFormTemplateSubscription=this.formTemplateService.updateFormTemplate(id, formTemplate).subscribe(res => {alert(res.toString());
-  });
+  this.updateFormTemplateSubscription=this.formTemplateService.updateFormTemplate(id, formTemplate)
+                                                              .subscribe(res => {alert(res.toString());});
   this.refreshFormTemplateList();
 }
 
@@ -56,21 +57,20 @@ deleteFormTemplate(id?: Guid)
 {
   if(id!==undefined) 
   {
-    this.deleteFormTemplateSubscription=this.formTemplateService.deleteFormTemplate(id).subscribe(()=>{this.refreshFormTemplateList();});
+    this.deleteFormTemplateSubscription=this.formTemplateService.deleteFormTemplate(id)
+                                                                .subscribe(()=>{this.refreshFormTemplateList();});
   }
 }
 
  getFormTemplates(){
-   this.getFormTemplatesSubscription=this.formTemplateService.getFormTemplates().subscribe((res)=>{
-     this.formTemplateList=res;     
-   });
+   this.getFormTemplatesSubscription=this.formTemplateService.getFormTemplates()
+                                                             .subscribe((res)=>{this.formTemplateList=res; });
  }
 
 refreshFormTemplateList()
 {
-  this.formTemplateService.getFormTemplates().subscribe(data=>{
-    this.formTemplateList=data;
-  })
+  this.formTemplateService.getFormTemplates()
+                          .subscribe(data=>{this.formTemplateList=data;})
 }
 
 }
