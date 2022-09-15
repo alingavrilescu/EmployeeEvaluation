@@ -16,13 +16,13 @@
         </h5>
       </div>
       <div class="modal-body">
-        <form id="createNewProjectForm">
+        <form id="createNewProjectForm" [formGroup]="addProjectForm">
           <!-- Name input -->
           <div class="mb-3">
             <label for="projectName" class="form-label">
 		          Name of the project
 	          </label>
-            <input [(ngModel)]="projectName" name="projectName" type="text" 
+            <input formControlName="projectName" name="projectName" type="text" 
               placeholder="Project's Name" class="form-control" id="projectName" aria-describedby="emailHelp" >
           </div>
           <!-- Description input -->
@@ -30,7 +30,7 @@
             <label for="projectDescription" class="form-label">
 		          Description of project
 	          </label>
-              <textarea class="input-textarea" [(ngModel)]="projectDescription" name="projectDescription" 
+              <textarea class="form-control input-textarea" formControlName="projectDescription" name="projectDescription" 
                 placeholder="Project's Description" id="projectDescription" aria-describedby="emailHelp" rows="5" cols="61" ></textarea>
           </div>
           <!-- Dropdown to assign department -->
@@ -65,7 +65,7 @@
         </h5>
       </div>
       <div class="modal-body">
-        <form id="createNewProjectForm" [formGroup]="editProjectFormGroup">
+        <form id="createNewProjectForm">
           <div class="mb-3">
             <label for="projectName" class="form-label">
 		          Change Name
