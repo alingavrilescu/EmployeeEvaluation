@@ -35,6 +35,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   projectDescriptionEdit = "";
   projectName = "";
   projectDescription = "";
+  project!: Project;
 
   
   ngOnInit(): void {
@@ -64,13 +65,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     // this.addProjectSubscription=this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();});
     // this.projectName="";
     // this.projectDescription="";
-    this.projectService.createProject(newProject).subscribe({
-      next: (project) => {
-        alert('Project successfuly created!');
-      },
-      error: (response) => {
-        console.log(response);
-      },
+    this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();
     });
   }
 
