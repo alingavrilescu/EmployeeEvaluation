@@ -22,7 +22,7 @@
             <label for="projectName" class="form-label">
 		          Name of the project
 	          </label>
-            <input formControlName="projectName" name="projectName" type="text" 
+            <input  name="projectName" type="text" 
               placeholder="Project's Name" class="form-control" id="projectName" aria-describedby="emailHelp" >
           </div>
           <!-- Description input -->
@@ -30,7 +30,7 @@
             <label for="projectDescription" class="form-label">
 		          Description of project
 	          </label>
-              <textarea class="form-control input-textarea" formControlName="projectDescription" name="projectDescription" 
+              <textarea class="form-control input-textarea"  name="projectDescription" 
                 placeholder="Project's Description" id="projectDescription" aria-describedby="emailHelp" rows="5" cols="61" ></textarea>
           </div>
           <!-- Dropdown to assign department -->
@@ -39,7 +39,7 @@
               Assign a department
             </label>
             <br/>
-            <p-dropdown [options]="departmentsList" [(ngModel)]="department" optionLabel="name" [ngModelOptions]="{standalone: true}" id="projectDepartment"></p-dropdown>
+            <p-dropdown [options]="departmentsList" optionLabel="name" name="projectDepartment" id="projectDepartment"></p-dropdown>
           </div>
           <div class="buttons-container">
             <button pButton pRipple type="submit" label="Close" data-bs-dismiss="modal" 
@@ -65,20 +65,20 @@
         </h5>
       </div>
       <div class="modal-body">
-        <form id="createNewProjectForm">
+        <form id="editProjectForm">
           <div class="mb-3">
-            <label for="projectName" class="form-label">
+            <label for="projectNameEdit" class="form-label">
 		          Change Name
 	          </label>
-            <input [(ngModel)]="projectNameEdit" type="text" class="form-control" id="projectName" aria-describedby="emailHelp" 
-              formControlName="nameControl" value="{{projectNameEdit}}"/>
+            <input [(ngModel)]="projectNameEdit" type="text" name="projectNameEdit" class="form-control" id="projectNameEdit" aria-describedby="emailHelp" 
+               value="{{projectNameEdit}}"/>
           </div>
           <div class="mb-3">
-            <label for="projectDescription" class="form-label">
+            <label for="projectDescriptionEdit" class="form-label">
 		          Change Description
 	          </label>
-              <textarea [(ngModel)]="projectDescriptionEdit" type="text" class="input-textarea" id="projectDescription" aria-describedby="emailHelp" 
-                formControlName="descriptionControl" rows="5" cols="61" value="{{projectDescriptionEdit}}"></textarea>
+              <textarea [(ngModel)]="projectDescriptionEdit" type="text" name="projectDescriptionEdit" class="input-textarea" id="projectDescriptionEdit" aria-describedby="emailHelp" 
+                 rows="5" cols="61" value="{{projectDescriptionEdit}}"></textarea>
           </div>
           <div class="buttons-container">
             <button pButton pRipple type="submit" label="Close" data-bs-dismiss="modal" 
