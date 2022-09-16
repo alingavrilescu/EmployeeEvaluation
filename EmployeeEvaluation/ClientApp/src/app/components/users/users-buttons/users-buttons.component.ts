@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { FormControl, FormGroup, RequiredValidator } from '@angular/forms';
 import { Project } from 'src/app/models/project.model';
 import { UserDTO } from 'src/app/models/users.model';
@@ -14,9 +16,11 @@ export class UsersButtonsComponent implements OnInit {
   @Output() notifyUsers: EventEmitter<UserDTO[]> = new EventEmitter<UserDTO[]>
   @Output() notifyProjects: EventEmitter<Project[]> = new EventEmitter<Project[]>
 
+  formBuilder: FormBuilder = new FormBuilder();
+
   addUserFormGroup = new FormGroup({
-    nameControl: new FormControl(''),
-    emailControl: new FormControl(''),
+    nameControl: new FormControl('',[Validators.required]),
+    emailControl: new FormControl('',[Validators.required, Validators.email]),
     roleControl: new FormControl(''),
   });
   projects: Project[] = [];
@@ -24,7 +28,10 @@ export class UsersButtonsComponent implements OnInit {
   constructor(
     private usersService: UsersService,
     private projectsService: ProjectsService
-  ) {}
+  ) {
+    
+
+  }
 
   ngOnInit(): void {
     this.httpGetProjects();

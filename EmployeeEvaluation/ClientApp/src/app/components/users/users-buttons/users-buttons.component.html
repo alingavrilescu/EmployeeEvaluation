@@ -110,12 +110,7 @@
             >
               Close
             </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              (click)="httpAddUser()"
-            >
+            <button   type="submit" class="btn btn-primary" [disabled]="!addUserFormGroup.valid" data-bs-dismiss="modal" (click)="httpAddUser()">
               Submit
             </button>
           </div>
