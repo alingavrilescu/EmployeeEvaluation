@@ -12,11 +12,19 @@
   padding-top: 25px;
   padding-left: 25px;
 }
-#projectInfo {
+#evaluationInfo {
   width: 50%;
 
   padding: 25px;
 }
 p {
   text-align: justify;
+}
+
+.info {
+  cursor: pointer;
+  margin-top: 10px;
+}
+.info:hover {
+  filter: brightness(0.9);
 }
