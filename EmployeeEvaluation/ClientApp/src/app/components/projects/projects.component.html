@@ -1,7 +1,7 @@
 <!-- =====================================ADD PROJECT BUTTON=============================== -->
 
 <div class="add-button-container">
-  <button (click)="showAddDialog()" type="button" class="p-button-raised p-button-help" [style]="{width: '150px', height: '40px'}" 
+  <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
       pButton pRipple label="Add Project" icon="pi pi-plus"></button>
 </div>
 
@@ -21,10 +21,10 @@
   </form>
   <div class="buttons-container">
     <button pButton pRipple type="button" label="Close" (click) = "showAddDialog()" 
-      class="modal-button p-button-raised p-button-danger"></button>
+      class="modal-button btn-pos p-button-danger"></button>
 
     <button pButton pRipple type="button" label="Submit" (click)="addProject()" (click)="showAddDialog()"
-     class="modal-button p-button-raised p-button-success"></button>
+     class="modal-button btn-pos p-button-success"></button>
   </div>
 </p-dialog>
 
@@ -44,10 +44,10 @@
   </form>
   <div class="buttons-container">
     <button pButton pRipple type="button" label="Close" (click) = "showEditDialog()" 
-      class="modal-button p-button-raised p-button-danger"></button>
+      class="modal-button btn-pos p-button-danger"></button>
 
     <button pButton pRipple type="button" label="Submit" (click)="updateProject()" (click)="showEditDialog()"
-     class="modal-button p-button-raised p-button-success"></button>
+     class="modal-button btn-pos p-button-success"></button>
   </div>
 </p-dialog>
 
@@ -64,7 +64,7 @@
     </ng-template>
     <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" 
-          class="p-button-raised btn-pos" id="editProject" (click)="showEditDialog()" (click)="getData(project)"></button>
+          class="btn-pos" id="editProject" (click)="showEditDialog()" (click)="getData(project)"></button>
 
         <button pButton pRipple type="button" label="More Details" icon="pi pi-info" 
           class="p-button-secondary btn-pos" routerLink="projectDetails/{{project.id}}"></button>
