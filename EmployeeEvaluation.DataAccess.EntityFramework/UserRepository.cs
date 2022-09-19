@@ -35,9 +35,30 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         public IEnumerable<User> GetUsersOfDepartment(Guid depId)
         {
             return dbContext.Set<User>()
-                            .Where(u => u.Id == depId)
+                            .Where(u => u.DepartmentId == depId)
                             .Include(p => p.Project).Include(ef => ef.EvaluationForms).ToList();
         }
+        public IEnumerable<User> GetUsersOfProject(Guid proId)
+        {
+            return dbContext.Set<User>()
+                            .Where(u => u.ProjectId == proId)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
+
+        public IEnumerable<User> GetUsersWithoutDepartment()
+        {
+            return dbContext.Set<User>()
+                            .Where(u => u.DepartmentId ==  null)
+                            .Include(p => p.Project).Include(ef => ef.EvaluationForms).ToList();
+        }
+
+        public IEnumerable<User> GetUsersWithoutProject()
+        {
+            return dbContext.Set<User>()
+                            .Where(u => u.ProjectId == null)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
+
 
         public User Update(User toUpdate)
         {

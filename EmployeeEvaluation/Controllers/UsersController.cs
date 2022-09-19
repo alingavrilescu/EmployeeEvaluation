@@ -97,6 +97,38 @@ namespace EmployeeEvaluation.Controllers
             return Ok(createUsersDTO(identityUsers, (List<User>)users));
         }
 
+        [HttpGet("{depId}")]
+        public async Task<IActionResult> GetUsersOfDepartment(Guid depId)
+        {
+            var identityUsers = await _userManager.Users.ToListAsync();
+            var users = _userService.GetUsersOfDepartment(depId);
+            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+        }
+
+        [HttpGet("{proId}")]
+        public async Task<IActionResult> GetUsersOfProject(Guid proId)
+        {
+            var identityUsers = await _userManager.Users.ToListAsync();
+            var users = _userService.GetUsersOfProject(proId);
+            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsersWithoutDepartment()
+        {
+            var identityUsers = await _userManager.Users.ToListAsync();
+            var users = _userService.GetUsersWithoutDepartment();
+            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsersWithoutProject()
+        {
+            var identityUsers = await _userManager.Users.ToListAsync();
+            var users = _userService.GetUsersWithoutProject();
+            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {

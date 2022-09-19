@@ -40,6 +40,17 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             dbContext.SaveChanges();
             return department.Entity;
         }
+
+        public Department AddUsersToDepartment(Guid depId, List<User> users)
+        {
+            var department = GetById(depId);
+            foreach (var user in users)
+            {
+                department.Users.Add(user);
+            }
+            this.dbContext.SaveChanges();
+            return department;
+        }
         public Department Update(Department toUpdate)
         {
             this.dbContext.Set<Department>().Update(toUpdate);
