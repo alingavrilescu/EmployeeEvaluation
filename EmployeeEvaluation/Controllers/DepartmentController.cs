@@ -1,7 +1,5 @@
 ﻿using EmployeeEvaluation.DataAccess.Model;
 using EmployeeEvaluation.ApplicationLogic;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using EmployeeEvaluation.Models;
 

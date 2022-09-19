@@ -30,6 +30,11 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return _dbcontext.Set<Project>().Include(u => u.Users).Include(d =>d.Department).ToList();
         }
 
+        public IEnumerable<Project> GetProjectsOfDepartment(Guid depId)
+        {
+            return _dbcontext.Set<Project>().Where(d=>d.DepartmentId==depId).Include(u => u.Users).ToList();
+        }
+
         public Project GetById(Guid id)
         {
             var projectToReturn = _dbcontext.Set<Project>().Where(p => p.Id == id).Include(u => u.Users).Include(d=>d.Department).FirstOrDefault();
