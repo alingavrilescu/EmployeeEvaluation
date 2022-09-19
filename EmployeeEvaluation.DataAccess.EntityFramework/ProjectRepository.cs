@@ -27,12 +27,17 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 
         public IEnumerable<Project> GetAll()
         {
-            return _dbcontext.Set<Project>().Include(u => u.Users).ToList();
+            return _dbcontext.Set<Project>().Include(u => u.Users).Include(d =>d.Department).ToList();
+        }
+
+        public IEnumerable<Project> GetProjectsOfDepartment(Guid depId)
+        {
+            return _dbcontext.Set<Project>().Where(d=>d.DepartmentId==depId).Include(u => u.Users).ToList();
         }
 
         public Project GetById(Guid id)
         {
-            var projectToReturn = _dbcontext.Set<Project>().Where(p => p.Id == id).Include(u => u.Users).FirstOrDefault();
+            var projectToReturn = _dbcontext.Set<Project>().Where(p => p.Id == id).Include(u => u.Users).Include(d=>d.Department).FirstOrDefault();
             if (projectToReturn == null)
             {
                 throw new KeyNotFoundException("Product not found");

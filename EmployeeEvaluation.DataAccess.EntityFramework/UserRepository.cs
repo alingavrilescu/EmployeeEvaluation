@@ -20,17 +20,45 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         }
         public IEnumerable<User> GetAll()
         {
-            return dbContext.Set<User>().ToList();
+            return dbContext.Set<User>().Include(p=>p.Project).Include(ef=>ef.EvaluationForms).ToList();
         }
         public User GetById(Guid id)
         {
-            var userToReturn = dbContext.Set<User>().Where(u => u.Id == id).FirstOrDefault();
-            if(userToReturn == null)
+            var userToReturn = dbContext.Set<User>().Where(u => u.Id == id).Include(p => p.Project).Include(ef => ef.EvaluationForms).FirstOrDefault();
+            if (userToReturn == null)
             {
                 throw new KeyNotFoundException("User not found");
-            }                               
+            }
             return userToReturn;
         }
+
+        public IEnumerable<User> GetUsersOfDepartment(Guid depId)
+        {
+            return dbContext.Set<User>()
+                            .Where(u => u.DepartmentId == depId)
+                            .Include(p => p.Project).Include(ef => ef.EvaluationForms).ToList();
+        }
+        public IEnumerable<User> GetUsersOfProject(Guid proId)
+        {
+            return dbContext.Set<User>()
+                            .Where(u => u.ProjectId == proId)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
+
+        public IEnumerable<User> GetUsersWithoutDepartment()
+        {
+            return dbContext.Set<User>()
+                            .Where(u => u.DepartmentId ==  null)
+                            .Include(p => p.Project).Include(ef => ef.EvaluationForms).ToList();
+        }
+
+        public IEnumerable<User> GetUsersWithoutProject()
+        {
+            return dbContext.Set<User>()
+                            .Where(u => u.ProjectId == null)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
+
 
         public User Update(User toUpdate)
         {

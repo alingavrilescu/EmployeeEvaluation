@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Department } from 'src/app/models/department.model';
+import { EvaluationForm } from 'src/app/models/evaluation-form.model';
 import { Project } from 'src/app/models/project.model';
 import { UserDTO } from 'src/app/models/users.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
+import { EvaluationFormService } from 'src/app/services/evaluation-form.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -15,6 +18,7 @@ export class UserDetailsComponent implements OnInit {
   userId: any;
   user!: UserDTO;
   project!: Project;
+  department!: Department;
   constructor(
     private usersService: UsersService,
     private projectsService: ProjectsService,
@@ -33,6 +37,11 @@ export class UserDetailsComponent implements OnInit {
       .getProjectById(this.user.projectId!)
       .subscribe((res) => {
         this.project = res;
+      });
+    this.departmentsService
+      .getDepartmentById(this.user.departmentId!)
+      .subscribe((res) => {
+        this.department = res;
       });
   }
 }

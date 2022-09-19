@@ -10,7 +10,7 @@ import { ReturnUrlType } from 'src/api-authorization/api-authorization.constants
 })
 export class FormTemplateService {
 
-  private readonly url="form-templates";
+  private readonly url="/Department/FormTemplate";
 
   constructor(private httpClient:HttpClient) { }
 
@@ -22,7 +22,7 @@ export class FormTemplateService {
   {
     return this.httpClient.get<FormTemplate>(`${environment.apiUrl}/${this.url}/${id}`);
   }
-  public getFormTemplates():Observable<FormTemplate[]>
+  public getFormTemplates(id:Guid):Observable<FormTemplate[]>
   {
     return this.httpClient.get<FormTemplate[]>(`${environment.apiUrl}/${this.url}`);
   }

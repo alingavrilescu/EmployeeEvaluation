@@ -12,15 +12,20 @@ namespace EmployeeEvaluation.ApplicationLogic
             this._projectRepository = projectRepository;
         }
 
+        public IEnumerable<Project> GetProjects()
+        {
+            return this._projectRepository.GetAll();
+        }
+        public IEnumerable<Project> GetProjectsOfDepartment(Guid depId)
+        {
+            return this._projectRepository.GetProjectsOfDepartment(depId);
+        }
+
         public Project GetProjectById(Guid id)
         {
             return this._projectRepository.GetById(id);
         }
 
-        public IEnumerable<Project> GetProjects()
-        {
-            return this._projectRepository.GetAll();
-        }
 
         public Project AddProject(Project toAdd)
         {

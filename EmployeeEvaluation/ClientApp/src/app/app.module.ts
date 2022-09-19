@@ -13,23 +13,22 @@ import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectsService } from './services/projects.service';
-import { UsersButtonsComponent } from './components/users/users-buttons/users-buttons.component';
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
 import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
-import {DialogModule} from 'primeng/dialog';
+import { DialogModule } from 'primeng/dialog';
 import { FormTemplateComponent } from './components/form-template/form-template.component';
-import {TabViewModule} from 'primeng/tabview';
-import {InputTextModule} from 'primeng/inputtext';
+import { TabViewModule } from 'primeng/tabview';
+import { InputTextModule } from 'primeng/inputtext';
 import { AccordionModule } from 'primeng/accordion';
 import { DropdownModule } from 'primeng/dropdown';
-import {InputTextareaModule} from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { EvaluationFormComponent } from './components/evaluation-form/evaluation-form/evaluation-form.component';
 import { DepartmentDetailsComponent } from './components/department-details/department-details.component';
-
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -37,7 +36,6 @@ import { DepartmentDetailsComponent } from './components/department-details/depa
     NavMenuComponent,
     HomeComponent,
     ProjectsComponent,
-    UsersButtonsComponent,
     UsersTableComponent,
     DepartmentTableComponent,
     DepartmentButtonsComponent,
@@ -64,9 +62,13 @@ import { DepartmentDetailsComponent } from './components/department-details/depa
     DropdownModule,
     InputTextareaModule,
     InputTextModule,
+    TableModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
-      { path: 'projects/projectDetails/:id',component: ProjectDetailsComponent },
+      {
+        path: 'projects/projectDetails/:id',
+        component: ProjectDetailsComponent,
+      },
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersTableComponent },
       { path: 'departments', component: DepartmentTableComponent },

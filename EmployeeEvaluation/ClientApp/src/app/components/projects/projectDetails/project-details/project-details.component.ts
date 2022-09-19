@@ -37,7 +37,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void{
     this.getProjecSubscription?.unsubscribe();
     // this.getAssignedDepartmentSubscription?.unsubscribe();
-    this.getDepartmentsSubscription?.unsubscribe();
+    // this.getDepartmentsSubscription?.unsubscribe();
   }
 
   getProject(){

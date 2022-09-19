@@ -11,11 +11,10 @@ import { CriteriaComments } from 'src/app/models/criteria-comments.model';
 @Component({
   selector: 'app-evaluation-form',
   templateUrl: './evaluation-form.component.html',
-  styleUrls: ['./evaluation-form.component.css']
+  styleUrls: ['./evaluation-form.component.css'],
 })
 export class EvaluationFormComponent implements OnInit, OnDestroy {
-
-  constructor(private evaluationFormService: EvaluationFormService) { }
+  constructor(private evaluationFormService: EvaluationFormService) {}
 
   deleteSubscription!: Subscription;
 
@@ -69,5 +68,4 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     };
     this.evaluationFormService.createEvaluationForm(temp).subscribe(() => { this.refreshEvaluationFormList(); });
   }
-
 }

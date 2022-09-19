@@ -20,9 +20,9 @@ namespace EmployeeEvaluation.Controllers
         }
         
         [HttpGet]
-        public IEnumerable<FormTemplate> GetFormTemplates()
+        public IEnumerable<FormTemplate> GetFormTemplates(Guid departmentId)
         {
-            return formTemplateService.GetFormTemplates();
+            return formTemplateService.GetFormTemplates(departmentId);
         }
 
         // GET api/<FormTemplateController>/5

@@ -18,12 +18,15 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         }
         public IEnumerable<Department> GetAll()
         {
-            return dbContext.Set<Department>().ToList();
+            return dbContext.Set<Department>().Include(u => u.Users)
+                                              .Include(p =>p.Projects)
+                                              .Include(t => t.FormTemplates).ToList();
         }
         public Department GetById(Guid id)
         {
             var departmentToReturn = dbContext.Set<Department>().Where(d => d.Id == id)
                                                                 .Include(u => u.Users)
+                                                                .Include(p => p.Projects)
                                                                 .Include(t => t.FormTemplates).FirstOrDefault();
             if (departmentToReturn == null)
             {
@@ -36,6 +39,17 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             var department = dbContext.Set<Department>().Add(toAdd);
             dbContext.SaveChanges();
             return department.Entity;
+        }
+
+        public Department AddUsersToDepartment(Guid depId, List<User> users)
+        {
+            var department = GetById(depId);
+            foreach (var user in users)
+            {
+                department.Users.Add(user);
+            }
+            this.dbContext.SaveChanges();
+            return department;
         }
         public Department Update(Department toUpdate)
         {

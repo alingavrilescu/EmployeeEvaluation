@@ -30,9 +30,10 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 
         }
         
-        public IEnumerable<FormTemplate> GetFormTemplates()
+        public IEnumerable<FormTemplate> GetFormTemplates(Guid departmentId)
         {
-            var formTemplates = dbContext.Set<FormTemplate>().Include(f => f.TemplateSections)
+            var formTemplates = dbContext.Set<FormTemplate>().Where(f => f.DepartmentId == departmentId)
+                                                             .Include(f => f.TemplateSections)
                                                              .ThenInclude(s => s.TemplateCriteria)
                                                              .ToList();
             return formTemplates;

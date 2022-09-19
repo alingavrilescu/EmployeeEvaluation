@@ -14,13 +14,17 @@ import { ProjectsService } from '../../services/projects.service';
 })
 export class ProjectsComponent implements OnInit, OnDestroy {
 
-  editProjectFormGroup = new FormGroup({
-    nameControl: new FormControl(''),
-    descriptionControl: new FormControl(''),
+  addProjectForm = new FormGroup({
+    projectName: new FormControl(''),
+    projectDescription: new FormControl(''),
   });
 
-  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService, 
-    private formBuilder: FormBuilder) { }
+  editProjectForm = new FormGroup({
+    projectName: new FormControl(''),
+    projectDescription: new FormControl(''),
+  });
+
+  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService) { }
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
@@ -35,6 +39,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   projectDescriptionEdit = "";
   projectName = "";
   projectDescription = "";
+  project!: Project;
+
+  displayAddModal: boolean = false;
+  displayEditModal: boolean = false;
 
   
   ngOnInit(): void {
@@ -43,22 +51,29 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.deleteSubscription.unsubscribe();
-    // this.getDepartmentsSubscription.unsubscribe();
-    // this.refreshProjectsSubscription.unsubscribe();
-    // this.addProjectSubscription.unsubscribe();
-    // this.updateProjectSubscription.unsubscribe();
+    this.deleteSubscription?.unsubscribe();
+    this.getDepartmentsSubscription?.unsubscribe();
+    this.refreshProjectsSubscription?.unsubscribe();
+    this.addProjectSubscription?.unsubscribe();
+    this.updateProjectSubscription?.unsubscribe();
   }
 
   addProject(){
-    var temp={
-      name:this.projectName,
-      description:this.projectDescription,
-      departmentId:this.department.id
-    };
-    this.addProjectSubscription=this.projectService.createProject(temp).subscribe(()=>{this.refreshProjectList();});
-    this.projectName="";
-    this.projectDescription="";
+    var newProject = new Project();
+    newProject.name = this.addProjectForm.controls
+                      .projectName.value!;
+    newProject.description= this.addProjectForm.controls
+                              .projectDescription.value!;
+    // var temp={
+    //   name:this.projectName,
+    //   description:this.projectDescription,
+    //   departmentId:this.department.id
+    // };
+    // this.addProjectSubscription=this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();});
+    // this.projectName="";
+    // this.projectDescription="";
+    this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();
+    });
   }
 
   updateProject()
@@ -99,5 +114,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     }
     this.projectNameEdit = project.name;
     this.projectDescriptionEdit = project.description;
+  }
+
+  // ======================= MODALS CONTROLS =====================================
+
+  showAddDialog(){
+    this.displayAddModal = !this.displayAddModal;
+  }
+  
+  showEditDialog(){
+    this.displayEditModal = !this.displayEditModal;
   }
 }
