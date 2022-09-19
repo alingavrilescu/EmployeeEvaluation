@@ -49,6 +49,16 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return formSection;
 
         }
+        public IEnumerable<FormSection> GetAllFormSections()
+        {
+            var formSection = _employeeEvaluationDbContext.Set<FormSection>()
+                                                             .Include(s => s.FormCriteria)
+                                                             .ThenInclude(c => c.CriteriaComments)
+                                                             .ToList();
+
+            return formSection;
+
+        }
         public FormCriteria GetFormCriteriaById(Guid id)
         {
             var formCriteria = _employeeEvaluationDbContext.Set<FormCriteria>().Where(f => f.Id == id)
@@ -58,10 +68,27 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return formCriteria;
 
         }
+        public IEnumerable<FormCriteria> GetAllFormCriteria()
+        {
+            var formCriteria = _employeeEvaluationDbContext.Set<FormCriteria>()
+                                                             .Include(c => c.CriteriaComments)
+                                                             .ToList();
+
+            return formCriteria;
+
+        }
         public CriteriaComments GetCriteriaCommentsById(Guid id)
         {
             var criteriaComments = _employeeEvaluationDbContext.Set<CriteriaComments>().Where(f => f.Id == id)
                                                              .FirstOrDefault();
+
+            return criteriaComments;
+
+        }
+        public IEnumerable<CriteriaComments> GetAllCriteriaComments()
+        {
+            var criteriaComments = _employeeEvaluationDbContext.Set<CriteriaComments>()
+                                                             .ToList();
 
             return criteriaComments;
 

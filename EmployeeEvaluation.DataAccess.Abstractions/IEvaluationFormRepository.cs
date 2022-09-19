@@ -11,6 +11,9 @@ namespace EmployeeEvaluation.DataAccess.Abstractions
     {
 
         public IEnumerable<EvaluationForm> GetAll();
+        public IEnumerable<FormSection> GetAllFormSections();
+        public IEnumerable<FormCriteria> GetAllFormCriteria();
+        public IEnumerable<CriteriaComments> GetAllCriteriaComments();
         public EvaluationForm GetEvaluationFormById(Guid id);
         public FormSection GetFormSectionById(Guid id);
         public FormCriteria GetFormCriteriaById(Guid id);
