@@ -1,5 +1,4 @@
-﻿using EmployeeEvaluation.ViewModels;
-using EmployeeEvaluation.Models;
+﻿using EmployeeEvaluation.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -97,7 +96,7 @@ namespace EmployeeEvaluation.Controllers
             return Ok(createUsersDTO(identityUsers, (List<User>)users));
         }
 
-        [HttpGet("{depId}")]
+        [HttpGet("department/{depId}")]
         public async Task<IActionResult> GetUsersOfDepartment(Guid depId)
         {
             var identityUsers = await _userManager.Users.ToListAsync();
@@ -105,7 +104,7 @@ namespace EmployeeEvaluation.Controllers
             return Ok(createUsersDTO(identityUsers, (List<User>)users));
         }
 
-        [HttpGet("{proId}")]
+        [HttpGet("project/{proId}")]
         public async Task<IActionResult> GetUsersOfProject(Guid proId)
         {
             var identityUsers = await _userManager.Users.ToListAsync();
@@ -113,7 +112,7 @@ namespace EmployeeEvaluation.Controllers
             return Ok(createUsersDTO(identityUsers, (List<User>)users));
         }
 
-        [HttpGet]
+        [HttpGet("without-department")]
         public async Task<IActionResult> GetUsersWithoutDepartment()
         {
             var identityUsers = await _userManager.Users.ToListAsync();
@@ -121,7 +120,7 @@ namespace EmployeeEvaluation.Controllers
             return Ok(createUsersDTO(identityUsers, (List<User>)users));
         }
 
-        [HttpGet]
+        [HttpGet("without-project")]
         public async Task<IActionResult> GetUsersWithoutProject()
         {
             var identityUsers = await _userManager.Users.ToListAsync();
