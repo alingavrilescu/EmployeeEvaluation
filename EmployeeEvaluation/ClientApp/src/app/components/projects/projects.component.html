@@ -1,97 +1,56 @@
 <!-- =====================================ADD PROJECT BUTTON=============================== -->
 
 <div class="add-button-container">
-  <button data-bs-toggle="modal" data-bs-target="#addProjectModal" type="button" label="help" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
+  <button (click)="showAddDialog()" type="button" class="p-button-raised p-button-help" [style]="{width: '150px', height: '40px'}" 
       pButton pRipple label="Add Project" icon="pi pi-plus"></button>
 </div>
 
 <!-- =============================MODAL FOR ADDING A PROJECT================================= -->
 
-<div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addProjectModal">
-          Add Project
-        </h5>
-      </div>
-      <div class="modal-body">
-        <form id="createNewProjectForm" [formGroup]="addProjectForm">
-          <!-- Name input -->
-          <div class="mb-3">
-            <label for="projectName" class="form-label">
-		          Name of the project
-	          </label>
-            <input  name="projectName" type="text" 
-              placeholder="Project's Name" class="form-control" id="projectName" aria-describedby="emailHelp" >
-          </div>
-          <!-- Description input -->
-          <div class="mb-3">
-            <label for="projectDescription" class="form-label">
-		          Description of project
-	          </label>
-              <textarea class="form-control input-textarea"  name="projectDescription" 
-                placeholder="Project's Description" id="projectDescription" aria-describedby="emailHelp" rows="5" cols="61" ></textarea>
-          </div>
-          <!-- Dropdown to assign department -->
-          <div class="mb-3">
-            <label for="projectDepartment" class="form-label">
-              Assign a department
-            </label>
-            <br/>
-            <p-dropdown [options]="departmentsList" optionLabel="name" name="projectDepartment" id="projectDepartment"></p-dropdown>
-          </div>
-          <div class="buttons-container">
-            <button pButton pRipple type="submit" label="Close" data-bs-dismiss="modal" 
-              class="modal-button btn-pos p-button-danger"></button>
+<p-dialog header="Add Project" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="addProjectForm">
+    <label for="float-input">Name</label>
+    <br />
+    <input placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
+    <br />
+    <br />
+    <label for="float-input">Description</label>
+    <br />
+    <textarea placeholder="Project's Description" id="float-input" class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="61" ></textarea>
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="button" label="Close" (click) = "showAddDialog()" 
+      class="modal-button p-button-raised p-button-danger"></button>
 
-            <button pButton pRipple type="button" label="Submit" (click)="addProject()" data-bs-dismiss="modal"
-             class="modal-button btn-pos p-button-success"></button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <button pButton pRipple type="button" label="Submit" (click)="addProject()" (click)="showAddDialog()"
+     class="modal-button p-button-raised p-button-success"></button>
   </div>
-</div>
+</p-dialog>
 
 <!-- =============================MODAL FOR EDITING A PROJECT================================= -->
 
-<div class="modal fade" id="editProjectModal" tabindex="-1" aria-labelledby="editProjectModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editProjectModal">
-          Edit Project
-        </h5>
-      </div>
-      <div class="modal-body">
-        <form id="editProjectForm">
-          <div class="mb-3">
-            <label for="projectNameEdit" class="form-label">
-		          Change Name
-	          </label>
-            <input [(ngModel)]="projectNameEdit" type="text" name="projectNameEdit" class="form-control" id="projectNameEdit" aria-describedby="emailHelp" 
-               value="{{projectNameEdit}}"/>
-          </div>
-          <div class="mb-3">
-            <label for="projectDescriptionEdit" class="form-label">
-		          Change Description
-	          </label>
-              <textarea [(ngModel)]="projectDescriptionEdit" type="text" name="projectDescriptionEdit" class="input-textarea" id="projectDescriptionEdit" aria-describedby="emailHelp" 
-                 rows="5" cols="61" value="{{projectDescriptionEdit}}"></textarea>
-          </div>
-          <div class="buttons-container">
-            <button pButton pRipple type="submit" label="Close" data-bs-dismiss="modal" 
-              class="modal-button btn-pos p-button-danger"></button>
+<p-dialog header="Edit Project" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '30vw'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="editProjectForm">
+    <label for="float-input">Name</label>
+    <br />
+    <input value="projectNameEdit" placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
+    <br />
+    <br />
+    <label for="float-input">Description</label>
+    <br />
+    <textarea value="projectDescriptionEdit" placeholder="Project's Description" id="float-input" class="form-control input-textarea" formControlName="projectDescription" rows="5" cols="61" ></textarea>
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="button" label="Close" (click) = "showEditDialog()" 
+      class="modal-button p-button-raised p-button-danger"></button>
 
-            <button pButton pRipple type="button" label="Submit" (click)="updateProject()" data-bs-dismiss="modal"
-             class="modal-button btn-pos p-button-success"></button>
-          </div>
-        </form>
-      </div>
-    </div>
+    <button pButton pRipple type="button" label="Submit" (click)="updateProject()" (click)="showEditDialog()"
+     class="modal-button p-button-raised p-button-success"></button>
   </div>
-</div>
+</p-dialog>
+
 
 <!-- ================================CARD================================= -->
 
@@ -100,12 +59,12 @@
     <ng-template pTemplate="header">
     </ng-template>
     <ng-template pTemplate="content">
-      <textarea rows="5" cols="40" readonly>{{project.description}}</textarea>
+      <textarea class="textbox" rows="5" cols="40" readonly>{{project.description}}</textarea>
       <!-- <p>{{project.description}}</p> -->
     </ng-template>
     <ng-template pTemplate="footer">
         <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" 
-          class="btn-pos" id="editProject" data-bs-toggle="modal" data-bs-target="#editProjectModal" (click)="getData(project)"></button>
+          class="p-button-raised btn-pos" id="editProject" (click)="showEditDialog()" (click)="getData(project)"></button>
 
         <button pButton pRipple type="button" label="More Details" icon="pi pi-info" 
           class="p-button-secondary btn-pos" routerLink="projectDetails/{{project.id}}"></button>

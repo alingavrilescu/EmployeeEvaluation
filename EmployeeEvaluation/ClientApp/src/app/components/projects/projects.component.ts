@@ -19,8 +19,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     projectDescription: new FormControl(''),
   });
 
-  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService, 
-    private formBuilder: FormBuilder) { }
+  editProjectForm = new FormGroup({
+    projectName: new FormControl(''),
+    projectDescription: new FormControl(''),
+  });
+
+  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService) { }
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
@@ -36,6 +40,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   projectName = "";
   projectDescription = "";
   project!: Project;
+
+  displayAddModal: boolean = false;
+  displayEditModal: boolean = false;
 
   
   ngOnInit(): void {
@@ -107,5 +114,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     }
     this.projectNameEdit = project.name;
     this.projectDescriptionEdit = project.description;
+  }
+
+  // ======================= MODALS CONTROLS =====================================
+
+  showAddDialog(){
+    this.displayAddModal = !this.displayAddModal;
+  }
+  
+  showEditDialog(){
+    this.displayEditModal = !this.displayEditModal;
   }
 }
