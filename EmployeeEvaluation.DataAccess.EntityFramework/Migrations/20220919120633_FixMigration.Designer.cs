@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
     [DbContext(typeof(EmployeeEvaluationDbContext))]
-    [Migration("20220914091738_AnotherMigration")]
-    partial class AnotherMigration
+    [Migration("20220919120633_FixMigration")]
+    partial class FixMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
