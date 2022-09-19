@@ -23,9 +23,13 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return formTemplateRepository.GetFormTemplateById(id);
         }
-        public IEnumerable<FormTemplate> GetFormTemplates(Guid departmentId)
+        //public IEnumerable<FormTemplate> GetFormTemplates(Guid departmentId)
+        //{
+        //    return formTemplateRepository.GetFormTemplates(departmentId);
+        //}
+        public IEnumerable<FormTemplate> GetFormTemplates()
         {
-            return formTemplateRepository.GetFormTemplates(departmentId);
+            return formTemplateRepository.GetFormTemplates();
         }
         public FormTemplate AddFormTemplate(FormTemplate toAdd)
         {

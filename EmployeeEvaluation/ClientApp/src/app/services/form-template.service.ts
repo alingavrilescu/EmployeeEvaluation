@@ -22,7 +22,11 @@ export class FormTemplateService {
   {
     return this.httpClient.get<FormTemplate>(`${environment.apiUrl}/${this.url}/${id}`);
   }
-  public getFormTemplates(id:Guid):Observable<FormTemplate[]>
+  // public getFormTemplates(id:Guid):Observable<FormTemplate[]>
+  // {
+  //   return this.httpClient.get<FormTemplate[]>(`${environment.apiUrl}/${this.url}`);
+  // }
+  public getFormTemplates():Observable<FormTemplate[]>
   {
     return this.httpClient.get<FormTemplate[]>(`${environment.apiUrl}/${this.url}`);
   }

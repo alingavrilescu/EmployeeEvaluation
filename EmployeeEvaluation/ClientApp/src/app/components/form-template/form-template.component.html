@@ -16,35 +16,245 @@
         </button>
       </div>
       <div class="modal-body">
-           <label for="name">Form template name<span aria-label="required">*</span></label>
-          <input type="text" class="input" pInputText placeholder="Name" [(ngModel)]="formTemplateName" required #name="ngModel" /> 
-    
-          <!-- ----------- Name validation ----------------- -->
-
-         <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert">
-          <div *ngIf="name.errors?.['required']">
-            <div style="color:red">Name is required.</div>
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)">
+          <div>
+            <label for="name"><span aria-label="required">*</span>Form template name<input placeholder="Name"
+                formControlName="name"></label>
+            <div
+              *ngIf="registrationForm.get('name')?.invalid && (registrationForm.get('name')?.dirty || registrationForm.get('name')?.touched)"
+              style="color:red">
+              Names must be at least 2 characters long.
+            </div>
           </div>
-        </div> 
-        <br>
-        <label for="type">Software developer type </label>
-        <select id="type" name="type" [(ngModel)]="formTemplateType">
-          <option value="junior">Junior</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="senior">Senior</option>
-          <option value="expert">Expert</option>
-        </select>
-      </div>
-      <div class="modal-footer">
-        <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal" (onclick)="addFormTemplate()">Save
-          changes</button>
-      </div>
+          <br>
+          <label for="type"><span aria-label="required">*</span>Software developer type </label>
+          <select formControlName="type">
+            <option value="">Choose form template type</option>
+            <option *ngFor="let type of Type">{{type}}</option>
+          </select>
+
+          <div class="modal-footer">
+          </div>
+          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
+            (click)="addFormTemplate()" [disabled]="registrationForm.invalid">Save
+            changes</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
+<!--- --------------------------- Edit modal Form Template-------------------------- -->
+
+<div class="modal" id="editFormTemplateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit form template</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)">
+          <div>
+            <label for="name"><span aria-label="required">*</span>Form template name<input formControlName="name"
+                [(ngModel)]="formTemplateName" value="{{formTemplateName}}"></label>
+            <div
+              *ngIf="registrationForm.get('name')?.invalid && (registrationForm.get('name')?.dirty || registrationForm.get('name')?.touched)"
+              style="color:red">
+              Names must be at least 2 characters long.
+            </div>
+          </div>
+          <br>
+          <label for="type"><span aria-label="required">*</span>Software developer type </label>
+          <select formControlName="type">
+            <option value="">Choose form template type</option>
+            <option *ngFor="let type of Type">{{type}}</option>
+          </select>
+
+          <div class="modal-footer">
+          </div>
+          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
+            [disabled]="registrationForm.invalid">Save
+            changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- --------------------------- Add section modal ------------------------- -->
+<div class="modal" id="addSectionModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new section</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="sectionRegistrationForm" (ngSubmit)="onSubmit(sectionRegistrationForm)">
+          <div>
+            <label for="name"><span aria-label="required">*</span>Section name<input placeholder="Name"
+                formControlName="name"></label>
+            <div
+              *ngIf="sectionRegistrationForm.get('name')?.invalid && (sectionRegistrationForm.get('name')?.dirty || sectionRegistrationForm.get('name')?.touched)"
+              style="color:red">
+              Names must be at least 2 characters long.
+            </div>
+          </div>
+          <div>
+            <label for="description"><span aria-label="required">*</span>Section description<input
+                placeholder="Description" formControlName="description"></label>
+            <div
+              *ngIf="sectionRegistrationForm.get('description')?.invalid && (sectionRegistrationForm.get('description')?.dirty || sectionRegistrationForm.get('description')?.touched)"
+              style="color:red">
+              Description is required.
+            </div>
+          </div>
+
+          <div class="modal-footer">
+          </div>
+          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
+            [disabled]="sectionRegistrationForm.invalid">Save
+            changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- --------------------------- Edit section modal ------------------------- -->
+<div class="modal" id="editSectionModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new section</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="sectionRegistrationForm" (ngSubmit)="onSubmit(sectionRegistrationForm)">
+          <div>
+            <label for="name"><span aria-label="required">*</span>Section name<input placeholder="Name"
+                formControlName="name"></label>
+            <div
+              *ngIf="sectionRegistrationForm.get('name')?.invalid && (sectionRegistrationForm.get('name')?.dirty || sectionRegistrationForm.get('name')?.touched)"
+              style="color:red">
+              Names must be at least 2 characters long.
+            </div>
+          </div>
+          <div>
+            <label for="description"><span aria-label="required">*</span>Section description<input
+                placeholder="Description" formControlName="description"></label>
+            <div
+              *ngIf="sectionRegistrationForm.get('description')?.invalid && (sectionRegistrationForm.get('description')?.dirty || sectionRegistrationForm.get('description')?.touched)"
+              style="color:red">
+              Description is required.
+            </div>
+          </div>
+
+          <div class="modal-footer">
+          </div>
+          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
+            [disabled]="sectionRegistrationForm.invalid">Save
+            changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- --------------------------- Add Criterion Modal ------------------------- -->
+<div class="modal" id="addCriterionModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new criterion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="criterionRegistrationForm" (ngSubmit)="onSubmit(criterionRegistrationForm)">
+          <div>
+            <label for="name"><span aria-label="required">*</span>Criterion name<input placeholder="Name"
+                formControlName="name"></label>
+            <div
+              *ngIf="criterionRegistrationForm.get('name')?.invalid && (criterionRegistrationForm.get('name')?.dirty || criterionRegistrationForm.get('name')?.touched)"
+              style="color:red">
+              Names must be at least 2 characters long.
+            </div>
+          </div>
+          <div>
+            <label for="description"><span aria-label="required">*</span>Criterion description<input
+                placeholder="Description" formControlName="description"></label>
+            <div
+              *ngIf="criterionRegistrationForm.get('description')?.invalid && (criterionRegistrationForm.get('description')?.dirty || criterionRegistrationForm.get('description')?.touched)"
+              style="color:red">
+              Description is required.
+            </div>
+          </div>
+
+          <div class="modal-footer">
+          </div>
+          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
+            [disabled]="criterionRegistrationForm.invalid">Save
+            changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- --------------------------- Edit criterion modal ------------------------- -->
+<div class="modal" id="editCriterionModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new criterion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="criterionRegistrationForm" (ngSubmit)="onSubmit(criterionRegistrationForm)">
+          <div>
+            <label for="name"><span aria-label="required">*</span>Criterion name<input placeholder="Name"
+                formControlName="name"></label>
+            <div
+              *ngIf="criterionRegistrationForm.get('name')?.invalid && (criterionRegistrationForm.get('name')?.dirty || criterionRegistrationForm.get('name')?.touched)"
+              style="color:red">
+              Names must be at least 2 characters long.
+            </div>
+          </div>
+          <div>
+            <label for="description"><span aria-label="required">*</span>Criterion description<input
+                placeholder="Description" formControlName="description"></label>
+            <div
+              *ngIf="criterionRegistrationForm.get('description')?.invalid && (criterionRegistrationForm.get('description')?.dirty || criterionRegistrationForm.get('description')?.touched)"
+              style="color:red">
+              Description is required.
+            </div>
+          </div>
+
+          <div class="modal-footer">
+          </div>
+          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
+            [disabled]="criterionRegistrationForm.invalid">Save
+            changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ----------------------- Accordion form templates --------------------------- -->
 
- <div class="accordion accordion-flush" id="accordionFlushExample">
+<div class="accordion accordion-flush" id="accordionFlushExample">
   <h5 style="text-align: center;">Form Template name</h5>
   <div class="accordion-item">
     <h2 class="accordion-header" id="flush-headingOne">
@@ -56,10 +266,56 @@
     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
       data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">
-        <p>Section description</p>
+        <div><b> Description: </b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur, lorem at
+          sollicitudin accumsan, turpis eros dictum libero, et posuere risus lacus vitae eros. Pellentesque nec pharetra
+          velit. Proin ut nunc aliquet, feugiat tellus at, tristique tellus. Etiam consequat pretium elit eu placerat.
+          Donec non blandit est. Maecenas congue diam sed ante ornare, sit amet aliquam justo tempus. Quisque odio est,
+          suscipit in euismod vitae, ornare non nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+          posuere cubilia curae; Donec nec scelerisque sem. Donec id lorem sit amet eros placerat sodales cursus ut
+          purus. Cras interdum nunc eget faucibus viverra.<br><br>
+
+           <!-- ---------- Delete, Edit section + Add criterion ------------ -->
+
+          <div class="button-block">
+            <button pButton type="button" label="Edit Section" data-bs-toggle="modal" data-bs-target="#editSectionModal"
+              class="p-button-warning">
+            </button>
+            <button pButton type="button" label="Delete Section" data-bs-toggle="modal"
+              data-bs-target="#deleteSectionModal" class="p-button-danger">
+            </button>
+            <button pButton type="button" label="+ Add Criterion" data-bs-toggle="modal"
+            data-bs-target="#addCriterionModal">
+          </button>
+          </div>
+        </div>
+        <br>
         <ul>
-          <li>Criteria name: Criteria description</li>
-          <li>Criteria name2: Criteria description2</li>
+          <li><b>Criteria name</b>
+            <hr>
+            Suspendisse sit amet justo vel leo blandit interdum nec ut dui. Aliquam velit odio,
+            scelerisque quis risus non, imperdiet cursus orci. Vestibulum ut sapien at tortor rhoncus pulvinar.
+            Phasellus quam quam, mollis sit amet sapien sed, aliquam pellentesque felis. Pellentesque enim erat,
+            accumsan at rutrum id, blandit pulvinar neque. Ut odio est, condimentum vitae lacinia at, finibus vitae
+            augue. Ut neque arcu, ullamcorper eget nunc at, hendrerit aliquam eros. Cras id turpis luctus nunc gravida
+            iaculis.
+            <br><br>
+            <div class="button-block">
+              <button pButton type="button" label="Edit Criterion" data-bs-toggle="modal" data-bs-target="#editCriterionModal"
+                class="p-button-warning">
+              </button>
+              <button pButton type="button" label="Delete Criterion" data-bs-toggle="modal"
+                data-bs-target="#deleteCriterionModal" class="p-button-danger">
+              </button>
+            </div>
+          </li>
+          <br>
+          <li><b>Criteria name2</b>
+            <hr> Suspendisse feugiat molestie sollicitudin. Proin id convallis ligula. Nulla posuere lectus
+            pharetra ligula fermentum, id vulputate nunc semper. Nunc sed urna sapien. Vestibulum eros est, placerat
+            vitae nulla at, posuere fringilla sem. Pellentesque habitant morbi tristique senectus et netus et malesuada
+            fames ac turpis egestas. Suspendisse potenti. Vestibulum eleifend, mi lobortis porttitor pretium, magna
+            risus cursus purus, sed rhoncus odio nulla nec risus. Nunc et accumsan dolor. Nam vitae efficitur nulla.
+          </li>
         </ul>
       </div>
     </div>
@@ -75,7 +331,8 @@
       data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
         <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled
-        with some actual content.</div>
+        with some actual content.
+      </div>
     </div>
   </div>
   <div class="accordion-item">
@@ -90,16 +347,45 @@
       <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
         <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening
         here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more
-        representative of how this would look in a real-world application.</div>
-        
-    </div>
-    <button pButton pRipple type="button" label="Delete" class="p-button-danger" style="float:right"></button>
+        representative of how this would look in a real-world application.
+      </div>
 
+    </div>
+
+    <!-- --------------Delete and Edit form template butttons and Add Section ------------------ -->
+    <div class="button-block">
+    <button pButton pRipple type="button" label="Edit" class="p-button-warning"
+      data-bs-toggle="modal" data-bs-target="#editFormTemplateModal"></button>
+    <button pButton pRipple type="button" label="Delete" class="p-button-danger" (click)="showConfirm()"></button>
+    <button pButton type="button" label="+ Add Section" data-bs-toggle="modal"
+    data-bs-target="#addSectionModal">
+  </button>
+    </div>
   </div>
 </div>
+ <!-- -----------------------------Toast details----------------------------- -->
+ <p-toast position="bottom-center" key="bc"></p-toast>
 
- 
-
+ <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+     <ng-template let-message pTemplate="message">
+         <div class="p-flex p-flex-column" style="flex: 1">
+             <div class="p-text-center">
+                 <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                 <h4>{{message.summary}}</h4>
+                 <p>{{message.detail}}</p>
+             </div>
+             <div class="p-grid p-fluid">
+                 <div class="p-col-6">
+                     <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                 </div>
+                 <div class="p-col-6">
+                     <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                 </div>
+             </div>
+         </div>
+     </ng-template>
+ </p-toast>
+<br>
 <br>
 <br>
 <div class="accordion accordion-flush" id="accordionFlushExample2">
@@ -114,7 +400,8 @@
     <div id="flush-collapseOne2" class="accordion-collapse collapse" aria-labelledby="flush-headingOne2"
       data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-        <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+        <code>.accordion-flush</code> class. This is the first item's accordion body.
+      </div>
     </div>
   </div>
   <div class="accordion-item">
@@ -128,7 +415,8 @@
       data-bs-parent="#accordionFlushExample">
       <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
         <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled
-        with some actual content.</div>
+        with some actual content.
+      </div>
     </div>
   </div>
   <div class="accordion-item">
@@ -143,10 +431,11 @@
       <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
         <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening
         here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more
-        representative of how this would look in a real-world application.</div>
+        representative of how this would look in a real-world application.
+      </div>
     </div>
   </div>
-</div> 
+</div>
 
 
 <ul>
@@ -163,7 +452,8 @@
         <div id="flush-collapseOne2" class="accordion-collapse collapse" aria-labelledby="flush-headingOne2"
           data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-            <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+            <code>.accordion-flush</code> class. This is the first item's accordion body.
+          </div>
         </div>
       </div>
       <div class="accordion-item">
@@ -176,8 +466,10 @@
         <div id="flush-collapseTwo2" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo2"
           data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-            <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled
-            with some actual content.</div>
+            <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being
+            filled
+            with some actual content.
+          </div>
         </div>
       </div>
       <div class="accordion-item">
@@ -190,12 +482,15 @@
         <div id="flush-collapseThree2" class="accordion-collapse collapse" aria-labelledby="flush-headingThree2"
           data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-            <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening
-            here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more
-            representative of how this would look in a real-world application.</div>
+            <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting
+            happening
+            here in terms of content, but just filling up the space to make it look, at least at first glance, a bit
+            more
+            representative of how this would look in a real-world application.
+          </div>
         </div>
       </div>
-    </div> 
+    </div>
     <br>
   </li>
 </ul>

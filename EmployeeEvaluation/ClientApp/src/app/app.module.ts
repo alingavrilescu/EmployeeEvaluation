@@ -28,7 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { EvaluationFormComponent } from './components/evaluation-form/evaluation-form/evaluation-form.component';
 import { DepartmentDetailsComponent } from './components/department-details/department-details.component';
-
+import {ToastModule} from 'primeng/toast';
+import {RippleModule} from 'primeng/ripple';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,8 @@ import { DepartmentDetailsComponent } from './components/department-details/depa
     DialogModule,
     DropdownModule,
     InputTextareaModule,
+    ToastModule,
+    RippleModule,
     InputTextModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
