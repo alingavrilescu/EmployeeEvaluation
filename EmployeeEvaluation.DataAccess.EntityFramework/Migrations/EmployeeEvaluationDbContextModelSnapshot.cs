@@ -217,7 +217,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DepartmentId")
+                    b.Property<Guid>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -327,7 +327,9 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 {
                     b.HasOne("EmployeeEvaluation.DataAccess.Model.Department", "Department")
                         .WithMany("Projects")
-                        .HasForeignKey("DepartmentId");
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });
