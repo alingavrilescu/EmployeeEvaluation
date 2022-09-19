@@ -5,6 +5,7 @@ import { Project } from 'src/app/models/project.model';
 import { UserDTO } from 'src/app/models/users.model';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { UsersService } from 'src/app/services/users.service';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-users-table',
@@ -13,19 +14,31 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class UsersTableComponent implements OnInit {
   editUserFormGroup = new FormGroup({
-    nameControl: new FormControl(''),
-    emailControl: new FormControl(''),
+    nameControl: new FormControl('', [Validators.required]),
+    emailControl: new FormControl('', [Validators.required, Validators.email]),
     roleControl: new FormControl(''),
   });
   addUserFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
     emailControl: new FormControl('', [Validators.required, Validators.email]),
-    roleControl: new FormControl('', [Validators.required]),
+    roleControl: new FormControl(''),
   });
   users: UserDTO[] = [];
   user!: UserDTO;
+  roles = [
+    'Human Resources',
+    'Software Developer',
+    'Project Manager',
+    'Project Lead',
+    'Head of Department',
+    'Director of Department',
+  ];
   projects: Project[] = [];
   currentUserId!: Guid;
+  loading: boolean = true;
+  displayAddModal: boolean = false;
+  displayEditModal: boolean = false;
+  displayDeleteModal: boolean = false;
   constructor(
     private usersService: UsersService,
     private projectsService: ProjectsService
@@ -33,6 +46,21 @@ export class UsersTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpGetUsers();
+  }
+  clear(table: Table) {
+    table.clear();
+  }
+  showAddDialog() {
+    this.displayAddModal = !this.displayAddModal;
+  }
+  showEditDialog() {
+    this.displayEditModal = !this.displayEditModal;
+  }
+  showDeleteDialog() {
+    this.displayDeleteModal = !this.displayDeleteModal;
+  }
+  getEventValue($event: any) {
+    return $event.target.value;
   }
   httpGetProjects() {
     this.projectsService.getProjects().subscribe({
@@ -48,6 +76,7 @@ export class UsersTableComponent implements OnInit {
     this.usersService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
+        this.loading = false;
       },
       error: (response) => {
         console.log(response);
@@ -77,7 +106,6 @@ export class UsersTableComponent implements OnInit {
     this.usersService.addUser(newUser).subscribe({
       next: (user) => {
         this.httpGetUsers();
-        alert('Account successfuly created!');
       },
       error: (response) => {
         console.log(response);
@@ -85,12 +113,12 @@ export class UsersTableComponent implements OnInit {
     });
   }
 
-  httpDeleteUser(id?: Guid) {
-    if (id !== undefined) {
+  httpDeleteUser() {
+    if (this.currentUserId !== undefined) {
       for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].id == id) this.users.splice(i, 1);
+        if (this.users[i].id == this.currentUserId) this.users.splice(i, 1);
       }
-      this.usersService.deleteUser(id).subscribe({
+      this.usersService.deleteUser(this.currentUserId).subscribe({
         next: (response) => {
           console.log(response);
         },
@@ -99,21 +127,19 @@ export class UsersTableComponent implements OnInit {
   }
 
   httpEditUser() {
-    this.user.name = this.editUserFormGroup.controls.nameControl.value!;
-    this.user.email = this.editUserFormGroup.controls.emailControl.value!;
-    this.user.role = this.editUserFormGroup.controls.roleControl.value!;
-    this.usersService.editUser(this.user.id!, this.user).subscribe({
-      next: (response) => {
-        console.log(response);
-      },
-    });
-  }
-
-  refreshUsers(users: UserDTO[]) {
-    this.users = users;
-  }
-
-  refreshProjects(projects: Project[]) {
-    this.projects = projects;
+    if (this.currentUserId !== undefined) {
+      var userToEdit = this.users[0];
+      this.users.forEach((user) => {
+        if (user.id === this.currentUserId) userToEdit = user;
+      });
+      userToEdit.name = this.editUserFormGroup.controls.nameControl.value!;
+      userToEdit.email = this.editUserFormGroup.controls.emailControl.value!;
+      userToEdit.role = this.editUserFormGroup.controls.roleControl.value!;
+      this.usersService.editUser(userToEdit.id!, userToEdit).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+      });
+    }
   }
 }
