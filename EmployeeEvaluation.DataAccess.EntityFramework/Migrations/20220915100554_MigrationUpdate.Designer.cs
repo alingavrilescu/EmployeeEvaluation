@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
     [DbContext(typeof(EmployeeEvaluationDbContext))]
-    [Migration("20220914084325_AnotherMigration")]
-    partial class AnotherMigration
+    [Migration("20220915100554_MigrationUpdate")]
+    partial class MigrationUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -219,7 +219,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("DepartmentId")
+                    b.Property<Guid?>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -329,9 +329,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 {
                     b.HasOne("EmployeeEvaluation.DataAccess.Model.Department", "Department")
                         .WithMany("Projects")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });

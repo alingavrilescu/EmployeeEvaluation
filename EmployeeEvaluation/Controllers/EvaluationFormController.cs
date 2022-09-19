@@ -32,6 +32,21 @@ namespace EmployeeEvaluation.Controllers
         {
             return this._evaluationFormService.GetEvaluationFormById(id);
         }
+        [HttpGet("FormSection")]
+        public  IEnumerable<FormSection> GetFormSections()
+        {
+            return this._evaluationFormService.GetAllFormSections();
+        }
+        [HttpGet("FormSection/FormCriteria")]
+        public IEnumerable<FormCriteria> GetFormCriterias()
+        {
+            return this._evaluationFormService.GetAllFormCriteria();
+        }
+        [HttpGet("FormSection/FormCriteria/CriteriaComments")]
+        public IEnumerable<CriteriaComments> GetCriteriaComments()
+        {
+            return this._evaluationFormService.GetAllCriteriaComments();
+        }
 
         [HttpPost]
         public EvaluationForm AddEvaluationForm([FromBody] EvaluationFormDTO evaluationForm)

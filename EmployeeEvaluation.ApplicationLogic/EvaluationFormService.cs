@@ -21,6 +21,19 @@ namespace EmployeeEvaluation.ApplicationLogic
             return this._evaluationFormRepository.GetAll();
         }
 
+        public IEnumerable<FormSection> GetAllFormSections() 
+        {
+            return this._evaluationFormRepository.GetAllFormSections();
+        }
+        public IEnumerable<FormCriteria> GetAllFormCriteria()
+        {
+            return this._evaluationFormRepository.GetAllFormCriteria();
+        }
+        public IEnumerable<CriteriaComments> GetAllCriteriaComments()
+        { 
+            return this._evaluationFormRepository.GetAllCriteriaComments(); 
+        }
+
         public EvaluationForm GetEvaluationFormById(Guid id)
         {
             return this._evaluationFormRepository.GetEvaluationFormById(id);
