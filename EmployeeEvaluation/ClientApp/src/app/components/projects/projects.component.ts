@@ -60,10 +60,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   addProject(){
     var newProject = new Project();
-    newProject.name = this.addProjectForm.controls
-                      .projectName.value!;
-    newProject.description= this.addProjectForm.controls
-                              .projectDescription.value!;
+    newProject.name = this.addProjectForm.controls.projectName.value!;
+    newProject.description= this.addProjectForm.controls.projectDescription.value!;
     // var temp={
     //   name:this.projectName,
     //   description:this.projectDescription,
@@ -79,8 +77,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   updateProject()
   {
     var project ={
-      name:this.projectNameEdit,
-      description:this.projectDescriptionEdit
+      name:this.editProjectForm.controls.projectName.value!,
+      description:this.editProjectForm.controls.projectDescription.value!
     }
     this.updateProjectSubscription=this.projectService.updateProject(this.projectId, project).subscribe(()=>{this.refreshProjectList();});
   }
@@ -106,23 +104,20 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     })
   }
 
-  getData(project:Project)
-  {
+  // ======================= MODALS CONTROLS =====================================
+
+  showAddDialog(){
+    this.displayAddModal = !this.displayAddModal;
+
+  }
+  
+  showEditDialog(project:Project){
+    this.displayEditModal = !this.displayEditModal;
     if(project.id)
     {
       this.projectId=project.id;
     }
     this.projectNameEdit = project.name;
     this.projectDescriptionEdit = project.description;
-  }
-
-  // ======================= MODALS CONTROLS =====================================
-
-  showAddDialog(){
-    this.displayAddModal = !this.displayAddModal;
-  }
-  
-  showEditDialog(){
-    this.displayEditModal = !this.displayEditModal;
   }
 }
