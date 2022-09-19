@@ -24,11 +24,22 @@ namespace EmployeeEvaluation.ApplicationLogic
             return this._userRepository.GetAll();
         }
         
-        public IEnumerable<User> GetUseGetUsersOfDepartmentrs(Guid id)
+        public IEnumerable<User> GetUsersOfDepartment(Guid depId)
         {
-            return this._userRepository.GetUsersOfDepartment(id);
+            return this._userRepository.GetUsersOfDepartment(depId);
         }
-
+        public IEnumerable<User> GetUsersOfProject(Guid proId)
+        {
+            return this._userRepository.GetUsersOfProject(proId);
+        }
+        public IEnumerable<User> GetUsersWithoutDepartment()
+        {
+            return this._userRepository.GetUsersWithoutDepartment();
+        }
+        public IEnumerable<User> GetUsersWithoutProject()
+        {
+            return this._userRepository.GetUsersWithoutProject();
+        }
 
         public User AddUser(User toAdd)
         {

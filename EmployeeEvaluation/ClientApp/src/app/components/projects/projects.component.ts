@@ -19,8 +19,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     projectDescription: new FormControl(''),
   });
 
-  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService, 
-    private formBuilder: FormBuilder) { }
+  editProjectForm = new FormGroup({
+    projectName: new FormControl(''),
+    projectDescription: new FormControl(''),
+  });
+
+  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService) { }
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
@@ -35,6 +39,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   projectDescriptionEdit = "";
   projectName = "";
   projectDescription = "";
+  project!: Project;
+
+  displayAddModal: boolean = false;
+  displayEditModal: boolean = false;
 
   
   ngOnInit(): void {
@@ -64,13 +72,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     // this.addProjectSubscription=this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();});
     // this.projectName="";
     // this.projectDescription="";
-    this.projectService.createProject(newProject).subscribe({
-      next: (project) => {
-        alert('Project successfuly created!');
-      },
-      error: (response) => {
-        console.log(response);
-      },
+    this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();
     });
   }
 
@@ -112,5 +114,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     }
     this.projectNameEdit = project.name;
     this.projectDescriptionEdit = project.description;
+  }
+
+  // ======================= MODALS CONTROLS =====================================
+
+  showAddDialog(){
+    this.displayAddModal = !this.displayAddModal;
+  }
+  
+  showEditDialog(){
+    this.displayEditModal = !this.displayEditModal;
   }
 }

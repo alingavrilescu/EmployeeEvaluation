@@ -1,16 +1,25 @@
 <div id="userDetails">
   <div id="userInfo">
-    <p style="font-size: 20px"><b>Name:</b> {{ this.user.name }}</p>
-    <p style="font-size: 20px"><b>Role:</b> {{ this.user.role }}</p>
-    <p style="font-size: 20px"><b>Evaluation:</b></p>
+    <p-card header="{{ user.name }}" style="margin-right: 50px">
+      <div style="background-color: #f1f0f0; margin-bottom: 10px">
+        <b>Role: </b>Software Developer
+      </div>
+      <div style="background-color: #f7f7f7; margin-bottom: 10px">
+        <b>Email:</b> {{ user.email }}
+      </div>
+      <div class="info" style="background-color: #f1f0f0">
+        <b>Project:</b> Employee Evaluation
+      </div>
+      <div class="info" style="background-color: #f7f7f7">
+        <b>Department:</b> Department #1
+      </div>
+    </p-card>
   </div>
-  <div id="projectInfo">
-    <h5>Project Employee Evaluation</h5>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, itaque
-      eligendi accusantium amet blanditiis aspernatur quaerat dicta natus
-      quisquam, reiciendis quae doloremque est tempore veniam laboriosam ad
-      laborum eos magni.
-    </p>
-  </div>
+  <div id="evaluationInfo"></div>
 </div>
+
+<!-- <p
+      style="font-size: 20px; margin-right: 10vw; border-bottom: 1px solid grey"
+    >
+      <b>User:</b> {{ this.user.name }} - {{ this.user.role }}
+    </p> -->

@@ -22,7 +22,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { InputTextModule } from 'primeng/inputtext';
 import { AccordionModule } from 'primeng/accordion';
 import { DropdownModule } from 'primeng/dropdown';
-import {InputTextareaModule} from 'primeng/inputtextarea';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProjectDetailsComponent } from './components/projects/projectDetails/project-details/project-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
@@ -30,6 +30,7 @@ import { EvaluationFormComponent } from './components/evaluation-form/evaluation
 import { DepartmentDetailsComponent } from './components/department-details/department-details.component';
 import {ToastModule} from 'primeng/toast';
 import {RippleModule} from 'primeng/ripple';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import {RippleModule} from 'primeng/ripple';
     ToastModule,
     RippleModule,
     InputTextModule,
+    TableModule,
     RouterModule.forRoot([
       { path: 'projects', component: ProjectsComponent },
       {

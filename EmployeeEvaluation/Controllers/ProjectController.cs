@@ -27,6 +27,12 @@ namespace EmployeeEvaluation.Controllers
             return this._projectService.GetProjects();
         }
 
+        [HttpGet("department/{depId}")]
+        public IEnumerable<Project> GetProjectsOfDepartment(Guid depId)
+        {
+            return this._projectService.GetProjectsOfDepartment(depId);
+        }
+
         // GET api/<ProjectController>/5
         [HttpGet("{id}")]
         public Project Get(Guid id)
