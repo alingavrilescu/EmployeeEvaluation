@@ -5,11 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
-<<<<<<<< HEAD:EmployeeEvaluation.DataAccess.EntityFramework/Migrations/20220914091738_AnotherMigration.cs
-    public partial class AnotherMigration : Migration
-========
-    public partial class MigrationUpdate : Migration
->>>>>>>> AdrianCiobanuBranch:EmployeeEvaluation.DataAccess.EntityFramework/Migrations/20220915100554_MigrationUpdate.cs
+    public partial class FixMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,11 +49,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-<<<<<<<< HEAD:EmployeeEvaluation.DataAccess.EntityFramework/Migrations/20220914091738_AnotherMigration.cs
                     DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-========
-                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
->>>>>>>> AdrianCiobanuBranch:EmployeeEvaluation.DataAccess.EntityFramework/Migrations/20220915100554_MigrationUpdate.cs
                 },
                 constraints: table =>
                 {
@@ -66,12 +58,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         name: "FK_Projects_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-<<<<<<<< HEAD:EmployeeEvaluation.DataAccess.EntityFramework/Migrations/20220914091738_AnotherMigration.cs
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-========
-                        principalColumn: "Id");
->>>>>>>> AdrianCiobanuBranch:EmployeeEvaluation.DataAccess.EntityFramework/Migrations/20220915100554_MigrationUpdate.cs
                 });
 
             migrationBuilder.CreateTable(
