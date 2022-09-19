@@ -36,6 +36,13 @@ namespace EmployeeEvaluation.Controllers
             };
             return this.departmentService.AddDepartment(departmentToAdd);
         }
+        [HttpPost("{depId}")]
+        public Department AddUsersInDepartment(Guid depId, List<User>users)
+        {
+            return this.departmentService.AddUsersToDepartment(depId, users);
+        }
+
+
         [HttpPut("{id}")]
         public Department Put(Guid id, [FromBody] Department department)
         {
