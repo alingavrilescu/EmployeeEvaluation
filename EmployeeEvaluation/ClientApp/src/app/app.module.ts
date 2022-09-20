@@ -31,6 +31,7 @@ import { DepartmentDetailsComponent } from './components/department-details/depa
 import {ToastModule} from 'primeng/toast';
 import {RippleModule} from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { TableModule } from 'primeng/table';
     BrowserAnimationsModule,
     ButtonModule,
     DialogModule,
+    DataViewModule,
     DropdownModule,
     InputTextareaModule,
     ToastModule,

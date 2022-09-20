@@ -1,22 +1,28 @@
 #userDetails {
   display: flex;
-  flex-direction: row;
-  height: 50vh;
-  margin-top: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
 }
 #userInfo {
   display: flex;
   flex-direction: column;
   width: 50%;
-  border-right: 1px solid rgb(142, 140, 140);
-  padding-top: 25px;
+  height: 100%;
+  padding-top: 50px;
   padding-left: 25px;
 }
 #evaluationInfo {
+  display: flex;
+  flex-direction: column;
   width: 50%;
-
-  padding: 25px;
+  padding-top: 25px;
+  padding-left: 25px;
+  padding-bottom: 50px;
+  height: 100%;
 }
+
 p {
   text-align: justify;
 }
