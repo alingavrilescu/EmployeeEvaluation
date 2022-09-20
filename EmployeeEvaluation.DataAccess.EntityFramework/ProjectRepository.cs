@@ -24,6 +24,16 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             _dbcontext.Set<Project>().Remove(toDelete);
             _dbcontext.SaveChanges();
         }
+        public Project AddUsersToProject(Guid proId, List<User> users)
+        {
+            var project = GetById(proId);
+            foreach (var user in users)
+            {
+                project.Users.Add(user);
+            }
+            this._dbcontext.SaveChanges();
+            return project;
+        }
 
         public IEnumerable<Project> GetAll()
         {

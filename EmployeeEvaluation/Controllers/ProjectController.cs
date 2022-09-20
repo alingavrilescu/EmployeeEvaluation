@@ -13,11 +13,13 @@ namespace EmployeeEvaluation.Controllers
     {
         private readonly ProjectService _projectService;
         private readonly DepartmentService _departmentService;
+        private readonly UserService _userService;
 
-        public ProjectController(ProjectService projectService, DepartmentService departmentService)
+        public ProjectController(ProjectService projectService, DepartmentService departmentService, UserService userService)
         {
             this._projectService = projectService;
             this._departmentService = departmentService;
+            this._userService = userService;
         }
 
         // GET: api/<ProjectController>
@@ -53,6 +55,17 @@ namespace EmployeeEvaluation.Controllers
                 Department=department
             };
             return this._projectService.AddProject(projectToAdd);
+        }
+        [HttpPost("{proId}/add-users")]
+        public Project AddUsersToProject(Guid proId,[FromBody] List<Guid> usersIds)
+        {
+            var users=new List<User>();
+            foreach(var id in usersIds)
+            {
+                var userToAdd = _userService.GetUserById(id);
+                users.Add(userToAdd);
+            }
+            return _projectService.AddUsersToProject(proId, users);
         }
 
         // PUT api/<ProjectController>/5

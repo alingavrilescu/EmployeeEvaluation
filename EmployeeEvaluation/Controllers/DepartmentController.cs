@@ -9,10 +9,12 @@ namespace EmployeeEvaluation.Controllers
     [ApiController]
     public class DepartmentController : Controller
     {
-        public readonly DepartmentService departmentService;
-        public DepartmentController(DepartmentService departmentService)
+        private readonly DepartmentService departmentService;
+        private readonly UserService userService;
+        public DepartmentController(DepartmentService departmentService, UserService userService)
         {
             this.departmentService = departmentService;
+            this.userService = userService;
         }
         [HttpGet]
         public IEnumerable<Department> Get()
@@ -34,9 +36,15 @@ namespace EmployeeEvaluation.Controllers
             };
             return this.departmentService.AddDepartment(departmentToAdd);
         }
-        [HttpPost("{depId}")]
-        public Department AddUsersInDepartment(Guid depId, List<User>users)
+        [HttpPost("{depId}/add-users")]
+        public Department AddUsersInDepartment(Guid depId,[FromBody] List<Guid>usersIds)
         {
+            var users = new List<User>();
+            foreach (var id in usersIds)
+            {
+                var userToAdd = userService.GetUserById(id);
+                users.Add(userToAdd);
+            }
             return this.departmentService.AddUsersToDepartment(depId, users);
         }
 
