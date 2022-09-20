@@ -7,6 +7,7 @@ using System.Net;
 using Swashbuckle.AspNetCore.Annotations;
 using EmployeeEvaluation.DataAccess.Model;
 using EmployeeEvaluation.ApplicationLogic;
+using EmployeeEvaluation.AggregationServices;
 
 //test
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -16,21 +17,14 @@ namespace EmployeeEvaluation.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
-    {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IUserStore<ApplicationUser> _userStore;
-        private readonly IUserEmailStore<ApplicationUser> _emailStore;
-        private readonly UserService _userService;
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-        public UsersController(UserService userService, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserStore<ApplicationUser> userStore)
-        {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._userStore = userStore;
-            this._emailStore = GetEmailStore();
-            this._userService = userService;
+    {      
+        private readonly UsersAggregationService aggregationService;
+        
+        public UsersController(UsersAggregationService aggregationService)
+        {           
+            this.aggregationService = aggregationService;
         }
+
 
         private ApplicationUser CreateUser()
         {
@@ -45,43 +39,7 @@ namespace EmployeeEvaluation.Controllers
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
-
-        private IUserEmailStore<ApplicationUser> GetEmailStore()
-        {
-            if (!_userManager.SupportsUserEmail)
-            {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
-            }
-            return (IUserEmailStore<ApplicationUser>)_userStore;
-        }
-
-        private List<UserDTO> createUsersDTO(List<ApplicationUser> identityUsers, List<User> users)
-        {
-            List<UserDTO> usersDTO = new List<UserDTO>();
-            for (int i = 0; i < identityUsers.Count; i++)
-            {
-                var newUser = new UserDTO();
-                newUser.Id = new Guid(identityUsers[i].Id);
-                newUser.Name = identityUsers[i].UserName;
-                newUser.Email = identityUsers[i].Email;
-                newUser.Role = users[i].Role;
-                newUser.DepartmentId = users[i].DepartmentId;
-                newUser.ProjectId = users[i].ProjectId;
-                usersDTO.Add(newUser);
-            }
-            return usersDTO;
-        }
-        private UserDTO createUserDTO(ApplicationUser identityUser, User user)
-        {
-            var newUser = new UserDTO();
-            newUser.Id = new Guid(identityUser.Id);
-            newUser.Name = identityUser.UserName;
-            newUser.Email = identityUser.Email;
-            newUser.Role = user.Role;
-            newUser.DepartmentId = user.DepartmentId;
-            newUser.ProjectId = user.ProjectId;
-            return newUser;
-        }
+       
 
         [HttpGet]
         [SwaggerResponse(StatusCodes.Status200OK, "Action was successful")]
@@ -90,57 +48,95 @@ namespace EmployeeEvaluation.Controllers
         [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetAllUsers()
-        {
-            var identityUsers = await _userManager.Users.ToListAsync();
-            var users = _userService.GetUsers();
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+        {          
+            try
+            {
+                var users = await aggregationService.GetAllUsers();
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+           
         }
 
         [HttpGet("department/{depId}")]
         public async Task<IActionResult> GetUsersOfDepartment(Guid depId)
         {
-            var identityUsers = await _userManager.Users.ToListAsync();
-            var users = _userService.GetUsersOfDepartment(depId);
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+            try
+            {
+                var users = await aggregationService.GetUsersByDepartment(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not load the users from the database");
+            }            
         }
 
         [HttpGet("project/{proId}")]
-        public async Task<IActionResult> GetUsersOfProject(Guid proId)
+        public async Task<IActionResult> GetUsersOfProject(Guid projectId)
         {
-            var identityUsers = await _userManager.Users.ToListAsync();
-            var users = _userService.GetUsersOfProject(proId);
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+            try
+            {
+                var users = await aggregationService.GetUsersByProject(projectId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not load the users from the database");
+            }
         }
 
         [HttpGet("without-department")]
         public async Task<IActionResult> GetUsersWithoutDepartment()
         {
-            var identityUsers = await _userManager.Users.ToListAsync();
-            var users = _userService.GetUsersWithoutDepartment();
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+            try
+            {
+                var users = await aggregationService.GetUsersWithNoDepartment();
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
         }
 
         [HttpGet("without-project")]
         public async Task<IActionResult> GetUsersWithoutProject()
         {
-            var identityUsers = await _userManager.Users.ToListAsync();
-            var users = _userService.GetUsersWithoutProject();
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+            try
+            {
+                var users = await aggregationService.GetUsersWithNoProject();
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
-            var identityUser = await _userManager.FindByIdAsync(id.ToString());
-            var user = _userService.GetUserById(id);
-            return Ok(this.createUserDTO(identityUser, user));
+            try
+            {
+                var users = await aggregationService.GetUserById(id);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not load the user from the database");
+            }
         }
 
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserPostDTO newUser)
         {
-            var identityUser = CreateUser();
+            /*var identityUser = CreateUser();
+            
             await _userStore.SetUserNameAsync(identityUser, newUser.Name, CancellationToken.None);
             await _emailStore.SetEmailAsync(identityUser, newUser.Email, CancellationToken.None);
             var result = await _userManager.CreateAsync(identityUser, "P@ssw0rd!");
@@ -156,26 +152,31 @@ namespace EmployeeEvaluation.Controllers
             {
                 return BadRequest();
             }
+            */
+            return Ok();
         }
 
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var identityUser = await _userManager.FindByIdAsync(id.ToString());
-            var user = _userService.GetUserById(id);
-            if (identityUser == null || user == null) return BadRequest();
-            var result = await _userManager.DeleteAsync(identityUser);
-            if (!result.Succeeded) return BadRequest();
-            this._userService.DeleteUser(id);
-            return Ok();
+            try
+            {
+                await aggregationService.DeleteUserById(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return Problem("Cannot remove the specified user");
+            }
+            
         }
 
 
         [HttpPut("{id}")]
         public async Task<IActionResult> EditUser(Guid id, [FromBody]UserDTO DTOuser)
         {
-            var identityUser = await _userManager.FindByIdAsync(id.ToString());
+            /*var identityUser = await _userManager.FindByIdAsync(id.ToString());
             var user = _userService.GetUserById(id);
             if (identityUser == null || user == null) return BadRequest();
             identityUser.UserName = DTOuser.Name;
@@ -184,7 +185,7 @@ namespace EmployeeEvaluation.Controllers
             user.Role = DTOuser.Role;
             user.DepartmentId = DTOuser.DepartmentId;
             user.ProjectId = DTOuser.ProjectId;
-            this._userService.EditUser(user);
+            this._userService.EditUser(user);*/
             return Ok();
         }
     }

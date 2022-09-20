@@ -6,6 +6,7 @@ namespace EmployeeEvaluation.DataAccess.Model
     {
         public Guid Id { get; set; }
         public string Role { get; set; }
+        public string? Name { get; set; }
         public Guid? DepartmentId { get; set; }
         public Guid? ProjectId { get; set; }
         public Project? Project { get; set; }
