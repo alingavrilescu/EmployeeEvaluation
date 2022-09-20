@@ -72,6 +72,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     // this.projectDescription="";
     this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();
     });
+    this.hideAddDialog();
   }
 
   updateProject()
@@ -81,6 +82,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       description:this.editProjectForm.controls.projectDescription.value!
     }
     this.updateProjectSubscription=this.projectService.updateProject(this.projectId, project).subscribe(()=>{this.refreshProjectList();});
+    this.hideEditDialog();
   }
   
   deleteProject(id?: Guid)
@@ -107,17 +109,25 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog(){
-    this.displayAddModal = !this.displayAddModal;
+    this.displayAddModal = this.displayAddModal=true;
+  }
 
+  hideAddDialog(){
+    this.displayAddModal = this.displayAddModal=false;
   }
   
   showEditDialog(project:Project){
-    this.displayEditModal = !this.displayEditModal;
+    this.displayEditModal = this.displayEditModal=true;
     if(project.id)
     {
       this.projectId=project.id;
     }
-    this.projectNameEdit = project.name;
-    this.projectDescriptionEdit = project.description;
+    this.editProjectForm.controls.projectName.setValue(project.name);
+    this.editProjectForm.controls.projectDescription.setValue(project.description);
+  }
+
+  hideEditDialog()
+  {
+    this.displayEditModal = this.displayEditModal=false;
   }
 }
