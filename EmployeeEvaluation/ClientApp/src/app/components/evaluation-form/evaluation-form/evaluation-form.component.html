@@ -48,7 +48,7 @@
 </div>
 <!-- ----------------------- Accordion form templates --------------------------- -->
 
-<div class="form-container" *ngFor="let evaluationForm of evaluationFormList">
+<div class="form-container">
   <p>{{evaluationForm.name}}</p>
   <p-accordion [multiple]="true" *ngFor="let formSection of formSectionList">
     <p-accordionTab header={{formSection.name}}>

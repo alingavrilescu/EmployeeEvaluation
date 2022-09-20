@@ -38,6 +38,17 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return evaluationForm;
 
         }
+        public EvaluationForm GetEvaluationFormByUserId(Guid id)
+        {
+            var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>().Where(f => f.UserId == id)
+                                                             .Include(f => f.FormSections)
+                                                             .ThenInclude(s => s.FormCriteria)
+                                                             .ThenInclude(c => c.CriteriaComments)
+                                                             .FirstOrDefault();
+
+            return evaluationForm;
+
+        }
 
         public FormSection GetFormSectionById(Guid id)
         {
