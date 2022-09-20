@@ -58,7 +58,7 @@ namespace EmployeeEvaluation.Controllers
         private List<UserDTO> createUsersDTO(List<ApplicationUser> identityUsers, List<User> users)
         {
             List<UserDTO> usersDTO = new List<UserDTO>();
-            for (int i = 0; i < identityUsers.Count; i++)
+            for (int i = 0; i < users.Count; i++)
             {
                 var newUser = new UserDTO();
                 newUser.Id = new Guid(identityUsers[i].Id);
@@ -71,6 +71,25 @@ namespace EmployeeEvaluation.Controllers
             }
             return usersDTO;
         }
+
+        private async Task<List<UserDTO>> createUsersDTOWithCondition(List<User> users)
+        {
+            List<UserDTO> usersDTO = new List<UserDTO>();
+            foreach (var user in users)
+            {
+                var identityUser = await _userManager.FindByIdAsync(user.Id.ToString());
+                var newUser = new UserDTO();
+                newUser.Id = new Guid(identityUser.Id);
+                newUser.Name = identityUser.UserName;
+                newUser.Email = identityUser.Email;
+                newUser.Role = user.Role;
+                newUser.DepartmentId = user.DepartmentId;
+                newUser.ProjectId = user.ProjectId;
+                usersDTO.Add(newUser);
+            }
+            return usersDTO;
+        }
+
         private UserDTO createUserDTO(ApplicationUser identityUser, User user)
         {
             var newUser = new UserDTO();
@@ -99,33 +118,29 @@ namespace EmployeeEvaluation.Controllers
         [HttpGet("department/{depId}")]
         public async Task<IActionResult> GetUsersOfDepartment(Guid depId)
         {
-            var identityUsers = await _userManager.Users.ToListAsync();
             var users = _userService.GetUsersOfDepartment(depId);
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+            return Ok(await createUsersDTOWithCondition((List<User>)users));
         }
 
         [HttpGet("project/{proId}")]
         public async Task<IActionResult> GetUsersOfProject(Guid proId)
         {
-            var identityUsers = await _userManager.Users.ToListAsync();
             var users = _userService.GetUsersOfProject(proId);
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+            return Ok(await createUsersDTOWithCondition((List<User>)users));
         }
 
         [HttpGet("without-department")]
         public async Task<IActionResult> GetUsersWithoutDepartment()
         {
-            var identityUsers = await _userManager.Users.ToListAsync();
             var users = _userService.GetUsersWithoutDepartment();
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+            return Ok(await createUsersDTOWithCondition((List<User>)users));
         }
 
         [HttpGet("without-project")]
         public async Task<IActionResult> GetUsersWithoutProject()
         {
-            var identityUsers = await _userManager.Users.ToListAsync();
             var users = _userService.GetUsersWithoutProject();
-            return Ok(createUsersDTO(identityUsers, (List<User>)users));
+            return Ok(await createUsersDTOWithCondition((List<User>)users));
         }
 
         [HttpGet("{id}")]

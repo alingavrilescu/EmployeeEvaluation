@@ -30,7 +30,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectId=params.get('id');
     })
     this.getProject();
-    this.getUsersOfProject();
+    // this.getUsersOfProject();
   }
 
   ngOnDestroy(): void{
@@ -41,13 +41,16 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   getProject(){
     this.getProjectSubscription=this.projectService.getProjectById(this.projectId).subscribe((res)=>{
       this.project=res;
+      this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
+        this.usersList = data;
+      });
     });
   }
-  getUsersOfProject(){
-    this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
-      this.usersList = data;
-    });
-  }
-
   
+  // getUsersOfProject(){
+  //   this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
+  //     this.usersList = data;
+  //   });
+  // }
+
 }

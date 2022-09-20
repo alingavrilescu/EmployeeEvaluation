@@ -3,6 +3,11 @@
 <hr style="width: 400px;"/>
 <p *ngIf="project">{{project.description}}</p>
 <hr/>
+<!-- =====================================ADD USERS TO PROJECT BUTTON=============================== -->
+<div class="add-button-container">
+  <button type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
+      pButton pRipple label="Add Users" icon="pi pi-plus"></button>
+</div>
 <h6>List of members:</h6>
 <li *ngFor="let user of usersList">
   <ul>{{user.name}}</ul>
