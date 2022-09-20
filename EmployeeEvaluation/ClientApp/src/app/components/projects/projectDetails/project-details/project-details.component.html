@@ -36,3 +36,8 @@
 <p *ngIf="project">{{project.description}}</p>
 <hr/>
 <h6>List of members:</h6>
+<li *ngFor="let user of usersList">
+  <ul>{{user.name}}</ul>
+  <ul>{{user.email}}</ul>
+  <ul>{{user.role}}</ul>
+</li>
