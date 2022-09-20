@@ -19,6 +19,7 @@ export class UserDetailsComponent implements OnInit {
   user!: UserDTO;
   project!: Project;
   department!: Department;
+  sections: string[] = ['C#', 'JavaScript', 'Python'];
   constructor(
     private usersService: UsersService,
     private projectsService: ProjectsService,

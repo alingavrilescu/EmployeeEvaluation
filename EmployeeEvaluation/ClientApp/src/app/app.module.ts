@@ -29,6 +29,7 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
 import { EvaluationFormComponent } from './components/evaluation-form/evaluation-form/evaluation-form.component';
 import { DepartmentDetailsComponent } from './components/department-details/department-details.component';
 import { TableModule } from 'primeng/table';
+import { DataViewModule } from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { TableModule } from 'primeng/table';
     BrowserAnimationsModule,
     ButtonModule,
     DialogModule,
+    DataViewModule,
     DropdownModule,
     InputTextareaModule,
     InputTextModule,

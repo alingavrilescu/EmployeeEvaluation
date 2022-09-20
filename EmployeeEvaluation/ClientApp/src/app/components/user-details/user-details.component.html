@@ -1,6 +1,6 @@
 <div id="userDetails">
   <div id="userInfo">
-    <p-card header="{{ user.name }}" style="margin-right: 50px">
+    <p-card header="{{ user.name }}">
       <div style="background-color: #f1f0f0; margin-bottom: 10px">
         <b>Role: </b>Software Developer
       </div>
@@ -15,7 +15,30 @@
       </div>
     </p-card>
   </div>
-  <div id="evaluationInfo"></div>
+  <div id="evaluationInfo">
+    <p-card header="Evaluation Form Information">
+      <div style="background-color: #f1f0f0; margin-bottom: 10px">
+        <p><b>Evaluation form type: </b>Junior</p>
+      </div>
+      <div style="background-color: #f1f0f0; margin-bottom: 10px">
+        <p>
+          <b>Sections: </b>
+          <p-table [value]="sections" responsiveLayout="scroll">
+            <ng-template pTemplate="header"> </ng-template>
+            <ng-template pTemplate="body" let-section>
+              <tr>
+                <td>{{ section }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p>
+      </div>
+      <div style="background-color: #f1f0f0; margin-bottom: 20px">
+        <p><b>Criteria done: </b>3/10</p>
+      </div>
+      <p-button label="Details"></p-button>
+    </p-card>
+  </div>
 </div>
 
 <!-- <p

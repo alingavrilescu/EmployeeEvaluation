@@ -3,3 +3,10 @@
   padding-bottom: 2vh;
   margin-top: 10vh;
 }
+
+#userDetails {
+  cursor: pointer;
+}
+#userDetails:hover {
+  background: rgb(227, 227, 227);
+}
