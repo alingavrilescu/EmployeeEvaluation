@@ -2,7 +2,13 @@
 <br>
 <br>
 <!-- ------------------ Add Evaluation Form Modal Button ---------------------- -->
-<button pButton type="button" label="+ Add Evaluation Form" data-bs-toggle="modal"
+<button pButton type="button" label="Add Evaluation Form" data-bs-toggle="modal"
+  data-bs-target="#addEvaluationFormModal">
+</button>
+<button pButton type="button" label="Update Evaluation Form" data-bs-toggle="modal"
+  data-bs-target="#addEvaluationFormModal">
+</button>
+<button pButton type="button" label="Delete Evaluation Form" data-bs-toggle="modal"
   data-bs-target="#addEvaluationFormModal">
 </button>
 <!-- --------------------- Modal for adding form template --------------------------- -->
@@ -46,13 +52,34 @@
   <p>{{evaluationForm.name}}</p>
   <p-accordion [multiple]="true" *ngFor="let formSection of formSectionList">
     <p-accordionTab header={{formSection.name}}>
-      {{formSection.description}}
+      <div style="display: flex; justify-content: space-between;">
+        {{formSection.description}}
+        <div style="display: flex; flex-direction:row; gap: 30px;">
+          <button pButton pRipple type="button" label="Add" class="add-button-container"></button>
+          <button pButton pRipple type="button" label="Update" class="add-button-container"></button>
+          <button pButton pRipple type="button" label="Delete" class="add-button-container"></button>
+        </div>
+      </div>
       <p-accordionTab *ngFor="let formCriteria of formCriteriaList" header={{formCriteria.name}}>
-        {{formCriteria.description}}
+        <div style="display: flex; justify-content: space-between;">
+          {{formCriteria.description}}
+          <div style="display: flex; flex-direction:row; gap: 30px;">
+            <button pButton pRipple type="button" label="Add" class="add-button-container"></button>
+            <button pButton pRipple type="button" label="Update" class="add-button-container"></button>
+            <button pButton pRipple type="button" label="Delete" class="add-button-container"></button>
+          </div>
+        </div>
         <ul *ngFor="let criteriaComments of criteriaCommentsList">
           <li>{{criteriaComments.comment}}</li>
           <li>{{criteriaComments.attachment}}</li>
         </ul>
+        <div style="display: flex; justify-content: space-between;">
+          <div style="display: flex; flex-direction:row; gap: 30px;">
+            <button pButton pRipple type="button" label="Add" class="add-button-container"></button>
+            <button pButton pRipple type="button" label="Update" class="add-button-container"></button>
+            <button pButton pRipple type="button" label="Delete" class="add-button-container"></button>
+          </div>
+        </div>
       </p-accordionTab>
     </p-accordionTab>
     <!-- ----------------------------------------------- -->
