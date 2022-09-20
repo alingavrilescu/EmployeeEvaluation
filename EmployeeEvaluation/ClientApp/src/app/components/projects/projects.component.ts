@@ -24,21 +24,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     projectDescription: new FormControl('', Validators.required),
   });
 
-  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService) { }
+  constructor(private projectService:ProjectsService) { }
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
   refreshProjectsSubscription!:Subscription;
   addProjectSubscription!:Subscription;
   updateProjectSubscription!:Subscription;
-  department!:Department;
-  departmentsList:Department[]=[];
   projectsList: Project[]=[];
   projectId!:Guid;
-  projectNameEdit = "";
-  projectDescriptionEdit = "";
-  projectName = "";
-  projectDescription = "";
   project!: Project;
 
   displayAddModal: boolean = false;
@@ -47,7 +41,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.refreshProjectList();
-    this.getDepartments();
   }
 
   ngOnDestroy(): void {
@@ -99,13 +92,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       this.projectsList=data;
     })
   }
-
-  getDepartments(){
-    this.getDepartmentsSubscription=this.departmentService.getDepartments().subscribe((data)=>{
-      this.departmentsList=data;
-    })
-  }
-
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog(){
