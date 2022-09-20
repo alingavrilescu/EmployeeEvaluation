@@ -15,12 +15,19 @@ export class ProjectsService {
   constructor(private httpClient:HttpClient) { }
    public getProjects(): Observable<Project[]>
    {
-       return this.httpClient.get<Project[]>(`${environment.apiUrl}/${this.url}`);
+      return this.httpClient.get<Project[]>(`${environment.apiUrl}/${this.url}`);
    }
+
    public getProjectById(id: Guid): Observable<Project>
    {
-     return this.httpClient.get<Project>(`${environment.apiUrl}/${this.url}/${id}`);
+      return this.httpClient.get<Project>(`${environment.apiUrl}/${this.url}/${id}`);
    }
+
+   public addUsersToProject(id:Guid, usersIds:Guid[]): Observable<Project>
+   {
+      return this.httpClient.post<Project>(`${environment.apiUrl}/${this.url}/${id}/add-users`, usersIds);
+   }
+
    public createProject(project:Project): Observable<Project>
    {
       return this.httpClient.post<Project>(`${environment.apiUrl}/${this.url}`,project);
