@@ -20,10 +20,10 @@
     <textarea placeholder="Project's Description" id="float-input" class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="61" ></textarea>
   </form>
   <div class="buttons-container">
-    <button pButton pRipple type="button" label="Close" (click) = "hideAddDialog()" 
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
       class="modal-button btn-pos p-button-danger"></button>
 
-    <button pButton pRipple type="button" label="Submit" (click)="addProject()"
+    <button pButton pRipple type="submit" label="Submit" (click)="addProject()" [disabled]="!addProjectForm.valid"
      class="modal-button btn-pos p-button-success"></button>
   </div>
 </p-dialog>
@@ -40,13 +40,13 @@
     <br />
     <label for="float-input">Description</label>
     <br />
-    <textarea [value]="editProjectForm.controls.projectDescription" placeholder="Project's Description" id="float-input" class="form-control input-textarea" formControlName="projectDescription" rows="5" cols="60" ></textarea>
+    <textarea [value]="editProjectForm.controls.projectDescription" placeholder="Project's Description" id="float-input" class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="60" ></textarea>
   </form>
   <div class="buttons-container">
     <button pButton pRipple type="button" label="Close" (click) = "hideEditDialog()" 
       class="modal-button btn-pos p-button-danger"></button>
 
-    <button pButton pRipple type="button" label="Submit" (click)="updateProject()"
+    <button pButton pRipple type="submit" label="Submit" (click)="updateProject()" [disabled]="!editProjectForm.valid"
      class="modal-button btn-pos p-button-success"></button>
   </div>
 </p-dialog>

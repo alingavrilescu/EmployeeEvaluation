@@ -15,13 +15,13 @@ import { ProjectsService } from '../../services/projects.service';
 export class ProjectsComponent implements OnInit, OnDestroy {
 
   addProjectForm = new FormGroup({
-    projectName: new FormControl(''),
-    projectDescription: new FormControl(''),
+    projectName: new FormControl('', Validators.required),
+    projectDescription: new FormControl('', Validators.required),
   });
 
   editProjectForm = new FormGroup({
-    projectName: new FormControl(''),
-    projectDescription: new FormControl(''),
+    projectName: new FormControl('', Validators.required),
+    projectDescription: new FormControl('', Validators.required),
   });
 
   constructor(private projectService:ProjectsService, private departmentService:DepartmentsService) { }
