@@ -30,10 +30,11 @@ export class UserDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.userId = params.get('id');
+      this.usersService.getUserById(this.userId).subscribe((res) => {
+        this.user = res;
+      });
     });
-    this.usersService.getUserById(this.userId).subscribe((res) => {
-      this.user = res;
-    });
+
     this.projectsService
       .getProjectById(this.user.projectId!)
       .subscribe((res) => {

@@ -114,6 +114,9 @@ export class UsersTableComponent implements OnInit, OnDestroy {
     this.usersService.addUser(newUser).subscribe({
       next: (user) => {
         this.httpGetUsers();
+        this.addUserFormGroup.controls.nameControl.setValue('');
+        this.addUserFormGroup.controls.emailControl.setValue('');
+        this.addUserFormGroup.controls.roleControl.setValue('');
       },
       error: (response) => {
         console.log(response);
