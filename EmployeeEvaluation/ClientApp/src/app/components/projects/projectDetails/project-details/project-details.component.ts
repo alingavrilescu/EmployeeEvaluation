@@ -26,9 +26,11 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   projectId:any;
   project!:Project;
   usersList:UserDTO[] = [];
+  usersWithoutProjectList:UserDTO[] = [];
   getProjectSubscription!:Subscription;
   getDepartmentsSubscription!:Subscription;
   getUsersOfProjectSubscription!:Subscription;
+  getUsersWithoutProjectSubscription!:Subscription;
 
   displayAddUsersModal:Boolean=false;
 
@@ -42,6 +44,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void{
     this.getProjectSubscription?.unsubscribe();
     this.getUsersOfProjectSubscription?.unsubscribe();
+    this.getUsersWithoutProjectSubscription?.unsubscribe();
   }
 
   getProject(){
