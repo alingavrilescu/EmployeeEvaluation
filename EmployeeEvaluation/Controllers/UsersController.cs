@@ -136,10 +136,10 @@ namespace EmployeeEvaluation.Controllers
             return Ok(await createUsersDTOWithCondition((List<User>)users));
         }
 
-        [HttpGet("without-project")]
-        public async Task<IActionResult> GetUsersWithoutProject()
+        [HttpGet("without-project/department/{depId}")]
+        public async Task<IActionResult> GetUsersWithoutProject(Guid depId)
         {
-            var users = _userService.GetUsersWithoutProject();
+            var users = _userService.GetUsersWithoutProject(depId);
             return Ok(await createUsersDTOWithCondition((List<User>)users));
         }
 

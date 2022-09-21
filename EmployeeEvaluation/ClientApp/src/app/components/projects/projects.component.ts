@@ -95,15 +95,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog(){
-    this.displayAddModal = this.displayAddModal=true;
+    this.displayAddModal = true;
   }
 
   hideAddDialog(){
-    this.displayAddModal = this.displayAddModal=false;
+    this.displayAddModal = false;
   }
   
   showEditDialog(project:Project){
-    this.displayEditModal = this.displayEditModal=true;
+    this.displayEditModal = true;
     if(project.id)
     {
       this.projectId=project.id;
@@ -114,6 +114,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   hideEditDialog()
   {
-    this.displayEditModal = this.displayEditModal=false;
+    this.displayEditModal = false;
   }
 }

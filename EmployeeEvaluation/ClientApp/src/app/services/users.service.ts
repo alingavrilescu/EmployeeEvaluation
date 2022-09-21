@@ -20,8 +20,20 @@ export class UsersService {
     );
   }
 
-  public getUsersOfProject(id: Guid): Observable<UserDTO[]> {
-    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/project/${id}`);
+  public getUsersOfDepartment(depId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}`);
+  }
+
+  public getUsersOfProject(proId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/project/${proId}`);
+  }
+
+  public getUsersWithoutDepartment(): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/without-department`);
+  }
+
+  public getUsersWithoutProject(depId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/without-project/department/${depId}`);
   }
 
   public addUser(newUser: UserDTO): Observable<UserDTO> {
