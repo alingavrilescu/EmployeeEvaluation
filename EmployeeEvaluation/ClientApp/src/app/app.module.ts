@@ -70,7 +70,7 @@ import { DataViewModule } from 'primeng/dataview';
     InputTextModule,
     TableModule,
     RouterModule.forRoot([
-      { path: 'projects', component: ProjectsComponent },
+      { path: 'departments/:id/projects', component: ProjectsComponent },
       {
         path: 'projects/projectDetails/:id',
         component: ProjectDetailsComponent,

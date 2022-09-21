@@ -1,8 +1,12 @@
 <!---------------------------- BUTTONS ------------------------------>
 <!-- <app-department-buttons></app-department-buttons> -->
 <!---------------------------- CONTAINER OF CARDS ------------------------------>
-<div style="margin-top: 50px">
-  <p-button label="Add Department" (onClick)="showAddDialog()"></p-button>
+<div style="display: flex; flex-direction: column; margin-top: 50px">
+  <p-button
+    label="Add Department"
+    (onClick)="showAddDialog()"
+    style="align-self: flex-end"
+  ></p-button>
 </div>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
   <p-card *ngFor="let department of departments">
@@ -17,8 +21,16 @@
         margin-top: 20px;
       "
     >
-      <i class="pi pi-bars" style="cursor: pointer"></i>
-      <i class="pi pi-users" style="cursor: pointer" routerLink="details/1"></i>
+      <i
+        class="pi pi-bars"
+        style="cursor: pointer"
+        routerLink="{{ this.department.id }}/projects"
+      ></i>
+      <i
+        class="pi pi-users"
+        style="cursor: pointer"
+        routerLink="details/{{ this.department.id }}"
+      ></i>
       <i
         class="pi pi-pencil"
         style="cursor: pointer"
@@ -33,7 +45,7 @@
       ></i>
     </div>
     <div class="card" style="width: 100%; margin-top: 30px">
-      <p-table [value]="users" [scrollable]="true" scrollHeight="250px">
+      <!-- <p-table [value]="users" [scrollable]="true" scrollHeight="250px">
         <ng-template pTemplate="header">
           <tr>
             <th style="min-width: 50px">Name</th>
@@ -46,7 +58,7 @@
             <td style="min-width: 50px">Software Developer</td>
           </tr>
         </ng-template>
-      </p-table>
+      </p-table> -->
     </div>
   </p-card>
 </div>
