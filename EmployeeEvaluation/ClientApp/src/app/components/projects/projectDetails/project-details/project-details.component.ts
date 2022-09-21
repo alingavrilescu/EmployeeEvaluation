@@ -24,6 +24,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   constructor(private projectService:ProjectsService, private activatedRoute: ActivatedRoute, private userService: UsersService) { }
 
   projectId:any;
+  departmentId:any;
   project!:Project;
   usersList:UserDTO[] = [];
   usersWithoutProject:UserDTO[] = [];
@@ -31,12 +32,14 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   getDepartmentsSubscription!:Subscription;
   getUsersOfProjectSubscription!:Subscription;
   getUsersWithoutProjectSubscription!:Subscription;
+  addUsersToProjectSubscription!:Subscription;
 
   displayAddUsersModal:Boolean=false;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
-      this.projectId=params.get('id');
+      this.projectId=params.get('proId');
+      this.departmentId=params.get('depId');
     })
     this.getProject();
   }
@@ -45,6 +48,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     this.getProjectSubscription?.unsubscribe();
     this.getUsersOfProjectSubscription?.unsubscribe();
     this.getUsersWithoutProjectSubscription?.unsubscribe();
+    this.addUsersToProjectSubscription?.unsubscribe();
   }
 
   getProject(){
@@ -56,14 +60,19 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // getUsersWithoutProject()
-  // {
-  //   this.getUsersWithoutProjectSubscription=this.userService.getUsersWithoutProject(departmentId).subscribe(data =>{
-  //     this.usersWithoutProject=data;
-  //   })
-  // }
+  addUsersToProject(){
+    //this.addUsersToProjectSubscription=this.projectService.addUsersToProject(this.projectId, this.addUsersToProjectForm.controls.users.value!).subscribe()
+  }
+
+  getUsersWithoutProject()
+  {
+    this.getUsersWithoutProjectSubscription=this.userService.getUsersWithoutProject(this.departmentId).subscribe(data =>{
+      this.usersWithoutProject=data;
+    })
+  }
 
   showAddDialog(){
+    this.getUsersWithoutProject();
     this.displayAddUsersModal = true;
   }
 

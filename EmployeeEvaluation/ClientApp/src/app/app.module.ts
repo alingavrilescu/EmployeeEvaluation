@@ -72,9 +72,9 @@ import {MultiSelectModule} from 'primeng/multiselect';
     MultiSelectModule,
     TableModule,
     RouterModule.forRoot([
-      { path: 'departments/:id/projects', component: ProjectsComponent },
+      { path: 'departments/:depId/projects', component: ProjectsComponent },
       {
-        path: 'projects/projectDetails/:id',
+        path: 'departments/:depId/projects/projectDetails/:proId',
         component: ProjectDetailsComponent,
       },
       { path: '', component: HomeComponent, pathMatch: 'full' },

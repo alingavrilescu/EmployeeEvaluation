@@ -9,21 +9,20 @@
   <form [formGroup]="addUsersToProjectForm">
     <label for="float-input">Name</label>
     <br />
-    <input placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
-    <p-multiSelect [options]="usersWithoutProject" formControlName="users"  optionLabel="name"></p-multiSelect>
+    <p-multiSelect [options]="usersWithoutProject" formControlName="users" optionLabel="name"></p-multiSelect>
   </form>
   <div class="buttons-container">
     <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
       class="modal-button btn-pos p-button-danger"></button>
-    <!-- <button pButton pRipple type="submit" label="Submit" (click)="addProject()" [disabled]="!addProjectForm.valid"
-     class="modal-button btn-pos p-button-success"></button> -->
+    <button pButton pRipple type="submit" label="Submit" (click)="addUsersToProject()" [disabled]="!addUsersToProjectForm.valid"
+     class="modal-button btn-pos p-button-success"></button>
   </div>
 </p-dialog>
 
 <!-- =====================================ADD USERS TO PROJECT BUTTON=============================== -->
 <div class="add-button-container">
   <button type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
-      pButton pRipple label="Add Users" icon="pi pi-plus"></button>
+      pButton pRipple label="Add Users" icon="pi pi-plus" (click)="showAddDialog()"></button>
 </div>
 
 <!-- ===============================TABLE WITH EMPLOYEES ASSIGNED TO THE PROJECT====================== -->
