@@ -58,19 +58,13 @@
  <p-card class="card-content" header={{project.name}} subheader="Project Leader: Grig Va dati cu seama" [style]="{width: '360px'}" styleClass="p-card-shadow">
     <ng-template pTemplate="header">
     </ng-template>
+    <div class="card-buttons">
+      <div title="More Details" class="card-button pi pi-bars" routerLink="projectDetails/{{project.id}}"></div>
+      <div title="Edit Project" class="card-button pi pi-pencil" (click)="showEditDialog(project)"></div>
+      <div title="Delete Project" class="card-button pi pi-trash" (click)="deleteProject(project.id)"></div>
+    </div>
     <ng-template pTemplate="content">
       <textarea class="textbox" rows="5" cols="40" readonly>{{project.description}}</textarea>
-      <!-- <p>{{project.description}}</p> -->
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <button pButton pRipple type="button" label="Edit Project" icon="pi pi-pencil" 
-          class="btn-pos" id="editProject" (click)="showEditDialog(project)"></button>
-
-        <button pButton pRipple type="button" label="More Details" icon="pi pi-info" 
-          class="p-button-secondary btn-pos" routerLink="projectDetails/{{project.id}}"></button>
-
-        <button pButton pRipple type="button" label="Delete Project" icon="pi pi-trash" 
-          class="p-button-danger btn-pos" (click)="deleteProject(project.id)"></button>
     </ng-template>
   </p-card> 
 </div>
