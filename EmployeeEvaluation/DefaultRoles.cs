@@ -8,6 +8,6 @@
         public const string HeadOfDepartment = "Head Of Department";
         public const string ProjectManager = "Project Manager";
         public const string TeamLead = "Team Lead";
-        public const string Development = "Development Member";            
+        public const string Development = "Development Member";             
     }
 }
