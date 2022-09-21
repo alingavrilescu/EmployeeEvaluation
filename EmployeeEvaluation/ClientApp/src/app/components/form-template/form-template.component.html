@@ -2,256 +2,135 @@
 <br>
 <br>
 <!-- ------------------ Add Form Template Modal Button ---------------------- -->
-<button pButton type="button" label="+ Add Form Template" data-bs-toggle="modal" data-bs-target="#addFormTemplateModal">
+<button pButton type="button" label="+ Add Form Template" (click)="showAddDialog()">
 </button>
-<!-- --------------------- Modal for adding form template --------------------------- -->
-<div class="modal" id="addFormTemplateModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add new form template</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)">
-          <div>
-            <label for="name"><span aria-label="required">*</span>Form template name<input placeholder="Name"
-                formControlName="name"></label>
-            <div
-              *ngIf="registrationForm.get('name')?.invalid && (registrationForm.get('name')?.dirty || registrationForm.get('name')?.touched)"
-              style="color:red">
-              Names must be at least 2 characters long.
-            </div>
-          </div>
-          <br>
-          <label for="type"><span aria-label="required">*</span>Software developer type </label>
-          <select formControlName="type">
-            <option value="">Choose form template type</option>
-            <option *ngFor="let type of Type">{{type}}</option>
-          </select>
+<!-- --------------------- Modal for Adding Form Template --------------------------- -->
+<p-dialog
+  header="Add Form Template"
+  [(visible)]="displayFormTemplateAddModal"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '30vw', height: '70vh' }"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column;">
+    <form [formGroup]="addFormTemplateFormGroup">
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="nameControl"
+        />
+        <label for="float-input">Form template's name</label>
+      </span>
+      <br>
+      <label class="required" for="typeControl">Software developer type</label>
+      <!-- <p-dropdown [options]="Type" formControlName="typeControl"></p-dropdown> -->
+      <select formControlName="typeControl">
+        <option hidden disabled selected value> Select an option </option>
+        <option *ngFor="let t of Type" [ngValue]="t">{{t}}</option>
+    </select>
+    </form>
+  </div>
+  <div style="display: flex; flex-direction: row; margin-top:  100px">
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showAddDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      style="margin-left: 45%"
+      (click)="showAddDialog()"
+      (click)="addFormTemplate()"
+      [disabled]="!addFormTemplateFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
 
-          <div class="modal-footer">
-          </div>
-          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
-            (click)="addFormTemplate()" [disabled]="registrationForm.invalid">Save
-            changes</button>
-        </form>
-      </div>
+<!---------------------- Delete Form Template Modal ------------------------>
+<p-dialog
+  [(visible)]="displayFormTemplateDeleteModal"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+    <i
+      class="pi pi-times-circle"
+      style="font-size: 7rem; align-self: center"
+    ></i>
+    <h3 style="margin-top: 10px; text-align: center">Are you sure you want to delete?</h3>
+    <p style="margin-top: 10px; text-align: center">
+      Do you realy want to delete this form template? This process cannot be undone.
+    </p>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 40px;
+      "
+    >
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-secondary"
+        (click)="showDeleteDialog()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        class="p-button-danger"
+        (click)="showDeleteDialog()"
+        (click)="deleteFormTemplate()"
+      ></button>
     </div>
   </div>
-</div>
-<!--- --------------------------- Edit modal Form Template-------------------------- -->
+</p-dialog>
+<!-- ------------------ Edit Form Template Modal ------------------------ -->
 
-<div class="modal" id="editFormTemplateModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit form template</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm)">
-          <div>
-            <label for="name"><span aria-label="required">*</span>Form template name<input formControlName="name"
-                [(ngModel)]="formTemplateName" value="{{formTemplateName}}"></label>
-            <div
-              *ngIf="registrationForm.get('name')?.invalid && (registrationForm.get('name')?.dirty || registrationForm.get('name')?.touched)"
-              style="color:red">
-              Names must be at least 2 characters long.
-            </div>
-          </div>
-          <br>
-          <label for="type"><span aria-label="required">*</span>Software developer type </label>
-          <select formControlName="type">
-            <option value="">Choose form template type</option>
-            <option *ngFor="let type of Type">{{type}}</option>
-          </select>
 
-          <div class="modal-footer">
-          </div>
-          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
-            [disabled]="registrationForm.invalid">Save
-            changes</button>
-        </form>
-      </div>
-    </div>
+<p-dialog header="Edit Form Template" [(visible)]="displayFormTemplateEditModal" [modal]="true" [style]="{width: '30vw'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="editFormTemplateFormGroup">
+    <br />
+    <label for="float-input" class="required">Name</label>
+    <input [value]="editFormTemplateFormGroup.controls.nameControl" placeholder="Form Template's Name" id="float-input" type="text" pInputText formControlName="nameControl" [style]="{width: '100%'}" /> 
+    <br />
+    <br />
+    <label for="float-input" class="required">Software developer type</label>
+    <!-- <p-dropdown [options]="Type" formControlName="typeControl"></p-dropdown> -->
+    <select formControlName="typeControl">
+      <option *ngFor="let t of Type" [ngValue]="t">{{t}}</option>
+    </select>
+  </form>
+  <div style="display: flex; flex-direction: row; margin-top:  100px">
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showAddDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      style="margin-left: 45%"
+      (click)="showAddDialog()"
+      (click)="addFormTemplate()"
+      [disabled]="!addFormTemplateFormGroup.valid"
+    ></button>
   </div>
-</div>
-<!-- --------------------------- Add section modal ------------------------- -->
-<div class="modal" id="addSectionModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add new section</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="sectionRegistrationForm" (ngSubmit)="onSubmit(sectionRegistrationForm)">
-          <div>
-            <label for="name"><span aria-label="required">*</span>Section name<input placeholder="Name"
-                formControlName="name"></label>
-            <div
-              *ngIf="sectionRegistrationForm.get('name')?.invalid && (sectionRegistrationForm.get('name')?.dirty || sectionRegistrationForm.get('name')?.touched)"
-              style="color:red">
-              Names must be at least 2 characters long.
-            </div>
-          </div>
-          <div>
-            <label for="description"><span aria-label="required">*</span>Section description<input
-                placeholder="Description" formControlName="description"></label>
-            <div
-              *ngIf="sectionRegistrationForm.get('description')?.invalid && (sectionRegistrationForm.get('description')?.dirty || sectionRegistrationForm.get('description')?.touched)"
-              style="color:red">
-              Description is required.
-            </div>
-          </div>
+</p-dialog>
 
-          <div class="modal-footer">
-          </div>
-          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
-            [disabled]="sectionRegistrationForm.invalid">Save
-            changes</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- --------------------------- Edit section modal ------------------------- -->
-<div class="modal" id="editSectionModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add new section</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="sectionRegistrationForm" (ngSubmit)="onSubmit(sectionRegistrationForm)">
-          <div>
-            <label for="name"><span aria-label="required">*</span>Section name<input placeholder="Name"
-                formControlName="name"></label>
-            <div
-              *ngIf="sectionRegistrationForm.get('name')?.invalid && (sectionRegistrationForm.get('name')?.dirty || sectionRegistrationForm.get('name')?.touched)"
-              style="color:red">
-              Names must be at least 2 characters long.
-            </div>
-          </div>
-          <div>
-            <label for="description"><span aria-label="required">*</span>Section description<input
-                placeholder="Description" formControlName="description"></label>
-            <div
-              *ngIf="sectionRegistrationForm.get('description')?.invalid && (sectionRegistrationForm.get('description')?.dirty || sectionRegistrationForm.get('description')?.touched)"
-              style="color:red">
-              Description is required.
-            </div>
-          </div>
-
-          <div class="modal-footer">
-          </div>
-          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
-            [disabled]="sectionRegistrationForm.invalid">Save
-            changes</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- --------------------------- Add Criterion Modal ------------------------- -->
-<div class="modal" id="addCriterionModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add new criterion</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="criterionRegistrationForm" (ngSubmit)="onSubmit(criterionRegistrationForm)">
-          <div>
-            <label for="name"><span aria-label="required">*</span>Criterion name<input placeholder="Name"
-                formControlName="name"></label>
-            <div
-              *ngIf="criterionRegistrationForm.get('name')?.invalid && (criterionRegistrationForm.get('name')?.dirty || criterionRegistrationForm.get('name')?.touched)"
-              style="color:red">
-              Names must be at least 2 characters long.
-            </div>
-          </div>
-          <div>
-            <label for="description"><span aria-label="required">*</span>Criterion description<input
-                placeholder="Description" formControlName="description"></label>
-            <div
-              *ngIf="criterionRegistrationForm.get('description')?.invalid && (criterionRegistrationForm.get('description')?.dirty || criterionRegistrationForm.get('description')?.touched)"
-              style="color:red">
-              Description is required.
-            </div>
-          </div>
-
-          <div class="modal-footer">
-          </div>
-          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
-            [disabled]="criterionRegistrationForm.invalid">Save
-            changes</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- --------------------------- Edit criterion modal ------------------------- -->
-<div class="modal" id="editCriterionModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add new criterion</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-          class="modal-button p-button-raised p-button-success" data-bs-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="criterionRegistrationForm" (ngSubmit)="onSubmit(criterionRegistrationForm)">
-          <div>
-            <label for="name"><span aria-label="required">*</span>Criterion name<input placeholder="Name"
-                formControlName="name"></label>
-            <div
-              *ngIf="criterionRegistrationForm.get('name')?.invalid && (criterionRegistrationForm.get('name')?.dirty || criterionRegistrationForm.get('name')?.touched)"
-              style="color:red">
-              Names must be at least 2 characters long.
-            </div>
-          </div>
-          <div>
-            <label for="description"><span aria-label="required">*</span>Criterion description<input
-                placeholder="Description" formControlName="description"></label>
-            <div
-              *ngIf="criterionRegistrationForm.get('description')?.invalid && (criterionRegistrationForm.get('description')?.dirty || criterionRegistrationForm.get('description')?.touched)"
-              style="color:red">
-              Description is required.
-            </div>
-          </div>
-
-          <div class="modal-footer">
-          </div>
-          <button type="button" value="submit" class="btn btn-primary" data-bs-dismiss="modal"
-            [disabled]="criterionRegistrationForm.invalid">Save
-            changes</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
 <!-- ----------------------- Accordion form templates --------------------------- -->
 
 <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -354,37 +233,14 @@
 
     <!-- --------------Delete and Edit form template butttons and Add Section ------------------ -->
     <div class="button-block">
-    <button pButton pRipple type="button" label="Edit" class="p-button-warning"
-      data-bs-toggle="modal" data-bs-target="#editFormTemplateModal"></button>
-    <button pButton pRipple type="button" label="Delete" class="p-button-danger" (click)="showConfirm()"></button>
+    <button pButton pRipple type="button" label="Edit" class="p-button-warning" (click)="showEditDialog()"></button>
+    <button pButton pRipple type="button" label="Delete" class="p-button-danger" (click)="showDeleteDialog()" ></button>
     <button pButton type="button" label="+ Add Section" data-bs-toggle="modal"
     data-bs-target="#addSectionModal">
   </button>
     </div>
   </div>
 </div>
- <!-- -----------------------------Toast details----------------------------- -->
- <p-toast position="bottom-center" key="bc"></p-toast>
-
- <p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
-     <ng-template let-message pTemplate="message">
-         <div class="p-flex p-flex-column" style="flex: 1">
-             <div class="p-text-center">
-                 <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
-                 <h4>{{message.summary}}</h4>
-                 <p>{{message.detail}}</p>
-             </div>
-             <div class="p-grid p-fluid">
-                 <div class="p-col-6">
-                     <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
-                 </div>
-                 <div class="p-col-6">
-                     <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
-                 </div>
-             </div>
-         </div>
-     </ng-template>
- </p-toast>
 <br>
 <br>
 <br>
