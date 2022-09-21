@@ -32,7 +32,7 @@ import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
-import {MultiSelectModule} from 'primeng/multiselect';
+import {ListboxModule} from 'primeng/listbox';
 
 @NgModule({
   declarations: [
@@ -69,12 +69,12 @@ import {MultiSelectModule} from 'primeng/multiselect';
     ToastModule,
     RippleModule,
     InputTextModule,
-    MultiSelectModule,
+    ListboxModule,
     TableModule,
     RouterModule.forRoot([
       { path: 'departments/:depId/projects', component: ProjectsComponent },
       {
-        path: 'departments/:depId/projects/projectDetails/:proId',
+        path: 'departments/:depId/projects/:proId',
         component: ProjectDetailsComponent,
       },
       { path: '', component: HomeComponent, pathMatch: 'full' },

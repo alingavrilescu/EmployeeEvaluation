@@ -28,6 +28,8 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   project!:Project;
   usersList:UserDTO[] = [];
   usersWithoutProject:UserDTO[] = [];
+  selectedUsers:UserDTO[] = [];
+  disabledSubmit:boolean=true;
   getProjectSubscription!:Subscription;
   getDepartmentsSubscription!:Subscription;
   getUsersOfProjectSubscription!:Subscription;
@@ -60,8 +62,21 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onListActions(event:any)
+  {
+    if(event.value.length===0)
+    {
+      this.disabledSubmit=true;
+    }
+    else
+    {
+      this.disabledSubmit=false;
+    }
+    this.selectedUsers=event.value;
+  }
+
   addUsersToProject(){
-    //this.addUsersToProjectSubscription=this.projectService.addUsersToProject(this.projectId, this.addUsersToProjectForm.controls.users.value!).subscribe()
+    // this.addUsersToProjectSubscription=this.projectService.addUsersToProject(this.projectId, this.selectedUsers).subscribe()
   }
 
   getUsersWithoutProject()
@@ -74,6 +89,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   showAddDialog(){
     this.getUsersWithoutProject();
     this.displayAddUsersModal = true;
+    this.disabledSubmit=true;
   }
 
   hideAddDialog(){

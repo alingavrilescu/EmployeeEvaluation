@@ -59,7 +59,7 @@
     <ng-template pTemplate="header">
     </ng-template>
     <div class="card-buttons">
-      <div title="More Details" class="card-button pi pi-bars" routerLink="projectDetails/{{project.id}}"></div>
+      <div title="More Details" class="card-button pi pi-bars" routerLink="{{project.id}}"></div>
       <div title="Edit Project" class="card-button pi pi-pencil" (click)="showEditDialog(project)"></div>
       <div title="Delete Project" class="card-button pi pi-trash" (click)="deleteProject(project.id)"></div>
     </div>

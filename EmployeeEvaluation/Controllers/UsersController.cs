@@ -141,7 +141,7 @@ namespace EmployeeEvaluation.Controllers
                 {
                     Email = newUser.Email,
                     Name = newUser.Name,
-                    Role = newUser.Role,
+                    Role = DefaultRoles.Development,
                     DepartmentId = null,
                     ProjectId = null
 

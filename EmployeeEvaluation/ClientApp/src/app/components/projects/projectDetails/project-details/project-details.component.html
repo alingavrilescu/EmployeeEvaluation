@@ -1,5 +1,5 @@
 <h1 *ngIf="project">{{project.name}}</h1>
-<h4 *ngIf="project.department">{{project.department.name}}</h4>
+<h4 *ngIf="project && project.department">{{project.department.name}}</h4>
 <hr style="width: 400px;"/>
 <p *ngIf="project">{{project.description}}</p>
 <hr/>
@@ -9,12 +9,12 @@
   <form [formGroup]="addUsersToProjectForm">
     <label for="float-input">Name</label>
     <br />
-    <p-multiSelect [options]="usersWithoutProject" formControlName="users" optionLabel="name"></p-multiSelect>
+    <p-listbox [options]="usersWithoutProject" optionLabel="name" optionValue="id" [multiple]="true" [checkbox]="true" [filter]="true" (onChange)="onListActions($event)"></p-listbox>
   </form>
   <div class="buttons-container">
     <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
       class="modal-button btn-pos p-button-danger"></button>
-    <button pButton pRipple type="submit" label="Submit" (click)="addUsersToProject()" [disabled]="!addUsersToProjectForm.valid"
+    <button pButton pRipple type="submit" label="Submit" (click)="addUsersToProject()" [disabled]="disabledSubmit"
      class="modal-button btn-pos p-button-success"></button>
   </div>
 </p-dialog>
