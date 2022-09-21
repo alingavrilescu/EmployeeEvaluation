@@ -29,6 +29,12 @@ export class DepartmentsService {
       newDepartment
     );
   }
+
+  public addUsersToDepartment(id:Guid, usersIds:Guid[]): Observable<Department>
+  {
+    return this.httpClient.post<Department>(`${environment.apiUrl}/${this.url}/${id}/add-users`, usersIds);
+  }
+
   public editDepartment(
     id: Guid,
     newDepartment: Department

@@ -15,30 +15,24 @@ import { ProjectsService } from '../../services/projects.service';
 export class ProjectsComponent implements OnInit, OnDestroy {
 
   addProjectForm = new FormGroup({
-    projectName: new FormControl(''),
-    projectDescription: new FormControl(''),
+    projectName: new FormControl('', Validators.required),
+    projectDescription: new FormControl('', Validators.required),
   });
 
   editProjectForm = new FormGroup({
-    projectName: new FormControl(''),
-    projectDescription: new FormControl(''),
+    projectName: new FormControl('', Validators.required),
+    projectDescription: new FormControl('', Validators.required),
   });
 
-  constructor(private projectService:ProjectsService, private departmentService:DepartmentsService) { }
+  constructor(private projectService:ProjectsService) { }
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
   refreshProjectsSubscription!:Subscription;
   addProjectSubscription!:Subscription;
   updateProjectSubscription!:Subscription;
-  department!:Department;
-  departmentsList:Department[]=[];
   projectsList: Project[]=[];
   projectId!:Guid;
-  projectNameEdit = "";
-  projectDescriptionEdit = "";
-  projectName = "";
-  projectDescription = "";
   project!: Project;
 
   displayAddModal: boolean = false;
@@ -47,7 +41,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   
   ngOnInit(): void {
     this.refreshProjectList();
-    this.getDepartments();
   }
 
   ngOnDestroy(): void {
@@ -72,6 +65,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     // this.projectDescription="";
     this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();
     });
+    this.hideAddDialog();
   }
 
   updateProject()
@@ -81,6 +75,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       description:this.editProjectForm.controls.projectDescription.value!
     }
     this.updateProjectSubscription=this.projectService.updateProject(this.projectId, project).subscribe(()=>{this.refreshProjectList();});
+    this.hideEditDialog();
   }
   
   deleteProject(id?: Guid)
@@ -97,27 +92,28 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       this.projectsList=data;
     })
   }
-
-  getDepartments(){
-    this.getDepartmentsSubscription=this.departmentService.getDepartments().subscribe((data)=>{
-      this.departmentsList=data;
-    })
-  }
-
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog(){
-    this.displayAddModal = !this.displayAddModal;
+    this.displayAddModal = true;
+  }
 
+  hideAddDialog(){
+    this.displayAddModal = false;
   }
   
   showEditDialog(project:Project){
-    this.displayEditModal = !this.displayEditModal;
+    this.displayEditModal = true;
     if(project.id)
     {
       this.projectId=project.id;
     }
-    this.projectNameEdit = project.name;
-    this.projectDescriptionEdit = project.description;
+    this.editProjectForm.controls.projectName.setValue(project.name);
+    this.editProjectForm.controls.projectDescription.setValue(project.description);
+  }
+
+  hideEditDialog()
+  {
+    this.displayEditModal = false;
   }
 }

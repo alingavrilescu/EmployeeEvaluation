@@ -1,11 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { Subscribable, Subscription } from 'rxjs';
 import { Department } from 'src/app/models/department.model';
 import { Project } from 'src/app/models/project.model';
+import { UserDTO } from 'src/app/models/users.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
 import { ProjectsService } from 'src/app/services/projects.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-project-details',
@@ -14,18 +17,20 @@ import { ProjectsService } from 'src/app/services/projects.service';
 })
 export class ProjectDetailsComponent implements OnInit, OnDestroy {
 
-  constructor(private projectService:ProjectsService, private activatedRoute: ActivatedRoute, private departmentService:DepartmentsService) {
+  addUsersToProjectForm = new FormGroup({
+    users: new FormControl('', Validators.required)
+  });
 
-  }
+  constructor(private projectService:ProjectsService, private activatedRoute: ActivatedRoute, private userService: UsersService) { }
 
   projectId:any;
   project!:Project;
-  department!:Department;
-  departments:Department[]=[];
-  // departmentToDisplay!:Department;
-  getProjecSubscription!:Subscription;
-  // getAssignedDepartmentSubscription!:Subscription;
+  usersList:UserDTO[] = [];
+  getProjectSubscription!:Subscription;
   getDepartmentsSubscription!:Subscription;
+  getUsersOfProjectSubscription!:Subscription;
+
+  displayAddUsersModal:Boolean=false;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -35,31 +40,25 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void{
-    this.getProjecSubscription?.unsubscribe();
-    // this.getAssignedDepartmentSubscription?.unsubscribe();
-    // this.getDepartmentsSubscription?.unsubscribe();
+    this.getProjectSubscription?.unsubscribe();
+    this.getUsersOfProjectSubscription?.unsubscribe();
   }
 
   getProject(){
-    this.getProjecSubscription=this.projectService.getProjectById(this.projectId).subscribe((res)=>{
-      this.project=res;     
-      // if(this.project && this.project.departmentId){
-      //   this.getAssignedDepartmentSubscription=this.departmentService.getDepartmentById(this.project.departmentId).subscribe((res)=>{
-      //     this.departmentToDisplay=res;
-      //   })
-      // }
+    this.getProjectSubscription=this.projectService.getProjectById(this.projectId).subscribe((res)=>{
+      this.project=res;
+      this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
+        this.usersList = data;
+      });
     });
   }
-  
-  // updateProjectDepartment(){
-  //   console.log(this.department.id);
-  //   this.project.departmentId=this.department.id;
-  //   if(this.project.id){
-  //     this.projectService.updateProject(this.project.id, this.project).subscribe({
-  //       next: (response) =>{
-  //         console.log(response);
-  //       }
-  //     })
-  //   }
-  // }
+
+  showAddDialog(){
+    this.displayAddUsersModal = true;
+  }
+
+  hideAddDialog(){
+    this.displayAddUsersModal = false;
+  }
+
 }

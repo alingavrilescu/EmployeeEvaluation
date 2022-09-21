@@ -75,22 +75,14 @@
         </th>
         <th>
           <div class="flex justify-content-center align-items-center">
-            Details
-          </div>
-        </th>
-        <th>
-          <div class="flex justify-content-center align-items-center">Edit</div>
-        </th>
-        <th>
-          <div class="flex justify-content-center align-items-center">
-            Remove
+            Actions
           </div>
         </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-user>
       <tr>
-        <td>
+        <td id="userDetails" routerLink="userDetails/{{ user.id }}">
           {{ user.name }}
         </td>
         <td>
@@ -103,23 +95,14 @@
         </td>
         <td>
           <i
-            class="pi pi-bars"
-            style="font-size: 1.3rem; cursor: pointer"
-            routerLink="userDetails/{{ user.id }}"
-          ></i>
-        </td>
-        <td>
-          <i
             class="pi pi-user-edit"
             style="font-size: 1.5rem; cursor: pointer"
             (click)="setCurrentUserId(user.id)"
             (click)="showEditDialog()"
           ></i>
-        </td>
-        <td>
           <i
             class="pi pi-trash"
-            style="font-size: 1.3rem; cursor: pointer"
+            style="font-size: 1.3rem; cursor: pointer; margin-left: 50px"
             (click)="setCurrentUserId(user.id)"
             (click)="showDeleteDialog()"
           ></i>
@@ -139,10 +122,10 @@
   header="Add User"
   [(visible)]="displayAddModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '30vw', height: '50vh' }"
+  [style]="{ width: '40vw', height: '45vh' }"
   [modal]="true"
 >
-  <div style="display: flex; flex-direction: column; margin-top: 30px">
+  <div style="display: flex; flex-direction: column; margin-top: 10px">
     <form [formGroup]="addUserFormGroup">
       <p-dropdown [options]="roles" formControlName="roleControl"></p-dropdown>
       <span class="p-float-label" style="margin-top: 30px">
@@ -151,21 +134,30 @@
           type="text"
           pInputText
           formControlName="nameControl"
+          style="width: 100%"
         />
-        <label for="float-input">Username</label>
+        <label for="float-input">Employee Name</label>
       </span>
       <span class="p-float-label" style="margin-top: 30px">
         <input
           id="float-input"
-          type="text"
+          type="email"
           pInputText
           formControlName="emailControl"
+          style="width: 100%"
         />
         <label for="float-input">Email</label>
       </span>
     </form>
   </div>
-  <div style="display: flex; flex-direction: row; margin-top: 60px">
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 30px;
+    "
+  >
     <button
       pButton
       type="button"
@@ -178,7 +170,6 @@
       type="button"
       label="Submit"
       class="p-button-success"
-      style="margin-left: 45%"
       (click)="showAddDialog()"
       (click)="httpAddUser()"
       [disabled]="!addUserFormGroup.valid"
@@ -191,10 +182,10 @@
   header="Edit User"
   [(visible)]="displayEditModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '50vw', height: '50vh' }"
+  [style]="{ width: '40vw', height: '45vh' }"
   [modal]="true"
 >
-  <div style="display: flex; flex-direction: column; margin-top: 30px">
+  <div style="display: flex; flex-direction: column; margin-top: 10px">
     <form [formGroup]="editUserFormGroup">
       <p-dropdown [options]="roles" formControlName="roleControl"></p-dropdown>
       <span class="p-float-label" style="margin-top: 30px">
@@ -203,8 +194,9 @@
           type="text"
           pInputText
           formControlName="nameControl"
+          style="width: 100%"
         />
-        <label for="float-input">New Username</label>
+        <label for="float-input">New Employee Name</label>
       </span>
       <span class="p-float-label" style="margin-top: 30px">
         <input
@@ -212,12 +204,20 @@
           type="text"
           pInputText
           formControlName="emailControl"
+          style="width: 100%"
         />
         <label for="float-input">New Email</label>
       </span>
     </form>
   </div>
-  <div style="display: flex; flex-direction: row; margin-top: 60px">
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 30px;
+    "
+  >
     <button
       pButton
       type="button"
@@ -230,7 +230,7 @@
       type="button"
       label="Submit"
       class="p-button-success"
-      style="margin-left: 70%"
+      style=""
       (click)="showEditDialog()"
       (click)="httpEditUser()"
       [disabled]="!editUserFormGroup.valid"
@@ -265,7 +265,7 @@
         pButton
         type="button"
         label="Cancel"
-        class="p-button-secondary"
+        class="p-button-danger"
         (click)="showDeleteDialog()"
         style=""
       ></button>
@@ -273,7 +273,7 @@
         pButton
         type="button"
         label="Delete"
-        class="p-button-danger"
+        class="p-button-success"
         (click)="showDeleteDialog()"
         (click)="httpDeleteUser()"
         style=""
@@ -374,7 +374,7 @@
 </div> -->
 
 <!-------------------------------------- EDIT MODAL  --------------------------------------->
-<div
+<!-- <div
   class="modal fade"
   id="editUserModal"
   tabindex="-1"
@@ -495,10 +495,10 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-------------------------------------- ADD MODAL  --------------------------------------->
-<div
+<!-- <div
   class="modal fade"
   id="addUserModal"
   tabindex="-1"
@@ -583,4 +583,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

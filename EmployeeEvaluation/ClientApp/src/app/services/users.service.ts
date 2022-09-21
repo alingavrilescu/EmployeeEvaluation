@@ -19,6 +19,23 @@ export class UsersService {
       `${environment.apiUrl}/${this.url}/${id}`
     );
   }
+
+  public getUsersOfDepartment(depId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}`);
+  }
+
+  public getUsersOfProject(proId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/project/${proId}`);
+  }
+
+  public getUsersWithoutDepartment(): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/without-department`);
+  }
+
+  public getUsersWithoutProject(depId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/without-project/department/${depId}`);
+  }
+
   public addUser(newUser: UserDTO): Observable<UserDTO> {
     return this.httpClient.post<UserDTO>(
       `${environment.apiUrl}/${this.url}`,
@@ -36,4 +53,6 @@ export class UsersService {
       `${environment.apiUrl}/${this.url}/${id}`
     );
   }
+
+  
 }

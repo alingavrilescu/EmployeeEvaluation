@@ -21,8 +21,8 @@ export class EvaluationFormService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getEvaluationForms(): Observable<EvaluationForm[]> {
-    return this.httpClient.get<EvaluationForm[]>(`${environment.apiUrl}/${this.url}`);
+  public getEvaluationForms(id: Guid): Observable<EvaluationForm> {
+    return this.httpClient.get<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}`);
   }
 
   public createEvaluationForm(evaluationForm: EvaluationForm): Observable<EvaluationForm> {

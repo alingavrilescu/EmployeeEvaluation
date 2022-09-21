@@ -38,6 +38,10 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._evaluationFormRepository.GetEvaluationFormById(id);
         }
+        public EvaluationForm GetEvaluationFormByUserId(Guid id)
+        {
+            return this._evaluationFormRepository.GetEvaluationFormByUserId(id);
+        }
         public FormSection GetFormSectionById(Guid id)
         {
             return this._evaluationFormRepository.GetFormSectionById(id);

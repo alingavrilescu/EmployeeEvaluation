@@ -52,9 +52,10 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                             .Include(p => p.Project).Include(ef => ef.EvaluationForms).ToList();
         }
 
-        public IEnumerable<User> GetUsersWithoutProject()
+        public IEnumerable<User> GetUsersWithoutProject(Guid depId)
         {
             return dbContext.Set<User>()
+                            .Where(d=>d.DepartmentId==depId)
                             .Where(u => u.ProjectId == null)
                             .Include(ef => ef.EvaluationForms).ToList();
         }

@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { Project } from 'src/app/models/project.model';
@@ -12,7 +12,7 @@ import { Table } from 'primeng/table';
   templateUrl: './users-table.component.html',
   styleUrls: ['./users-table.component.css'],
 })
-export class UsersTableComponent implements OnInit {
+export class UsersTableComponent implements OnInit, OnDestroy {
   editUserFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
     emailControl: new FormControl('', [Validators.required, Validators.email]),
@@ -47,6 +47,7 @@ export class UsersTableComponent implements OnInit {
   ngOnInit(): void {
     this.httpGetUsers();
   }
+  ngOnDestroy(): void {}
   clear(table: Table) {
     table.clear();
   }
@@ -85,6 +86,13 @@ export class UsersTableComponent implements OnInit {
   }
   setCurrentUserId(id: Guid) {
     this.currentUserId = id;
+    this.users.forEach((user) => {
+      if (user.id === id) {
+        this.editUserFormGroup.controls.nameControl.setValue(user.name);
+        this.editUserFormGroup.controls.emailControl.setValue(user.email);
+        this.editUserFormGroup.controls.roleControl.setValue(user.role);
+      }
+    });
   }
   httpGetUserById(id?: Guid) {
     if (id !== undefined) {
@@ -106,6 +114,9 @@ export class UsersTableComponent implements OnInit {
     this.usersService.addUser(newUser).subscribe({
       next: (user) => {
         this.httpGetUsers();
+        this.addUserFormGroup.controls.nameControl.setValue('');
+        this.addUserFormGroup.controls.emailControl.setValue('');
+        this.addUserFormGroup.controls.roleControl.setValue('');
       },
       error: (response) => {
         console.log(response);

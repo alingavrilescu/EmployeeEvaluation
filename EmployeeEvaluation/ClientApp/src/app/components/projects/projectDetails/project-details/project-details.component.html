@@ -1,38 +1,46 @@
-<!-- =====================================ADD PROJECT BUTTON=============================== -->
-<!-- <div class="add-button-container">
-    <button data-bs-toggle="modal" data-bs-target="#addDepartmentModal" type="button" label="help" class="p-button-raised p-button-help" 
-    [style]="{width: '150px', height: '60px'}" pButton pRipple label="Assign Department" icon="pi pi-plus"></button>
-</div> -->
-
-<!-- =============================MODAL FOR ASSIGNING A DEPARTMENT================================= -->
-<!-- <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addDepartmentModal">
-            Assign Departament
-          </h5>
-        </div>
-        <div class="modal-body">
-          <form id="createNewProjectForm">
-            <div class="mb-3">
-              Dropdown with Departments
-              <p-dropdown [options]="departments" [(ngModel)]="department" optionLabel="name" [ngModelOptions]="{standalone: true}"></p-dropdown>
-            </div>
-            <div class="buttons-container">
-              <button pButton pRipple type="button" label="Close" data-bs-dismiss="modal" class="modal-button p-button-raised p-button-danger"></button>
-              <button pButton pRipple type="button" label="Submit" data-bs-dismiss="modal" (click)="updateProjectDepartment()" class="modal-button p-button-raised p-button-success"></button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-
 <h1 *ngIf="project">{{project.name}}</h1>
 <h4 *ngIf="project.department">{{project.department.name}}</h4>
 <hr style="width: 400px;"/>
 <p *ngIf="project">{{project.description}}</p>
 <hr/>
-<h6>List of members:</h6>
+<!-- =============================MODAL TO ADD USERS TO PROJECT=============================== -->
+<p-dialog header="Add users to project" [(visible)]="displayAddUsersModal" [modal]="true" [style]="{width: '550px'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="addUsersToProjectForm">
+    <label for="float-input">Name</label>
+    <br />
+    <input placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
+    <br />
+    <br />
+    <label for="float-input">Description</label>
+    <br />
+    <textarea placeholder="Project's Description" id="float-input" class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="61" ></textarea>
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
+
+    <!-- <button pButton pRipple type="submit" label="Submit" (click)="addProject()" [disabled]="!addProjectForm.valid"
+     class="modal-button btn-pos p-button-success"></button> -->
+  </div>
+</p-dialog>
+<!-- =====================================ADD USERS TO PROJECT BUTTON=============================== -->
+<div class="add-button-container">
+  <button type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
+      pButton pRipple label="Add Users" icon="pi pi-plus"></button>
+</div>
+<h6>List of employees:</h6>
+<p-table [value]="usersList" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+      <tr>
+          <th>Name</th>
+          <th>Email</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-user>
+      <tr>
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+      </tr>
+  </ng-template>
+</p-table>
