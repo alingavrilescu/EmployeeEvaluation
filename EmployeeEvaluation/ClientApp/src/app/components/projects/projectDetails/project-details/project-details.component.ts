@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { Subscribable, Subscription } from 'rxjs';
@@ -16,6 +17,10 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class ProjectDetailsComponent implements OnInit, OnDestroy {
 
+  addUsersToProjectForm = new FormGroup({
+    users: new FormControl('', Validators.required)
+  });
+
   constructor(private projectService:ProjectsService, private activatedRoute: ActivatedRoute, private userService: UsersService) { }
 
   projectId:any;
@@ -25,12 +30,13 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   getDepartmentsSubscription!:Subscription;
   getUsersOfProjectSubscription!:Subscription;
 
+  displayAddUsersModal:Boolean=false;
+
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       this.projectId=params.get('id');
     })
     this.getProject();
-    // this.getUsersOfProject();
   }
 
   ngOnDestroy(): void{
@@ -46,11 +52,13 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
       });
     });
   }
-  
-  // getUsersOfProject(){
-  //   this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
-  //     this.usersList = data;
-  //   });
-  // }
+
+  showAddDialog(){
+    this.displayAddUsersModal = true;
+  }
+
+  hideAddDialog(){
+    this.displayAddUsersModal = false;
+  }
 
 }
