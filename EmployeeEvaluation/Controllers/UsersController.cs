@@ -103,12 +103,12 @@ namespace EmployeeEvaluation.Controllers
             }
         }
 
-        [HttpGet("without-project")]
-        public async Task<IActionResult> GetUsersWithoutProject()
+        [HttpGet("without-project/department/{depId}")]
+        public async Task<IActionResult> GetUsersWithoutProject(Guid depId)
         {
             try
             {
-                var users = await aggregationService.GetUsersWithNoProject();
+                var users = await aggregationService.GetUsersWithNoProject(depId);
                 return Ok(users);
             }
             catch (Exception)

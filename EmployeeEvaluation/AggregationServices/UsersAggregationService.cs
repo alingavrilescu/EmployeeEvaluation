@@ -101,9 +101,9 @@ namespace EmployeeEvaluation.AggregationServices
             return await GetUsersWithIdentityData(users);
         }
 
-        public async Task<IEnumerable<UserDTO>> GetUsersWithNoProject()
+        public async Task<IEnumerable<UserDTO>> GetUsersWithNoProject(Guid deptId)
         {
-            var users = usersService.GetUsersWithoutProject();
+            var users = usersService.GetUsersWithoutProject(deptId);
             return await GetUsersWithIdentityData(users);
         }
         public async Task<UserDTO> GetUserById(Guid id)
