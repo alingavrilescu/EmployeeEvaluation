@@ -52,12 +52,15 @@ namespace EmployeeEvaluation.AggregationServices
                 logger.LogError("Failed to create identity user. {@Errors} ", createUserResult.Errors);
                 throw new Exception("Failed to create new identity user");
             }
+            await 
+                usersManager.AddToRoleAsync(identityUser, newUser.Role);
             User user = new()
             {
                 Id = Guid.Parse(identityUser.Id),
                 ProjectId = newUser.ProjectId,
                 DepartmentId = newUser.DepartmentId,
-                Name = newUser.Name
+                Name = newUser.Name,
+                Role = newUser.Role
             };            
             var savedUser = usersService.AddUser(user);
             return savedUser.ToUserDTO(identityUser);

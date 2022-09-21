@@ -8,27 +8,30 @@ namespace EmployeeEvaluation.IdentityDataSeed
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UsersAggregationService userAggregationService;
-        private readonly ILogger<IdentityDataSeeding> logger;
-        private const string AdminRole = "Admin";
+        UserManager<ApplicationUser> userManager;
+        private readonly ILogger<IdentityDataSeeding> logger;       
         private const string defaultPassword = "P@ssw0rd";
+        public const string defaultAdminName = "System Admin";
         private readonly List<string> defaultRoles = new()
         {
-            AdminRole,
-            "HR",
-            "Development Manager",
-            "Head Of Department",
-            "Project Manager",
-            "Team Lead",
-            "Software Developer"
+            DefaultRoles.Admin,
+            DefaultRoles.HR,
+            DefaultRoles.DevelopmentManager,
+            DefaultRoles.HeadOfDepartment,
+            DefaultRoles.ProjectManager,
+            DefaultRoles.TeamLead,
+            DefaultRoles.Development
         };
         private readonly string defaultAdmin = "admin@admin.com";
         public IdentityDataSeeding(RoleManager<IdentityRole> roleManager, 
+                                    UserManager<ApplicationUser> userManager,
                                    UsersAggregationService userAggregationService,
                                    ILogger<IdentityDataSeeding> logger)
         { 
             this.roleManager = roleManager;
             this.userAggregationService = userAggregationService;
             this.logger = logger;
+            this.userManager = userManager;
         }
 
         private async Task SeedRoles()
@@ -49,29 +52,25 @@ namespace EmployeeEvaluation.IdentityDataSeed
         }
         private async Task SeedDefaultUser()
         {
-           
-          /*  var user = await userManager.FindByNameAsync(defaultAdmin);
+
+            var user = await userManager.FindByNameAsync(defaultAdmin);
+            if (user != null)
+            {
+                logger.LogInformation("Default User already exists and it will not be created");
+                return;
+            }
             if (user == null)
             {
-                logger.LogDebug("Seeding user to store");
-                var adminUser = new ApplicationUser(defaultAdmin);
-                var result = await userManager.CreateAsync(adminUser, defaultPassword);
-                if (result == IdentityResult.Success)
+                await userAggregationService.CreateUser(new UserDTO()
                 {
-                    logger.LogDebug("User created. Assigning to its role");
-                    user = await userManager.FindByNameAsync(defaultAdmin);
-                    result = await userManager.AddToRoleAsync(user, AdminRole);
-                    if (result != IdentityResult.Success)
-                    {
-                        logger.LogError($"Failed to add default admin user to its role");
-                    }
-                }
-            }
-            else
-            {
-                logger.LogDebug("Default admin user already exists. Not seeding the user");
-            }
-          */
+                    Role = DefaultRoles.Admin,
+                    Email = defaultAdmin,
+                    Name = defaultAdminName
+                    
+                }, defaultPassword);
+            }      
+
+           
         }
         public async Task SeedData()
         {

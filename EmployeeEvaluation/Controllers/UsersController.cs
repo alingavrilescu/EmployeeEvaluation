@@ -135,6 +135,23 @@ namespace EmployeeEvaluation.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserPostDTO newUser)
         {
+            try
+            {
+                var user = await aggregationService.CreateUser(new UserDTO()
+                {
+                    Email = newUser.Email,
+                    Name = newUser.Name,
+                    Role = newUser.Role,
+                    DepartmentId = null,
+                    ProjectId = null
+
+                }, "P@ssw0rd");
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not create the user");
+            }
             /*var identityUser = CreateUser();
             
             await _userStore.SetUserNameAsync(identityUser, newUser.Name, CancellationToken.None);
@@ -153,7 +170,7 @@ namespace EmployeeEvaluation.Controllers
                 return BadRequest();
             }
             */
-            return Ok();
+            
         }
 
 
