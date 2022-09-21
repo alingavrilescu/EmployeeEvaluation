@@ -26,7 +26,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   projectId:any;
   project!:Project;
   usersList:UserDTO[] = [];
-  usersWithoutProjectList:UserDTO[] = [];
+  usersWithoutProject:UserDTO[] = [];
   getProjectSubscription!:Subscription;
   getDepartmentsSubscription!:Subscription;
   getUsersOfProjectSubscription!:Subscription;
@@ -55,6 +55,13 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  // getUsersWithoutProject()
+  // {
+  //   this.getUsersWithoutProjectSubscription=this.userService.getUsersWithoutProject(departmentId).subscribe(data =>{
+  //     this.usersWithoutProject=data;
+  //   })
+  // }
 
   showAddDialog(){
     this.displayAddUsersModal = true;

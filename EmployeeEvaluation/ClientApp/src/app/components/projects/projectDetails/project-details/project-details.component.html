@@ -10,7 +10,7 @@
     <label for="float-input">Name</label>
     <br />
     <input placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
-    <!-- <p-multiSelect [options]="cities" optionLabel="name"></p-multiSelect> -->
+    <p-multiSelect [options]="usersWithoutProject" formControlName="users"  optionLabel="name"></p-multiSelect>
   </form>
   <div class="buttons-container">
     <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
