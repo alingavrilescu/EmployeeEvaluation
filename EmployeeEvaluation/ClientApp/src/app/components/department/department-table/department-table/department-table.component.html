@@ -9,10 +9,8 @@
   ></p-button>
 </div>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
-  <p-card *ngFor="let department of departments">
-    <h3>{{ department.name }}</h3>
-    <h6>Mark - Head Of Department</h6>
-
+  <p-card *ngFor="let department of departments" style="width: 20vw">
+    <h3 style="border-bottom: 1px solid darkgrey">{{ department.name }}</h3>
     <div
       style="
         display: flex;
@@ -45,20 +43,19 @@
       ></i>
     </div>
     <div class="card" style="width: 100%; margin-top: 30px">
-      <!-- <p-table [value]="users" [scrollable]="true" scrollHeight="250px">
-        <ng-template pTemplate="header">
-          <tr>
-            <th style="min-width: 50px">Name</th>
-            <th style="min-width: 50px">Role</th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-user>
-          <tr>
-            <td style="min-width: 50px">{{ user.name }}</td>
-            <td style="min-width: 50px">Software Developer</td>
-          </tr>
-        </ng-template>
-      </p-table> -->
+      <div style="background-color: #f1f0f0">
+        <b>Director of department: </b>Mark
+      </div>
+      <div style="background-color: #f7f7f7">
+        <b>Head of department: </b>John
+      </div>
+      <div style="background-color: #f1f0f0"><b>Project lead: </b>Ben</div>
+      <div tyle="background-color: #f7f7f7">
+        <b>Project manager: </b>Michael
+      </div>
+      <div style="background-color: #f1f0f0">
+        <b>Software developers: </b> 7 members
+      </div>
     </div>
   </p-card>
 </div>
@@ -195,7 +192,8 @@
     ></i>
     <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
     <p style="margin-top: 10px; text-align: center">
-      Do you realy want to delete this user? This process cannot be undone.
+      Do you realy want to delete this department? This process cannot be
+      undone.
     </p>
     <div
       style="
