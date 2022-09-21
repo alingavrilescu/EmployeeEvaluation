@@ -1,7 +1,9 @@
+using EmployeeEvaluation.AggregationServices;
 using EmployeeEvaluation.ApplicationLogic;
 using EmployeeEvaluation.Data;
 using EmployeeEvaluation.DataAccess.Abstractions;
 using EmployeeEvaluation.DataAccess.EntityFramework;
+using EmployeeEvaluation.IdentityDataSeed;
 using EmployeeEvaluation.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -44,6 +46,8 @@ builder.Services.AddScoped<IEvaluationFormRepository, EvaluationFormRepository>(
 builder.Services.AddScoped<EvaluationFormService>();
 builder.Services.AddScoped<FormTemplateRepository>();
 builder.Services.AddScoped<FormTemplateService>();
+builder.Services.AddScoped<UsersAggregationService>();
+builder.Services.AddScoped<IdentityDataSeeding>();
 
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
@@ -85,5 +89,11 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.MapFallbackToFile("index.html"); ;
+
+using (var scope = app.Services.CreateScope()) 
+{     
+    var seedService = scope.ServiceProvider.GetRequiredService<IdentityDataSeeding>();
+    await seedService.SeedData();
+}
 
 app.Run();
