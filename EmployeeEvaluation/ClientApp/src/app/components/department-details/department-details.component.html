@@ -1,25 +1,153 @@
 <div id="userDetails">
   <div id="userInfo">
+    <div
+      style="display: flex; flex-direction: row; gap: 20px; margin-left: 65%"
+    >
+      <p-button label="Add Members" (click)="showAddDialog()"></p-button>
+      <p-button label="Delete Members" (click)="showDeleteDialog()"></p-button>
+    </div>
     <p style="font-size: 20px"><b>Departament #1 members</b></p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Role</th>
-          <th scope="col">Project</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          class="users"
-          *ngFor="let user of users"
-          routerLink="../../../users/userDetails/{{ user.id }}"
-        >
-          <td>{{ user.name }}</td>
-          <td>{{ user.role }}</td>
-          <td>---</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="card">
+      <p-dataView
+        #dv
+        [value]="users"
+        [paginator]="true"
+        [rows]="9"
+        filterBy="name"
+        layout="list"
+      >
+        <ng-template pTemplate="header">
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+            <span class="p-input-icon-left mb-2 md:mb-0">
+              <i class="pi pi-search"></i>
+              <input
+                type="search"
+                pInputText
+                placeholder="Search by Name"
+                (input)="dv.filter(getEventValue($event))"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template let-user pTemplate="listItem">
+          <div
+            class="col-12"
+            id="user"
+            routerLink="../../../users/userDetails/{{ user.id }}"
+          >
+            <div style="display: flex; flex-direction: row; gap: 20px">
+              <div
+                style="
+                  width: fit-content;
+                  height: fit-content;
+                  align-self: center;
+                  margin-left: 2%;
+                "
+              >
+                <i class="pi pi-user" style="font-size: 6rem"></i>
+              </div>
+              <div>
+                <p><b>Name: </b>{{ user.name }}</p>
+                <p><b>Email: </b>{{ user.email }}</p>
+                <p><b>Role: </b>{{ user.role }}</p>
+                <p id="evalForm"><b>Evaluation Forms: </b>2</p>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </div>
   </div>
 </div>
+
+<!-- ADD DIALOG -->
+<p-dialog
+  header="Add members to department"
+  [(visible)]="displayAddDialog"
+  styleClass="users-dialog"
+  [modal]="true"
+>
+  <form [formGroup]="addUserFormGroup">
+    <!-- <p>{{ this.addUserFormGroup.controls.nameControl.value![0] }}</p> -->
+    <p-listbox
+      [options]="allUsers"
+      [checkbox]="true"
+      [multiple]="true"
+      [filter]="true"
+      formControlName="nameControl"
+      optionLabel="name"
+      optionValue="id"
+    ></p-listbox>
+  </form>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 50px;
+    "
+  >
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showAddDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      (click)="showAddDialog()"
+      (click)="addUsersToDepartment()"
+      [disabled]="!addUserFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
+
+<!-- DELETE DIALOG -->
+<p-dialog
+  header="Delete members from department"
+  [(visible)]="displayDeleteDialog"
+  styleClass="users-dialog"
+  [modal]="true"
+>
+  <form [formGroup]="addUserFormGroup">
+    <!-- <p>{{ this.addUserFormGroup.controls.nameControl.value![0] }}</p> -->
+    <p-listbox
+      [options]="users"
+      [checkbox]="true"
+      [multiple]="true"
+      [filter]="true"
+      formControlName="nameControl"
+      optionLabel="name"
+      optionValue="id"
+    ></p-listbox>
+  </form>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 50px;
+    "
+  >
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showDeleteDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      (click)="showDeleteDialog()"
+      (click)="deleteUsersFromDepartment()"
+      [disabled]="!addUserFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>

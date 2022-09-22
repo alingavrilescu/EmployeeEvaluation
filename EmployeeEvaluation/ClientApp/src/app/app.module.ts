@@ -32,7 +32,9 @@ import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
-import {MultiSelectModule} from 'primeng/multiselect';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ListboxModule } from 'primeng/listbox';
+import { HeadOfDepartmentPageComponent } from './components/head-of-department-page/head-of-department-page.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
     UserDetailsComponent,
     EvaluationFormComponent,
     DepartmentDetailsComponent,
+    HeadOfDepartmentPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,6 +65,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ButtonModule,
+    ListboxModule,
     DialogModule,
     DataViewModule,
     DropdownModule,
@@ -81,12 +85,14 @@ import {MultiSelectModule} from 'primeng/multiselect';
       { path: 'users', component: UsersTableComponent },
       { path: 'departments', component: DepartmentTableComponent },
       { path: 'form-templates', component: FormTemplateComponent },
+      { path: 'departments/form-templates', component: FormTemplateComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
       { path: 'evaluation-form/user/:id', component: EvaluationFormComponent },
       {
         path: 'departments/details/:id',
         component: DepartmentDetailsComponent,
       },
+      { path: 'head-of-department', component: HeadOfDepartmentPageComponent },
     ]),
   ],
   providers: [
