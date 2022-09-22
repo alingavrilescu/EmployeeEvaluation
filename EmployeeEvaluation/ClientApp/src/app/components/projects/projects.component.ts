@@ -28,12 +28,14 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   constructor(private projectService:ProjectsService, private activatedRoute: ActivatedRoute) { }
   
   deleteSubscription!: Subscription;
+  displayConfirmationDialogue: boolean = false; 
   getDepartmentsSubscription!:Subscription;
   refreshProjectsSubscription!:Subscription;
   addProjectSubscription!:Subscription;
   updateProjectSubscription!:Subscription;
   projectsList: Project[]=[];
   projectId:any;
+  projectIdToDelete: any;
   departmentId:any;
   project!: Project;
 
@@ -113,5 +115,16 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   hideEditDialog()
   {
     this.displayEditModal = false;
+  }
+
+  showDeleteDialog(project: Project) {
+    this.displayConfirmationDialogue = true;
+    if(project.id){
+      this.projectIdToDelete = project.id;
+    }
+  }
+
+  hideDeleteDialog(){
+    this.displayConfirmationDialogue = false;
   }
 }
