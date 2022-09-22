@@ -1,16 +1,6 @@
 <h2 style="text-align: center"> Evaluation </h2>
 <br>
 <br>
-<!-- ------------------ Add Evaluation Form Modal Button ---------------------- -->
-<button pButton type="button" label="Add Evaluation Form" data-bs-toggle="modal"
-  data-bs-target="#addEvaluationFormModal">
-</button>
-<button pButton type="button" label="Update Evaluation Form" data-bs-toggle="modal"
-  data-bs-target="#addEvaluationFormModal">
-</button>
-<button pButton type="button" label="Delete Evaluation Form" data-bs-toggle="modal"
-  data-bs-target="#addEvaluationFormModal">
-</button>
 <!-- --------------------- Modal for adding form template --------------------------- -->
 <div class="modal" id="addEvaluationFormModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -49,37 +39,28 @@
 <!-- ----------------------- Accordion form templates --------------------------- -->
 
 <div class="form-container">
-  <p>{{evaluationForm.name}}</p>
+  <p style="text-align:center; color: navy;text-indent: 30px; text-transform: uppercase">{{evaluationForm.name}}</p>
   <p-accordion [multiple]="true" *ngFor="let formSection of formSectionList">
     <p-accordionTab header={{formSection.name}}>
       <div style="display: flex; justify-content: space-between;">
-        {{formSection.description}}
-        <div style="display: flex; flex-direction:row; gap: 30px;">
-          <button pButton pRipple type="button" label="Add" class="add-button-container"></button>
-          <button pButton pRipple type="button" label="Update" class="add-button-container"></button>
-          <button pButton pRipple type="button" label="Delete" class="add-button-container"></button>
-        </div>
+        <p-card header="Section description" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+          <ng-template pTemplate="header">
+          </ng-template>
+          <p>{{formSection.description}}</p>
+        </p-card>
       </div>
       <p-accordionTab *ngFor="let formCriteria of formCriteriaList" header={{formCriteria.name}}>
         <div style="display: flex; justify-content: space-between;">
-          {{formCriteria.description}}
-          <div style="display: flex; flex-direction:row; gap: 30px;">
-            <button pButton pRipple type="button" label="Add" class="add-button-container"></button>
-            <button pButton pRipple type="button" label="Update" class="add-button-container"></button>
-            <button pButton pRipple type="button" label="Delete" class="add-button-container"></button>
-          </div>
+          <p-card header="Criteria Description" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+            <ng-template pTemplate="header">
+            </ng-template>
+            <p>{{formCriteria.description}}</p>
+          </p-card>
         </div>
         <ul *ngFor="let criteriaComments of criteriaCommentsList">
           <li>{{criteriaComments.comment}}</li>
           <li>{{criteriaComments.attachment}}</li>
         </ul>
-        <div style="display: flex; justify-content: space-between;">
-          <div style="display: flex; flex-direction:row; gap: 30px;">
-            <button pButton pRipple type="button" label="Add" class="add-button-container"></button>
-            <button pButton pRipple type="button" label="Update" class="add-button-container"></button>
-            <button pButton pRipple type="button" label="Delete" class="add-button-container"></button>
-          </div>
-        </div>
       </p-accordionTab>
     </p-accordionTab>
     <!-- ----------------------------------------------- -->
