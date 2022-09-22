@@ -1,4 +1,5 @@
 import { Guid } from "guid-typescript";
+import { CriteriaComments } from "./criteria-comments.model";
 
 export class FormCriteria {
     id?:Guid;
@@ -6,4 +7,5 @@ export class FormCriteria {
     isChecked: boolean = false;
     description: string = "";
     formSectionId?: Guid;
+    criteriaComments: CriteriaComments[] = [];
 }

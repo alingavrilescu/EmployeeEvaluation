@@ -1,46 +1,11 @@
 <h2 style="text-align: center"> Evaluation </h2>
 <br>
 <br>
-<!-- --------------------- Modal for adding form template --------------------------- -->
-<div class="modal" id="addEvaluationFormModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Add new evaluation form</h5>
-      </div>
-      <div class="modal-body">
-        <form id="createNewProjectForm">
-          <div class="mb-3">
-            <label for="projectName" class="form-label">
-              Name of the evaluation form
-            </label>
-            <input [(ngModel)]="evaluationFormName" name="evaluationFormName" onfocus="this.value=''" value=""
-              type="text" placeholder="Name" class="form-control" id="evaluationFormName" aria-describedby="emailHelp">
-          </div>
-          <div class="mb-3">
-            <label for="evaluationFormType">Software developer type </label>
-            <select [(ngModel)]="evaluationFormType" id="type" onfocus="this.value=''" value="" name="type">
-              <option value="junior">Junior</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="senior">Senior</option>
-              <option value="expert">Expert</option>
-            </select>
-
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="addEvaluationForm()">Save changes</button>
-        <button type="submit" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- ----------------------- Accordion form templates --------------------------- -->
-
+<!-- ----------------------- Evaluation form for user --------------------------- -->
 <div class="form-container">
-  <p style="text-align:center; color: navy;text-indent: 30px; text-transform: uppercase">{{evaluationForm.name}}</p>
-  <p-accordion [multiple]="true" *ngFor="let formSection of formSectionList">
+  <p *ngIf="evaluationForm" style="text-align:center; color: navy;text-indent: 30px; text-transform: uppercase">
+    {{evaluationForm.name}}</p>
+  <p-accordion [multiple]="true" *ngFor="let formSection of evaluationForm.formSections">
     <p-accordionTab header={{formSection.name}}>
       <div style="display: flex; justify-content: space-between;">
         <p-card header="Section description" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
@@ -49,7 +14,7 @@
           <p>{{formSection.description}}</p>
         </p-card>
       </div>
-      <p-accordionTab *ngFor="let formCriteria of formCriteriaList" header={{formCriteria.name}}>
+      <p-accordionTab *ngFor="let formCriteria of formSection.formCriteria" header={{formCriteria.name}}>
         <div style="display: flex; justify-content: space-between;">
           <p-card header="Criteria Description" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
             <ng-template pTemplate="header">
@@ -57,7 +22,7 @@
             <p>{{formCriteria.description}}</p>
           </p-card>
         </div>
-        <ul *ngFor="let criteriaComments of criteriaCommentsList">
+        <ul *ngFor="let criteriaComments of formCriteria.criteriaComments">
           <li>{{criteriaComments.comment}}</li>
           <li>{{criteriaComments.attachment}}</li>
         </ul>
