@@ -130,12 +130,11 @@
   header="Add User"
   [(visible)]="displayAddModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '40vw', height: '45vh' }"
   [modal]="true"
+  styleClass="user-dialog"
 >
   <div style="display: flex; flex-direction: column; margin-top: 10px">
     <form [formGroup]="addUserFormGroup">
-      <p-dropdown [options]="roles" formControlName="roleControl"></p-dropdown>
       <span class="p-float-label" style="margin-top: 30px">
         <input
           id="float-input"
@@ -190,7 +189,7 @@
   header="Edit User"
   [(visible)]="displayEditModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '40vw', height: '45vh' }"
+  styleClass="user-dialog"
   [modal]="true"
 >
   <div style="display: flex; flex-direction: column; margin-top: 10px">
@@ -249,7 +248,7 @@
 <!---------------------- DELETE MODAL ------------------------>
 <p-dialog
   [(visible)]="displayDeleteModal"
-  [style]="{ width: '40vw', height: '45vh' }"
+  styleClass="user-dialog"
   [modal]="true"
 >
   <div style="display: flex; flex-direction: column; width: 100%; height: 100%">

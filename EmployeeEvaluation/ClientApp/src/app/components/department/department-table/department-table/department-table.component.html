@@ -10,7 +10,10 @@
 </div>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
   <p-card *ngFor="let department of departments" style="width: 20vw">
-    <h3 style="border-bottom: 1px solid darkgrey">{{ department.name }}</h3>
+    <h3>{{ department.name }}</h3>
+    <div style="border-bottom: 1px solid darkgrey">
+      <b>Head of department: </b>Mark
+    </div>
     <div
       style="
         display: flex;
@@ -20,7 +23,7 @@
       "
     >
       <i
-        class="pi pi-bars"
+        class="pi pi-folder-open"
         style="cursor: pointer"
         routerLink="{{ this.department.id }}/projects"
       ></i>
@@ -28,6 +31,11 @@
         class="pi pi-users"
         style="cursor: pointer"
         routerLink="details/{{ this.department.id }}"
+      ></i>
+      <i
+        class="pi pi-book"
+        style="cursor: pointer"
+        routerLink="form-templates"
       ></i>
       <i
         class="pi pi-pencil"
@@ -43,19 +51,10 @@
       ></i>
     </div>
     <div class="card" style="width: 100%; margin-top: 30px">
-      <div style="background-color: #f1f0f0">
-        <b>Director of department: </b>Mark
-      </div>
-      <div style="background-color: #f7f7f7">
-        <b>Head of department: </b>John
-      </div>
-      <div style="background-color: #f1f0f0"><b>Project lead: </b>Ben</div>
-      <div tyle="background-color: #f7f7f7">
-        <b>Project manager: </b>Michael
-      </div>
-      <div style="background-color: #f1f0f0">
-        <b>Software developers: </b> 7 members
-      </div>
+      <div style="background-color: #f1f0f0"><b>Projects: </b>3</div>
+      <div style="background-color: #f1f0f0"><b>Project leads: </b>3</div>
+      <div tyle="background-color: #f7f7f7"><b>Project managers: </b>3</div>
+      <div style="background-color: #f1f0f0"><b>Developers: </b> 7</div>
     </div>
   </p-card>
 </div>
@@ -65,7 +64,7 @@
   header="Add Department"
   [(visible)]="displayAddModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '40vw', height: '45vh' }"
+  styleClass="department-dialog"
   [modal]="true"
 >
   <div style="display: flex; flex-direction: column; margin-top: 10px">
@@ -124,7 +123,7 @@
   header="Edit Department"
   [(visible)]="displayEditModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
-  [style]="{ width: '40vw', height: '45vh' }"
+  styleClass="department-dialog"
   [modal]="true"
 >
   <div style="display: flex; flex-direction: column; margin-top: 10px">
@@ -182,7 +181,7 @@
 <!---------------------- DELETE MODAL ------------------------>
 <p-dialog
   [(visible)]="displayDeleteModal"
-  [style]="{ width: '40vw', height: '45vh' }"
+  styleClass="department-dialog"
   [modal]="true"
 >
   <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
