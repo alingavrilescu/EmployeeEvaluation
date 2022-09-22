@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeEvaluation.Controllers
 {
-    [Route("api/Department/[controller]")]
+    [Route("api/Department/{departmentId}/[controller]")]
     [ApiController]
     public class FormTemplateController : ControllerBase
     {
@@ -18,15 +18,10 @@ namespace EmployeeEvaluation.Controllers
         {
             this.formTemplateService = formTemplateService;
         }
-        [HttpGet("{departmentId}")]
+        [HttpGet]
         public IEnumerable<FormTemplate> GetFormTemplatesOfDepartment(Guid departmentId)
         {
             return formTemplateService.GetFormTemplatesOfDepartment(departmentId);
-        }
-        [HttpGet]
-        public IEnumerable<FormTemplate> GetFormTemplates()
-        {
-            return formTemplateService.GetFormTemplates();
         }
 
         // GET api/<FormTemplateController>/5
@@ -36,28 +31,15 @@ namespace EmployeeEvaluation.Controllers
             return formTemplateService.GetFormTemplateById(id);
         }
 
-        // POST api/<FormTemplateController>
-        [HttpPost]
-        public FormTemplate PostFormTemplate([FromBody] FormTemplateDTO formTemplate)
-        {
-            var formTemplateToAdd = new FormTemplate
-            {
-                Name = formTemplate.Name,
-                Type = formTemplate.Type,
-                DepartmentId = formTemplate.DepartmentId
-            };
-            return formTemplateService.AddFormTemplate(formTemplateToAdd);
-        }
-
         // PUT api/<FormTemplateController>/5
         [HttpPut("{id}")]
-        public FormTemplate PutFormTemplate(Guid id, [FromBody] FormTemplateDTO formTemplate)
+        public FormTemplate PutFormTemplate(Guid id, [FromBody] FormTemplate formTemplate)
         {
             var formTemplateToEdit = new FormTemplate
             {
                 Name = formTemplate.Name,
-                Type = formTemplate.Type
-
+                Type = formTemplate.Type,
+                DepartmentId = formTemplate.DepartmentId
             };
             return formTemplateService.UpdateFormTemplate(formTemplateToEdit);
 
@@ -76,7 +58,7 @@ namespace EmployeeEvaluation.Controllers
         [HttpGet("{formTemplateId}/FormTemplateSection")]
         public IEnumerable<FormTemplateSection> GetTemplateSections(Guid formTemplateId)
         {
-            return formTemplateService.GetAllSections(formTemplateId);
+            return formTemplateService.GetSections(formTemplateId);
         }
 
         // GET api/<FormTemplateController>/5
@@ -88,24 +70,26 @@ namespace EmployeeEvaluation.Controllers
 
         // POST api/<FormTemplateController>
         [HttpPost("{formTemplateId}/FormTemplateSection")]
-        public FormTemplateSection PostTemplateSection([FromBody] FormTemplateSectionDTO formTemplateSection)
+        public FormTemplate PostTemplateSection(Guid formTemplateId,[FromBody] FormTemplateSection formTemplateSection)
         {
             var formTemplateSectionToAdd = new FormTemplateSection
             {
                 Name = formTemplateSection.Name,
-                Description = formTemplateSection.Description
+                Description = formTemplateSection.Description,
+                FormTemplateId = formTemplateId
             };
-            return formTemplateService.AddTemplateSection(formTemplateSectionToAdd);
+            return formTemplateService.AddTemplateSection(formTemplateId,formTemplateSectionToAdd);
         }
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{formTemplateId}/FormTemplateSection/{id}")]
-        public FormTemplateSection PutTemplateSection(Guid id, [FromBody] FormTemplateSectionDTO formTemplateSection)
+        public FormTemplateSection PutTemplateSection(Guid id, [FromBody] FormTemplateSection formTemplateSection)
         {
             var formTemplateSectionToEdit = new FormTemplateSection
             {
                 Name = formTemplateSection.Name,
-                Description = formTemplateSection.Description
+                Description = formTemplateSection.Description,
+                FormTemplateId = formTemplateSection.FormTemplateId
             };
             return formTemplateService.UpdateSection(formTemplateSectionToEdit);
 
@@ -117,17 +101,11 @@ namespace EmployeeEvaluation.Controllers
         {
             formTemplateService.DeleteSection(id);
         }
-        //[HttpGet({)]
-        //public IEnumerable<FormTemplateSection> GetSectiosOfFormTemplate(Guid formTemplateId)
-        //{
-        //    return formTemplateService.GetSectiosOfFormTemplate(formTemplateId);
-        //}
-        //----------------------------------------------------------------------------
 
         [HttpGet("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria")]
-        public IEnumerable<FormTemplateCriteria> GetAllCriteria(Guid formSectionId)
+        public IEnumerable<FormTemplateCriteria> GetCriteria(Guid formSectionId)
         {
-            return formTemplateService.GetAllCriteria(formSectionId);
+            return formTemplateService.GetCriteria(formSectionId);
         }
 
         // GET api/<FormTemplateController>/5
@@ -139,24 +117,26 @@ namespace EmployeeEvaluation.Controllers
 
         // POST api/<FormTemplateController>
         [HttpPost("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria")]
-        public FormTemplateCriteria PostFormTemplate([FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
+        public FormTemplateSection PostFormTemplate(Guid sectionId,[FromBody] FormTemplateCriteria formTemplateCriteria)
         {
             var formTemplateCriteriaToAdd = new FormTemplateCriteria
             {
                 Name = formTemplateCriteria.Name,
-                Description = formTemplateCriteria.Description
+                Description = formTemplateCriteria.Description,
+                FormTemplateSectionId = sectionId
             };
-            return formTemplateService.AddTemplateCriteria(formTemplateCriteriaToAdd);
+            return formTemplateService.AddTemplateCriteria(sectionId,formTemplateCriteriaToAdd);
         }
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria/{id}")]
-        public FormTemplateCriteria PutFormTemplate(Guid id, [FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
+        public FormTemplateCriteria PutFormTemplate(Guid id, [FromBody] FormTemplateCriteria formTemplateCriteria)
         {
             var formTemplateCriteriaToEdit = new FormTemplateCriteria
             {
                 Name = formTemplateCriteria.Name,
-                Description = formTemplateCriteria.Description
+                Description = formTemplateCriteria.Description,
+                FormTemplateSectionId= formTemplateCriteria.FormTemplateSectionId
             };
             return formTemplateService.UpdateCriteria(formTemplateCriteriaToEdit);
 
@@ -168,11 +148,6 @@ namespace EmployeeEvaluation.Controllers
         {
             formTemplateService.DeleteCriteria(id);
         }
-
-        //public IEnumerable<FormTemplateCriteria> GetCriteriaOfSection(Guid formTemplateSectionId)
-        //{
-        //    return formTemplateService.GetCriteriaOfSection(formTemplateSectionId);
-        //}
 
     }
 
