@@ -38,19 +38,19 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                              .ToList();
             return formTemplates;
         }
-        public IEnumerable<FormTemplate> GetFormTemplates()
-        {
-            var formTemplates = dbContext.Set<FormTemplate>().Include(f => f.TemplateSections)
-                                                             .ThenInclude(s => s.TemplateCriteria)
-                                                             .ToList();
-            return formTemplates;
-        }
-        public FormTemplate AddFormTemplate(FormTemplate toAdd)
-        {
-            var entity = dbContext.Set<FormTemplate>().Add(toAdd);
-            dbContext.SaveChanges();
-            return entity.Entity;
-        }
+        //public IEnumerable<FormTemplate> GetFormTemplates()
+        //{
+        //    var formTemplates = dbContext.Set<FormTemplate>().Include(f => f.TemplateSections)
+        //                                                     .ThenInclude(s => s.TemplateCriteria)
+        //                                                     .ToList();
+        //    return formTemplates;
+        //}
+        //public FormTemplate AddFormTemplate(FormTemplate toAdd)
+        //{
+        //    var entity = dbContext.Set<FormTemplate>().Add(toAdd);
+        //    dbContext.SaveChanges();
+        //    return entity.Entity;
+        //}
         public FormTemplate UpdateFormTemplate(FormTemplate toUpdate)
         {
             dbContext.Set<FormTemplate>().Update(toUpdate);
@@ -84,11 +84,18 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                                            .ToList();
             return formTemplateSections;
         }
-        public FormTemplateSection AddSectionTemplate(FormTemplateSection toAdd)
+        //public FormTemplateSection AddSectionTemplate(FormTemplateSection toAdd)
+        //{
+        //    var entity = dbContext.Set<FormTemplateSection>().Add(toAdd);
+        //    dbContext.SaveChanges();
+        //    return entity.Entity;
+        //}
+        public FormTemplate AddSectionToFormTemplate(Guid formTemplateId, FormTemplateSection formTemplateSection)
         {
-            var entity = dbContext.Set<FormTemplateSection>().Add(toAdd);
-            dbContext.SaveChanges();
-            return entity.Entity;
+            var formTemplate = GetFormTemplateById(formTemplateId);
+            formTemplate.TemplateSections.Add(formTemplateSection);
+            this.dbContext.SaveChanges();
+            return formTemplate;
         }
         public FormTemplateSection UpdateSection(FormTemplateSection toUpdate)
         {
@@ -103,17 +110,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             dbContext.SaveChanges();
         }
 
-        public IEnumerable<FormTemplateSection> GetSectiosOfFormTemplate(Guid formTemplateId)
-        {
-            var sections = dbContext.Set<FormTemplateSection>().Where(f => f.FormTemplateId == formTemplateId)
-                                                             .Include(f => f.TemplateCriteria)
-                                                             .ToList();
-            return sections;
-        }
-
-
-        //criteria
-
+     
         public FormTemplateCriteria GetCriteriaById(Guid criteriaId)
         {
             var criteria = dbContext.Set<FormTemplateCriteria>().Where(c => c.Id == criteriaId)
@@ -130,12 +127,19 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                                .ToList();
             return criteria;
         }
-        public FormTemplateCriteria AddCriteriaTemplate(FormTemplateCriteria toAdd)
+        public FormTemplateSection AddCriteriaToTemplateSection(Guid formTemplateSectionId, FormTemplateCriteria formTemplateCriteria)
         {
-            var entity = dbContext.Set<FormTemplateCriteria>().Add(toAdd);
-            dbContext.SaveChanges();
-            return entity.Entity;
+            var formTemplateSection = GetSectionById(formTemplateSectionId);
+            formTemplateSection.TemplateCriteria.Add(formTemplateCriteria);
+            this.dbContext.SaveChanges();
+            return formTemplateSection;
         }
+        //public FormTemplateCriteria AddCriteriaTemplate(FormTemplateCriteria toAdd)
+        //{
+        //    var entity = dbContext.Set<FormTemplateCriteria>().Add(toAdd);
+        //    dbContext.SaveChanges();
+        //    return entity.Entity;
+        //}
         public FormTemplateCriteria UpdateCriteria(FormTemplateCriteria toUpdate)
         {
             dbContext.Set<FormTemplateCriteria>().Update(toUpdate);
@@ -148,11 +152,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             dbContext.Set<FormTemplateCriteria>().Remove(toDelete);
             dbContext.SaveChanges();
         }
-        public IEnumerable<FormTemplateCriteria> GetCriteriaOfSection(Guid formTemplateSectionId)
-        {
-            var criteria = dbContext.Set<FormTemplateCriteria>().Where(f => f.FormTemplateSectionId == formTemplateSectionId)
-                                                             .ToList();
-            return criteria;
-        }
+      
     }
 }

@@ -38,7 +38,10 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return departmentRepository.AddUsersToDepartment(depId, users);
         }
-
+        public Department AddFormTemplateToDepartment(Guid depId,FormTemplate formTemplate)
+        {
+            return departmentRepository.AddFormTemplateToDepartment(depId, formTemplate);
+        }
         public void DeleteDepartment(Guid id)
         {
             this.departmentRepository.DeleteById(id);
