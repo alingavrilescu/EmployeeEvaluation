@@ -28,10 +28,11 @@ namespace EmployeeEvaluation.Controllers
         }
 
         [HttpGet("{id}")]
-        public EvaluationForm GetEvaluationFormById(Guid id)
+        public EvaluationForm GetEvaluationFormByUserId(Guid id)
         {
-            return this._evaluationFormService.GetEvaluationFormById(id);
+            return this._evaluationFormService.GetEvaluationFormByUserId(id);
         }
+
         [HttpGet("FormSection")]
         public  IEnumerable<FormSection> GetFormSections()
         {

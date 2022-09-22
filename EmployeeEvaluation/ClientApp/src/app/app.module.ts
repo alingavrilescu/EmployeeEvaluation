@@ -28,9 +28,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { EvaluationFormComponent } from './components/evaluation-form/evaluation-form/evaluation-form.component';
 import { DepartmentDetailsComponent } from './components/department-details/department-details.component';
-import {ToastModule} from 'primeng/toast';
-import {RippleModule} from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
+import { DataViewModule } from 'primeng/dataview';
+import {ListboxModule} from 'primeng/listbox';
 
 @NgModule({
   declarations: [
@@ -61,16 +63,18 @@ import { TableModule } from 'primeng/table';
     BrowserAnimationsModule,
     ButtonModule,
     DialogModule,
+    DataViewModule,
     DropdownModule,
     InputTextareaModule,
     ToastModule,
     RippleModule,
     InputTextModule,
+    ListboxModule,
     TableModule,
     RouterModule.forRoot([
-      { path: 'projects', component: ProjectsComponent },
+      { path: 'departments/:depId/projects', component: ProjectsComponent },
       {
-        path: 'projects/projectDetails/:id',
+        path: 'departments/:depId/projects/:proId',
         component: ProjectDetailsComponent,
       },
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -78,7 +82,7 @@ import { TableModule } from 'primeng/table';
       { path: 'departments', component: DepartmentTableComponent },
       { path: 'form-templates', component: FormTemplateComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
-      { path: 'evaluation-form', component: EvaluationFormComponent },
+      { path: 'evaluation-form/user/:id', component: EvaluationFormComponent },
       {
         path: 'departments/details/:id',
         component: DepartmentDetailsComponent,

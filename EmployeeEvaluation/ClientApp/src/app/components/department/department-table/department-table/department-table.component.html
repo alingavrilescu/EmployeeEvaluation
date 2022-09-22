@@ -1,193 +1,224 @@
 <!---------------------------- BUTTONS ------------------------------>
-<app-department-buttons></app-department-buttons>
+<!-- <app-department-buttons></app-department-buttons> -->
 <!---------------------------- CONTAINER OF CARDS ------------------------------>
-<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
-  <div>
-    <div class="card text-bg-light mb-3" style="max-width: 18rem">
-      <div class="card-header">
-        <div style="display: flex; flex-direction: row">
-          <p style="margin-top: 10px; margin-left: 15px">
-            <b>Name of department</b>
-          </p>
-          <div>
-            <svg
-              id="editDepartment"
-              data-bs-toggle="modal"
-              data-bs-target="#editDepartmentModal"
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-pencil"
-              viewBox="0 0 16 16"
-              style="cursor: pointer; margin-top: 15px; margin-left: 15px"
-            >
-              <path
-                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
-              />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-people-fill"
-              viewBox="0 0 16 16"
-              style="cursor: pointer; margin-top: 15px; margin-left: 15px"
-              routerLink="details/1"
-            >
-              <path
-                d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"
-              />
-              <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-            </svg>
-          </div>
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="currentColor"
-              class="bi bi-list"
-              viewBox="0 0 16 16"
-              style="cursor: pointer; margin-top: 13px; margin-left: 15px"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-              />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-trash"
-              viewBox="0 0 16 16"
-              style="cursor: pointer; margin-top: 15px; margin-left: 15px"
-            >
-              <path
-                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <h6 class="card-title" style="padding-left: 12px">
-          Head of Department
-        </h6>
-        <div style="max-width: 13rem">
-          <button
-            class="btn btn-light"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#collapseExample"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-          >
-            Number of users: {{ users.length }}
-          </button>
-          <div class="collapse" id="collapseExample">
-            <div class="card card-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Role</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let user of users">
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.role }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-------------------------------------- EDIT DEPARTMENT MODAL  --------------------------------------->
-  <div
-    class="modal fade"
-    id="editDepartmentModal"
-    tabindex="-1"
-    aria-labelledby="editDepartmentModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editDepartmentModalLabel">
-            Edit department
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <form id="createNewDepartmentForm">
-            <div class="mb-3">
-              <label for="departmentName" class="form-label"
-                >Name of the department</label
-              >
-              <input
-                type="text"
-                class="form-control"
-                id="departmentName"
-                aria-describedby="emailHelp"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="headOfDepartment" class="form-label"
-                >Head of Department</label
-              >
-              <select
-                id="headOfDepartment"
-                class="form-select"
-                aria-label="Default select example"
-              >
-                <option selected></option>
-                <option *ngFor="let headOfDepartment of users">
-                  {{ headOfDepartment.name }}
-                </option>
-              </select>
-            </div>
-
-            <div
-              style="
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                margin-top: 50px;
-              "
-            >
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+<div style="display: flex; flex-direction: column; margin-top: 50px">
+  <p-button
+    label="Add Department"
+    (onClick)="showAddDialog()"
+    style="align-self: flex-end"
+  ></p-button>
 </div>
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
+  <p-card *ngFor="let department of departments" style="width: 20vw">
+    <h3 style="border-bottom: 1px solid darkgrey">{{ department.name }}</h3>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 20px;
+      "
+    >
+      <i
+        class="pi pi-bars"
+        style="cursor: pointer"
+        routerLink="{{ this.department.id }}/projects"
+      ></i>
+      <i
+        class="pi pi-users"
+        style="cursor: pointer"
+        routerLink="details/{{ this.department.id }}"
+      ></i>
+      <i
+        class="pi pi-pencil"
+        style="cursor: pointer"
+        (click)="setCurrentDepartmentId(department.id!)"
+        (click)="showEditDialog()"
+      ></i>
+      <i
+        class="pi pi-trash"
+        style="cursor: pointer"
+        (click)="setCurrentDepartmentId(department.id!)"
+        (click)="showDeleteDialog()"
+      ></i>
+    </div>
+    <div class="card" style="width: 100%; margin-top: 30px">
+      <div style="background-color: #f1f0f0">
+        <b>Director of department: </b>Mark
+      </div>
+      <div style="background-color: #f7f7f7">
+        <b>Head of department: </b>John
+      </div>
+      <div style="background-color: #f1f0f0"><b>Project lead: </b>Ben</div>
+      <div tyle="background-color: #f7f7f7">
+        <b>Project manager: </b>Michael
+      </div>
+      <div style="background-color: #f1f0f0">
+        <b>Software developers: </b> 7 members
+      </div>
+    </div>
+  </p-card>
+</div>
+
+<!---------------------- ADD MODAL ------------------------>
+<p-dialog
+  header="Add Department"
+  [(visible)]="displayAddModal"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '40vw', height: '45vh' }"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; margin-top: 10px">
+    <form [formGroup]="addDepartmentFormGroup">
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="nameControl"
+          style="width: 100%"
+        />
+        <label for="float-input">Name of Department</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="headOfDepartmentControl"
+          style="width: 100%"
+        />
+        <label for="float-input">Head of Department</label>
+      </span>
+    </form>
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 80px;
+    "
+  >
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showAddDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      (click)="showAddDialog()"
+      (click)="httpAddDepartment()"
+      [disabled]="!addDepartmentFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
+
+<!---------------------- EDIT MODAL ------------------------>
+<p-dialog
+  header="Edit Department"
+  [(visible)]="displayEditModal"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [style]="{ width: '40vw', height: '45vh' }"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; margin-top: 10px">
+    <form [formGroup]="editDepartmentFormGroup">
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="nameControl"
+          style="width: 100%"
+        />
+        <label for="float-input">New name of Department</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="headOfDepartmentControl"
+          style="width: 100%"
+        />
+        <label for="float-input">New Head of Department</label>
+      </span>
+    </form>
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 30px;
+    "
+  >
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showEditDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      style=""
+      (click)="showEditDialog()"
+      (click)="httpEditDepartment()"
+      [disabled]="!addDepartmentFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
+
+<!---------------------- DELETE MODAL ------------------------>
+<p-dialog
+  [(visible)]="displayDeleteModal"
+  [style]="{ width: '40vw', height: '45vh' }"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+    <i
+      class="pi pi-times-circle"
+      style="font-size: 7rem; align-self: center"
+    ></i>
+    <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
+    <p style="margin-top: 10px; text-align: center">
+      Do you realy want to delete this department? This process cannot be
+      undone.
+    </p>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 40px;
+      "
+    >
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-danger"
+        (click)="showDeleteDialog()"
+        style=""
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        class="p-button-success"
+        (click)="showDeleteDialog()"
+        (click)="httpDeleteDepartment()"
+      ></button>
+    </div>
+  </div>
+</p-dialog>

@@ -1,5 +1,6 @@
 import { Component, OnInit,OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { Observable, Subscription } from 'rxjs';
 import { Department } from 'src/app/models/department.model';
@@ -24,7 +25,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     projectDescription: new FormControl('', Validators.required),
   });
 
-  constructor(private projectService:ProjectsService) { }
+  constructor(private projectService:ProjectsService, private activatedRoute: ActivatedRoute) { }
   
   deleteSubscription!: Subscription;
   getDepartmentsSubscription!:Subscription;
@@ -32,7 +33,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   addProjectSubscription!:Subscription;
   updateProjectSubscription!:Subscription;
   projectsList: Project[]=[];
-  projectId!:Guid;
+  projectId:any;
+  departmentId:any;
   project!: Project;
 
   displayAddModal: boolean = false;
@@ -40,6 +42,9 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.departmentId=params.get('depId');
+    })
     this.refreshProjectList();
   }
 
@@ -55,14 +60,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     var newProject = new Project();
     newProject.name = this.addProjectForm.controls.projectName.value!;
     newProject.description= this.addProjectForm.controls.projectDescription.value!;
-    // var temp={
-    //   name:this.projectName,
-    //   description:this.projectDescription,
-    //   departmentId:this.department.id
-    // };
-    // this.addProjectSubscription=this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();});
-    // this.projectName="";
-    // this.projectDescription="";
+    newProject.departmentId=this.departmentId;
     this.projectService.createProject(newProject).subscribe(()=>{this.refreshProjectList();
     });
     this.hideAddDialog();
@@ -95,15 +93,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog(){
-    this.displayAddModal = this.displayAddModal=true;
+    this.displayAddModal = true;
   }
 
   hideAddDialog(){
-    this.displayAddModal = this.displayAddModal=false;
+    this.displayAddModal = false;
   }
   
   showEditDialog(project:Project){
-    this.displayEditModal = this.displayEditModal=true;
+    this.displayEditModal = true;
     if(project.id)
     {
       this.projectId=project.id;
@@ -114,6 +112,6 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   hideEditDialog()
   {
-    this.displayEditModal = this.displayEditModal=false;
+    this.displayEditModal = false;
   }
 }

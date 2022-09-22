@@ -26,7 +26,10 @@ namespace EmployeeEvaluation.ApplicationLogic
             return this._projectRepository.GetById(id);
         }
 
-
+        public Project AddUsersToProject(Guid proId, List<User> users)
+        {
+            return this._projectRepository.AddUsersToProject(proId, users);
+        }
         public Project AddProject(Project toAdd)
         {
             return _projectRepository.Add(toAdd);

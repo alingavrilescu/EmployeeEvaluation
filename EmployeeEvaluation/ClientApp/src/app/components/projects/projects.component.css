@@ -31,6 +31,17 @@
   justify-content:flex-end;
 }
 
+.card-button{
+  cursor: pointer;
+}
+
+.card-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 /* ====================================CARDS STYLE========================== */
 
 .card-container{

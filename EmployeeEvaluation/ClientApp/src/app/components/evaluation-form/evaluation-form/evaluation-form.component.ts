@@ -7,6 +7,7 @@ import { EvaluationFormService } from 'src/app/services/evaluation-form.service'
 import { FormSection } from 'src/app/models/form-section.model';
 import { FormCriteria } from 'src/app/models/form-criteria.model';
 import { CriteriaComments } from 'src/app/models/criteria-comments.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-evaluation-form',
@@ -14,19 +15,25 @@ import { CriteriaComments } from 'src/app/models/criteria-comments.model';
   styleUrls: ['./evaluation-form.component.css'],
 })
 export class EvaluationFormComponent implements OnInit, OnDestroy {
-  constructor(private evaluationFormService: EvaluationFormService) {}
+  constructor(private evaluationFormService: EvaluationFormService, private activatedRoute: ActivatedRoute) { }
 
   deleteSubscription!: Subscription;
 
-  evaluationFormList: EvaluationForm[] = [];
+  evaluationForm!: EvaluationForm;
   formSectionList: FormSection[] = [];
   formCriteriaList: FormCriteria[] = [];
   criteriaCommentsList: CriteriaComments[] = [];
 
+  evaluationFormId: any;
   evaluationFormName = "";
   evaluationFormType = "";
+  userId: any;
+
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.userId = params.get('id');
+    });
     this.refreshEvaluationFormList();
     this.refreshFormSectionList();
     this.refreshFormCriteriaList();
@@ -38,14 +45,16 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   refreshEvaluationFormList() {
-    this.evaluationFormService.getEvaluationForms().subscribe(data => {
-      this.evaluationFormList = data;
+    this.evaluationFormService.getEvaluationForms(this.userId).subscribe(data => {
+      this.evaluationForm = data;
     })
   }
 
   refreshFormSectionList() {
     this.evaluationFormService.getFormSections().subscribe(data => {
       this.formSectionList = data;
+      this.formSectionList.filter(section => section.evaluationFormId === this.evaluationForm.id)
+      console.log(this.formSectionList)
     })
   }
 
@@ -64,7 +73,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   addEvaluationForm() {
     var temp = {
       name: this.evaluationFormName,
-      type: this.evaluationFormType
+      type: this.evaluationFormType,
+      userId: this.userId
     };
     this.evaluationFormService.createEvaluationForm(temp).subscribe(() => { this.refreshEvaluationFormList(); });
   }

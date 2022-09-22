@@ -36,9 +36,9 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._userRepository.GetUsersWithoutDepartment();
         }
-        public IEnumerable<User> GetUsersWithoutProject()
+        public IEnumerable<User> GetUsersWithoutProject(Guid depId)
         {
-            return this._userRepository.GetUsersWithoutProject();
+            return this._userRepository.GetUsersWithoutProject(depId);
         }
 
         public User AddUser(User toAdd)
