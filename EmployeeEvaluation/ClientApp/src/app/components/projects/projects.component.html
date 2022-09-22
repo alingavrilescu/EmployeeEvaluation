@@ -51,6 +51,24 @@
   </div>
 </p-dialog>
 
+<!-- =============================CONFIRMATION DIALOGUE================================= -->
+
+<p-dialog header="Header" [(visible)]="displayConfirmationDialogue" [modal]="true" [style]="{width: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <div class="confirm-dialogue">
+      <i class="confirm-icon pi pi-times-circle"></i>
+      <h3 class="confirm-header">Are you sure?</h3>
+      <p class="confirm-text m-0">
+        Do you realy want to delete this department? This process cannot be
+        undone.
+      </p>
+      <div class="confirm-buttons-dialogue">
+        <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
+        <button pButton type="button" label="Delete" class="p-button-success" (click)="deleteProject(projectIdToDelete)" (click)="hideDeleteDialog()"></button>
+      </div>
+    </div>
+</p-dialog>
+
 
 <!-- ================================CARD================================= -->
 
@@ -61,7 +79,7 @@
     <div class="card-buttons">
       <div title="More Details" class="card-button pi pi-bars" routerLink="{{project.id}}"></div>
       <div title="Edit Project" class="card-button pi pi-pencil" (click)="showEditDialog(project)"></div>
-      <div title="Delete Project" class="card-button pi pi-trash" (click)="deleteProject(project.id)"></div>
+      <div title="Delete Project" class="card-button pi pi-trash" (click)="showDeleteDialog(project)"></div>
     </div>
     <ng-template pTemplate="content">
       <textarea class="textbox" rows="5" cols="40" readonly>{{project.description}}</textarea>
