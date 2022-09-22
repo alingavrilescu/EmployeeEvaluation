@@ -1,3 +1,4 @@
+using Duende.IdentityServer.Services;
 using EmployeeEvaluation.AggregationServices;
 using EmployeeEvaluation.ApplicationLogic;
 using EmployeeEvaluation.Data;
@@ -32,7 +33,7 @@ builder.Services.AddIdentityServer().AddDeveloperSigningCredential()
 builder.Services.AddAuthentication()
     .AddIdentityServerJwt();
 
-
+builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<UserService>();
 
