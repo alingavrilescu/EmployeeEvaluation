@@ -18,12 +18,12 @@ namespace EmployeeEvaluation.Controllers
         {
             this.formTemplateService = formTemplateService;
         }
-        
+        [HttpGet("{departmentId}")]
+        public IEnumerable<FormTemplate> GetFormTemplatesOfDepartment(Guid departmentId)
+        {
+            return formTemplateService.GetFormTemplatesOfDepartment(departmentId);
+        }
         [HttpGet]
-        //public IEnumerable<FormTemplate> GetFormTemplates(Guid departmentId)
-        //{
-        //    return formTemplateService.GetFormTemplates(departmentId);
-        //}
         public IEnumerable<FormTemplate> GetFormTemplates()
         {
             return formTemplateService.GetFormTemplates();
@@ -57,20 +57,20 @@ namespace EmployeeEvaluation.Controllers
             {
                 Name = formTemplate.Name,
                 Type = formTemplate.Type
-                
+
             };
             return formTemplateService.UpdateFormTemplate(formTemplateToEdit);
-            
+
         }
 
         // DELETE api/<FormTemplateController>/5
         [HttpDelete("{id}")]
-        public void DeleteFormTemplate (Guid id)
+        public void DeleteFormTemplate(Guid id)
         {
             formTemplateService.DeleteFormTemplate(id);
         }
 
-       //-------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------
 
 
         [HttpGet("{formTemplateId}/FormTemplateSection")]
@@ -100,7 +100,7 @@ namespace EmployeeEvaluation.Controllers
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{formTemplateId}/FormTemplateSection/{id}")]
-        public FormTemplateSection PutTemplateSection(Guid id,[FromBody] FormTemplateSectionDTO formTemplateSection)
+        public FormTemplateSection PutTemplateSection(Guid id, [FromBody] FormTemplateSectionDTO formTemplateSection)
         {
             var formTemplateSectionToEdit = new FormTemplateSection
             {
@@ -117,7 +117,11 @@ namespace EmployeeEvaluation.Controllers
         {
             formTemplateService.DeleteSection(id);
         }
-
+        //[HttpGet({)]
+        //public IEnumerable<FormTemplateSection> GetSectiosOfFormTemplate(Guid formTemplateId)
+        //{
+        //    return formTemplateService.GetSectiosOfFormTemplate(formTemplateId);
+        //}
         //----------------------------------------------------------------------------
 
         [HttpGet("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria")]
@@ -147,7 +151,7 @@ namespace EmployeeEvaluation.Controllers
 
         // PUT api/<FormTemplateController>/5
         [HttpPut("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria/{id}")]
-        public FormTemplateCriteria PutFormTemplate(Guid id,[FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
+        public FormTemplateCriteria PutFormTemplate(Guid id, [FromBody] FormTemplateCriteriaDTO formTemplateCriteria)
         {
             var formTemplateCriteriaToEdit = new FormTemplateCriteria
             {
@@ -164,7 +168,12 @@ namespace EmployeeEvaluation.Controllers
         {
             formTemplateService.DeleteCriteria(id);
         }
-   
+
+        //public IEnumerable<FormTemplateCriteria> GetCriteriaOfSection(Guid formTemplateSectionId)
+        //{
+        //    return formTemplateService.GetCriteriaOfSection(formTemplateSectionId);
+        //}
+
     }
-        
+
 }
