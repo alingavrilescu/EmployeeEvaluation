@@ -96,7 +96,9 @@
 <!-- ------------------ Edit Form Template Modal ------------------------ -->
 
 
-<p-dialog header="Edit Form Template" [(visible)]="displayFormTemplateEditModal" [modal]="true" [style]="{width: '30vw'}" 
+<p-dialog header="Edit Form Template" [(visible)]="displayFormTemplateEditModal" [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+[style]="{ width: '30vw', height: '70vh' }"
+[modal]="true" 
   [draggable]="false" [resizable]="false">
   <form [formGroup]="editFormTemplateFormGroup">
     <br />

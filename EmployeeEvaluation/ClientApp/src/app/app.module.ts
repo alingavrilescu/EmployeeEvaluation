@@ -80,7 +80,7 @@ import {MultiSelectModule} from 'primeng/multiselect';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersTableComponent },
       { path: 'departments', component: DepartmentTableComponent },
-      { path: 'form-templates', component: FormTemplateComponent },
+      { path: 'departments/:id/form-templates', component: FormTemplateComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
       { path: 'evaluation-form/user/:id', component: EvaluationFormComponent },
       {
