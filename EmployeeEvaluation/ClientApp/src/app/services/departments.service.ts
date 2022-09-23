@@ -4,6 +4,7 @@ import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Department } from '../models/department.model';
+import { FormTemplate } from '../models/form-template.model';
 
 @Injectable({
   providedIn: 'root',
@@ -33,6 +34,10 @@ export class DepartmentsService {
   public addUsersToDepartment(id:Guid, usersIds:Guid[]): Observable<Department>
   {
     return this.httpClient.post<Department>(`${environment.apiUrl}/${this.url}/${id}/add-users`, usersIds);
+  }
+  public addFormTemplateToDepartment(id:Guid,formTemplate:FormTemplate):Observable<FormTemplate>
+  {
+    return this.httpClient.post<FormTemplate>(`${environment.apiUrl}/${this.url}/${id}/add-form-template`,formTemplate);
   }
 
   public editDepartment(

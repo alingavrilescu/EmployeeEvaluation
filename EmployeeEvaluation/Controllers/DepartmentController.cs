@@ -47,18 +47,18 @@ namespace EmployeeEvaluation.Controllers
             }
             return this.departmentService.AddUsersToDepartment(depId, users);
         }
-        [HttpPost("{depId}/add-form-templates")]
+        //[HttpPost("{depId}/add-form-template")]
 
-        public Department AddFormTemplateInDepartment(Guid depId, [FromBody] FormTemplate formTemplate)
-        {
-            var formTemplateToAdd = new FormTemplate
-            {
-                Name = formTemplate.Name,
-                Type = formTemplate.Type,
-                DepartmentId = depId
-            };
-            return this.departmentService.AddFormTemplateToDepartment(depId, formTemplateToAdd);
-        }
+        //public Department AddFormTemplateInDepartment(Guid depId, [FromBody] FormTemplate formTemplate)
+        //{
+        //    var formTemplateToAdd = new FormTemplate
+        //    {
+        //        Name = formTemplate.Name,
+        //        Type = formTemplate.Type,
+        //        DepartmentId = depId
+        //    };
+        //    return this.departmentService.AddFormTemplateToDepartment(depId, formTemplateToAdd);
+        //}
 
         [HttpPut("{id}")]
         public Department Put(Guid id, [FromBody] Department department)

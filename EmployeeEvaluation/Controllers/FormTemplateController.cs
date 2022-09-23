@@ -17,6 +17,7 @@ namespace EmployeeEvaluation.Controllers
         public FormTemplateController(FormTemplateService formTemplateService)
         {
             this.formTemplateService = formTemplateService;
+    
         }
         [HttpGet]
         public IEnumerable<FormTemplate> GetFormTemplatesOfDepartment(Guid departmentId)
@@ -24,11 +25,25 @@ namespace EmployeeEvaluation.Controllers
             return formTemplateService.GetFormTemplatesOfDepartment(departmentId);
         }
 
-        // GET api/<FormTemplateController>/5
+        // GET api/<FormTemplateController>
         [HttpGet("{id}")]
         public FormTemplate GetFormTemplateById(Guid id)
         {
             return formTemplateService.GetFormTemplateById(id);
+        }
+
+        // POST api/<FormTemplateController>
+        [HttpPost]
+        public FormTemplate AddFormTemplate ([FromBody] FormTemplate formTemplate)
+        {
+            
+            var formTemplateToAdd = new FormTemplate
+            {
+                Name = formTemplate.Name,
+                Type = formTemplate.Type,
+                DepartmentId=formTemplate.DepartmentId
+            };
+            return formTemplateService.AddFormTemplate(formTemplate);
         }
 
         // PUT api/<FormTemplateController>/5

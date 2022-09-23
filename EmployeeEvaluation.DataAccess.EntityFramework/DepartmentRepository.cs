@@ -51,13 +51,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             this.dbContext.SaveChanges();
             return department;
         }
-        public Department AddFormTemplateToDepartment(Guid depId, FormTemplate formTemplate)
-        {
-            var department = GetById(depId);
-            department.FormTemplates.Add(formTemplate);
-            this.dbContext.SaveChanges();
-            return department;
-        }
+       
         public Department Update(Department toUpdate)
         {
             this.dbContext.Set<Department>().Update(toUpdate);
