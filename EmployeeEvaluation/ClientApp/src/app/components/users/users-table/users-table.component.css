@@ -10,3 +10,14 @@
 #userDetails:hover {
   background: rgb(227, 227, 227);
 }
+@media (max-width: 767.98px) {
+  :host ::ng-deep .user-dialog {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  :host ::ng-deep .user-dialog {
+    width: 50%;
+  }
+}

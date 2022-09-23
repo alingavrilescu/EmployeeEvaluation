@@ -13,7 +13,6 @@ namespace EmployeeEvaluation.ApplicationLogic
     {
         private readonly FormTemplateRepository formTemplateRepository;
 
-
         public FormTemplateService(FormTemplateRepository formTemplateRepository)
         {
             this.formTemplateRepository = formTemplateRepository;
@@ -23,19 +22,19 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return formTemplateRepository.GetFormTemplateById(id);
         }
-        //public IEnumerable<FormTemplate> GetFormTemplates(Guid departmentId)
+        public IEnumerable<FormTemplate> GetFormTemplatesOfDepartment(Guid departmentId)
+        {
+            return formTemplateRepository.GetFormTemplatesOfDepartment(departmentId);
+        }
+        //public IEnumerable<FormTemplate> GetFormTemplates()
         //{
-        //    return formTemplateRepository.GetFormTemplates(departmentId);
+        //    return formTemplateRepository.GetFormTemplates();
         //}
-        public IEnumerable<FormTemplate> GetFormTemplates()
-        {
-            return formTemplateRepository.GetFormTemplates();
-        }
-        public FormTemplate AddFormTemplate(FormTemplate toAdd)
-        {
-            return formTemplateRepository.AddFormTemplate(toAdd);
-        }
-       
+        //public FormTemplate AddFormTemplate(FormTemplate toAdd)
+        //{
+        //    return formTemplateRepository.AddFormTemplate(toAdd);
+        //}
+
         public FormTemplate UpdateFormTemplate(FormTemplate formTemplate)
         {
             return formTemplateRepository.UpdateFormTemplate(formTemplate);
@@ -49,13 +48,13 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return formTemplateRepository.GetSectionById(sectionId);
         }
-        public IEnumerable<FormTemplateSection> GetAllSections(Guid formTemplateId)
+        public IEnumerable<FormTemplateSection> GetSections(Guid formTemplateId)
         {
             return formTemplateRepository.GetSections(formTemplateId);
         }
-        public FormTemplateSection AddTemplateSection(FormTemplateSection toAdd)
+        public FormTemplate AddTemplateSection(Guid formTemplateId,FormTemplateSection toAdd)
         {
-            return formTemplateRepository.AddSectionTemplate(toAdd);
+            return formTemplateRepository.AddSectionToFormTemplate(formTemplateId,toAdd);
         }
         public FormTemplateSection UpdateSection(FormTemplateSection section)
         {
@@ -65,18 +64,18 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             formTemplateRepository.DeleteSection(sectionId);
         }
-       
-        public FormTemplateCriteria GetCriteriaById( Guid criteriaId)
+
+        public FormTemplateCriteria GetCriteriaById(Guid criteriaId)
         {
-           return formTemplateRepository.GetCriteriaById( criteriaId);
+            return formTemplateRepository.GetCriteriaById(criteriaId);
         }
-        public IEnumerable<FormTemplateCriteria> GetAllCriteria(Guid sectionId)
+        public IEnumerable<FormTemplateCriteria> GetCriteria(Guid sectionId)
         {
             return formTemplateRepository.GetCriteria(sectionId);
         }
-        public FormTemplateCriteria AddTemplateCriteria(FormTemplateCriteria toAdd)
+        public FormTemplateSection AddTemplateCriteria(Guid formTemplateSectionId, FormTemplateCriteria toAdd)
         {
-            return formTemplateRepository.AddCriteriaTemplate(toAdd);
+            return formTemplateRepository.AddCriteriaToTemplateSection(formTemplateSectionId,toAdd);
         }
         public FormTemplateCriteria UpdateCriteria(FormTemplateCriteria criteria)
         {
@@ -87,7 +86,6 @@ namespace EmployeeEvaluation.ApplicationLogic
             formTemplateRepository.DeleteCriteria(criteriaId);
         }
 
-
     }
-} 
-        
+}
+

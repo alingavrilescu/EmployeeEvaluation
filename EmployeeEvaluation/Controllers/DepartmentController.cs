@@ -11,10 +11,12 @@ namespace EmployeeEvaluation.Controllers
     {
         private readonly DepartmentService departmentService;
         private readonly UserService userService;
-        public DepartmentController(DepartmentService departmentService, UserService userService)
+        private readonly ProjectService projectService;
+        public DepartmentController(DepartmentService departmentService, UserService userService, ProjectService projectService)
         {
             this.departmentService = departmentService;
             this.userService = userService;
+            this.projectService = projectService;
         }
         [HttpGet]
         public IEnumerable<Department> Get()
@@ -48,6 +50,17 @@ namespace EmployeeEvaluation.Controllers
             return this.departmentService.AddUsersToDepartment(depId, users);
         }
 
+        [HttpDelete("{depId}/{userId}")]
+        public Department RemoveUserFromDepartment([FromRoute]Guid depId, [FromRoute] Guid userId)
+        {
+            var userToRemove = new User();
+            userToRemove = userService.GetUserById(userId);
+            if (userToRemove.ProjectId != null)
+            {
+              projectService.RemoveUserFromProject(userToRemove.ProjectId.Value, userToRemove);
+            }
+            return departmentService.RemoveUserFromDepartment(depId, userToRemove);
+        }
 
         [HttpPut("{id}")]
         public Department Put(Guid id, [FromBody] Department department)

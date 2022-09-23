@@ -24,3 +24,21 @@ p {
 .users {
   cursor: pointer;
 }
+
+@media (max-width: 767.98px) {
+  :host ::ng-deep .users-dialog {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  :host ::ng-deep .users-dialog {
+    width: 50%;
+  }
+}
+#user {
+  cursor: pointer;
+}
+#user:hover {
+  background-color: rgb(230, 228, 228);
+}

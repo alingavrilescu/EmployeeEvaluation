@@ -24,19 +24,25 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   constructor(private projectService:ProjectsService, private activatedRoute: ActivatedRoute, private userService: UsersService) { }
 
   projectId:any;
+  departmentId:any;
   project!:Project;
   usersList:UserDTO[] = [];
   usersWithoutProject:UserDTO[] = [];
+  selectedUsers:UserDTO[] = [];
+  selectedUsersIds:Guid[]=[];
+  disabledSubmit:boolean=true;
   getProjectSubscription!:Subscription;
   getDepartmentsSubscription!:Subscription;
   getUsersOfProjectSubscription!:Subscription;
   getUsersWithoutProjectSubscription!:Subscription;
+  addUsersToProjectSubscription!:Subscription;
 
   displayAddUsersModal:Boolean=false;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
-      this.projectId=params.get('id');
+      this.projectId=params.get('proId');
+      this.departmentId=params.get('depId');
     })
     this.getProject();
   }
@@ -45,30 +51,56 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     this.getProjectSubscription?.unsubscribe();
     this.getUsersOfProjectSubscription?.unsubscribe();
     this.getUsersWithoutProjectSubscription?.unsubscribe();
+    this.addUsersToProjectSubscription?.unsubscribe();
   }
 
   getProject(){
     this.getProjectSubscription=this.projectService.getProjectById(this.projectId).subscribe((res)=>{
       this.project=res;
-      this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
-        this.usersList = data;
-      });
+      this.getUsersOfProject();
     });
   }
 
-  // getUsersWithoutProject()
-  // {
-  //   this.getUsersWithoutProjectSubscription=this.userService.getUsersWithoutProject(departmentId).subscribe(data =>{
-  //     this.usersWithoutProject=data;
-  //   })
-  // }
+  getUsersOfProject(){
+    this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
+      this.usersList = data;
+    });
+  }
+
+  onListActions(event:any)
+  {
+    if(event.value.length===0)
+    {
+      this.disabledSubmit=true;
+    }
+    else
+    {
+      this.disabledSubmit=false;
+    }
+    this.selectedUsersIds=event.value;
+  }
+
+  addUsersToProject(){
+    this.addUsersToProjectSubscription=this.projectService.addUsersToProject(this.projectId, this.selectedUsersIds).subscribe(()=>{
+      this.hideAddDialog();
+      this.getUsersOfProject();
+    })
+  }
+
+  getUsersWithoutProject()
+  {
+    this.getUsersWithoutProjectSubscription=this.userService.getUsersWithoutProject(this.departmentId).subscribe(data =>{
+      this.usersWithoutProject=data;
+    })
+  }
 
   showAddDialog(){
+    this.getUsersWithoutProject();
     this.displayAddUsersModal = true;
+    this.disabledSubmit=true;
   }
 
   hideAddDialog(){
     this.displayAddUsersModal = false;
   }
-
 }

@@ -39,6 +39,11 @@ namespace EmployeeEvaluation.ApplicationLogic
             return departmentRepository.AddUsersToDepartment(depId, users);
         }
 
+        public Department RemoveUserFromDepartment(Guid depId, User user)
+        {
+            return this.departmentRepository.RemoveUserFromDepartment(depId, user);
+        }
+
         public void DeleteDepartment(Guid id)
         {
             this.departmentRepository.DeleteById(id);

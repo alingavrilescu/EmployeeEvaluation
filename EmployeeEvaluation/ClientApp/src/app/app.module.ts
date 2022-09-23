@@ -32,7 +32,7 @@ import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
-import {MultiSelectModule} from 'primeng/multiselect';
+import {ListboxModule} from 'primeng/listbox';
 import { DefaultRoles } from 'src/api-authorization/role-defines';
 
 @NgModule({
@@ -70,12 +70,12 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
     ToastModule,
     RippleModule,
     InputTextModule,
-    MultiSelectModule,
+    ListboxModule,
     TableModule,
     RouterModule.forRoot([
-      { path: 'departments/:id/projects', component: ProjectsComponent },
+      { path: 'departments/:depId/projects', component: ProjectsComponent },
       {
-        path: 'projects/projectDetails/:id',
+        path: 'departments/:depId/projects/:proId',
         component: ProjectDetailsComponent,
       },
       { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -89,7 +89,7 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
         } 
     },
       { path: 'departments', component: DepartmentTableComponent },
-      { path: 'form-templates', component: FormTemplateComponent },
+      { path: 'departments/:id/form-templates', component: FormTemplateComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
       { path: 'evaluation-form/user/:id', component: EvaluationFormComponent },
       {
