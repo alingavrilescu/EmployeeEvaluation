@@ -25,6 +25,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
 
   projectId:any;
   departmentId:any;
+  userToRemoveId:any;
   project!:Project;
   usersList:UserDTO[] = [];
   usersWithoutProject:UserDTO[] = [];
@@ -36,8 +37,11 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   getUsersOfProjectSubscription!:Subscription;
   getUsersWithoutProjectSubscription!:Subscription;
   addUsersToProjectSubscription!:Subscription;
+  removeUsersFromProjectSubscription!:Subscription;
+
 
   displayAddUsersModal:Boolean=false;
+  displayConfirmationDialogue:boolean=false;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -52,6 +56,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     this.getUsersOfProjectSubscription?.unsubscribe();
     this.getUsersWithoutProjectSubscription?.unsubscribe();
     this.addUsersToProjectSubscription?.unsubscribe();
+    this.removeUsersFromProjectSubscription?.unsubscribe();
   }
 
   getProject(){
@@ -102,5 +107,21 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
 
   hideAddDialog(){
     this.displayAddUsersModal = false;
+  }
+
+  removeUser(){
+    this.removeUsersFromProjectSubscription=this.projectService.removeUserFromProject(this.projectId,this.userToRemoveId).subscribe(()=>{
+      this.hideDeleteConfirmation();
+      this.getUsersOfProject();
+    })
+  }
+  
+  showDeleteConfirmation(id:Guid){
+    this.userToRemoveId=id;
+    this.displayConfirmationDialogue=true;
+  }
+
+  hideDeleteConfirmation(){
+    this.displayConfirmationDialogue=false;
   }
 }
