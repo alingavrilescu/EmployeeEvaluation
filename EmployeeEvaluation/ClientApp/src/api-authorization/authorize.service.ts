@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User, UserManager } from 'oidc-client';
+import { Profile, User, UserManager } from 'oidc-client';
 import { BehaviorSubject, concat, from, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { ApplicationPaths, ApplicationName } from './api-authorization.constants';
@@ -63,9 +63,12 @@ export class AuthorizeService {
   }
 
   public getRole(): Observable<string | null>{
-    return from(this.ensureUserManagerInitialized())
-      .pipe(mergeMap(() => from(this.userManager!.getUser())),
-        map(user => user && user.profile["role"]));
+
+    return  this.getUser().pipe(map(user => {
+                                                let newUser = user as Profile; 
+                                                return (newUser && newUser["role"]);
+                                              }));
+    
   }
   public isUserAdmin(): Observable<boolean>
   {
@@ -199,11 +202,12 @@ export class AuthorizeService {
     settings.automaticSilentRenew = true;
     settings.includeIdTokenInSilentRenew = true;
     this.userManager = new UserManager(settings);
-
+  
     this.userManager.events.addUserSignedOut(async () => {
       await this.userManager!.removeUser();
       this.userSubject.next(null);
     });
+    await this.userManager?.getUser();
   }
 
   private getUserFromStorage(): Observable<IUser | null> {
