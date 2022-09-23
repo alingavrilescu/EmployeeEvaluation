@@ -11,10 +11,12 @@ namespace EmployeeEvaluation.Controllers
     {
         private readonly DepartmentService departmentService;
         private readonly UserService userService;
-        public DepartmentController(DepartmentService departmentService, UserService userService)
+        private readonly ProjectService projectService;
+        public DepartmentController(DepartmentService departmentService, UserService userService, ProjectService projectService)
         {
             this.departmentService = departmentService;
             this.userService = userService;
+            this.projectService = projectService;
         }
         [HttpGet]
         public IEnumerable<Department> Get()
@@ -47,17 +49,17 @@ namespace EmployeeEvaluation.Controllers
             }
             return this.departmentService.AddUsersToDepartment(depId, users);
         }
-        [HttpPost("{depId}/add-form-templates")]
 
-        public Department AddFormTemplateInDepartment(Guid depId, [FromBody] FormTemplate formTemplate)
+        [HttpDelete("{depId}/{userId}")]
+        public Department RemoveUserFromDepartment([FromRoute]Guid depId, [FromRoute] Guid userId)
         {
-            var formTemplateToAdd = new FormTemplate
+            var userToRemove = new User();
+            userToRemove = userService.GetUserById(userId);
+            if (userToRemove.ProjectId != null)
             {
-                Name = formTemplate.Name,
-                Type = formTemplate.Type,
-                DepartmentId = depId
-            };
-            return this.departmentService.AddFormTemplateToDepartment(depId, formTemplateToAdd);
+              projectService.RemoveUserFromProject(userToRemove.ProjectId.Value, userToRemove);
+            }
+            return departmentService.RemoveUserFromDepartment(depId, userToRemove);
         }
 
         [HttpPut("{id}")]

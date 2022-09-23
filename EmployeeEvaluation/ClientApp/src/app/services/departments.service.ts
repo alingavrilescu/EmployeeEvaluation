@@ -35,6 +35,11 @@ export class DepartmentsService {
     return this.httpClient.post<Department>(`${environment.apiUrl}/${this.url}/${id}/add-users`, usersIds);
   }
 
+  public removeUserFromDepartment(id:Guid, userId:Guid): Observable<Department>
+  {
+    return  this.httpClient.delete<Department>(`${environment.apiUrl}/${this.url}/${id}/${userId}`);
+  }
+
   public editDepartment(
     id: Guid,
     newDepartment: Department
@@ -45,8 +50,6 @@ export class DepartmentsService {
     );
   }
   public deleteDepartment(id: Guid): Observable<Department> {
-    return this.httpClient.delete<Department>(
-      `${environment.apiUrl}/${this.url}/${id}`
-    );
+    return this.httpClient.delete<Department>(`${environment.apiUrl}/${this.url}/${id}`);
   }
 }

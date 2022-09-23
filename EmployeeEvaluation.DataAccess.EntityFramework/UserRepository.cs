@@ -22,7 +22,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         {
             return dbContext.Set<User>().Include(p=>p.Project).Include(ef=>ef.EvaluationForms).ToList();
         }
-        public User GetById(Guid id)
+        public User GetUserById(Guid id)
         {
             var userToReturn = dbContext.Set<User>().Where(u => u.Id == id).Include(p => p.Project).Include(ef => ef.EvaluationForms).FirstOrDefault();
             if (userToReturn == null)
@@ -70,7 +70,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
 
         public void DeleteById(Guid id)
         {
-            var toDelete = GetById(id);
+            var toDelete = GetUserById(id);
             dbContext.Set<User>().Remove(toDelete);
             dbContext.SaveChanges();
         }

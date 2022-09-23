@@ -9,7 +9,7 @@ namespace EmployeeEvaluation.DataAccess.Abstractions
         public IEnumerable<User> GetUsersOfProject(Guid proId);
         public IEnumerable<User> GetUsersWithoutDepartment();
         public IEnumerable<User> GetUsersWithoutProject(Guid depId);
-        public User GetById(Guid id);
+        public User GetUserById(Guid id);
         public User Add(User toAdd);
         public User Update(User toUpdate); 
         public void DeleteById(Guid id);

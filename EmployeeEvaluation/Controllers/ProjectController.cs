@@ -68,6 +68,14 @@ namespace EmployeeEvaluation.Controllers
             return _projectService.AddUsersToProject(proId, users);
         }
 
+        [HttpDelete("{proId}/{userId}")]
+        public Project RemoveUserFromProject([FromRoute]  Guid proId, [FromRoute] Guid userId)
+        {
+            var userToRemove = new User();
+            userToRemove = _userService.GetUserById(userId);
+            return _projectService.RemoveUserFromProject(proId, userToRemove);
+        }
+
         // PUT api/<ProjectController>/5
         [HttpPut("{id}")]
         public Project Put(Guid id, [FromBody] ProjectDTO project)

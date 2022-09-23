@@ -29,6 +29,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   usersList:UserDTO[] = [];
   usersWithoutProject:UserDTO[] = [];
   selectedUsers:UserDTO[] = [];
+  selectedUsersIds:Guid[]=[];
   disabledSubmit:boolean=true;
   getProjectSubscription!:Subscription;
   getDepartmentsSubscription!:Subscription;
@@ -56,9 +57,13 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   getProject(){
     this.getProjectSubscription=this.projectService.getProjectById(this.projectId).subscribe((res)=>{
       this.project=res;
-      this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
-        this.usersList = data;
-      });
+      this.getUsersOfProject();
+    });
+  }
+
+  getUsersOfProject(){
+    this.getUsersOfProjectSubscription = this.userService.getUsersOfProject(this.projectId).subscribe(data => {
+      this.usersList = data;
     });
   }
 
@@ -72,11 +77,14 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     {
       this.disabledSubmit=false;
     }
-    this.selectedUsers=event.value;
+    this.selectedUsersIds=event.value;
   }
 
   addUsersToProject(){
-    // this.addUsersToProjectSubscription=this.projectService.addUsersToProject(this.projectId, this.selectedUsers).subscribe()
+    this.addUsersToProjectSubscription=this.projectService.addUsersToProject(this.projectId, this.selectedUsersIds).subscribe(()=>{
+      this.hideAddDialog();
+      this.getUsersOfProject();
+    })
   }
 
   getUsersWithoutProject()
@@ -95,5 +103,4 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   hideAddDialog(){
     this.displayAddUsersModal = false;
   }
-
 }

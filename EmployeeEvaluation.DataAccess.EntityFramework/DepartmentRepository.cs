@@ -51,10 +51,11 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             this.dbContext.SaveChanges();
             return department;
         }
-        public Department AddFormTemplateToDepartment(Guid depId, FormTemplate formTemplate)
+
+        public Department RemoveUserFromDepartment(Guid depId, User user)
         {
             var department = GetById(depId);
-            department.FormTemplates.Add(formTemplate);
+            department.Users.Remove(user);
             this.dbContext.SaveChanges();
             return department;
         }

@@ -16,7 +16,7 @@ namespace EmployeeEvaluation.ApplicationLogic
 
         public User GetUserById(Guid id)
         {
-            return this._userRepository.GetById(id);
+            return this._userRepository.GetUserById(id);
         }
 
         public IEnumerable<User> GetUsers()
