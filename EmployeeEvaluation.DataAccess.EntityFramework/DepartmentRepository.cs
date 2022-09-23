@@ -51,6 +51,14 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             this.dbContext.SaveChanges();
             return department;
         }
+
+        public Department RemoveUserFromDepartment(Guid depId, User user)
+        {
+            var department = GetById(depId);
+            department.Users.Remove(user);
+            this.dbContext.SaveChanges();
+            return department;
+        }
         public Department Update(Department toUpdate)
         {
             this.dbContext.Set<Department>().Update(toUpdate);

@@ -76,11 +76,11 @@ namespace EmployeeEvaluation.Controllers
         }
 
         [HttpGet("project/{proId}")]
-        public async Task<IActionResult> GetUsersOfProject(Guid projectId)
+        public async Task<IActionResult> GetUsersOfProject(Guid proId)
         {
             try
             {
-                var users = await aggregationService.GetUsersByProject(projectId);
+                var users = await aggregationService.GetUsersByProject(proId);
                 return Ok(users);
             }
             catch (Exception)

@@ -28,6 +28,11 @@ export class ProjectsService {
       return this.httpClient.post<Project>(`${environment.apiUrl}/${this.url}/${id}/add-users`, usersIds);
    }
 
+   public removeUserFromProject(id:Guid, userId:Guid): Observable<Project>
+  {
+    return  this.httpClient.delete<Project>(`${environment.apiUrl}/${this.url}/${id}/${userId}`);
+  }
+
    public createProject(project:Project): Observable<Project>
    {
       return this.httpClient.post<Project>(`${environment.apiUrl}/${this.url}`,project);
