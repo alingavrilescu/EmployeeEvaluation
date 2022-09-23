@@ -3,8 +3,7 @@
 <br>
 <!-- ----------------------- Evaluation form for user --------------------------- -->
 <div class="form-container">
-  <p *ngIf="evaluationForm" style="text-align:center; color: navy;text-indent: 30px; text-transform: uppercase">
-    {{evaluationForm.name}}</p>
+  <h1 class="evaluation-form-name" *ngIf="evaluationForm">{{evaluationForm.name}}</h1>
   <p-accordion [multiple]="true" *ngFor="let formSection of evaluationForm.formSections">
     <p-accordionTab header={{formSection.name}}>
       <div style="display: flex; justify-content: space-between;">

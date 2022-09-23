@@ -15,4 +15,11 @@ input[type=text], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-  }
+}
+
+.evaluation-form-name{
+    text-align: center;
+    color: navy;
+    text-indent: 30px;
+    text-transform: uppercase;
+}
