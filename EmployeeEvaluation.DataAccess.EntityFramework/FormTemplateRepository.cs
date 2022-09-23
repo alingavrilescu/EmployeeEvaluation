@@ -38,19 +38,15 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                              .ToList();
             return formTemplates;
         }
-        //public IEnumerable<FormTemplate> GetFormTemplates()
-        //{
-        //    var formTemplates = dbContext.Set<FormTemplate>().Include(f => f.TemplateSections)
-        //                                                     .ThenInclude(s => s.TemplateCriteria)
-        //                                                     .ToList();
-        //    return formTemplates;
-        //}
-        //public FormTemplate AddFormTemplate(FormTemplate toAdd)
-        //{
-        //    var entity = dbContext.Set<FormTemplate>().Add(toAdd);
-        //    dbContext.SaveChanges();
-        //    return entity.Entity;
-        //}
+
+        public FormTemplate AddFormTemplate(FormTemplate formTemplate)
+        {
+
+            var entity = dbContext.Set<FormTemplate>().Add(formTemplate);
+            dbContext.SaveChanges();
+            return entity.Entity;
+
+        }
         public FormTemplate UpdateFormTemplate(FormTemplate toUpdate)
         {
             dbContext.Set<FormTemplate>().Update(toUpdate);
