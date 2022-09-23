@@ -2,30 +2,36 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormTemplate } from 'src/app/models/form-template.model';
 import { FormTemplateService } from 'src/app/services/form-template.service';
 import { Guid } from 'guid-typescript';
-import { Subscription } from 'rxjs';
 import { FormGroup,FormBuilder,Validators,FormControl} from '@angular/forms';
-import { MessageService} from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
+import { ActivatedRoute } from '@angular/router';
+import { FormTemplateSection } from 'src/app/models/form-template-section.model';
+import { FormTemplateCriteria } from 'src/app/models/form-template-criteria.model';
 
 
 @Component({
   selector: 'app-form-template',
   templateUrl: './form-template.component.html',
   styleUrls: ['./form-template.component.css'],
-  providers: [MessageService]
 })
 
 export class FormTemplateComponent implements OnInit,OnDestroy {
 
   currentFormTemplateId!:Guid;
+  currentTemplateSectionId!:Guid;
+  currentTemplateCriteriaId!:Guid;
   Type: any = ['Junior', 'Intermediate', 'Senior', 'Expert'];
   sectionRegistrationForm!:FormGroup;
   criterionRegistrationForm!:FormGroup;
   formTemplateList: FormTemplate[]=[];
   formTemplate!:FormTemplate;
+  formTemplateSectionList:FormTemplateSection[]=[];
+  formTemplateSection!:FormTemplateSection;
+  formTemplateCriteriaList:FormTemplateCriteria[]=[];
+  formTemplateCriteria!:FormTemplateCriteria;
   displayFormTemplateAddModal: boolean = false;
   displayFormTemplateEditModal: boolean = false;
   displayFormTemplateDeleteModal: boolean = false;
+  departmentId:any;
 
   editFormTemplateFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
@@ -52,26 +58,28 @@ export class FormTemplateComponent implements OnInit,OnDestroy {
   //   descriptionControl: new FormControl('', [Validators.required]),
   // });
 
-  constructor(private fb:FormBuilder,private formTemplateService:FormTemplateService,
-    private messageService: MessageService, private primengConfig: PrimeNGConfig) { }
+  constructor(private fb:FormBuilder,private formTemplateService:FormTemplateService,private activatedRoute: ActivatedRoute) { }
   
   ngOnInit(): void {
-    this.getFormTemplates();
+    
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.departmentId = params.get('id');
+      this.getFormTemplates();
+    });
   }
   
  ngOnDestroy(): void {
  }
-// getEventValue($event: any) {
-//   return $event.target.value;
-// }
-setCurrentUserId(id: Guid) {
+
+setCurrentFormTemplateId(id: Guid) {
   this.currentFormTemplateId = id;
 }
  addFormTemplate(){
   var newFormTemplate = new FormTemplate();
   newFormTemplate.name = this.addFormTemplateFormGroup.controls.nameControl.value!;
   newFormTemplate.type = this.addFormTemplateFormGroup.controls.typeControl.value!;
-  this.formTemplateService.createFormTemplate(newFormTemplate).subscribe({
+  newFormTemplate.departmentId=this.departmentId;
+  this.formTemplateService.postFormTemplate(this.departmentId,newFormTemplate).subscribe({
     next: (formTemplate) => {
       this.getFormTemplates();
     },
@@ -81,7 +89,7 @@ setCurrentUserId(id: Guid) {
   });
 }
 
-updateFormTemplate(formTemplate:FormTemplate, id: Guid)
+updateFormTemplate(id:Guid,formTemplate:FormTemplate)
 {
   if (this.currentFormTemplateId !== undefined) {
     var formTemplateToEdit = this.formTemplateList[0];
@@ -90,7 +98,7 @@ updateFormTemplate(formTemplate:FormTemplate, id: Guid)
     });
     formTemplateToEdit.name = this.editFormTemplateFormGroup.controls.nameControl.value!;
     formTemplateToEdit.type = this.editFormTemplateFormGroup.controls.typeControl.value!;
-    this.formTemplateService.updateFormTemplate(formTemplateToEdit.id!, formTemplateToEdit).subscribe({
+    this.formTemplateService.updateFormTemplate(this.departmentId,formTemplateToEdit.id!, formTemplateToEdit).subscribe({
       next: (response) => {
         console.log(response);
       },
@@ -104,7 +112,7 @@ deleteFormTemplate(id?: Guid)
     for (let i = 0; i < this.formTemplateList.length; i++) {
       if (this.formTemplateList[i].id == this.currentFormTemplateId) this.formTemplateList.splice(i, 1);
     }
-    this.formTemplateService.deleteFormTemplate(this.currentFormTemplateId).subscribe({
+    this.formTemplateService.deleteFormTemplate(this.departmentId,this.currentFormTemplateId).subscribe({
       next: (response) => {
         console.log(response);
       },
@@ -124,7 +132,8 @@ showDeleteDialog() {
   this.displayFormTemplateDeleteModal = !this.displayFormTemplateDeleteModal;
 }
  getFormTemplates(){
-  this.formTemplateService.getFormTemplates().subscribe({
+  this.formTemplateService.getFormTemplates(this.departmentId)
+  .subscribe({
     next: (formTemplateList) => {
       this.formTemplateList = formTemplateList;
     },
@@ -133,11 +142,10 @@ showDeleteDialog() {
     },
   });
 }
-
 getFormTemplateById(id:Guid)
 {
   if (id !== undefined) {
-    this.formTemplateService.getFormTemplateById(id).subscribe({
+    this.formTemplateService.getFormTemplateById(this.departmentId,id).subscribe({
       next: (formTemplate) => {
         this.formTemplate = formTemplate;
       },
@@ -146,7 +154,7 @@ getFormTemplateById(id:Guid)
       },
     });
   }
-}
-
+ }
+ 
 
 }

@@ -68,4 +68,8 @@ button
 {
   float:right;
 }
+.required:after {
+  content:" *";
+  color: red;
+}
   

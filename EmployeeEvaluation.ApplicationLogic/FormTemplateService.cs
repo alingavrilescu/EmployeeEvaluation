@@ -26,14 +26,10 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return formTemplateRepository.GetFormTemplatesOfDepartment(departmentId);
         }
-        //public IEnumerable<FormTemplate> GetFormTemplates()
-        //{
-        //    return formTemplateRepository.GetFormTemplates();
-        //}
-        //public FormTemplate AddFormTemplate(FormTemplate toAdd)
-        //{
-        //    return formTemplateRepository.AddFormTemplate(toAdd);
-        //}
+        public FormTemplate AddFormTemplate(FormTemplate toAdd)
+        {
+            return formTemplateRepository.AddFormTemplate(toAdd);
+        }
 
         public FormTemplate UpdateFormTemplate(FormTemplate formTemplate)
         {
