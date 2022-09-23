@@ -33,6 +33,7 @@ import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
 import {MultiSelectModule} from 'primeng/multiselect';
+import { DefaultRoles } from 'src/api-authorization/role-defines';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,15 @@ import {MultiSelectModule} from 'primeng/multiselect';
         component: ProjectDetailsComponent,
       },
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'users', component: UsersTableComponent },
+      { 
+        path: 'users', 
+        component: UsersTableComponent, 
+        canActivate: [AuthorizeGuard], 
+        data:
+        {
+          roles:[DefaultRoles.Admin, DefaultRoles.HR]
+        } 
+    },
       { path: 'departments', component: DepartmentTableComponent },
       { path: 'form-templates', component: FormTemplateComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
