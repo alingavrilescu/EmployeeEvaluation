@@ -3,6 +3,7 @@ import { User, UserManager } from 'oidc-client';
 import { BehaviorSubject, concat, from, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { ApplicationPaths, ApplicationName } from './api-authorization.constants';
+import { DefaultRoles } from './role-defines';
 
 export type IAuthenticationResult =
   SuccessAuthenticationResult |
@@ -59,6 +60,21 @@ export class AuthorizeService {
     return from(this.ensureUserManagerInitialized())
       .pipe(mergeMap(() => from(this.userManager!.getUser())),
         map(user => user && user.access_token));
+  }
+
+  public getRole(): Observable<string | null>{
+    return from(this.ensureUserManagerInitialized())
+      .pipe(mergeMap(() => from(this.userManager!.getUser())),
+        map(user => user && user.profile["role"]));
+  }
+  public isUserAdmin(): Observable<boolean>
+  {
+    return this.getRole().pipe(map(role => role === DefaultRoles.Admin));
+  }
+  
+  public isUserHR(): Observable<boolean>
+  {
+    return this.getRole().pipe(map(role => role === DefaultRoles.HR));
   }
 
   // We try to authenticate the user in three different ways:
