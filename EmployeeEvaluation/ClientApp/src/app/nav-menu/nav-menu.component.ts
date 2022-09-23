@@ -9,19 +9,15 @@ import { AuthorizeService } from 'src/api-authorization/authorize.service';
   styleUrls: ['./nav-menu.component.css']
 })
 
-export class NavMenuComponent implements OnInit, AfterViewInit {
+export class NavMenuComponent implements OnInit {
   isExpanded = false;
   shouldDisplayUsers$?: Observable<boolean>;
   constructor(private authorizeService: AuthorizeService){}
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.shouldDisplayUsers$ =combineLatest([this.authorizeService.isUserAdmin(), this.authorizeService.isUserHR()])
       .pipe(map( ([isAdmin, isHr]) => {return isAdmin || isHr;})); 
   }
-  ngOnInit()
-  {
-    
-       
-  }  
+ 
 
   collapse() {
     this.isExpanded = false;
