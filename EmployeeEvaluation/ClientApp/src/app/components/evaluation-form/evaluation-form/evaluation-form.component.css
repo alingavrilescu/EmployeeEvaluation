@@ -23,3 +23,24 @@ input[type=text], select {
     text-indent: 30px;
     text-transform: uppercase;
 }
+
+/* ===========================================SECTION STYLING===================================================== */
+
+.section-container{
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    width: 100%;
+}
+
+.section-name-container{
+    margin-bottom: 0.5%;
+    font-size: 28px;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.section-desc-container{
+    padding-left: 1%;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+}
