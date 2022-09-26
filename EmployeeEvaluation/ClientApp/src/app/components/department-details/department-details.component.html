@@ -1,10 +1,9 @@
 <div id="userDetails">
   <div id="userInfo">
     <div
-      style="display: flex; flex-direction: row; gap: 20px; margin-left: 65%"
+      style="display: flex; flex-direction: row; gap: 20px; margin-left: 85%"
     >
       <p-button label="Add Members" (click)="showAddDialog()"></p-button>
-      <p-button label="Delete Members" (click)="showDeleteDialog()"></p-button>
     </div>
     <p style="font-size: 20px"><b>Departament #1 members</b></p>
     <div class="card">
@@ -30,12 +29,46 @@
           </div>
         </ng-template>
         <ng-template let-user pTemplate="listItem">
-          <div
-            class="col-12"
-            id="user"
-            routerLink="../../../users/userDetails/{{ user.id }}"
-          >
-            <div style="display: flex; flex-direction: row; gap: 20px">
+          <div class="col-12" id="user">
+            <div class="container">
+              <div class="row">
+                <div
+                  class="col-10"
+                  style="display: flex"
+                  routerLink="../../../users/userDetails/{{ user.id }}"
+                >
+                  <div><i class="pi pi-user" style="font-size: 6rem"></i></div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      margin-left: 30px;
+                    "
+                  >
+                    <div><b>Name: </b>{{ user.name }}</div>
+                    <div><b>Email: </b>{{ user.email }}</div>
+                    <div><b>Role: </b>{{ user.role }}</div>
+                    <div><b>Evaluation Forms: </b>2</div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <p-button
+                    label="Delete user"
+                    (click)="setCurrentUserId(user.id)"
+                    (click)="showDeleteDialog()"
+                  ></p-button>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div style="display: flex; flex-direction: row; gap: 20px">
               <div
                 style="
                   width: fit-content;
@@ -46,13 +79,13 @@
               >
                 <i class="pi pi-user" style="font-size: 6rem"></i>
               </div>
-              <div>
+              <div class="product-list-detail">
                 <p><b>Name: </b>{{ user.name }}</p>
                 <p><b>Email: </b>{{ user.email }}</p>
                 <p><b>Role: </b>{{ user.role }}</p>
                 <p id="evalForm"><b>Evaluation Forms: </b>2</p>
               </div>
-            </div>
+            </div> -->
           </div>
         </ng-template>
       </p-dataView>
@@ -106,48 +139,45 @@
   </div>
 </p-dialog>
 
-<!-- DELETE DIALOG -->
+<!---------------------- DELETE DIALOG ------------------------>
 <p-dialog
-  header="Delete members from department"
   [(visible)]="displayDeleteDialog"
-  styleClass="users-dialog"
+  styleClass="user-dialog"
   [modal]="true"
 >
-  <form [formGroup]="addUserFormGroup">
-    <!-- <p>{{ this.addUserFormGroup.controls.nameControl.value![0] }}</p> -->
-    <p-listbox
-      [options]="users"
-      [checkbox]="true"
-      [multiple]="true"
-      [filter]="true"
-      formControlName="nameControl"
-      optionLabel="name"
-      optionValue="id"
-    ></p-listbox>
-  </form>
-  <div
-    style="
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      margin-top: 50px;
-    "
-  >
-    <button
-      pButton
-      type="button"
-      label="Cancel"
-      class="p-button-danger"
-      (click)="showDeleteDialog()"
-    ></button>
-    <button
-      pButton
-      type="button"
-      label="Submit"
-      class="p-button-success"
-      (click)="showDeleteDialog()"
-      (click)="deleteUsersFromDepartment()"
-      [disabled]="!addUserFormGroup.valid"
-    ></button>
+  <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+    <i
+      class="pi pi-times-circle"
+      style="font-size: 7rem; align-self: center"
+    ></i>
+    <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
+    <p style="margin-top: 10px; text-align: center">
+      Do you realy want to delete this user? This process cannot be undone.
+    </p>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 40px;
+      "
+    >
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-danger"
+        (click)="showDeleteDialog()"
+        style=""
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        class="p-button-success"
+        (click)="showDeleteDialog()"
+        (click)="deleteUserFromDepartment()"
+      ></button>
+    </div>
   </div>
 </p-dialog>

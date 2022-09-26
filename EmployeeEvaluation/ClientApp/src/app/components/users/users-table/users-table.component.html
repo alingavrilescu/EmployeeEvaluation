@@ -135,6 +135,7 @@
 >
   <div style="display: flex; flex-direction: column; margin-top: 10px">
     <form [formGroup]="addUserFormGroup">
+      <p-dropdown [options]="roles" formControlName="roleControl"></p-dropdown>
       <span class="p-float-label" style="margin-top: 30px">
         <input
           id="float-input"

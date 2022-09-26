@@ -20,6 +20,7 @@ export class DepartmentDetailsComponent implements OnInit {
   displayAddDialog: boolean = false;
   displayDeleteDialog: boolean = false;
   departmentId: any;
+  currentUserId!: Guid;
   addUserFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
   });
@@ -70,7 +71,8 @@ export class DepartmentDetailsComponent implements OnInit {
       .addUsersToDepartment(this.departmentId, ids)
       .subscribe();
   }
-  deleteUsersFromDepartment() {
-    var ids: any = this.addUserFormGroup.controls.nameControl.value!;
+  deleteUserFromDepartment() {}
+  setCurrentUserId(id: Guid) {
+    this.currentUserId = id;
   }
 }
