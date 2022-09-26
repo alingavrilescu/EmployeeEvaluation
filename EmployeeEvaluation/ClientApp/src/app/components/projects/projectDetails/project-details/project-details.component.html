@@ -27,7 +27,7 @@
 
 <!-- =============================CONFIRMATION DIALOGUE================================= -->
 
-<p-dialog header="Header" [(visible)]="displayConfirmationDialogue" [modal]="true" [style]="{width: '550px'}"
+<p-dialog [(visible)]="displayConfirmationDialogue" [modal]="true" [style]="{width: '550px'}"
     [draggable]="false" [resizable]="false">
     <div class="confirm-dialogue">
       <i class="confirm-icon pi pi-times-circle"></i>
@@ -44,22 +44,30 @@
 </p-dialog>
 
 <!-- ===============================TABLE WITH EMPLOYEES ASSIGNED TO THE PROJECT====================== -->
-<h4>List of employees:</h4>
-<p-table [value]="usersList" responsiveLayout="scroll">
-  <ng-template pTemplate="header">
-      <tr>
-          <th>Photo</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Actions</th>
-      </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-user>
-      <tr>
-          <td><img src="https://cdn.icon-icons.com/icons2/1674/PNG/512/person_110935.png" style="height: 80px;"></td>
-          <td>{{user.name}}</td>
-          <td>{{user.email}}</td>
-          <td><i class="pi pi-user-minus" style="font-size: 2rem" (click)="showDeleteConfirmation(user.id)"></i></td>
-      </tr>
-  </ng-template>
-</p-table>
+<div *ngIf="usersList.length">
+  <h4>List of employees:</h4>
+  <p-table [value]="usersList" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td><img src="https://cdn.icon-icons.com/icons2/1674/PNG/512/person_110935.png" style="height: 80px;"></td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+            <td><i class="pi pi-user-minus" style="font-size: 2rem" (click)="showDeleteConfirmation(user.id)"></i></td>
+        </tr>
+    </ng-template>
+  </p-table>
+</div>
+<div *ngIf="usersList.length===0">
+  <h3>There are currently no users assigned to this project.</h3>
+  <h3>You can add users to this project using the button on the top right corner.</h3>
+</div>
