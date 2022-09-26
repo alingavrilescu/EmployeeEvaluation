@@ -32,6 +32,9 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   displayFormTemplateAddModal: boolean = false;
   displayFormTemplateEditModal: boolean = false;
   displayFormTemplateDeleteModal: boolean = false;
+  displayCriterionAddModal: boolean = false;
+  displayCriterionEditModal: boolean = false;
+  displayCriterionDeleteModal: boolean = false;
   departmentId: any;
 
   editFormTemplateFormGroup = new FormGroup({
@@ -240,6 +243,16 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   }
   // ================= FORM CRITERIA =================
 
+  setCurrentCriterionId(id: Guid) {
+    this.currentTemplateCriteriaId = id;
+    this.formTemplateCriteriaList.forEach((criterion) => {
+      if (criterion.id === id) {
+        this.editFormTemplateFormGroup.controls.nameControl.setValue(criterion.name);
+        this.editFormTemplateFormGroup.controls.typeControl.setValue(criterion.description);
+      }
+  });
+}
+
   getCriteria()
   {
     this.formTemplateService.getCriteria(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId)
@@ -253,17 +266,58 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     });
   }
 
-  // deleteCriteria() {
-  //   if (this.currentTemplateCriteriaId !== undefined) {
-  //     this.formTemplateService.deleteCriteria(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId,c).subscribe({
-  //       next: (response) => {
-  //         this.getFormTemplates();
-  //         console.log(response);
-  //       },
-  //     });
-  //   }
-  //   this.hideDeleteDialog();
-  // }
+  updateCriterion()
+  {
+
+  }
+
+  addCriterion() {
+    var newCriterion = new FormTemplateCriteria();
+    newCriterion.name = this.addCriterionFormGroup.controls.nameControl.value!;
+    newCriterion.description = this.addCriterionFormGroup.controls.descriptionControl.value!;
+    this.formTemplateService.postFormTemplateCriterion(this.departmentId, this.currentFormTemplateId,this.currentTemplateSectionId, newCriterion).subscribe({
+      next: (formTemplateCriterion) => {
+        this.getFormTemplates();
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+    this.hideAddDialogCriterion();
+  }
+
+
+  deleteCriterion() {
+    if (this.currentTemplateCriteriaId !== undefined) {
+      this.formTemplateService.deleteCriterion(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId,this.currentTemplateCriteriaId).subscribe({
+        next: (response) => {
+          this.getFormTemplates();
+          console.log(response);
+        },
+      });
+    }
+    this.hideDeleteDialog();
+  }
+
+  showAddDialogCriterion() {
+   this.displayCriterionAddModal=true;
+  }
+  hideAddDialogCriterion() {
+  this.displayCriterionAddModal=false;
+  }
+  showEditDialogCriterion() {
+   this.displayCriterionEditModal=true;
+  }
+  hideEditDialogCriterion() {
+    this.displayCriterionEditModal=false;
+  }
+  showDeleteDialogCriterion() {
+  this.displayCriterionDeleteModal=true;
+  }
+  hideDeleteDialogCriterion() {
+    this.displayCriterionDeleteModal=false;
+  }
+
 
   setCurrentFormTemplateSectionId(id: Guid) {
     this.currentTemplateSectionId = id;
