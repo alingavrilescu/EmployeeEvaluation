@@ -35,6 +35,23 @@ export class DepartmentDetailsComponent implements OnInit {
     this.projectsService.getProjects().subscribe((data) => {
       this.projects = data;
     });
+    this.getUsersWithoutDepartment();
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.departmentId = params.get('id');
+      this.getUsersOfDepartment();
+    });
+  }
+  getUsersOfDepartment() {
+    this.usersService.getUsersOfDepartment(this.departmentId).subscribe({
+      next: (res) => {
+        this.users = res;
+      },
+      error: (res) => {
+        console.log(res);
+      },
+    });
+  }
+  getUsersWithoutDepartment() {
     this.usersService.getUsersWithoutDepartment().subscribe({
       next: (users) => {
         this.allUsers = users;
@@ -42,17 +59,6 @@ export class DepartmentDetailsComponent implements OnInit {
       error: (response) => {
         console.log(response);
       },
-    });
-    this.activatedRoute.paramMap.subscribe((params) => {
-      this.departmentId = params.get('id');
-      this.usersService.getUsersOfDepartment(this.departmentId).subscribe({
-        next: (res) => {
-          this.users = res;
-        },
-        error: (res) => {
-          console.log(res);
-        },
-      });
     });
   }
 
@@ -69,9 +75,19 @@ export class DepartmentDetailsComponent implements OnInit {
     var ids: any = this.addUserFormGroup.controls.nameControl.value!;
     this.departmentsService
       .addUsersToDepartment(this.departmentId, ids)
-      .subscribe();
+      .subscribe(() => {
+        this.getUsersOfDepartment();
+        this.getUsersWithoutDepartment();
+      });
   }
-  deleteUserFromDepartment() {}
+  deleteUserFromDepartment() {
+    this.departmentsService
+      .removeUserFromDepartment(this.departmentId, this.currentUserId)
+      .subscribe(() => {
+        this.getUsersOfDepartment();
+        this.getUsersWithoutDepartment();
+      });
+  }
   setCurrentUserId(id: Guid) {
     this.currentUserId = id;
   }

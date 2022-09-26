@@ -15,7 +15,6 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ProjectsService } from './services/projects.service';
 import { UsersTableComponent } from './components/users/users-table/users-table.component';
 import { DepartmentTableComponent } from './components/department/department-table/department-table/department-table.component';
-import { DepartmentButtonsComponent } from './components/department/department-buttons/department-buttons.component';
 import { DialogModule } from 'primeng/dialog';
 import { FormTemplateComponent } from './components/form-template/form-template.component';
 import { TabViewModule } from 'primeng/tabview';
@@ -44,7 +43,6 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
     ProjectsComponent,
     UsersTableComponent,
     DepartmentTableComponent,
-    DepartmentButtonsComponent,
     FormTemplateComponent,
     ProjectDetailsComponent,
     UserDetailsComponent,
@@ -81,15 +79,14 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
         component: ProjectDetailsComponent,
       },
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { 
-        path: 'users', 
-        component: UsersTableComponent, 
-        canActivate: [AuthorizeGuard], 
-        data:
-        {
-          roles:[DefaultRoles.Admin, DefaultRoles.HR]
-        } 
-    },
+      {
+        path: 'users',
+        component: UsersTableComponent,
+        canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.HR],
+        },
+      },
       { path: 'departments', component: DepartmentTableComponent },
       {
         path: 'departments/:id/form-templates',
