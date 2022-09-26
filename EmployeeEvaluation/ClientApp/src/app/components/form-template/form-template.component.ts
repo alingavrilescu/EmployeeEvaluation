@@ -72,6 +72,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
+  // ================FORM TEMPLATES====================
+
   setCurrentFormTemplateId(id: Guid) {
     this.currentFormTemplateId = id;
     this.formTemplateList.forEach((formTemplate) => {
@@ -236,6 +238,32 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
       },
     });
   }
+  // ================= FORM CRITERIA =================
+
+  getCriteria()
+  {
+    this.formTemplateService.getCriteria(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId)
+    .subscribe({
+      next: (formTemplateCriteriaList) => {
+        this.formTemplateCriteriaList = formTemplateCriteriaList;
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
+
+  // deleteCriteria() {
+  //   if (this.currentTemplateCriteriaId !== undefined) {
+  //     this.formTemplateService.deleteCriteria(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId,c).subscribe({
+  //       next: (response) => {
+  //         this.getFormTemplates();
+  //         console.log(response);
+  //       },
+  //     });
+  //   }
+  //   this.hideDeleteDialog();
+  // }
 
   setCurrentFormTemplateSectionId(id: Guid) {
     this.currentTemplateSectionId = id;
