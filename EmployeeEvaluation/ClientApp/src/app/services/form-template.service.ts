@@ -28,7 +28,7 @@ export class FormTemplateService {
     return this.httpClient.post<FormTemplate[]>(`${environment.apiUrl}/Department/${departmentId}/${this.url}`,formTemplate);
   } 
   public deleteFormTemplate(departmentId:Guid,id: Guid): Observable<FormTemplate> {
-    return this.httpClient.delete<FormTemplate>(`${environment.apiUrl}/Department/${departmentId}${this.url}/${id}`);
+    return this.httpClient.delete<FormTemplate>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${id}`);
   }
   public updateFormTemplate(departmentId: Guid, id: Guid, formTemplate: FormTemplate): Observable<FormTemplate> {
     return this.httpClient.put<FormTemplate>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${id}`, formTemplate);

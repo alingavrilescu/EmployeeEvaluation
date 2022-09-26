@@ -94,6 +94,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         console.log(response);
       },
     });
+    this.hideAddDialog();
   }
 
   updateFormTemplate() {
@@ -111,6 +112,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         },
       });
     }
+    this.hideEditDialog();
   }
   
 
@@ -118,10 +120,12 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     if (this.currentFormTemplateId !== undefined) {
       this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
         next: (response) => {
+          this.getFormTemplates();
           console.log(response);
         },
       });
     }
+    this.hideDeleteDialog();
   }
 
   showAddDialog() {
@@ -221,5 +225,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   //     });
   //   }
   // }
+
 
 }

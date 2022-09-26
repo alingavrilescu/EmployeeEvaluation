@@ -45,7 +45,6 @@
       label="Submit"
       class="p-button-success"
       style="margin-left: 45%"
-      (click)="hideAddDialog()"
       (click)="addFormTemplate()"
       [disabled]="!addFormTemplateFormGroup.valid"
     ></button>
@@ -87,7 +86,6 @@
         type="button"
         label="Delete"
         class="p-button-danger"
-        (click)="showDeleteDialog()"
         (click)="deleteFormTemplate()"
       ></button>
     </div>
@@ -103,7 +101,7 @@
   <form [formGroup]="editFormTemplateFormGroup">
     <br />
     <label for="float-input" class="required">Name</label>
-    <input [value]="editFormTemplateFormGroup.controls.nameControl" placeholder="Form Template's Name" id="float-input" type="text" pInputText formControlName="nameControl" [style]="{width: '100%'}" /> 
+    <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText formControlName="nameControl" [style]="{width: '100%'}" /> 
     <br />
     <br />
     <label for="float-input" class="required">Software developer type</label>
@@ -126,9 +124,8 @@
       label="Submit"
       class="p-button-success"
       style="margin-left: 45%"
-      (click)="showEditDialog()"
       (click)="updateFormTemplate()"
-      [disabled]="!addFormTemplateFormGroup.valid"
+      [disabled]="!editFormTemplateFormGroup.valid"
     ></button>
   </div>
 </p-dialog>
