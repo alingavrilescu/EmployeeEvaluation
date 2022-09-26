@@ -59,8 +59,7 @@ export class DepartmentTableComponent implements OnInit {
   }
   httpAddDepartment() {
     var newDepartment = new Department();
-    newDepartment.name =
-      this.addDepartmentFormGroup.controls.nameControl.value!;
+    newDepartment.name =this.addDepartmentFormGroup.controls.nameControl.value!;
     newDepartment.headOfDepartment = this.getHeadOfDepartment()!;
     this.departmentsService.addDepartment(newDepartment).subscribe({
       next: (department) => {
