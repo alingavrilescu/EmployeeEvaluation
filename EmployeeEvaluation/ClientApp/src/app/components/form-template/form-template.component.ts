@@ -94,7 +94,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         console.log(response);
       },
     });
-    this.hideAddDialog();
   }
 
   updateFormTemplate() {
@@ -112,7 +111,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         },
       });
     }
-    this.hideEditDialog();
   }
   
 
@@ -120,12 +118,10 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     if (this.currentFormTemplateId !== undefined) {
       this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
         next: (response) => {
-          this.getFormTemplates();
           console.log(response);
         },
       });
     }
-    this.hideDeleteDialog();
   }
 
   showAddDialog() {
@@ -216,15 +212,38 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     }
   }
 
-  // deleteFormTemplateSection(id: Guid) {
-  //   if (this.currentFormTemplateId !== undefined) {
-  //     this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
-  //       next: (response) => {
-  //         console.log(response);
-  //       },
-  //     });
-  //   }
-  // }
+  deleteTemplateSectionById(id: Guid) {
+    if (this.currentTemplateSectionId !== undefined) {
+      this.formTemplateService.deleteSection(this.departmentId, this.currentFormTemplateId, id).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+      });
+    }
+  }
 
+  addFormTemplateSection() {
+    var newFormTemplateSection = new FormTemplateSection();
+    newFormTemplateSection.name = this.addSectionGroup.controls.nameControl.value!;
+    newFormTemplateSection.description = this.addSectionGroup.controls.descriptionControl.value!;
+    newFormTemplateSection.FormTemplateId = this.currentFormTemplateId;
+    this.formTemplateService.postTemplateSection(this.departmentId,this.currentFormTemplateId, newFormTemplateSection).subscribe({
+      next: (formTemplateSection) => {
+        this.getTemplateSections();
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
 
+  setCurrentFormTemplateSectionId(id: Guid) {
+    this.currentTemplateSectionId = id;
+    this.formTemplateSectionList.forEach((formTemplateSection) => {
+      if (formTemplateSection.id === id) {
+        this.editSectionFormGroup.controls.nameControl.setValue(formTemplateSection.name);
+        this.editSectionFormGroup.controls.descriptionControl.setValue(formTemplateSection.description);
+      }
+  });
+}
 }
