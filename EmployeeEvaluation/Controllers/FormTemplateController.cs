@@ -50,12 +50,12 @@ namespace EmployeeEvaluation.Controllers
         [HttpPut("{id}")]
         public FormTemplate PutFormTemplate(Guid id, [FromBody] FormTemplate formTemplate)
         {
-            var formTemplateToEdit = new FormTemplate
-            {
-                Name = formTemplate.Name,
-                Type = formTemplate.Type,
-                DepartmentId = formTemplate.DepartmentId
-            };
+            var formTemplateToEdit = formTemplateService.GetFormTemplateById(id);
+            
+            //formTemplateToEdit = formTemplate.Name;
+            //formTemplateToEdit = formTemplate.Type;
+            //formTemplateToEdit = formTemplate.DepartmentId;
+            
             return formTemplateService.UpdateFormTemplate(formTemplateToEdit);
 
         }
