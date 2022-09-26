@@ -84,6 +84,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     {
       this.deleteSubscription=this.projectService.deleteProject(id).subscribe(()=>{this.refreshProjectList();});
     }
+    this.hideDeleteDialog();
   }
 
   refreshProjectList()

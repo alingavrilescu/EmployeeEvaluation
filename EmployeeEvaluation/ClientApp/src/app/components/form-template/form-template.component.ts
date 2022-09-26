@@ -32,6 +32,9 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   displayFormTemplateAddModal: boolean = false;
   displayFormTemplateEditModal: boolean = false;
   displayFormTemplateDeleteModal: boolean = false;
+  displayCriterionAddModal: boolean = false;
+  displayCriterionEditModal: boolean = false;
+  displayCriterionDeleteModal: boolean = false;
   departmentId: any;
 
   editFormTemplateFormGroup = new FormGroup({
@@ -71,6 +74,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
   }
+
+  // ================FORM TEMPLATES====================
 
   setCurrentFormTemplateId(id: Guid) {
     this.currentFormTemplateId = id;
@@ -212,14 +217,115 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     }
   }
 
-  // deleteFormTemplateSection(id: Guid) {
-  //   if (this.currentFormTemplateId !== undefined) {
-  //     this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
-  //       next: (response) => {
-  //         console.log(response);
-  //       },
-  //     });
-  //   }
-  // }
+  deleteTemplateSectionById(id: Guid) {
+    if (this.currentTemplateSectionId !== undefined) {
+      this.formTemplateService.deleteSection(this.departmentId, this.currentFormTemplateId, id).subscribe({
+        next: (response) => {
+          console.log(response);
+        },
+      });
+    }
+  }
 
+  addFormTemplateSection() {
+    var newFormTemplateSection = new FormTemplateSection();
+    newFormTemplateSection.name = this.addSectionGroup.controls.nameControl.value!;
+    newFormTemplateSection.description = this.addSectionGroup.controls.descriptionControl.value!;
+    newFormTemplateSection.FormTemplateId = this.currentFormTemplateId;
+    this.formTemplateService.postTemplateSection(this.departmentId,this.currentFormTemplateId, newFormTemplateSection).subscribe({
+      next: (formTemplateSection) => {
+        this.getTemplateSections();
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
+  // ================= FORM CRITERIA =================
+
+  setCurrentCriterionId(id: Guid) {
+    this.currentTemplateCriteriaId = id;
+    this.formTemplateCriteriaList.forEach((criterion) => {
+      if (criterion.id === id) {
+        this.editFormTemplateFormGroup.controls.nameControl.setValue(criterion.name);
+        this.editFormTemplateFormGroup.controls.typeControl.setValue(criterion.description);
+      }
+  });
+}
+
+  getCriteria()
+  {
+    this.formTemplateService.getCriteria(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId)
+    .subscribe({
+      next: (formTemplateCriteriaList) => {
+        this.formTemplateCriteriaList = formTemplateCriteriaList;
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
+
+  updateCriterion()
+  {
+
+  }
+
+  addCriterion() {
+    var newCriterion = new FormTemplateCriteria();
+    newCriterion.name = this.addCriterionFormGroup.controls.nameControl.value!;
+    newCriterion.description = this.addCriterionFormGroup.controls.descriptionControl.value!;
+    this.formTemplateService.postFormTemplateCriterion(this.departmentId, this.currentFormTemplateId,this.currentTemplateSectionId, newCriterion).subscribe({
+      next: (formTemplateCriterion) => {
+        this.getFormTemplates();
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+    this.hideAddDialogCriterion();
+  }
+
+
+  deleteCriterion() {
+    if (this.currentTemplateCriteriaId !== undefined) {
+      this.formTemplateService.deleteCriterion(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId,this.currentTemplateCriteriaId).subscribe({
+        next: (response) => {
+          this.getFormTemplates();
+          console.log(response);
+        },
+      });
+    }
+    this.hideDeleteDialog();
+  }
+
+  showAddDialogCriterion() {
+   this.displayCriterionAddModal=true;
+  }
+  hideAddDialogCriterion() {
+  this.displayCriterionAddModal=false;
+  }
+  showEditDialogCriterion() {
+   this.displayCriterionEditModal=true;
+  }
+  hideEditDialogCriterion() {
+    this.displayCriterionEditModal=false;
+  }
+  showDeleteDialogCriterion() {
+  this.displayCriterionDeleteModal=true;
+  }
+  hideDeleteDialogCriterion() {
+    this.displayCriterionDeleteModal=false;
+  }
+
+
+  setCurrentFormTemplateSectionId(id: Guid) {
+    this.currentTemplateSectionId = id;
+    this.formTemplateSectionList.forEach((formTemplateSection) => {
+      if (formTemplateSection.id === id) {
+        this.editSectionFormGroup.controls.nameControl.setValue(formTemplateSection.name);
+        this.editSectionFormGroup.controls.descriptionControl.setValue(formTemplateSection.description);
+      }
+  });
+}
 }
