@@ -25,7 +25,6 @@
       </span>
       <br>
       <label class="required" for="typeControl">Software developer type</label>
-      <!-- <p-dropdown [options]="Type" formControlName="typeControl"></p-dropdown> -->
       <select formControlName="typeControl">
         <option hidden disabled selected value> Select an option </option>
         <option *ngFor="let t of Type" [ngValue]="t">{{t}}</option>
@@ -46,7 +45,7 @@
       label="Submit"
       class="p-button-success"
       style="margin-left: 45%"
-      (click)="showAddDialog()"
+      (click)="hideAddDialog()"
       (click)="addFormTemplate()"
       [disabled]="!addFormTemplateFormGroup.valid"
     ></button>
@@ -80,7 +79,8 @@
         type="button"
         label="Cancel"
         class="p-button-secondary"
-        (click)="showDeleteDialog()"
+        (click)="hideDeleteDialog()"
+       
       ></button>
       <button
         pButton
@@ -118,7 +118,7 @@
       type="button"
       label="Cancel"
       class="p-button-danger"
-      (click)="showAddDialog()"
+      (click)="hideEditDialog()"
     ></button>
     <button
       pButton
@@ -126,8 +126,8 @@
       label="Submit"
       class="p-button-success"
       style="margin-left: 45%"
-      (click)="showAddDialog()"
-      (click)="addFormTemplate()"
+      (click)="showEditDialog()"
+      (click)="updateFormTemplate()"
       [disabled]="!addFormTemplateFormGroup.valid"
     ></button>
   </div>
@@ -234,9 +234,9 @@
     </div>
 
     <!-- --------------Delete and Edit form template butttons and Add Section ------------------ -->
-    <div class="button-block">
-    <button pButton pRipple type="button" label="Edit" class="p-button-warning" (click)="showEditDialog()"></button>
-    <button pButton pRipple type="button" label="Delete" class="p-button-danger" (click)="showDeleteDialog()" ></button>
+    <!-- <div class="button-block">
+    <button pButton pRipple type="button" label="Edit" class="p-button-warning"></button>
+    <button pButton pRipple type="button" label="Delete" class="p-button-danger" ></button>
     <button pButton type="button" label="+ Add Section" data-bs-toggle="modal"
     data-bs-target="#addSectionModal">
   </button>
@@ -296,61 +296,125 @@
 </div>
 
 
+
+ -->
+
+
 <ul>
-  <li *ngFor="let formTemplate of formTemplateList;let indexOfelement=index;">
-    <div class="accordion accordion-flush" id="accordionFlushExample">
-      <h5 style="text-align: center;">{{formTemplate.name}}</h5>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingOne2">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseOne2" aria-expanded="false" aria-controls="flush-collapseOne2">
-            Accordion Item #1
+<br>
+<li *ngFor="let formTemplate of formTemplateList">
+<div class="accordion accordion-flush" id="accordionFlushExample">
+  <h5 style="text-align: center;">{{formTemplate.name}}</h5>
+  <h6 class="indent" style="opacity: 0.7;">{{formTemplate.type}}</h6>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        Accordion Item #1
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+      data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">
+        <div><b> Description: </b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur, lorem at
+          sollicitudin accumsan, turpis eros dictum libero, et posuere risus lacus vitae eros. Pellentesque nec pharetra
+          velit. Proin ut nunc aliquet, feugiat tellus at, tristique tellus. Etiam consequat pretium elit eu placerat.
+          Donec non blandit est. Maecenas congue diam sed ante ornare, sit amet aliquam justo tempus. Quisque odio est,
+          suscipit in euismod vitae, ornare non nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+          posuere cubilia curae; Donec nec scelerisque sem. Donec id lorem sit amet eros placerat sodales cursus ut
+          purus. Cras interdum nunc eget faucibus viverra.<br><br>
+
+           <!-- ---------- Delete, Edit section + Add criterion ------------ -->
+
+          <div class="button-block">
+            <button pButton type="button" label="Edit Section"
+              class="p-button-warning">
+            </button>
+            <button pButton type="button" label="Delete Section" class="p-button-danger">
+            </button>
+            <button pButton type="button" label="+ Add Criterion" data-bs-toggle="modal"
+            data-bs-target="#addCriterionModal">
           </button>
-        </h2>
-        <div id="flush-collapseOne2" class="accordion-collapse collapse" aria-labelledby="flush-headingOne2"
-          data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-            <code>.accordion-flush</code> class. This is the first item's accordion body.
           </div>
         </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingTwo2">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseTwo2" aria-expanded="false" aria-controls="flush-collapseTwo2">
-            Accordion Item #2
-          </button>
-        </h2>
-        <div id="flush-collapseTwo2" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo2"
-          data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-            <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being
-            filled
-            with some actual content.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="flush-headingThree">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseThree2" aria-expanded="false" aria-controls="flush-collapseThree2">
-            Accordion Item #3
-          </button>
-        </h2>
-        <div id="flush-collapseThree2" class="accordion-collapse collapse" aria-labelledby="flush-headingThree2"
-          data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-            <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting
-            happening
-            here in terms of content, but just filling up the space to make it look, at least at first glance, a bit
-            more
-            representative of how this would look in a real-world application.
-          </div>
-        </div>
+        <br>
+        <ul>
+          <li><b>Criteria name</b>
+            <hr>
+            Suspendisse sit amet justo vel leo blandit interdum nec ut dui. Aliquam velit odio,
+            scelerisque quis risus non, imperdiet cursus orci. Vestibulum ut sapien at tortor rhoncus pulvinar.
+            Phasellus quam quam, mollis sit amet sapien sed, aliquam pellentesque felis. Pellentesque enim erat,
+            accumsan at rutrum id, blandit pulvinar neque. Ut odio est, condimentum vitae lacinia at, finibus vitae
+            augue. Ut neque arcu, ullamcorper eget nunc at, hendrerit aliquam eros. Cras id turpis luctus nunc gravida
+            iaculis.
+            <br><br>
+            <div class="button-block">
+              <button pButton type="button" label="Edit Criterion" data-bs-toggle="modal" data-bs-target="#editCriterionModal"
+                class="p-button-warning">
+              </button>
+              <button pButton type="button" label="Delete Criterion" data-bs-toggle="modal"
+                data-bs-target="#deleteCriterionModal" class="p-button-danger">
+              </button>
+            </div>
+          </li>
+          <br>
+          <li><b>Criteria name2</b>
+            <hr> Suspendisse feugiat molestie sollicitudin. Proin id convallis ligula. Nulla posuere lectus
+            pharetra ligula fermentum, id vulputate nunc semper. Nunc sed urna sapien. Vestibulum eros est, placerat
+            vitae nulla at, posuere fringilla sem. Pellentesque habitant morbi tristique senectus et netus et malesuada
+            fames ac turpis egestas. Suspendisse potenti. Vestibulum eleifend, mi lobortis porttitor pretium, magna
+            risus cursus purus, sed rhoncus odio nulla nec risus. Nunc et accumsan dolor. Nam vitae efficitur nulla.
+          </li>
+        </ul>
       </div>
     </div>
-    <br>
-  </li>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+        Accordion Item #2
+      </button>
+    </h2>
+    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+      data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
+        <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled
+        with some actual content.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+        Accordion Item #3
+      </button>
+    </h2>
+    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
+      data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
+        <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening
+        here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more
+        representative of how this would look in a real-world application.
+      </div>
+
+    </div>
+
+    <!-- --------------Delete and Edit form template butttons and Add Section ------------------ -->
+    <div class="button-block">
+    <button pButton pRipple type="button" label="Edit" class="p-button-warning" (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog()"></button>
+    <button pButton pRipple type="button" label="Delete" class="p-button-danger" (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog()" ></button>
+    <button pButton type="button" label="+ Add Section" data-bs-toggle="modal"
+    data-bs-target="#addSectionModal">
+  </button>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+<br>
+</li>
 </ul>
 
 
