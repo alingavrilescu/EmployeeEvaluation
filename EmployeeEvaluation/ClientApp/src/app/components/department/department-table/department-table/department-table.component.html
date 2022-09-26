@@ -9,7 +9,7 @@
   ></p-button>
 </div>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
-  <p-card *ngFor="let department of departments" style="width: 20vw">
+  <p-card *ngFor="let department of departments" [style]="{width: '360px'}">
     <h3>{{ department.name }}</h3>
     <div style="border-bottom: 1px solid darkgrey">
       <b>Head of department: </b>Mark
