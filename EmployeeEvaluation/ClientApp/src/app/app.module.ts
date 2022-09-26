@@ -32,7 +32,8 @@ import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
 import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
-import {ListboxModule} from 'primeng/listbox';
+import { ListboxModule } from 'primeng/listbox';
+import { HeadOfDepartmentPageComponent } from './components/head-of-department-page/head-of-department-page.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import {ListboxModule} from 'primeng/listbox';
     UserDetailsComponent,
     EvaluationFormComponent,
     DepartmentDetailsComponent,
+    HeadOfDepartmentPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -80,12 +82,19 @@ import {ListboxModule} from 'primeng/listbox';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'users', component: UsersTableComponent },
       { path: 'departments', component: DepartmentTableComponent },
-      { path: 'departments/:id/form-templates', component: FormTemplateComponent },
+      {
+        path: 'departments/:id/form-templates',
+        component: FormTemplateComponent,
+      },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
       { path: 'evaluation-form/user/:id', component: EvaluationFormComponent },
       {
         path: 'departments/details/:id',
         component: DepartmentDetailsComponent,
+      },
+      {
+        path: 'head-of-department',
+        component: HeadOfDepartmentPageComponent,
       },
     ]),
   ],

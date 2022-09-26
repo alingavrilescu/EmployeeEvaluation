@@ -26,12 +26,12 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   users: UserDTO[] = [];
   user!: UserDTO;
   roles = [
-    'Human Resources',
-    'Software Developer',
+    'HR',
+    'Development Manager',
+    'Head Of Department',
     'Project Manager',
-    'Project Lead',
-    'Head of Department',
-    'Director of Department',
+    'Team Lead',
+    'Development Member',
   ];
   projects: Project[] = [];
   currentUserId!: Guid;
