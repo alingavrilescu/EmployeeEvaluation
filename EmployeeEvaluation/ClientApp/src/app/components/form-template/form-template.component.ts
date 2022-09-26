@@ -42,22 +42,22 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     nameControl: new FormControl('', [Validators.required]),
     typeControl: new FormControl('', [Validators.required]),
   });
-  // editSectionFormGroup = new FormGroup({
-  //   nameControl: new FormControl('', [Validators.required]),
-  //   descriptionControl: new FormControl('', [Validators.required])
-  // });
-  // addSectionGroup = new FormGroup({
-  //   nameControl: new FormControl('', [Validators.required]),
-  //   descriptionControl: new FormControl('', [Validators.required]),
-  // });
-  // editCriterionFormGroup = new FormGroup({
-  //   nameControl: new FormControl('', [Validators.required]),
-  //   descriptionControl: new FormControl('', [Validators.required])
-  // });
-  // addCriterionFormGroup = new FormGroup({
-  //   nameControl: new FormControl('', [Validators.required]),
-  //   descriptionControl: new FormControl('', [Validators.required]),
-  // });
+  editSectionFormGroup = new FormGroup({
+    nameControl: new FormControl('', [Validators.required]),
+    descriptionControl: new FormControl('', [Validators.required])
+  });
+  addSectionGroup = new FormGroup({
+    nameControl: new FormControl('', [Validators.required]),
+    descriptionControl: new FormControl('', [Validators.required]),
+  });
+  editCriterionFormGroup = new FormGroup({
+    nameControl: new FormControl('', [Validators.required]),
+    descriptionControl: new FormControl('', [Validators.required])
+  });
+  addCriterionFormGroup = new FormGroup({
+    nameControl: new FormControl('', [Validators.required]),
+    descriptionControl: new FormControl('', [Validators.required]),
+  });
 
   constructor(private fb: FormBuilder, private formTemplateService: FormTemplateService, private activatedRoute: ActivatedRoute) { }
 
@@ -165,6 +165,61 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
       });
     }
   }
+   
+  //===================SECTIONS=====================
 
+  showAddDialogSection() {
+    this.displayFormTemplateAddModal = true;
+  }
+  hideAddDialogSection() {
+    this.displayFormTemplateAddModal = false;
+  }
+  showEditDialogSection() {
+    this.displayFormTemplateEditModal = true;
+  }
+  hideEditDialogSection() {
+    this.displayFormTemplateEditModal = false;
+  }
+  showDeleteDialogSection() {
+    this.displayFormTemplateDeleteModal = true;
+  }
+  hideDeleteDialogSection() {
+    this.displayFormTemplateDeleteModal = false;
+  }
+
+  getTemplateSections() {
+    this.formTemplateService.getSections(this.departmentId,this.currentFormTemplateId)
+      .subscribe({
+        next: (formTemplateSectionList) => {
+          this.formTemplateSectionList = formTemplateSectionList;
+        },
+        error: (response) => {
+          console.log(response);
+        },
+      });
+  }
+
+  getTemplateSectionById(id: Guid) {
+    if (id !== undefined) {
+      this.formTemplateService.getTemplateSectionById(this.departmentId,this.currentFormTemplateId ,id).subscribe({
+        next: (formTemplateSection) => {
+          this.formTemplateSection = formTemplateSection;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
+  }
+
+  // deleteFormTemplateSection(id: Guid) {
+  //   if (this.currentFormTemplateId !== undefined) {
+  //     this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
+  //       next: (response) => {
+  //         console.log(response);
+  //       },
+  //     });
+  //   }
+  // }
 
 }
