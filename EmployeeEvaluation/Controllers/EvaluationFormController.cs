@@ -12,9 +12,11 @@ namespace EmployeeEvaluation.Controllers
     public class EvaluationFormController : ControllerBase
     {
         private readonly EvaluationFormService _evaluationFormService;
-        public EvaluationFormController(EvaluationFormService evaluationFormService)
+        private readonly FormTemplateService _formTemplateService;
+        public EvaluationFormController(EvaluationFormService evaluationFormService, FormTemplateService formTemplateService)
         {
             this._evaluationFormService = evaluationFormService;
+            this._formTemplateService = formTemplateService;
         }
         [HttpGet]
         [SwaggerResponse(StatusCodes.Status200OK, "Action was successful")]
@@ -49,15 +51,41 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.GetAllCriteriaComments();
         }
 
-        [HttpPost]
-        public EvaluationForm AddEvaluationForm([FromBody] EvaluationFormDTO evaluationForm)
+        [HttpPost("{id}")]
+        public EvaluationForm AddEvaluationForm(Guid id,[FromBody] FormTemplate formTemplate)
         {
+            var formTemplateToGet = _formTemplateService.GetFormTemplateById(formTemplate.Id);
+
             var evaluationFormToAdd = new EvaluationForm
             {
-                Name = evaluationForm.Name,
-                Type = evaluationForm.Type,
-                UserId = evaluationForm.UserId
+                Name = formTemplateToGet.Name,
+                Type = formTemplateToGet.Type,
+                UserId = id,
+                FormSections = new List<FormSection>()
+           
             };
+
+            if (formTemplateToGet.TemplateSections != null)
+            {
+                foreach (var formTemplateSection in formTemplateToGet.TemplateSections)
+                {
+                    var formSection = new FormSection();
+                    formSection.Name = formTemplateSection.Name;
+                    formSection.Description = formTemplateSection.Description;
+                    formSection.FormCriteria = new List<FormCriteria>();
+                    if(formTemplateSection.TemplateCriteria != null) { 
+                    foreach (var formTemplateCriteria in formTemplateSection.TemplateCriteria)
+                    {
+                        var formCriteria = new FormCriteria();
+                        formCriteria.Name = formTemplateCriteria.Name;
+                        formCriteria.Description = formTemplateCriteria.Description;
+                        formCriteria.isChecked = false;
+                        formSection.FormCriteria.Add(formCriteria);
+                    }
+                    evaluationFormToAdd.FormSections.Add(formSection);
+                }
+                    }
+            }
             return this._evaluationFormService.AddEvaluationForm(evaluationFormToAdd);
         }
 
