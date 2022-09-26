@@ -51,11 +51,11 @@ namespace EmployeeEvaluation.Controllers
         public FormTemplate PutFormTemplate(Guid id, [FromBody] FormTemplate formTemplate)
         {
             var formTemplateToEdit = formTemplateService.GetFormTemplateById(id);
-            
-            //formTemplateToEdit = formTemplate.Name;
-            //formTemplateToEdit = formTemplate.Type;
-            //formTemplateToEdit = formTemplate.DepartmentId;
-            
+
+            formTemplateToEdit.Name = formTemplate.Name;
+            formTemplateToEdit.Type = formTemplate.Type;
+            formTemplateToEdit.DepartmentId = formTemplate.DepartmentId;
+
             return formTemplateService.UpdateFormTemplate(formTemplateToEdit);
 
         }

@@ -129,6 +129,125 @@
     ></button>
   </div>
 </p-dialog>
+ <!-- ========================================== -->
+
+<!-- --------------------- Add Criterion Modal  --------------------------- -->
+<p-dialog
+  header="Add Form Template"
+  [(visible)]="displayCriterionAddModal"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column;">
+    <form [formGroup]="addCriterionFormGroup">
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="nameControl"
+        />
+        <label for="float-input">Criterion's name</label>
+      </span>
+      <br>
+      <label class="required" for="typeControl">Criterion description</label>
+      <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea" formControlName="descriptionControl" rows="5" cols="61" ></textarea>
+    </form>
+  </div>
+  <div style="display: flex; flex-direction: row; margin-top:  100px">
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showAddDialogCriterion()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      style="margin-left: 45%"
+      (click)="addCriterion()"
+      [disabled]="!addCriterionFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
+
+<!---------------------- Delete Criterion Modal ------------------------>
+<p-dialog
+  [(visible)]="displayCriterionDeleteModal"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+    <i
+      class="pi pi-times-circle"
+      style="font-size: 7rem; align-self: center"
+    ></i>
+    <h3 style="margin-top: 10px; text-align: center">Are you sure you want to delete?</h3>
+    <p style="margin-top: 10px; text-align: center">
+      Do you realy want to delete this form template criterion? This process cannot be undone.
+    </p>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 40px;
+      "
+    >
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-secondary"
+        (click)="hideDeleteDialogCriterion()"
+       
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        class="p-button-danger"
+        (click)="deleteCriterion()"
+      ></button>
+    </div>
+  </div>
+</p-dialog>
+<!-- ------------------ Edit Criterion Modal ------------------------ -->
+
+
+<p-dialog header="Edit Form Template Criterion" [(visible)]="displayCriterionEditModal" [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+[modal]="true" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="editCriterionFormGroup">
+    <br />
+    <label for="float-input" class="required">Crieterion's name</label>
+    <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText formControlName="nameControl" [style]="{width: '100%'}" /> 
+    <br />
+    <br />
+    <label class="required" for="typeControl">Criterion description</label>
+      <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea" formControlName="descriptionControl" rows="5" cols="61" ></textarea>
+  </form>
+  <div style="display: flex; flex-direction: row; margin-top:  100px">
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="hideEditDialogCriterion()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      style="margin-left: 45%"
+      (click)="updateCriterion()"
+      [disabled]="!editCriterionFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
 
 <!-- ----------------------- Accordion form templates --------------------------- -->
 
@@ -161,8 +280,7 @@
             <button pButton type="button" label="Delete Section" data-bs-toggle="modal"
               data-bs-target="#deleteSectionModal" class="p-button-danger">
             </button>
-            <button pButton type="button" label="+ Add Criterion" data-bs-toggle="modal"
-            data-bs-target="#addCriterionModal">
+            <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion()">
           </button>
           </div>
         </div>
@@ -178,11 +296,10 @@
             iaculis.
             <br><br>
             <div class="button-block">
-              <button pButton type="button" label="Edit Criterion" data-bs-toggle="modal" data-bs-target="#editCriterionModal"
+              <button pButton type="button" label="Edit Criterion" (click)="showEditDialogCriterion()"
                 class="p-button-warning">
               </button>
-              <button pButton type="button" label="Delete Criterion" data-bs-toggle="modal"
-                data-bs-target="#deleteCriterionModal" class="p-button-danger">
+              <button pButton type="button" label="Delete Criterion" (click)="showDeleteDialogCriterion()" class="p-button-danger">
               </button>
             </div>
           </li>
