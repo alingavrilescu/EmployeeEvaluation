@@ -100,13 +100,13 @@ namespace EmployeeEvaluation.Controllers
         [HttpPut("{formTemplateId}/FormTemplateSection/{id}")]
         public FormTemplateSection PutTemplateSection(Guid id, [FromBody] FormTemplateSection formTemplateSection)
         {
-            var formTemplateSectionToEdit = new FormTemplateSection
-            {
-                Name = formTemplateSection.Name,
-                Description = formTemplateSection.Description,
-                FormTemplateId = formTemplateSection.FormTemplateId
-            };
-            return formTemplateService.UpdateSection(formTemplateSectionToEdit);
+            var sectionToEdit = formTemplateService.GetSectionById(id);
+
+            sectionToEdit.Name = formTemplateSection.Name;
+            sectionToEdit.Description = formTemplateSection.Description;
+            sectionToEdit.FormTemplateId = formTemplateSection.FormTemplateId;
+   
+            return formTemplateService.UpdateSection(sectionToEdit);
 
         }
 
