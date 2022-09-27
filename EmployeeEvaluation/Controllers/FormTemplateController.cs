@@ -147,12 +147,12 @@ namespace EmployeeEvaluation.Controllers
         [HttpPut("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria/{id}")]
         public FormTemplateCriteria PutFormTemplate(Guid id, [FromBody] FormTemplateCriteria formTemplateCriteria)
         {
-            var formTemplateCriteriaToEdit = new FormTemplateCriteria
-            {
-                Name = formTemplateCriteria.Name,
-                Description = formTemplateCriteria.Description,
-                FormTemplateSectionId= formTemplateCriteria.FormTemplateSectionId
-            };
+            var formTemplateCriteriaToEdit = formTemplateService.GetCriteriaById(id);
+
+            formTemplateCriteriaToEdit.Name = formTemplateCriteria.Name;
+            formTemplateCriteriaToEdit.Description = formTemplateCriteria.Description;
+            formTemplateCriteriaToEdit.FormTemplateSectionId = formTemplateCriteria.FormTemplateSectionId;
+            
             return formTemplateService.UpdateCriteria(formTemplateCriteriaToEdit);
 
         }

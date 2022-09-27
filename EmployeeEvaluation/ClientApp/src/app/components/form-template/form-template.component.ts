@@ -78,6 +78,9 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
   // ================FORM TEMPLATES====================
 
+  
+  
+
   setCurrentFormTemplateId(id: Guid) {
     this.currentFormTemplateId = id;
     this.formTemplateList.forEach((formTemplate) => {
@@ -100,6 +103,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         console.log(response);
       },
     });
+    this.hideAddDialog();
   }
 
   updateFormTemplate() {
@@ -118,6 +122,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         },
       });
     }
+    this.hideEditDialog();
   }
   
 
@@ -130,6 +135,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         },
       });
     }
+    this.hideDeleteDialog();
   }
 
   showAddDialog() {
@@ -246,17 +252,19 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         },
       });
     }
+    this.hideEditDialogSection();
   }
 
-  deleteTemplateSectionById(id: Guid) {
+  deleteSection() {
     if (this.currentTemplateSectionId !== undefined) {
-      this.formTemplateService.deleteSection(this.departmentId, this.currentFormTemplateId, id).subscribe({
+      this.formTemplateService.deleteSection(this.departmentId, this.currentFormTemplateId, this.currentTemplateSectionId).subscribe({
         next: (response) => {
           this.getTemplateSections();
           console.log(response);
         },
       });
     }
+    this.hideEditDialogSection();
   }
 
   addFormTemplateSection() {
@@ -266,13 +274,15 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     newFormTemplateSection.FormTemplateId = this.currentFormTemplateId;
     this.formTemplateService.postTemplateSection(this.departmentId,this.currentFormTemplateId, newFormTemplateSection).subscribe({
       next: (formTemplateSection) => {
-        // this.getFormTemplates();
-        // this.getTemplateSections();
+        this.getFormTemplateById(this.currentFormTemplateId);
+        this.formTemplate.formTemplateSections.push(newFormTemplateSection);
+        this.getFormTemplates();
       },
       error: (response) => {
         console.log(response);
       },
     });
+    this.hideAddDialogSection();
   }
   // ================= FORM CRITERIA =================
 
@@ -316,6 +326,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         },
       });
     }
+    this.hideEditDialogCriterion();
   }
 
   addCriterion() {
@@ -343,7 +354,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
         },
       });
     }
-    this.hideDeleteDialog();
+    this.hideDeleteDialogCriterion();
   }
 
   showAddDialogCriterion() {
