@@ -126,31 +126,26 @@ export class UsersTableComponent implements OnInit, OnDestroy {
 
   httpDeleteUser() {
     if (this.currentUserId !== undefined) {
-      for (let i = 0; i < this.users.length; i++) {
-        if (this.users[i].id == this.currentUserId) this.users.splice(i, 1);
-      }
       this.usersService.deleteUser(this.currentUserId).subscribe({
         next: (response) => {
           console.log(response);
+          this.httpGetUsers();
         },
       });
     }
   }
 
   httpEditUser() {
-    if (this.currentUserId !== undefined) {
-      var userToEdit = this.users[0];
-      this.users.forEach((user) => {
-        if (user.id === this.currentUserId) userToEdit = user;
-      });
-      userToEdit.name = this.editUserFormGroup.controls.nameControl.value!;
-      userToEdit.email = this.editUserFormGroup.controls.emailControl.value!;
-      userToEdit.role = this.editUserFormGroup.controls.roleControl.value!;
-      this.usersService.editUser(userToEdit.id!, userToEdit).subscribe({
-        next: (response) => {
-          console.log(response);
-        },
-      });
-    }
+    this.httpGetUserById(this.currentUserId);
+    var userToEdit = this.user;
+    userToEdit.name = this.editUserFormGroup.controls.nameControl.value!;
+    userToEdit.email = this.editUserFormGroup.controls.emailControl.value!;
+    userToEdit.role = this.editUserFormGroup.controls.roleControl.value!;
+    this.usersService.editUser(userToEdit.id!, userToEdit).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.httpGetUsers();
+      },
+    });
   }
 }
