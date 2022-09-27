@@ -70,14 +70,42 @@ export class AuthorizeService {
                                               }));
     
   }
+  private userHasRole(roleToCheck: string):Observable<boolean>
+  {
+      return this.getRole().pipe(map(role => role === roleToCheck));
+  }
   public isUserAdmin(): Observable<boolean>
   {
-    return this.getRole().pipe(map(role => role === DefaultRoles.Admin));
+    return this.userHasRole(DefaultRoles.Admin);
   }
   
   public isUserHR(): Observable<boolean>
   {
-    return this.getRole().pipe(map(role => role === DefaultRoles.HR));
+    return this.userHasRole(DefaultRoles.HR);
+  }
+
+  public isUserDevMember(): Observable<boolean>
+  {
+    return this.userHasRole(DefaultRoles.Development);
+  }
+  public isUserPM(): Observable<boolean>
+  {
+    return this.userHasRole(DefaultRoles.ProjectManager);
+  }
+
+  public isUserTeamLead(): Observable<boolean>
+  {
+    return this.userHasRole(DefaultRoles.TeamLead);
+  }
+
+  public isUserHeadOfDepartment(): Observable<boolean>
+  {
+    return this.userHasRole(DefaultRoles.HeadOfDepartment);
+  }
+
+  public isUserDevelopmentManager(): Observable<boolean>
+  {
+    return this.userHasRole(DefaultRoles.DevelopmentManager);
   }
 
   // We try to authenticate the user in three different ways:

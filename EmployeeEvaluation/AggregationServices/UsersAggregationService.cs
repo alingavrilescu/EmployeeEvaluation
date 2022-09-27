@@ -115,5 +115,27 @@ namespace EmployeeEvaluation.AggregationServices
 
             return user.ToUserDTO(identityUser);
         }
+
+        public async Task<UserDTO> UpdateUser(UserDTO newUserData)
+        {
+            var user = usersService.GetUserById(newUserData.Id);           
+            var identityUser = await usersManager.FindByIdAsync(newUserData.Id.ToString());
+            if (identityUser == null)
+                throw new KeyNotFoundException($"User cannot be updated since it cannot be found in the list of active users");
+
+            user.DepartmentId = newUserData.DepartmentId;
+            user.ProjectId = newUserData.ProjectId;
+            user.Name = newUserData.Name;
+            if (!string.IsNullOrEmpty(newUserData.Role) && user.Role != newUserData.Role)
+            {                
+                var result = await usersManager.AddToRoleAsync(identityUser, newUserData.Role);
+                if (result != IdentityResult.Success)
+                    throw new Exception($"Unable to add user to the new role {newUserData.Role}");                
+                await usersManager.RemoveFromRoleAsync(identityUser, user.Role);                
+                user.Role = newUserData.Role;
+            }
+           user = usersService.EditUser(user);
+           return user.ToUserDTO(identityUser);
+        }
     }
 }

@@ -35,6 +35,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { HeadOfDepartmentPageComponent } from './components/head-of-department-page/head-of-department-page.component';
 import { DefaultRoles } from 'src/api-authorization/role-defines';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
     EvaluationFormComponent,
     DepartmentDetailsComponent,
     HeadOfDepartmentPageComponent,
+    
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
