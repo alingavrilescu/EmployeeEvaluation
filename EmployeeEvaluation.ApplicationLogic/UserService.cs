@@ -40,6 +40,22 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._userRepository.GetUsersWithoutProject(depId);
         }
+        public IEnumerable<User> GetDevs(Guid depId)
+        {
+            return this._userRepository.GetDevs(depId);
+        }
+        public IEnumerable<User> GetHODepsWithoutDep()
+        {
+            return this._userRepository.GetHODepsWithoutDep();
+        }
+        public IEnumerable<User> GetProjectManagers(Guid depId) 
+        { 
+            return this._userRepository.GetProjectManagers(depId); 
+        }
+        public IEnumerable<User> GetTeamLeads(Guid depId)
+        { 
+            return this._userRepository.GetTeamLeads(depId);
+        }
 
         public User AddUser(User toAdd)
         {

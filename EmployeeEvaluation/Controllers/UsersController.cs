@@ -117,6 +117,62 @@ namespace EmployeeEvaluation.Controllers
             }
         }
 
+        [HttpGet("department/{depId}/developers")]
+        public async Task<IActionResult> GetDevs(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetDevs(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/project-managers")]
+        public async Task<IActionResult> GetProjectManagers(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetProjectManagers(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/team-leads")]
+        public async Task<IActionResult> GetTeamLeads(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetTeamLeads(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+        [HttpGet("head-of-dep")]
+        public async Task<IActionResult> GetHODepsWithoutDep()
+        {
+            try
+            {
+                var users = await aggregationService.GetHODepsWithoutDep();
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
@@ -133,7 +189,7 @@ namespace EmployeeEvaluation.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserPostDTO newUser)
+        public async Task<IActionResult> Post([FromBody] UserDTO newUser)
         {
             try
             {
@@ -141,7 +197,7 @@ namespace EmployeeEvaluation.Controllers
                 {
                     Email = newUser.Email,
                     Name = newUser.Name,
-                    Role = DefaultRoles.Development,
+                    Role = newUser.Role,
                     DepartmentId = null,
                     ProjectId = null
 

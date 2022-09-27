@@ -65,11 +65,9 @@ namespace EmployeeEvaluation.Controllers
         [HttpPut("{id}")]
         public Department Put(Guid id, [FromBody] Department department)
         {
-            var departmentToEdit = new Department
-            {
-                Name = department.Name,
-                HeadOfDepartmentId = department.HeadOfDepartmentId
-            };
+            var departmentToEdit = this.departmentService.GetDepartmentById(id);
+            departmentToEdit.Name = department.Name;
+            departmentToEdit.HeadOfDepartmentId = department.HeadOfDepartmentId;
             return this.departmentService.UpdateDepartment(departmentToEdit);
         }
         [HttpDelete("{id}")]
