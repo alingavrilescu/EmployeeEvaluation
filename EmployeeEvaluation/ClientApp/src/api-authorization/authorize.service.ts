@@ -80,6 +80,21 @@ export class AuthorizeService {
     return this.getRole().pipe(map(role => role === DefaultRoles.HR));
   }
 
+  public isUserHODepart(): Observable<boolean>
+  {
+    return this.getRole().pipe(map(role => role === DefaultRoles.HeadOfDepartment));
+  }
+
+  public isUserProjManager(): Observable<boolean>
+  {
+    return this.getRole().pipe(map(role => role === DefaultRoles.ProjectManager));
+  }
+
+  public isUserTeamLead(): Observable<boolean>
+  {
+    return this.getRole().pipe(map(role => role === DefaultRoles.TeamLead));
+  }
+
   // We try to authenticate the user in three different ways:
   // 1) We try to see if we can authenticate the user silently. This happens
   //    when the user is already logged in on the IdP and is done using a hidden iframe

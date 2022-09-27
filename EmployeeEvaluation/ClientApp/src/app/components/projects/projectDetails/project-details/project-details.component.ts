@@ -116,6 +116,10 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     })
   }
   
+  getEventValue($event: any): string {
+    return $event.target.value;
+  }
+  
   showDeleteConfirmation(id:Guid){
     this.userToRemoveId=id;
     this.displayConfirmationDialogue=true;

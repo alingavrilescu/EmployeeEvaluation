@@ -40,14 +40,8 @@ export class DepartmentsService {
     return  this.httpClient.delete<Department>(`${environment.apiUrl}/${this.url}/${id}/${userId}`);
   }
 
-  public editDepartment(
-    id: Guid,
-    newDepartment: Department
-  ): Observable<Department> {
-    return this.httpClient.put<Department>(
-      `${environment.apiUrl}/${this.url}/${id}`,
-      newDepartment
-    );
+  public editDepartment(id: Guid,newDepartment: Department): Observable<Department> {
+    return this.httpClient.put<Department>(`${environment.apiUrl}/${this.url}/${id}`,newDepartment);
   }
   public deleteDepartment(id: Guid): Observable<Department> {
     return this.httpClient.delete<Department>(`${environment.apiUrl}/${this.url}/${id}`);
