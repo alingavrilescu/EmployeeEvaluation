@@ -100,36 +100,33 @@ export class DepartmentTableComponent implements OnInit {
     });
   }
   httpDeleteDepartment() {
-    for (let i = 0; i < this.departments.length; i++) {
-      if (this.departments[i].id == this.currentDepartmentId)
-        this.departments.splice(i, 1);
-    }
     this.departmentsService
       .deleteDepartment(this.currentDepartmentId)
       .subscribe({
         next: (response) => {
+          this.httpGetDepartments();
+          this.httpGetUsers();
           console.log(response);
         },
       });
   }
 
   httpEditDepartment() {
-    for (let i = 0; i < this.departments.length; i++) {
-      if (this.departments[i].id === this.currentDepartmentId) {
-        this.departments[i].name =
-          this.addDepartmentFormGroup.controls.nameControl.value!;
-        this.departments[i].headOfDepartment =
-          this.getHeadOfDepartmentByName()!;
-        this.departmentsService
-          .editDepartment(this.currentDepartmentId, this.departments[i])
-          .subscribe({
-            next: (response) => {
-              console.log(response);
-            },
-          });
-        break;
-      }
-    }
+    this.departmentsService
+      .getDepartmentById(this.currentDepartmentId)
+      .subscribe({
+        next: (department) => {
+          department.name =
+            this.addDepartmentFormGroup.controls.nameControl.value!;
+          department.headOfDepartment = this.getHeadOfDepartmentByName()!;
+          this.departmentsService
+            .editDepartment(this.currentDepartmentId, department)
+            .subscribe(() => {
+              this.httpGetDepartments();
+              this.httpGetUsers();
+            });
+        },
+      });
   }
   getHeadOfDepartmentByName() {
     var name =

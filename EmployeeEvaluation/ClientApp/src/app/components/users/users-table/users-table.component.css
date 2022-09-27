@@ -4,12 +4,12 @@
   margin-top: 10vh;
 }
 
-#userDetails {
+/* #userDetails {
   cursor: pointer;
 }
 #userDetails:hover {
   background: rgb(227, 227, 227);
-}
+} */
 @media (max-width: 767.98px) {
   :host ::ng-deep .user-dialog {
     width: 100%;
@@ -20,4 +20,8 @@
   :host ::ng-deep .user-dialog {
     width: 50%;
   }
+}
+
+#hover:hover {
+  background-color: rgb(219, 219, 219);
 }
