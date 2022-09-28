@@ -67,14 +67,13 @@
                 >
                   <i
                     class="pi pi-pencil"
-                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"                    
+                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"
                     (click)="showEditUserDialog(user)"
                   ></i>
                   <i
                     class="pi pi-trash"
                     style="font-size: 2rem; cursor: pointer; margin-left: 50px"
-                    (click)="setCurrentUserId(user.id)"
-                    (click)="showDeleteDialog()"
+                    (click)="showDeleteDialog(user)"
                   ></i>
                 </div>
               </div>
@@ -260,14 +259,13 @@
       type="button"
       label="Cancel"
       class="p-button-danger"
-      (click)="showAddDialog()"
+      (click)="hideAddDialog()"
     ></button>
     <button
       pButton
       type="button"
       label="Submit"
       class="p-button-success"
-      (click)="showAddDialog()"
       (click)="httpAddUser()"
       [disabled]="!addUserFormGroup.valid"
     ></button>
@@ -326,8 +324,8 @@
       pButton
       type="button"
       label="Submit"
-      class="p-button-success"     
-      (click)="saveEditedUser()"      
+      class="p-button-success"
+      (click)="saveEditedUser()"
       [disabled]="!editUserFormGroup.valid"
     ></button>
   </div>
@@ -361,17 +359,14 @@
         type="button"
         label="Cancel"
         class="p-button-danger"
-        (click)="showDeleteDialog()"
-        style=""
+        (click)="hideDeleteDialog()"
       ></button>
       <button
         pButton
         type="button"
         label="Delete"
         class="p-button-success"
-        (click)="showDeleteDialog()"
         (click)="httpDeleteUser()"
-        style=""
       ></button>
     </div>
   </div>

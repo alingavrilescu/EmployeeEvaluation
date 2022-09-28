@@ -62,15 +62,25 @@ export class DepartmentTableComponent implements OnInit {
     });
   }
   showAddDialog() {
-    this.displayAddModal = !this.displayAddModal;
+    this.displayAddModal = false;
+  }
+  hideAddDialog() {
+    this.displayAddModal = true;
   }
   showEditDialog() {
-    this.displayEditModal = !this.displayEditModal;
+    this.displayEditModal = true;
+  }
+  hideEditDialog() {
+    this.displayEditModal = false;
   }
   showDeleteDialog() {
-    this.displayDeleteModal = !this.displayDeleteModal;
+    this.displayDeleteModal = true;
+  }
+  hideDeleteDialog() {
+    this.displayDeleteModal = false;
   }
   httpAddDepartment() {
+    this.hideAddDialog();
     var newDepartment = new Department();
     newDepartment.name =
       this.addDepartmentFormGroup.controls.nameControl.value!;
@@ -113,6 +123,7 @@ export class DepartmentTableComponent implements OnInit {
     });
   }
   httpDeleteDepartment() {
+    this.hideDeleteDialog();
     this.departmentsService
       .deleteDepartment(this.currentDepartmentId)
       .subscribe({
@@ -125,6 +136,7 @@ export class DepartmentTableComponent implements OnInit {
   }
 
   httpEditDepartment() {
+    this.hideEditDialog();
     this.departmentsService
       .getDepartmentById(this.currentDepartmentId)
       .subscribe({

@@ -110,14 +110,13 @@
       type="button"
       label="Cancel"
       class="p-button-danger"
-      (click)="showAddDialog()"
+      (click)="hideAddDialog()"
     ></button>
     <button
       pButton
       type="button"
       label="Submit"
       class="p-button-success"
-      (click)="showAddDialog()"
       (click)="addUsersToDepartment()"
       [disabled]="!addUserFormGroup.valid"
     ></button>
@@ -152,7 +151,7 @@
         type="button"
         label="Cancel"
         class="p-button-danger"
-        (click)="showDeleteDialog()"
+        (click)="hideDeleteDialog()"
         style=""
       ></button>
       <button
@@ -160,7 +159,6 @@
         type="button"
         label="Delete"
         class="p-button-success"
-        (click)="showDeleteDialog()"
         (click)="deleteUserFromDepartment()"
       ></button>
     </div>

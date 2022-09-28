@@ -196,14 +196,13 @@
       type="button"
       label="Cancel"
       class="p-button-danger"
-      (click)="showAddDialog()"
+      (click)="hideAddDialog()"
     ></button>
     <button
       pButton
       type="button"
       label="Submit"
       class="p-button-success"
-      (click)="showAddDialog()"
       (click)="httpAddDepartment()"
       [disabled]="!addDepartmentFormGroup.valid"
     ></button>
@@ -231,14 +230,10 @@
         <label for="float-input">New name of Department</label>
       </span>
       <span class="p-float-label" style="margin-top: 30px">
-        <input
-          id="float-input"
-          type="text"
-          pInputText
-          formControlName="headOfDepartmentControl"
-          style="width: 100%"
-        />
-        <label for="float-input">New Head of Department</label>
+        <p-dropdown
+          [options]="usersHODNames"
+          formControlName="roleControl"
+        ></p-dropdown>
       </span>
     </form>
   </div>
@@ -255,7 +250,7 @@
       type="button"
       label="Cancel"
       class="p-button-danger"
-      (click)="showEditDialog()"
+      (click)="hideEditDialog()"
     ></button>
     <button
       pButton
@@ -263,7 +258,6 @@
       label="Submit"
       class="p-button-success"
       style=""
-      (click)="showEditDialog()"
       (click)="httpEditDepartment()"
       [disabled]="!addDepartmentFormGroup.valid"
     ></button>
@@ -299,7 +293,7 @@
         type="button"
         label="Cancel"
         class="p-button-danger"
-        (click)="showDeleteDialog()"
+        (click)="hideDeleteDialog()"
         style=""
       ></button>
       <button
@@ -307,7 +301,6 @@
         type="button"
         label="Delete"
         class="p-button-success"
-        (click)="showDeleteDialog()"
         (click)="httpDeleteDepartment()"
       ></button>
     </div>
