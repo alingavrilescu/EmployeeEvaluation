@@ -121,6 +121,16 @@ namespace EmployeeEvaluation.AggregationServices
             var users = usersService.GetTeamLeads(deptId);
             return await GetUsersWithIdentityData(users);
         }
+        public async Task<IEnumerable<UserDTO>> GetProjectManagersWithoutProject(Guid deptId)
+        {
+            var users = usersService.GetProjectManagersWithoutProject(deptId);
+            return await GetUsersWithIdentityData(users);
+        }
+        public async Task<IEnumerable<UserDTO>> GetTeamLeadsWithoutProject(Guid deptId)
+        {
+            var users = usersService.GetTeamLeadsWithoutProject(deptId);
+            return await GetUsersWithIdentityData(users);
+        }
         public async Task<IEnumerable<UserDTO>> GetHODepsWithoutDep()
         {
             var users = usersService.GetHODepsWithoutDep();

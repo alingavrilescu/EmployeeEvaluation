@@ -7,4 +7,6 @@ export class Project {
     description: string = "";
     departmentId?: Guid;
     department?:Department;
+    projectManagerId?:string;
+    teamLeadId?:string;
 }

@@ -94,6 +94,9 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Choice")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -105,8 +108,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("isChecked")
-                        .HasColumnType("bit");
+                    b.Property<string>("Review")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -227,6 +230,12 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ProjectManagerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TeamLeadId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
-    public partial class FixMigration : Migration
+    public partial class addPmAndTlToProj : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,7 +49,9 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProjectManagerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    TeamLeadId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,6 +90,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DepartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -172,8 +175,9 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    isChecked = table.Column<bool>(type: "bit", nullable: false),
+                    Choice = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Review = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FormSectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
