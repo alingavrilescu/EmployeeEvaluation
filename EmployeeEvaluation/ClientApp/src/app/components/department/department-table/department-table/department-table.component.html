@@ -9,7 +9,7 @@
   ></p-button>
 </div>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
-  <p-card *ngFor="let department of departments" [style]="{width: '360px'}">
+  <p-card *ngFor="let department of departments" [style]="{ width: '360px' }">
     <h3>{{ department.name }}</h3>
     <div style="border-bottom: 1px solid darkgrey">
       <b>Head of department: </b>Mark
@@ -18,11 +18,12 @@
       style="
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-end;
+        gap: 20px;
         margin-top: 20px;
       "
     >
-      <i
+      <!-- <i
         class="pi pi-folder-open"
         style="cursor: pointer"
         routerLink="{{ this.department.id }}/projects"
@@ -36,7 +37,7 @@
         class="pi pi-book"
         style="cursor: pointer"
         routerLink="{{ this.department.id }}/form-templates"
-      ></i>
+      ></i> -->
       <i
         class="pi pi-pencil"
         style="cursor: pointer"
@@ -51,10 +52,93 @@
       ></i>
     </div>
     <div class="card" style="width: 100%; margin-top: 30px">
-      <div style="background-color: #f1f0f0"><b>Projects: </b>3</div>
-      <div style="background-color: #f1f0f0"><b>Project leads: </b>3</div>
-      <div tyle="background-color: #f7f7f7"><b>Project managers: </b>3</div>
-      <div style="background-color: #f1f0f0"><b>Developers: </b> 7</div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+          padding-top: 5px;
+          padding-bottom: 5px;
+        "
+        routerLink="{{ this.department.id }}/projects"
+      >
+        <div>Projects:</div>
+        <div style="padding-right: 10px"><b>3</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+      >
+        <div>Project leads:</div>
+        <div style="padding-right: 10px"><b>4</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+      >
+        <div>Project managers:</div>
+        <div style="padding-right: 10px"><b>5</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+      >
+        <div>Developers:</div>
+        <div style="padding-right: 10px"><b>6</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+        routerLink="details/{{ this.department.id }}"
+      >
+        <div>All members:</div>
+        <div style="padding-right: 10px"><b>6</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+        routerLink="{{ this.department.id }}/form-templates"
+      >
+        <div>Form templates:</div>
+        <div style="padding-right: 10px"><b>6</b></div>
+      </div>
     </div>
   </p-card>
 </div>
@@ -80,14 +164,19 @@
         <label for="float-input">Name of Department</label>
       </span>
       <span class="p-float-label" style="margin-top: 30px">
-        <input
+        <p-dropdown
+          [options]="usersHODNames"
+          formControlName="headOfDepartmentControl"
+        ></p-dropdown>
+
+        <!-- <input
           id="float-input"
           type="text"
           pInputText
           formControlName="headOfDepartmentControl"
           style="width: 100%"
         />
-        <label for="float-input">Head of Department</label>
+        <label for="float-input">Head of Department</label> -->
       </span>
     </form>
   </div>

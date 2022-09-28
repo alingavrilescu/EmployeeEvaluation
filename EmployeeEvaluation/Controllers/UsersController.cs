@@ -117,6 +117,62 @@ namespace EmployeeEvaluation.Controllers
             }
         }
 
+        [HttpGet("department/{depId}/developers")]
+        public async Task<IActionResult> GetDevs(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetDevs(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/project-managers")]
+        public async Task<IActionResult> GetProjectManagers(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetProjectManagers(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/team-leads")]
+        public async Task<IActionResult> GetTeamLeads(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetTeamLeads(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+        [HttpGet("head-of-dep")]
+        public async Task<IActionResult> GetHODepsWithoutDep()
+        {
+            try
+            {
+                var users = await aggregationService.GetHODepsWithoutDep();
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
@@ -133,7 +189,7 @@ namespace EmployeeEvaluation.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserPostDTO newUser)
+        public async Task<IActionResult> Post([FromBody] UserDTO newUser)
         {
             try
             {
@@ -141,7 +197,7 @@ namespace EmployeeEvaluation.Controllers
                 {
                     Email = newUser.Email,
                     Name = newUser.Name,
-                    Role = DefaultRoles.Development,
+                    Role = newUser.Role,
                     DepartmentId = null,
                     ProjectId = null
 
@@ -151,25 +207,7 @@ namespace EmployeeEvaluation.Controllers
             catch (Exception)
             {
                 return Problem("Could not create the user");
-            }
-            /*var identityUser = CreateUser();
-            
-            await _userStore.SetUserNameAsync(identityUser, newUser.Name, CancellationToken.None);
-            await _emailStore.SetEmailAsync(identityUser, newUser.Email, CancellationToken.None);
-            var result = await _userManager.CreateAsync(identityUser, "P@ssw0rd!");
-            if (result == IdentityResult.Success)
-            {
-                var userToAdd = new User();
-                userToAdd.Id = new Guid(identityUser.Id);
-                userToAdd.Role = newUser.Role;
-                this._userService.AddUser(userToAdd);
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-            */
+            }           
             
         }
 
@@ -191,19 +229,17 @@ namespace EmployeeEvaluation.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditUser(Guid id, [FromBody]UserDTO DTOuser)
+        public async Task<IActionResult> EditUser(Guid id, [FromBody]UserDTO userData)
         {
-            /*var identityUser = await _userManager.FindByIdAsync(id.ToString());
-            var user = _userService.GetUserById(id);
-            if (identityUser == null || user == null) return BadRequest();
-            identityUser.UserName = DTOuser.Name;
-            identityUser.Email = DTOuser.Email;
-            await _userManager.UpdateAsync(identityUser);
-            user.Role = DTOuser.Role;
-            user.DepartmentId = DTOuser.DepartmentId;
-            user.ProjectId = DTOuser.ProjectId;
-            this._userService.EditUser(user);*/
-            return Ok();
+            try
+            {
+                var user = await aggregationService.UpdateUser(userData);
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not create the user");
+            }
         }
     }
 }

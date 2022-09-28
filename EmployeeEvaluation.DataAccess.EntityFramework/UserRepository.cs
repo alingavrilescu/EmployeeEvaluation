@@ -49,7 +49,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         {
             return dbContext.Set<User>()
                             .Where(u => u.DepartmentId ==  null)
-                            .Include(p => p.Project).Include(ef => ef.EvaluationForms).ToList();
+                            .Include(p => p.Project)
+                            .Include(ef => ef.EvaluationForms).ToList();
         }
 
         public IEnumerable<User> GetUsersWithoutProject(Guid depId)
@@ -57,6 +58,39 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return dbContext.Set<User>()
                             .Where(d=>d.DepartmentId==depId)
                             .Where(u => u.ProjectId == null)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
+
+        public IEnumerable<User> GetDevs(Guid depId)
+        {
+            return dbContext.Set<User>()
+                            .Where(d => d.DepartmentId == depId)
+                            .Where(u => u.Role == "Development Member")
+                            .Include(p => p.Project)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
+        public IEnumerable<User> GetHODepsWithoutDep()
+        {
+            return dbContext.Set<User>()
+                            .Where(d => d.DepartmentId == null)
+                            .Where(u => u.Role == "Head Of Department")
+                            .Include(p => p.Project)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
+        public IEnumerable<User> GetProjectManagers(Guid depId)
+        {
+            return dbContext.Set<User>()
+                            .Where(d => d.DepartmentId == depId)
+                            .Where(u => u.Role == "Project Manager")
+                            .Include(p => p.Project)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
+        public IEnumerable<User> GetTeamLeads(Guid depId)
+        {
+            return dbContext.Set<User>()
+                            .Where(d => d.DepartmentId == depId)
+                            .Where(u => u.Role == "Team Lead")
+                            .Include(p => p.Project)
                             .Include(ef => ef.EvaluationForms).ToList();
         }
 

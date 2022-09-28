@@ -36,11 +36,24 @@ export class UsersService {
     return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/without-project/department/${depId}`);
   }
 
+  public getDevsOfDep(depId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}/developers`);
+  }
+
+  public getProjectManagersOfDep(depId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}/project-managers`);
+  }
+
+  public getTeamLeadsOfDep(depId: Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}/team-leads`);
+  }
+
+  public getHODepWithoutDep(): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/head-of-dep`);
+  }
+
   public addUser(newUser: UserDTO): Observable<UserDTO> {
-    return this.httpClient.post<UserDTO>(
-      `${environment.apiUrl}/${this.url}`,
-      newUser
-    );
+    return this.httpClient.post<UserDTO>(`${environment.apiUrl}/${this.url}`,newUser);
   }
   public editUser(id: Guid, userToEdit: UserDTO): Observable<UserDTO> {
     return this.httpClient.put<UserDTO>(

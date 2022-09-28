@@ -106,6 +106,26 @@ namespace EmployeeEvaluation.AggregationServices
             var users = usersService.GetUsersWithoutProject(deptId);
             return await GetUsersWithIdentityData(users);
         }
+        public async Task<IEnumerable<UserDTO>> GetDevs(Guid deptId)
+        {
+            var users = usersService.GetDevs(deptId);
+            return await GetUsersWithIdentityData(users);
+        }
+        public async Task<IEnumerable<UserDTO>> GetProjectManagers(Guid deptId)
+        {
+            var users = usersService.GetProjectManagers(deptId);
+            return await GetUsersWithIdentityData(users);
+        }
+        public async Task<IEnumerable<UserDTO>> GetTeamLeads(Guid deptId)
+        {
+            var users = usersService.GetTeamLeads(deptId);
+            return await GetUsersWithIdentityData(users);
+        }
+        public async Task<IEnumerable<UserDTO>> GetHODepsWithoutDep()
+        {
+            var users = usersService.GetHODepsWithoutDep();
+            return await GetUsersWithIdentityData(users);
+        }
         public async Task<UserDTO> GetUserById(Guid id)
         { 
             var user = usersService.GetUserById(id);
@@ -114,6 +134,28 @@ namespace EmployeeEvaluation.AggregationServices
                 throw new KeyNotFoundException($"User cannot be found {id.ToString()}");
 
             return user.ToUserDTO(identityUser);
+        }
+
+        public async Task<UserDTO> UpdateUser(UserDTO newUserData)
+        {
+            var user = usersService.GetUserById(newUserData.Id);           
+            var identityUser = await usersManager.FindByIdAsync(newUserData.Id.ToString());
+            if (identityUser == null)
+                throw new KeyNotFoundException($"User cannot be updated since it cannot be found in the list of active users");
+
+            user.DepartmentId = newUserData.DepartmentId;
+            user.ProjectId = newUserData.ProjectId;
+            user.Name = newUserData.Name;
+            if (!string.IsNullOrEmpty(newUserData.Role) && user.Role != newUserData.Role)
+            {                
+                var result = await usersManager.AddToRoleAsync(identityUser, newUserData.Role);
+                if (result != IdentityResult.Success)
+                    throw new Exception($"Unable to add user to the new role {newUserData.Role}");                
+                await usersManager.RemoveFromRoleAsync(identityUser, user.Role);                
+                user.Role = newUserData.Role;
+            }
+           user = usersService.EditUser(user);
+           return user.ToUserDTO(identityUser);
         }
     }
 }

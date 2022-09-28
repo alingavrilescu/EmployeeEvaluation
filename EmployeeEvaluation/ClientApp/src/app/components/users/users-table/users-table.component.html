@@ -1,4 +1,93 @@
-<div
+<div id="userDetails" style="display: flex; flex-direction: column">
+  <p-button
+    label="Add User"
+    (click)="showAddDialog()"
+    style="align-self: flex-end; margin-top: 50px"
+  ></p-button>
+  <div id="userInfo">
+    <p style="font-size: 20px"><b>Departament #1 members</b></p>
+    <div class="card">
+      <p-dataView
+        #dv
+        [value]="users"
+        [paginator]="true"
+        [rows]="9"
+        filterBy="name"
+        layout="list"
+      >
+        <ng-template pTemplate="header">
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+            <span class="p-input-icon-left mb-2 md:mb-0">
+              <i class="pi pi-search"></i>
+              <input
+                type="search"
+                pInputText
+                placeholder="Search by Name"
+                (input)="dv.filter(getEventValue($event))"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template let-user pTemplate="listItem">
+          <div class="col-12">
+            <div class="container">
+              <div class="row">
+                <div
+                  class="col-10"
+                  style="
+                    display: flex;
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                    cursor: pointer;
+                  "
+                  id="hover"
+                  routerLink="userDetails/{{ user.id }}"
+                >
+                  <div><i class="pi pi-user" style="font-size: 6rem"></i></div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      margin-left: 30px;
+                    "
+                  >
+                    <div><b>Name: </b>{{ user.name }}</div>
+                    <div><b>Email: </b>{{ user.email }}</div>
+                    <div><b>Role: </b>{{ user.role }}</div>
+                    <div><b>Evaluation Forms: </b>2</div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <i
+                    class="pi pi-pencil"
+                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"                    
+                    (click)="showEditUserDialog(user)"
+                  ></i>
+                  <i
+                    class="pi pi-trash"
+                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"
+                    (click)="setCurrentUserId(user.id)"
+                    (click)="showDeleteDialog()"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </div>
+  </div>
+</div>
+
+<!------------------------------------------------ TABLE ------------------------------------->
+<!-- <div
   class="card"
   style="display: flex; flex-direction: column; margin-top: 100px"
 >
@@ -123,7 +212,7 @@
       </tr>
     </ng-template>
   </p-table>
-</div>
+</div> -->
 
 <!---------------------- ADD MODAL ------------------------>
 <p-dialog
@@ -231,16 +320,14 @@
       type="button"
       label="Cancel"
       class="p-button-danger"
-      (click)="showEditDialog()"
+      (click)="hideEditUserDialog()"
     ></button>
     <button
       pButton
       type="button"
       label="Submit"
-      class="p-button-success"
-      style=""
-      (click)="showEditDialog()"
-      (click)="httpEditUser()"
+      class="p-button-success"     
+      (click)="saveEditedUser()"      
       [disabled]="!editUserFormGroup.valid"
     ></button>
   </div>
@@ -289,306 +376,3 @@
     </div>
   </div>
 </p-dialog>
-
-<!-- <div style="width: 80%; margin-left: auto; margin-right: auto">
-
-  <div id="addUserButton">
-    <button
-      type="button"
-      class="btn btn-primary"
-      data-bs-toggle="modal"
-      data-bs-target="#addUserModal"
-    >
-      Add user
-    </button>
-  </div>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">Role</th>
-        <th scope="col">Edit</th>
-        <th scope="col">Remove</th>
-        <th scope="col">Details</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <th scope="row">1</th>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.role }}</td>
-        <td>
-          <svg
-            id="editUser"
-            data-bs-toggle="modal"
-            data-bs-target="#editUserModal"
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-pencil"
-            viewBox="0 0 16 16"
-            style="cursor: pointer"
-            (click)="httpGetUserById(user.id)"
-          >
-            <path
-              d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"
-            />
-          </svg>
-        </td>
-        <td>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-trash"
-            viewBox="0 0 16 16"
-            style="cursor: pointer"
-            (click)="httpDeleteUser(user.id)"
-          >
-            <path
-              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-            />
-            <path
-              fill-rule="evenodd"
-              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-            />
-          </svg>
-        </td>
-        <td>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            fill="currentColor"
-            class="bi bi-list"
-            viewBox="0 0 16 16"
-            style="cursor: pointer; margin-top: 13px; margin-left: 15px"
-            routerLink="userDetails/{{ user.id }}"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
-            />
-          </svg>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div> -->
-
-<!-------------------------------------- EDIT MODAL  --------------------------------------->
-<!-- <div
-  class="modal fade"
-  id="editUserModal"
-  tabindex="-1"
-  aria-labelledby="editUserModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editUserModalLabel">Edit user</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form id="createNewTeamForm" [formGroup]="editUserFormGroup">
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Change name</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              id="userName"
-              aria-describedby="emailHelp"
-              formControlName="nameControl"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Change email</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              id="userEmail"
-              aria-describedby="emailHelp"
-              formControlName="emailControl"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Change role</label
-            >
-            <select
-              id="exampleInputEmail1"
-              class="form-select"
-              aria-label="Default select example"
-              formControlName="roleControl"
-            >
-              <option selected></option>
-              <option value="Software Developer">Software Developer</option>
-              <option value="Project Manager">Project Manager</option>
-              <option value="Technical Lead">Technical Lead</option>
-              <option value="Technical Lead">Head of Department</option>
-              <option value="Technical Lead">Director of Department</option>
-              <option value="Technical Lead">Human Resources</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Change project</label
-            >
-            <select
-              id="exampleInputEmail1"
-              class="form-select"
-              aria-label="Default select example"
-            >
-              <option selected></option>
-              <option *ngFor="let project of projects">
-                {{ project.name }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label"
-              >Change department</label
-            >
-            <select
-              id="exampleInputEmail1"
-              class="form-select"
-              aria-label="Default select example"
-            >
-              <option selected></option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </select>
-          </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
-              margin-top: 50px;
-            "
-          >
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              (click)="httpEditUser()"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<!-------------------------------------- ADD MODAL  --------------------------------------->
-<!-- <div
-  class="modal fade"
-  id="addUserModal"
-  tabindex="-1"
-  aria-labelledby="addUserModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addUserModalLabel">Add new user</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form id="createNewTeamForm" [formGroup]="addUserFormGroup">
-          <div class="mb-3">
-            <label for="teamName" class="form-label">Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="userName"
-              aria-describedby="emailHelp"
-              formControlName="nameControl"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="teamName" class="form-label">Email</label>
-            <input
-              type="email"
-              class="form-control"
-              id="userEmail"
-              aria-describedby="emailHelp"
-              formControlName="emailControl"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Role</label>
-            <select
-              id="exampleInputPassword1"
-              class="form-select"
-              aria-label="Default select example"
-              formControlName="roleControl"
-            >
-              <option value="Software Developer">Software Developer</option>
-              <option value="Project Manager">Project Manager</option>
-              <option value="Technical Lead">Technical Lead</option>
-              <option value="Technical Lead">Head of Department</option>
-              <option value="Technical Lead">Director of Department</option>
-              <option value="Technical Lead">Human Resources</option>
-            </select>
-          </div>
-          <div
-            style="
-              display: flex;
-              flex-direction: row;
-              justify-content: space-between;
-              margin-top: 50px;
-            "
-          >
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
-              [disabled]="!addUserFormGroup.valid"
-              (click)="httpAddUser()"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div> -->
