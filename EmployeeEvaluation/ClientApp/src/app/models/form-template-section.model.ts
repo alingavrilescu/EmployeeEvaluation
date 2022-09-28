@@ -7,4 +7,5 @@ export class FormTemplateSection {
     description: string = "";
     FormTemplateId!: Guid;
     formTemplateCriteria:FormTemplateCriteria[]=[];
+  static description: string | null;
 }
