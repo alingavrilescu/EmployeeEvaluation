@@ -6,13 +6,15 @@ import { UsersService } from 'src/app/services/users.service';
 @Component({
   selector: 'app-developers',
   templateUrl: './developers.component.html',
-  styleUrls: ['./developers.component.css']
+  styleUrls: ['./developers.component.css'],
 })
 export class DevelopersComponent implements OnInit {
+  constructor(
+    private usersService: UsersService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  constructor(private usersService: UsersService, private activatedRoute: ActivatedRoute) { }
-
-  users: UserDTO[] = []
+  users: UserDTO[] = [];
 
   departmentId: any;
 
