@@ -25,8 +25,8 @@ export class EvaluationFormService {
     return this.httpClient.get<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}`);
   }
 
-  public createEvaluationForm(evaluationForm: EvaluationForm): Observable<EvaluationForm> {
-    return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}`, evaluationForm);
+  public createEvaluationForm(id: Guid, evaluationForm: EvaluationForm): Observable<EvaluationForm> {
+    return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}`, evaluationForm);
   }
 
   public getFormSections(): Observable<FormSection[]> {
