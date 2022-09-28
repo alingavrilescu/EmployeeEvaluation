@@ -249,11 +249,9 @@
             iaculis.
             <br><br>
             <div class="button-block">
-              <button pButton type="button" label="Edit Criterion"
-                class="p-button-warning">
+              <button pButton type="button" label="Edit Criterion" class="p-button-warning">
               </button>
-              <button pButton type="button" label="Delete Criterion"
-                class="p-button-danger">
+              <button pButton type="button" label="Delete Criterion" class="p-button-danger">
               </button>
             </div>
           </li>
@@ -367,7 +365,7 @@
 
  -->
 
-
+    <!-- 
     <ul>
       <br>
       <li *ngFor="let formTemplate of formTemplateList; index as formTemplateIterator">
@@ -389,7 +387,7 @@
             <div class="accordion-body">
               <div><b> Description: </b> {{formTemplateSection.description}} <br><br>
 
-                <!-- ---------- Delete, Edit section + Add criterion ------------ -->
+               ---------- Delete, Edit section + Add criterion ------------ 
 
                 <div class="button-block">
                   <button pButton type="button" label="Edit Section" class="p-button-warning">
@@ -439,7 +437,7 @@
           </div>
         </div>
       </li>
-      <!-- --------------Delete and Edit form template butttons and Add Section ------------------ -->
+       --------------Delete and Edit form template butttons and Add Section ------------------ 
       <div class="button-block">
         <button pButton pRipple type="button" label="Edit" class="p-button-warning"
           (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
@@ -453,4 +451,20 @@
   <br>
   <br>
   </li>
-  </ul>
+  </ul> -->
+
+    <br>
+    <br>
+    <ul>
+      <li *ngFor="let formTemplate of formTemplateList">
+        <h5 style="text-align:center;">{{formTemplate.name}}</h5>
+        <h6 class="indent" style="opacity:0.7">{{formTemplate.type}}</h6>
+        <p-accordion>
+          <li *ngFor="let section of formTemplate.formTemplateSections">
+          <p-accordionTab header=`${{section.name}}`>
+          <div class="indent">{{section.description}}</div>
+          </p-accordionTab>
+        </li>
+        </p-accordion>
+      </li>
+    </ul>

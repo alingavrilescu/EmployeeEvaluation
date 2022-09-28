@@ -4,8 +4,7 @@ import { FormTemplateCriteria } from "./form-template-criteria.model";
 export class FormTemplateSection {
     id?:Guid;
     name:string = "";
-    description: string = "";
+    description:string = "";
     FormTemplateId!: Guid;
     formTemplateCriteria:FormTemplateCriteria[]=[];
-  static description: string | null;
 }
