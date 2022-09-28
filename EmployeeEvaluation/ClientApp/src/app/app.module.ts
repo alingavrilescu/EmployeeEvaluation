@@ -34,6 +34,9 @@ import { DataViewModule } from 'primeng/dataview';
 import { ListboxModule } from 'primeng/listbox';
 import { HeadOfDepartmentPageComponent } from './components/head-of-department-page/head-of-department-page.component';
 import { DefaultRoles } from 'src/api-authorization/role-defines';
+import { ProjectLeadsComponent } from './components/department-details/project-leads/project-leads.component';
+import { ProjectManagersComponent } from './components/department-details/project-managers/project-managers.component';
+import { DevelopersComponent } from './components/department-details/developers/developers.component';
 
 
 @NgModule({
@@ -50,7 +53,10 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
     EvaluationFormComponent,
     DepartmentDetailsComponent,
     HeadOfDepartmentPageComponent,
-    
+    ProjectLeadsComponent,
+    ProjectManagersComponent,
+    DevelopersComponent
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -76,6 +82,9 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
     TableModule,
     RouterModule.forRoot([
       { path: 'departments/:depId/projects', component: ProjectsComponent },
+      { path: 'departments/details/project-leads/:id', component: ProjectLeadsComponent },
+      { path: 'departments/details/project-managers/:id', component: ProjectManagersComponent },
+      { path: 'departments/details/developers/:id', component: DevelopersComponent },
       {
         path: 'departments/:depId/projects/:proId',
         component: ProjectDetailsComponent,
@@ -112,4 +121,4 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

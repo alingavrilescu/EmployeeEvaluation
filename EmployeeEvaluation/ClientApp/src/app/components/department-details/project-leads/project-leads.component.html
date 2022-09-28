@@ -1,0 +1,47 @@
+<div id="userDetails" style="display: flex; flex-direction: column">
+    <div id="userInfo" style="width: 100%; padding-right: 100px; padding-left: 100px">
+        <p style="font-size: 20px"><b>Departament #1 Project Leads</b></p>
+        <div class="card">
+            <p-dataView #dv [value]="users" [paginator]="true" [rows]="9" filterBy="name" layout="list">
+                <ng-template pTemplate="header">
+                    <div class="flex flex-column md:flex-row md:justify-content-between">
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <i class="pi pi-search"></i>
+                            <input type="search" pInputText placeholder="Search by Name"
+                                (input)="dv.filter(getEventValue($event))" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template let-user pTemplate="listItem">
+                    <div class="col-12">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-10" style="display: flex; padding-top: 20px; padding-bottom: 20px"
+                                    id="user" routerLink="../../../users/userDetails/{{ user.id }}">
+                                    <div><i class="pi pi-user" style="font-size: 6rem"></i></div>
+                                    <div style="
+                        display: flex;
+                        flex-direction: column;
+                        margin-left: 30px;
+                      ">
+                                        <div><b>Name: </b>{{ user.name }}</div>
+                                        <div><b>Email: </b>{{ user.email }}</div>
+                                        <div><b>Role: </b>{{ user.role }}</div>
+                                    </div>
+                                </div>
+                                <div class="col" style="
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                    ">
+                                    <i class="pi pi-trash"
+                                        style="font-size: 2rem; cursor: pointer; margin-left: 50px"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+    </div>
+</div>
