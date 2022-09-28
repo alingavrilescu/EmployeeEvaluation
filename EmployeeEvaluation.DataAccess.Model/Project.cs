@@ -7,6 +7,8 @@
         public string Description { get; set; }
         public Guid DepartmentId { get; set; }
         public Department Department { get; set; }
+        public Guid? ProjectManagerId { get; set; }
+        public Guid TeamLeadId { get; set; }
         public ICollection<User>? Users { get; set; }
     }
 }

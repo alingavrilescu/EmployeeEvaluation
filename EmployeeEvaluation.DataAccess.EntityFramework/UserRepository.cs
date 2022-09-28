@@ -93,7 +93,22 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                             .Include(p => p.Project)
                             .Include(ef => ef.EvaluationForms).ToList();
         }
-
+        public IEnumerable<User> GetProjectManagersWithoutProject(Guid depId)
+        {
+            return dbContext.Set<User>()
+                            .Where(d => d.DepartmentId == depId)
+                            .Where(u => u.Role == "Project Manager")
+                            .Where(p => p.ProjectId == null)
+                            .ToList();
+        }
+        public IEnumerable<User> GetTeamLeadsWithoutProject(Guid depId)
+        {
+            return dbContext.Set<User>()
+                            .Where(d => d.DepartmentId == depId)
+                            .Where(u => u.Role == "Team Lead")
+                            .Where(p => p.ProjectId == null)
+                            .ToList();
+        }
 
         public User Update(User toUpdate)
         {

@@ -10,6 +10,10 @@
 <p-dialog header="Add Project" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}" 
   [draggable]="false" [resizable]="false">
   <form [formGroup]="addProjectForm">
+    <label for="float-input">Technical lead</label>
+    <br>
+    <p-dropdown [options]="projectTeamLeads" formControlName="projectTeamLead" optionLabel="name" optionValue="id" [style]="{width: '100%'}"></p-dropdown>
+    <br>
     <label for="float-input">Name</label>
     <br />
     <input placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
@@ -33,14 +37,23 @@
 <p-dialog header="Edit Project" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}" 
   [draggable]="false" [resizable]="false">
   <form [formGroup]="editProjectForm">
+    <label for="float-input">Team Lead</label>
+    <br>
+    <p-dropdown [options]="projectTeamLeads" formControlName="projectTeamLead" optionLabel="name" optionValue="id"></p-dropdown>
+    <br>
+    <label for="float-input">Project Manager</label>
+    <br>
+    <p-dropdown [options]="projectManagers" formControlName="projectManager" optionLabel="name" optionValue="id"></p-dropdown>
+    <br>
     <label for="float-input">Name</label>
     <br />
-    <input [value]="editProjectForm.controls.projectName" placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
+    <input placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
     <br />
     <br />
     <label for="float-input">Description</label>
     <br />
-    <textarea [value]="editProjectForm.controls.projectDescription" placeholder="Project's Description" id="float-input" class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="60" ></textarea>
+    <textarea placeholder="Project's Description" id="float-input" 
+    class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="60" ></textarea>
   </form>
   <div class="buttons-container">
     <button pButton pRipple type="button" label="Close" (click) = "hideEditDialog()" 
@@ -51,7 +64,7 @@
   </div>
 </p-dialog>
 
-<!-- =============================CONFIRMATION DIALOGUE================================= -->
+<!-- =============================CONFIRMATION DELETE DIALOGUE================================= -->
 
 <p-dialog header="Header" [(visible)]="displayConfirmationDialogue" [modal]="true" [style]="{width: '550px'}"
     [draggable]="false" [resizable]="false">
@@ -73,9 +86,7 @@
 <!-- ================================CARD================================= -->
 
 <div class="card-container" *ngFor="let project of projectsList">
- <p-card class="card-content" header={{project.name}} subheader="Project Leader: Grig Va dati cu seama" [style]="{width: '360px'}" styleClass="p-card-shadow">
-    <ng-template pTemplate="header">
-    </ng-template>
+ <p-card class="card-content" header={{project.name}} subheader="Project Manager: " [style]="{width: '360px'}" styleClass="p-card-shadow">
     <div class="card-buttons">
       <div title="More Details" class="card-button pi pi-bars" routerLink="{{project.id}}"></div>
       <div title="Edit Project" class="card-button pi pi-pencil" (click)="showEditDialog(project)"></div>

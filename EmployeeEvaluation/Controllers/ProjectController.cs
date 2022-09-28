@@ -52,7 +52,8 @@ namespace EmployeeEvaluation.Controllers
                 Name = project.Name,
                 Description = project.Description,
                 DepartmentId = project.DepartmentId,
-                Department=department
+                Department=department,
+                TeamLeadId=project.TeamLeadId
             };
             return this._projectService.AddProject(projectToAdd);
         }
@@ -83,6 +84,8 @@ namespace EmployeeEvaluation.Controllers
             var projectToEdit = _projectService.GetProjectById(id);
             projectToEdit.Name = project.Name;
             projectToEdit.Description = project.Description;
+            projectToEdit.ProjectManagerId = project.ProjectManagerId;
+            projectToEdit.TeamLeadId = project.TeamLeadId;
             return this._projectService.UpdateProject(projectToEdit);
         }
 
