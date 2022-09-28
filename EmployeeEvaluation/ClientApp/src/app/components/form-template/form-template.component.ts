@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { FormTemplateSection } from 'src/app/models/form-template-section.model';
 import { FormTemplateCriteria } from 'src/app/models/form-template-criteria.model';
+import { SoftwareDeveloperType } from 'src/app/software-developer-type';
 
 
 @Component({
@@ -16,10 +17,11 @@ import { FormTemplateCriteria } from 'src/app/models/form-template-criteria.mode
 
 export class FormTemplateComponent implements OnInit, OnDestroy {
 
+  selectedFormTemplate!:FormTemplate;
   currentFormTemplateId!: Guid;
   currentTemplateSectionId!: Guid;
   currentTemplateCriteriaId!: Guid;
-  Type: any = ['Junior', 'Intermediate', 'Senior', 'Expert'];
+  Type = SoftwareDeveloperType.AllTypes;
   formTemplateList: FormTemplate[] = [];
   formTemplate!: FormTemplate;
   formTemplateSectionList: FormTemplateSection[] = [];
@@ -80,17 +82,26 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   // ================FORM TEMPLATES====================
 
   
-  
-
-  setCurrentFormTemplateId(id: Guid) {
-    this.currentFormTemplateId = id;
-    this.formTemplateList.forEach((formTemplate) => {
-      if (formTemplate.id === id) {
-        this.editFormTemplateFormGroup.controls.nameControl.setValue(formTemplate.name);
-        this.editFormTemplateFormGroup.controls.typeControl.setValue(formTemplate.type);
-      }
-  });
+  setCurrentFormTemplateId(id: Guid){
+    let selectedFormTemplate = this.formTemplateList.find(formTemplate=> formTemplate.id === id);
+    if (selectedFormTemplate)
+    {
+      this.currentFormTemplateId = id;
+      this.editFormTemplateFormGroup.controls.nameControl.setValue(selectedFormTemplate.name);
+      this.editFormTemplateFormGroup.controls.typeControl.setValue(selectedFormTemplate.type);
+    }      
 }
+  setSelectedFormTemplate(formTemplateToSet:FormTemplate)
+  {
+    
+    this.selectedFormTemplate = formTemplateToSet;
+    if (this.selectedFormTemplate)
+    {
+      this.currentFormTemplateId!=this.selectedFormTemplate.id;
+      this.editFormTemplateFormGroup.controls.nameControl.setValue(this.selectedFormTemplate.name);
+      this.editFormTemplateFormGroup.controls.typeControl.setValue(this.selectedFormTemplate.type);
+    }  
+  }
   addFormTemplate() {
     var newFormTemplate = new FormTemplate();
     newFormTemplate.name = this.addFormTemplateFormGroup.controls.nameControl.value!;
@@ -108,27 +119,21 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   }
 
   updateFormTemplate() {
-    if (this.currentFormTemplateId !== undefined) {
-      var formTemplateToEdit = this.formTemplateList[0];
-      this.formTemplateList.forEach((formTemplate) => {
-        if (formTemplate.id === this.currentFormTemplateId) formTemplateToEdit = formTemplate;
-      });
-      formTemplateToEdit.name = this.editFormTemplateFormGroup.controls.nameControl.value!;
-      formTemplateToEdit.type = this.editFormTemplateFormGroup.controls.typeControl.value!;
-      formTemplateToEdit.departmentId = this.departmentId;
-      this.formTemplateService.updateFormTemplate(this.departmentId, formTemplateToEdit.id!, formTemplateToEdit).subscribe({
+      this.selectedFormTemplate.name = this.editFormTemplateFormGroup.controls.nameControl.value!;
+      this.selectedFormTemplate.type = this.editFormTemplateFormGroup.controls.typeControl.value!;
+      this.selectedFormTemplate.departmentId = this.departmentId;
+      this.formTemplateService.updateFormTemplate(this.departmentId, this.selectedFormTemplate.id!, this.selectedFormTemplate).subscribe({
         next: (response) => {
           this.getFormTemplates();
           console.log(response);
         },
       });
-    }
     this.hideEditDialog();
   }
   
 
   deleteFormTemplate(id?: Guid) {
-    if (this.currentFormTemplateId !== undefined) {
+    if (this.selectedFormTemplate.id !== undefined) {
       this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
         next: (response) => {
           this.getFormTemplates();
@@ -145,13 +150,15 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   hideAddDialog() {
     this.displayFormTemplateAddModal = false;
   }
-  showEditDialog() {
+  showEditDialog(formTemplate:FormTemplate) {
+    this.setSelectedFormTemplate(formTemplate);
     this.displayFormTemplateEditModal = true;
   }
   hideEditDialog() {
     this.displayFormTemplateEditModal = false;
   }
-  showDeleteDialog() {
+  showDeleteDialog(formTemplate:FormTemplate) {
+    this.setSelectedFormTemplate(formTemplate);
     this.displayFormTemplateDeleteModal = true;
   }
   hideDeleteDialog() {
