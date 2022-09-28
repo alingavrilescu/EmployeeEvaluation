@@ -62,10 +62,10 @@ export class DepartmentTableComponent implements OnInit {
     });
   }
   showAddDialog() {
-    this.displayAddModal = false;
+    this.displayAddModal = true;
   }
   hideAddDialog() {
-    this.displayAddModal = true;
+    this.displayAddModal = false;
   }
   showEditDialog() {
     this.displayEditModal = true;
