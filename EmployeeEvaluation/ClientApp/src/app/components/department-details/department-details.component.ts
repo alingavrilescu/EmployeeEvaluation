@@ -63,15 +63,22 @@ export class DepartmentDetailsComponent implements OnInit {
   }
 
   showAddDialog() {
-    this.displayAddDialog = !this.displayAddDialog;
+    this.displayAddDialog = true;
+  }
+  hideAddDialog() {
+    this.displayAddDialog = false;
   }
   showDeleteDialog() {
-    this.displayDeleteDialog = !this.displayDeleteDialog;
+    this.displayDeleteDialog = true;
+  }
+  hideDeleteDialog() {
+    this.displayDeleteDialog = false;
   }
   getEventValue($event: any): string {
     return $event.target.value;
   }
   addUsersToDepartment() {
+    this.hideAddDialog();
     var ids: any = this.addUserFormGroup.controls.nameControl.value!;
     this.departmentsService
       .addUsersToDepartment(this.departmentId, ids)
@@ -81,6 +88,7 @@ export class DepartmentDetailsComponent implements OnInit {
       });
   }
   deleteUserFromDepartment() {
+    this.hideDeleteDialog();
     this.departmentsService
       .removeUserFromDepartment(this.departmentId, this.currentUserId)
       .subscribe(() => {

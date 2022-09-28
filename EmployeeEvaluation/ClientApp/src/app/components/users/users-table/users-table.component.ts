@@ -49,18 +49,22 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   showAddDialog() {
     this.displayAddModal = !this.displayAddModal;
   }
-  
-  showEditUserDialog(user: UserDTO) 
-  {    
+
+  showEditUserDialog(user: UserDTO) {
     this.setSelectedUser(user);
     this.displayEditModal = true;
   }
-
-  hideEditUserDialog()
-  {
+  hideAddDialog() {
+    this.displayAddModal = false;
+  }
+  hideEditUserDialog() {
     this.displayEditModal = false;
   }
-  showDeleteDialog() {
+  hideDeleteDialog() {
+    this.displayDeleteModal = false;
+  }
+  showDeleteDialog(user: UserDTO) {
+    this.setSelectedUser(user);
     this.displayDeleteModal = !this.displayDeleteModal;
   }
   getEventValue($event: any) {
@@ -77,7 +81,6 @@ export class UsersTableComponent implements OnInit, OnDestroy {
     });
   }
   httpGetUsers() {
-   
     this.usersService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
@@ -88,27 +91,30 @@ export class UsersTableComponent implements OnInit, OnDestroy {
       },
     });
   }
-  setCurrentUserId(id: Guid) {    
-    let selectedUser = this.users.find(user=> user.id === id);
-    if (selectedUser)
-    {
+  setCurrentUserId(id: Guid) {
+    let selectedUser = this.users.find((user) => user.id === id);
+    if (selectedUser) {
       this.currentUserId = id;
       this.editUserFormGroup.controls.nameControl.setValue(selectedUser.name);
       this.editUserFormGroup.controls.emailControl.setValue(selectedUser.email);
       this.editUserFormGroup.controls.roleControl.setValue(selectedUser.role);
-    }      
+    }
   }
 
-  setSelectedUser(userToSet: UserDTO)
-  {
+  setSelectedUser(userToSet: UserDTO) {
     this.selectedUser = userToSet;
-    if (this.selectedUser)
-    {
+    if (this.selectedUser) {
       this.currentUserId = this.selectedUser.id;
-      this.editUserFormGroup.controls.nameControl.setValue(this.selectedUser.name);
-      this.editUserFormGroup.controls.emailControl.setValue(this.selectedUser.email);
-      this.editUserFormGroup.controls.roleControl.setValue(this.selectedUser.role);
-    }  
+      this.editUserFormGroup.controls.nameControl.setValue(
+        this.selectedUser.name
+      );
+      this.editUserFormGroup.controls.emailControl.setValue(
+        this.selectedUser.email
+      );
+      this.editUserFormGroup.controls.roleControl.setValue(
+        this.selectedUser.role
+      );
+    }
   }
 
   httpGetUserById(id?: Guid) {
@@ -124,6 +130,7 @@ export class UsersTableComponent implements OnInit, OnDestroy {
     }
   }
   httpAddUser() {
+    this.hideAddDialog();
     var newUser = new UserDTO();
     newUser.name = this.addUserFormGroup.controls.nameControl.value!;
     newUser.email = this.addUserFormGroup.controls.emailControl.value!;
@@ -142,26 +149,27 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   }
 
   httpDeleteUser() {
-    if (this.currentUserId !== undefined) {
-      this.usersService.deleteUser(this.currentUserId).subscribe({
+    this.hideDeleteDialog();
+    this.usersService.deleteUser(this.selectedUser.id!).subscribe({
+      next: (response) => {
+        this.httpGetUsers();
+      },
+    });
+  }
+
+  saveEditedUser() {
+    this.selectedUser.name = this.editUserFormGroup.controls.nameControl.value!;
+    this.selectedUser.email =
+      this.editUserFormGroup.controls.emailControl.value!;
+    this.selectedUser.role = this.editUserFormGroup.controls.roleControl.value!;
+    this.usersService
+      .editUser(this.selectedUser.id!, this.selectedUser)
+      .subscribe({
         next: (response) => {
           console.log(response);
           this.httpGetUsers();
         },
       });
-    }
-  }
-
-  saveEditedUser() {    
-    this.selectedUser.name = this.editUserFormGroup.controls.nameControl.value!;
-    this.selectedUser.email = this.editUserFormGroup.controls.emailControl.value!;
-    this.selectedUser.role = this.editUserFormGroup.controls.roleControl.value!;
-    this.usersService.editUser(this.selectedUser.id!, this.selectedUser).subscribe({
-      next: (response) => {
-        console.log(response);
-        this.httpGetUsers();
-      },
-    });
     this.hideEditUserDialog();
   }
 }
