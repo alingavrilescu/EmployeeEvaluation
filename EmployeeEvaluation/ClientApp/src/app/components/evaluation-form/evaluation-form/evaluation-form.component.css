@@ -1,0 +1,46 @@
+.indent
+{
+    text-indent: 2em
+}
+input {
+    display: block;
+    box-sizing: border-box;
+    margin-top: 100 px;
+}
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.evaluation-form-name{
+    text-align: center;
+    color: navy;
+    text-indent: 30px;
+    text-transform: uppercase;
+}
+
+/* ===========================================SECTION STYLING===================================================== */
+
+.section-container{
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    width: 100%;
+}
+
+.section-name-container{
+    margin-bottom: 0.5%;
+    font-size: 28px;
+    color: rgba(0, 0, 0, 0.75);
+}
+
+.section-desc-container{
+    padding-left: 1%;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.6);
+}

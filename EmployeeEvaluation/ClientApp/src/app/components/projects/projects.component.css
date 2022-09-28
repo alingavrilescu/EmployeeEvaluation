@@ -1,0 +1,123 @@
+/* ====================================BUTTONS STYLE========================== */
+
+.add-button-container{
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 2%;
+}
+
+.modal-button{
+  width: 120px;
+  height: 50px;
+}
+
+.p-button-help,
+.button{
+  padding: 5px;
+}
+
+.btn-pos{
+  margin-left: 10px;
+  padding: 5px;
+  padding-right: 10px;
+  width: 90px;
+  height: 50px;
+}
+
+.buttons-container{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-end;
+}
+
+.card-button{
+  cursor: pointer;
+}
+
+.card-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+/* ====================================CARDS STYLE========================== */
+
+.card-container{
+  display: inline-block;
+  margin-right: 2%;
+  margin-bottom: 2%;
+}
+
+/* ====================================TEXTAREA STYLE========================== */
+
+textarea {
+  outline: none;
+  text-decoration: none;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  outline: none;
+  text-align:left;
+}
+
+textarea:hover{
+  overflow:visible;
+}
+.input-textarea{
+  border: 0.1px solid #a6a6a6;
+  border-radius: 5px;
+}
+
+.textbox {
+  scrollbar-face-color: #C5C5C5;
+  scrollbar-shadow-color: #080C0D;
+  scrollbar-highlight-color: #C5C5C5;
+  scrollbar-3dlight-color: #C5C5C5;
+  scrollbar-darkshadow-color: #080C0D;
+  scrollbar-track-color: #080C0D;
+  scrollbar-arrow-color: #C5C5C5;}
+  
+  body::-webkit-scrollbar,.textbox::-webkit-scrollbar {
+      width: 7px;
+  }
+  
+  body::-webkit-scrollbar-track, .textbox::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+  
+  body::-webkit-scrollbar-thumb, .textbox::-webkit-scrollbar-thumb {
+    background-color: #081114;
+    border: 1px solid #C5C5C5;
+  }
+
+  /* ====================================CONFIRMATION DIALOGUE STYLE========================== */
+  .confirm-dialogue{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .confirm-icon{
+    font-size: 7rem;
+    align-self: center;
+  }
+
+  .confirm-header,
+  .confirm-text{
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  .confirm-buttons-dialogue{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+  }
+
+
+
+  

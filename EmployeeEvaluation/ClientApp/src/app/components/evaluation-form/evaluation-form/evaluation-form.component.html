@@ -1,0 +1,48 @@
+<h2 style="text-align: center"> Evaluation </h2>
+<br>
+<br>
+<!-- ----------------------- Evaluation form for user --------------------------- -->
+<div class="form-container">
+  <h1 class="evaluation-form-name" *ngIf="evaluationForm">{{evaluationForm.name}}</h1>
+  <p-accordion [multiple]="true" *ngFor="let formSection of evaluationForm.formSections">
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <div class="section-container">
+          <div class="section-name-container">
+            {{formSection.name}}
+          </div>
+          <div class="section-desc-container">
+            {{formSection.description}}
+          </div>
+        </div>
+      </ng-template>
+      <p-accordionTab *ngFor="let formCriteria of formSection.formCriteria">
+        <ng-template pTemplate="header">
+          <div>
+            {{formCriteria.name}}
+          </div>
+          <p-table>
+            <ng-template pTemplate="header">
+              <tr>
+                <th></th>
+                <th>Done</th>
+                <th>Checked</th>
+                <th>Untouched</th>
+              </tr>
+            </ng-template>
+          </p-table>
+        </ng-template>
+        <div style="display: flex; justify-content: space-between;">
+          <p-card header="Criteria Description" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
+            <ng-template pTemplate="header">
+            </ng-template>
+            <p>{{formCriteria.description}}</p>
+          </p-card>
+        </div>
+        <ul *ngFor="let criteriaComments of formCriteria.criteriaComments">
+          <li>{{criteriaComments.comment}}</li>
+          <li>{{criteriaComments.attachment}}</li>
+        </ul>
+      </p-accordionTab>
+    </p-accordionTab>
+    <!-- ----------------------------------------------- -->

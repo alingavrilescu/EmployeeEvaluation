@@ -1,0 +1,381 @@
+<div id="userDetails" style="display: flex; flex-direction: column">
+  <p-button
+    label="Add User"
+    (click)="showAddDialog()"
+    style="align-self: flex-end; margin-top: 50px"
+  ></p-button>
+  <div id="userInfo">
+    <p style="font-size: 20px"><b>Departament #1 members</b></p>
+    <div class="card">
+      <p-dataView
+        #dv
+        [value]="users"
+        [paginator]="true"
+        [rows]="9"
+        filterBy="name"
+        layout="list"
+      >
+        <ng-template pTemplate="header">
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+            <span class="p-input-icon-left mb-2 md:mb-0">
+              <i class="pi pi-search"></i>
+              <input
+                type="search"
+                pInputText
+                placeholder="Search by Name"
+                (input)="dv.filter(getEventValue($event))"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template let-user pTemplate="listItem">
+          <div class="col-12">
+            <div class="container">
+              <div class="row">
+                <div
+                  class="col-10"
+                  style="
+                    display: flex;
+                    padding-top: 20px;
+                    padding-bottom: 20px;
+                    cursor: pointer;
+                  "
+                  id="hover"
+                  routerLink="userDetails/{{ user.id }}"
+                >
+                  <div><i class="pi pi-user" style="font-size: 6rem"></i></div>
+                  <div
+                    style="
+                      display: flex;
+                      flex-direction: column;
+                      margin-left: 30px;
+                    "
+                  >
+                    <div><b>Name: </b>{{ user.name }}</div>
+                    <div><b>Email: </b>{{ user.email }}</div>
+                    <div><b>Role: </b>{{ user.role }}</div>
+                    <div><b>Evaluation Forms: </b>2</div>
+                  </div>
+                </div>
+                <div
+                  class="col"
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <i
+                    class="pi pi-pencil"
+                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"
+                    (click)="setCurrentUserId(user.id)"
+                    (click)="showEditDialog()"
+                  ></i>
+                  <i
+                    class="pi pi-trash"
+                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"
+                    (click)="setCurrentUserId(user.id)"
+                    (click)="showDeleteDialog()"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </div>
+  </div>
+</div>
+
+<!------------------------------------------------ TABLE ------------------------------------->
+<!-- <div
+  class="card"
+  style="display: flex; flex-direction: column; margin-top: 100px"
+>
+  <p-table
+    #dt1
+    [value]="users"
+    dataKey="id"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [loading]="loading"
+    styleClass="p-datatable-gridlines"
+    [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['name', 'email', 'role']"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+          "
+        >
+          <button
+            pButton
+            label="Clear"
+            class="p-button-outlined"
+            icon="pi pi-filter-slash"
+            (click)="clear(dt1)"
+          ></button>
+          <span class="p-input-icon-left ml-auto" style="margin-left: 50px">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt1.filterGlobal(getEventValue($event), 'contains')"
+              placeholder="Search keyword"
+            />
+          </span>
+          <button
+            pButton
+            type="button"
+            label="Add User"
+            (click)="showAddDialog()"
+          ></button>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Name
+            <p-columnFilter
+              type="text"
+              field="name"
+              display="menu"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Email
+            <p-columnFilter
+              type="text"
+              field="email"
+              display="menu"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Role
+            <p-columnFilter
+              type="text"
+              field="role"
+              display="menu"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th>
+          <div class="flex justify-content-center align-items-center">
+            Actions
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td id="userDetails" routerLink="userDetails/{{ user.id }}">
+          {{ user.name }}
+        </td>
+        <td>
+          {{ user.email }}
+        </td>
+        <td>
+          <span [class]="'customer-badge status-' + user.role">{{
+            user.role
+          }}</span>
+        </td>
+        <td>
+          <i
+            class="pi pi-user-edit"
+            style="font-size: 1.5rem; cursor: pointer"
+            (click)="setCurrentUserId(user.id)"
+            (click)="showEditDialog()"
+          ></i>
+          <i
+            class="pi pi-trash"
+            style="font-size: 1.3rem; cursor: pointer; margin-left: 50px"
+            (click)="setCurrentUserId(user.id)"
+            (click)="showDeleteDialog()"
+          ></i>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">No customers found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div> -->
+
+<!---------------------- ADD MODAL ------------------------>
+<p-dialog
+  header="Add User"
+  [(visible)]="displayAddModal"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  [modal]="true"
+  styleClass="user-dialog"
+>
+  <div style="display: flex; flex-direction: column; margin-top: 10px">
+    <form [formGroup]="addUserFormGroup">
+      <p-dropdown [options]="roles" formControlName="roleControl"></p-dropdown>
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="nameControl"
+          style="width: 100%"
+        />
+        <label for="float-input">Employee Name</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="email"
+          pInputText
+          formControlName="emailControl"
+          style="width: 100%"
+        />
+        <label for="float-input">Email</label>
+      </span>
+    </form>
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 30px;
+    "
+  >
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showAddDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      (click)="showAddDialog()"
+      (click)="httpAddUser()"
+      [disabled]="!addUserFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
+
+<!---------------------- EDIT MODAL ------------------------>
+<p-dialog
+  header="Edit User"
+  [(visible)]="displayEditModal"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  styleClass="user-dialog"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; margin-top: 10px">
+    <form [formGroup]="editUserFormGroup">
+      <p-dropdown [options]="roles" formControlName="roleControl"></p-dropdown>
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="nameControl"
+          style="width: 100%"
+        />
+        <label for="float-input">New Employee Name</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="emailControl"
+          style="width: 100%"
+        />
+        <label for="float-input">New Email</label>
+      </span>
+    </form>
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 30px;
+    "
+  >
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showEditDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      style=""
+      (click)="showEditDialog()"
+      (click)="httpEditUser()"
+      [disabled]="!editUserFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
+
+<!---------------------- DELETE MODAL ------------------------>
+<p-dialog
+  [(visible)]="displayDeleteModal"
+  styleClass="user-dialog"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+    <i
+      class="pi pi-times-circle"
+      style="font-size: 7rem; align-self: center"
+    ></i>
+    <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
+    <p style="margin-top: 10px; text-align: center">
+      Do you realy want to delete this user? This process cannot be undone.
+    </p>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 40px;
+      "
+    >
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-danger"
+        (click)="showDeleteDialog()"
+        style=""
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        class="p-button-success"
+        (click)="showDeleteDialog()"
+        (click)="httpDeleteUser()"
+        style=""
+      ></button>
+    </div>
+  </div>
+</p-dialog>

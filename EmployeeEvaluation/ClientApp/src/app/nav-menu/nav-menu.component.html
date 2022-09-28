@@ -1,9 +1,11 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">EmployeeEvaluation</a>
+      <a class="navbar-brand" [routerLink]="['/']">
+        <img src="../../assets/evaluation.png" width="35px" height="35px"/>
+        <strong>Employee</strong> Evaluation</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -27,16 +29,19 @@
           >
             <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
+          <li *ngIf="(shouldDisplayUsers$ | async) === true" class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/users']">Users</a>
+          </li>
+          <li>
+            <a class="nav-link text-dark" [routerLink]="['/departments']"
+              >Departments</a
             >
           </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
+          <!-- <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/projects']"
+              >Projects</a
             >
-          </li>
+          </li> -->
         </ul>
         <app-login-menu></app-login-menu>
       </div>

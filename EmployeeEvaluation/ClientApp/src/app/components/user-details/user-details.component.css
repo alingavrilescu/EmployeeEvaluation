@@ -1,0 +1,36 @@
+#userDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+#userInfo {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+  padding-top: 50px;
+  padding-left: 25px;
+}
+#evaluationInfo {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding-top: 25px;
+  padding-left: 25px;
+  padding-bottom: 50px;
+  height: 100%;
+}
+
+p {
+  text-align: justify;
+}
+
+.info {
+  cursor: pointer;
+  margin-top: 10px;
+}
+.info:hover {
+  filter: brightness(0.9);
+}

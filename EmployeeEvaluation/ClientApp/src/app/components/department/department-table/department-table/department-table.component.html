@@ -1,0 +1,307 @@
+<!---------------------------- BUTTONS ------------------------------>
+<!-- <app-department-buttons></app-department-buttons> -->
+<!---------------------------- CONTAINER OF CARDS ------------------------------>
+<div style="display: flex; flex-direction: column; margin-top: 50px">
+  <p-button
+    label="Add Department"
+    (onClick)="showAddDialog()"
+    style="align-self: flex-end"
+  ></p-button>
+</div>
+<div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
+  <p-card *ngFor="let department of departments" [style]="{width: '360px'}">
+    <h3>{{ department.name }}</h3>
+    <div style="border-bottom: 1px solid darkgrey">
+      <b>Head of department: </b>Mark
+    </div>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 20px;
+        margin-top: 20px;
+      "
+    >
+      <!-- <i
+        class="pi pi-folder-open"
+        style="cursor: pointer"
+        routerLink="{{ this.department.id }}/projects"
+      ></i>
+      <i
+        class="pi pi-users"
+        style="cursor: pointer"
+        routerLink="details/{{ this.department.id }}"
+      ></i>
+      <i
+        class="pi pi-book"
+        style="cursor: pointer"
+        routerLink="{{ this.department.id }}/form-templates"
+      ></i> -->
+      <i
+        class="pi pi-pencil"
+        style="cursor: pointer"
+        (click)="setCurrentDepartmentId(department.id!)"
+        (click)="showEditDialog()"
+      ></i>
+      <i
+        class="pi pi-trash"
+        style="cursor: pointer"
+        (click)="setCurrentDepartmentId(department.id!)"
+        (click)="showDeleteDialog()"
+      ></i>
+    </div>
+    <div class="card" style="width: 100%; margin-top: 30px">
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+          padding-top: 5px;
+          padding-bottom: 5px;
+        "
+        routerLink="{{ this.department.id }}/projects"
+      >
+        <div>Projects:</div>
+        <div style="padding-right: 10px"><b>3</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+      >
+        <div>Project leads:</div>
+        <div style="padding-right: 10px"><b>4</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+      >
+        <div>Project managers:</div>
+        <div style="padding-right: 10px"><b>5</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+      >
+        <div>Developers:</div>
+        <div style="padding-right: 10px"><b>6</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+        routerLink="details/{{ this.department.id }}"
+      >
+        <div>All members:</div>
+        <div style="padding-right: 10px"><b>6</b></div>
+      </div>
+      <div
+        id="hover"
+        style="
+          display: flex;
+          justify-content: space-between;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          border-bottom: 1px solid rgb(223, 221, 221);
+          cursor: pointer;
+        "
+        routerLink="{{ this.department.id }}/form-templates"
+      >
+        <div>Form templates:</div>
+        <div style="padding-right: 10px"><b>6</b></div>
+      </div>
+    </div>
+  </p-card>
+</div>
+
+<!---------------------- ADD MODAL ------------------------>
+<p-dialog
+  header="Add Department"
+  [(visible)]="displayAddModal"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  styleClass="department-dialog"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; margin-top: 10px">
+    <form [formGroup]="addDepartmentFormGroup">
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="nameControl"
+          style="width: 100%"
+        />
+        <label for="float-input">Name of Department</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="headOfDepartmentControl"
+          style="width: 100%"
+        />
+        <label for="float-input">Head of Department</label>
+      </span>
+    </form>
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 80px;
+    "
+  >
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showAddDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      (click)="showAddDialog()"
+      (click)="httpAddDepartment()"
+      [disabled]="!addDepartmentFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
+
+<!---------------------- EDIT MODAL ------------------------>
+<p-dialog
+  header="Edit Department"
+  [(visible)]="displayEditModal"
+  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }"
+  styleClass="department-dialog"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; margin-top: 10px">
+    <form [formGroup]="editDepartmentFormGroup">
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="nameControl"
+          style="width: 100%"
+        />
+        <label for="float-input">New name of Department</label>
+      </span>
+      <span class="p-float-label" style="margin-top: 30px">
+        <input
+          id="float-input"
+          type="text"
+          pInputText
+          formControlName="headOfDepartmentControl"
+          style="width: 100%"
+        />
+        <label for="float-input">New Head of Department</label>
+      </span>
+    </form>
+  </div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 30px;
+    "
+  >
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      class="p-button-danger"
+      (click)="showEditDialog()"
+    ></button>
+    <button
+      pButton
+      type="button"
+      label="Submit"
+      class="p-button-success"
+      style=""
+      (click)="showEditDialog()"
+      (click)="httpEditDepartment()"
+      [disabled]="!addDepartmentFormGroup.valid"
+    ></button>
+  </div>
+</p-dialog>
+
+<!---------------------- DELETE MODAL ------------------------>
+<p-dialog
+  [(visible)]="displayDeleteModal"
+  styleClass="department-dialog"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+    <i
+      class="pi pi-times-circle"
+      style="font-size: 7rem; align-self: center"
+    ></i>
+    <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
+    <p style="margin-top: 10px; text-align: center">
+      Do you realy want to delete this department? This process cannot be
+      undone.
+    </p>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 40px;
+      "
+    >
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-danger"
+        (click)="showDeleteDialog()"
+        style=""
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        class="p-button-success"
+        (click)="showDeleteDialog()"
+        (click)="httpDeleteDepartment()"
+      ></button>
+    </div>
+  </div>
+</p-dialog>

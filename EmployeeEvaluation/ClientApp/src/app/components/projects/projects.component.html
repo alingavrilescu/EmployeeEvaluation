@@ -1,0 +1,88 @@
+<!-- =====================================ADD PROJECT BUTTON=============================== -->
+
+<div class="add-button-container">
+  <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
+      pButton pRipple label="Add Project" icon="pi pi-plus"></button>
+</div>
+
+<!-- =============================MODAL FOR ADDING A PROJECT================================= -->
+
+<p-dialog header="Add Project" [(visible)]="displayAddModal" [modal]="true" [style]="{width: '550px'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="addProjectForm">
+    <label for="float-input">Name</label>
+    <br />
+    <input placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
+    <br />
+    <br />
+    <label for="float-input">Description</label>
+    <br />
+    <textarea placeholder="Project's Description" id="float-input" class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="61" ></textarea>
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
+
+    <button pButton pRipple type="submit" label="Submit" (click)="addProject()" [disabled]="!addProjectForm.valid"
+     class="modal-button btn-pos p-button-success"></button>
+  </div>
+</p-dialog>
+
+<!-- =============================MODAL FOR EDITING A PROJECT================================= -->
+
+<p-dialog header="Edit Project" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="editProjectForm">
+    <label for="float-input">Name</label>
+    <br />
+    <input [value]="editProjectForm.controls.projectName" placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
+    <br />
+    <br />
+    <label for="float-input">Description</label>
+    <br />
+    <textarea [value]="editProjectForm.controls.projectDescription" placeholder="Project's Description" id="float-input" class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="60" ></textarea>
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="button" label="Close" (click) = "hideEditDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
+
+    <button pButton pRipple type="submit" label="Submit" (click)="updateProject()" [disabled]="!editProjectForm.valid"
+     class="modal-button btn-pos p-button-success"></button>
+  </div>
+</p-dialog>
+
+<!-- =============================CONFIRMATION DIALOGUE================================= -->
+
+<p-dialog header="Header" [(visible)]="displayConfirmationDialogue" [modal]="true" [style]="{width: '550px'}"
+    [draggable]="false" [resizable]="false">
+    <div class="confirm-dialogue">
+      <i class="confirm-icon pi pi-times-circle"></i>
+      <h3 class="confirm-header">Are you sure?</h3>
+      <p class="confirm-text m-0">
+        Do you realy want to delete this department? This process cannot be
+        undone.
+      </p>
+      <div class="confirm-buttons-dialogue">
+        <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
+        <button pButton type="button" label="Delete" class="p-button-success" (click)="deleteProject(projectIdToDelete)"></button>
+      </div>
+    </div>
+</p-dialog>
+
+
+<!-- ================================CARD================================= -->
+
+<div class="card-container" *ngFor="let project of projectsList">
+ <p-card class="card-content" header={{project.name}} subheader="Project Leader: Grig Va dati cu seama" [style]="{width: '360px'}" styleClass="p-card-shadow">
+    <ng-template pTemplate="header">
+    </ng-template>
+    <div class="card-buttons">
+      <div title="More Details" class="card-button pi pi-bars" routerLink="{{project.id}}"></div>
+      <div title="Edit Project" class="card-button pi pi-pencil" (click)="showEditDialog(project)"></div>
+      <div title="Delete Project" class="card-button pi pi-trash" (click)="showDeleteDialog(project)"></div>
+    </div>
+    <ng-template pTemplate="content">
+      <textarea class="textbox" rows="5" cols="40" readonly>{{project.description}}</textarea>
+    </ng-template>
+  </p-card> 
+</div>

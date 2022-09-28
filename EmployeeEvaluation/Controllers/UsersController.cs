@@ -2,7 +2,14 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using Swashbuckle.AspNetCore.Annotations;
+using EmployeeEvaluation.DataAccess.Model;
+using EmployeeEvaluation.ApplicationLogic;
+using EmployeeEvaluation.AggregationServices;
 
+//test
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace EmployeeEvaluation.Controllers
@@ -10,19 +17,14 @@ namespace EmployeeEvaluation.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
-    {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IUserStore<ApplicationUser> _userStore;
-        private readonly IUserEmailStore<ApplicationUser> _emailStore;
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
-        public UsersController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserStore<ApplicationUser> userStore)
-        {
-            this._userManager = userManager;
-            this._signInManager = signInManager;
-            this._userStore = userStore;
-            this._emailStore = GetEmailStore();
+    {      
+        private readonly UsersAggregationService aggregationService;
+        
+        public UsersController(UsersAggregationService aggregationService)
+        {           
+            this.aggregationService = aggregationService;
         }
+
 
         private ApplicationUser CreateUser()
         {
@@ -37,69 +39,207 @@ namespace EmployeeEvaluation.Controllers
                     $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
+       
 
-        private IUserEmailStore<ApplicationUser> GetEmailStore()
-        {
-            if (!_userManager.SupportsUserEmail)
-            {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
-            }
-            return (IUserEmailStore<ApplicationUser>)_userStore;
-        }
-
-
-        // GET: api/<UsersController>
-        //[HttpGet]
-        //public async Task Get()
-        //{
-        //    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-        //}
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK, "Action was successful")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Server error ocurred and is logged")]
+        [ProducesResponseType(typeof(UserDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetAllUsers()
-        {
-            var users = await _userManager.Users.ToListAsync();
-            return Ok(users);
-        }
-
-        // GET api/<UsersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-            /// MESAJ
-        }
-
-        // POST api/<UsersController>
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string value)
-        {
-            var user = CreateUser();
-            await _userStore.SetUserNameAsync(user, "hr2@gmail.com", CancellationToken.None);
-            await _emailStore.SetEmailAsync(user, "hr2@gmail.com", CancellationToken.None);
-            var result = await _userManager.CreateAsync(user, "HRRR123");
-
-            if (result != IdentityResult.Success)
+        {          
+            try
             {
-                return BadRequest();
+                var users = await aggregationService.GetAllUsers();
+                return Ok(users);
             }
-            else
+            catch (Exception)
             {
+                return Problem("Unable to retrieve users associated data");
+            }
+           
+        }
+
+        [HttpGet("department/{depId}")]
+        public async Task<IActionResult> GetUsersOfDepartment(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetUsersByDepartment(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not load the users from the database");
+            }            
+        }
+
+        [HttpGet("project/{proId}")]
+        public async Task<IActionResult> GetUsersOfProject(Guid proId)
+        {
+            try
+            {
+                var users = await aggregationService.GetUsersByProject(proId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not load the users from the database");
+            }
+        }
+
+        [HttpGet("without-department")]
+        public async Task<IActionResult> GetUsersWithoutDepartment()
+        {
+            try
+            {
+                var users = await aggregationService.GetUsersWithNoDepartment();
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("without-project/department/{depId}")]
+        public async Task<IActionResult> GetUsersWithoutProject(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetUsersWithNoProject(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/developers")]
+        public async Task<IActionResult> GetDevs(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetDevs(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/project-managers")]
+        public async Task<IActionResult> GetProjectManagers(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetProjectManagers(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/team-leads")]
+        public async Task<IActionResult> GetTeamLeads(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetTeamLeads(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+        [HttpGet("head-of-dep")]
+        public async Task<IActionResult> GetHODepsWithoutDep()
+        {
+            try
+            {
+                var users = await aggregationService.GetHODepsWithoutDep();
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById(Guid id)
+        {
+            try
+            {
+                var users = await aggregationService.GetUserById(id);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not load the user from the database");
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] UserDTO newUser)
+        {
+            try
+            {
+                var user = await aggregationService.CreateUser(new UserDTO()
+                {
+                    Email = newUser.Email,
+                    Name = newUser.Name,
+                    Role = newUser.Role,
+                    DepartmentId = null,
+                    ProjectId = null
+
+                }, "P@ssw0rd");
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not create the user");
+            }           
+            
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            try
+            {
+                await aggregationService.DeleteUserById(id);
                 return Ok();
             }
+            catch (Exception)
+            {
+                return Problem("Cannot remove the specified user");
+            }
+            
         }
 
-        // PUT api/<UsersController>/5
+
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> EditUser(Guid id, [FromBody]UserDTO userData)
         {
-
-        }
-
-        // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-
+            try
+            {
+                var user = await aggregationService.UpdateUser(userData);
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return Problem("Could not create the user");
+            }
         }
     }
 }

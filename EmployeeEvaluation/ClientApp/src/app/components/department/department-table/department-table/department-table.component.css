@@ -1,0 +1,15 @@
+@media (max-width: 767.98px) {
+  :host ::ng-deep .department-dialog {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  :host ::ng-deep .department-dialog {
+    width: 50%;
+  }
+}
+
+#hover:hover {
+  background-color: rgb(219, 219, 219);
+}

@@ -1,0 +1,113 @@
+<h1 *ngIf="project">{{project.name}}</h1>
+<h4 *ngIf="project && project.department">{{project.department.name}}</h4>
+<hr style="width: 400px;"/>
+<p *ngIf="project">{{project.description}}</p>
+<hr/>
+<!-- =============================MODAL TO ADD USERS TO PROJECT=============================== -->
+<p-dialog header="Add users to project" [(visible)]="displayAddUsersModal" [modal]="true" [style]="{width: '550px'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="addUsersToProjectForm">
+    <label for="float-input">Name</label>
+    <br />
+    <p-listbox [options]="usersWithoutProject" optionLabel="name" optionValue="id" [multiple]="true" [checkbox]="true" [filter]="true" (onChange)="onListActions($event)"></p-listbox>
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
+    <button pButton pRipple type="submit" label="Submit" (click)="addUsersToProject()" [disabled]="disabledSubmit"
+     class="modal-button btn-pos p-button-success"></button>
+  </div>
+</p-dialog>
+
+<!-- =====================================ADD USERS TO PROJECT BUTTON=============================== -->
+<div class="add-button-container">
+  <button type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
+      pButton pRipple label="Add Users" icon="pi pi-plus" (click)="showAddDialog()"></button>
+</div>
+
+<!-- =============================CONFIRMATION DIALOGUE================================= -->
+
+<p-dialog [(visible)]="displayConfirmationDialogue" [modal]="true" [style]="{width: '550px'}"
+    [draggable]="false" [resizable]="false">
+    <div class="confirm-dialogue">
+      <i class="confirm-icon pi pi-times-circle"></i>
+      <h3 class="confirm-header">Are you sure?</h3>
+      <p class="confirm-text m-0">
+        Do you realy want to remove this user from the project he is assigned to? This process cannot be
+        undone.
+      </p>
+      <div class="confirm-buttons-dialogue">
+        <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteConfirmation()"></button>
+        <button pButton type="button" label="Delete" class="p-button-success" (click)="removeUser()"></button>
+      </div>
+    </div>
+</p-dialog>
+
+<!-- ===============================TABLE WITH EMPLOYEES ASSIGNED TO THE PROJECT====================== -->
+<div *ngIf="usersList.length===0">
+  <h3>There are currently no users assigned to this project.</h3>
+  <h3>You can add users to this project using the button on the top right corner.</h3>
+</div>
+<!-- <div *ngIf="usersList.length">
+  <h4>List of employees:</h4>
+  <p-table [value]="usersList" responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+        <tr>
+            <td><img src="https://cdn.icon-icons.com/icons2/1674/PNG/512/person_110935.png" style="height: 80px;"></td>
+            <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.role}}</td>
+            <td><i class="pi pi-user-minus" style="font-size: 2rem" (click)="showDeleteConfirmation(user.id)"></i></td>
+        </tr>
+    </ng-template>
+  </p-table>
+</div> -->
+<div id="userDetails" style="display: flex; flex-direction: column">
+  <div id="userInfo">
+    <p style="font-size: 20px"><b>{{project.name}} members:</b></p>
+    <div class="card">
+      <p-dataView #dv [value]="usersList" [paginator]="true" [rows]="9" filterBy="name" layout="list">
+        <ng-template pTemplate="header">
+          <div class="flex flex-column md:flex-row md:justify-content-between">
+            <span class="p-input-icon-left mb-2 md:mb-0">
+              <i class="pi pi-search"></i>
+              <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter(getEventValue($event))"/>
+            </span>
+          </div>
+        </ng-template>
+        <ng-template let-user pTemplate="listItem">
+          <div class="col-12">
+            <div class="container">
+              <div class="row">
+                <div class="col-10" style="display: flex; padding-top: 20px; padding-bottom: 20px"
+                  id="user" routerLink="../../../users/userDetails/{{ user.id }}">
+                  <div><i class="pi pi-user" style="font-size: 6rem"></i></div>
+                  <div style="display: flex; flex-direction: column; margin-left: 30px;">
+                    <div><b>Name: </b>{{ user.name }}</div>
+                    <div><b>Email: </b>{{ user.email }}</div>
+                    <div><b>Role: </b>{{ user.role }}</div>
+                  </div>
+                </div>
+                <div class="col"style="display: flex; justify-content: center; align-items: center;">
+                  <i class="pi pi-trash" style="font-size: 2rem; cursor: pointer; margin-left: 50px"
+                    (click)="showDeleteConfirmation(user.id)">
+                  </i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-dataView>
+    </div>
+  </div>
+</div>
+
