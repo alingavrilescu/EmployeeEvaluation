@@ -167,7 +167,7 @@
         <label for="float-input">Name of Department</label>
       </span>
       <span class="p-float-label" style="margin-top: 30px">
-        <p-dropdown
+        <p-dropdown autoWidth="false" [style]="{'width':'100%'}"
           [options]="usersHODNames"
           formControlName="headOfDepartmentControl"
         ></p-dropdown>
@@ -229,8 +229,8 @@
         />
         <label for="float-input">New name of Department</label>
       </span>
-      <span class="p-float-label" style="margin-top: 30px">
-        <p-dropdown
+      <span class="p-float-label" style="margin-top: 30px;">
+        <p-dropdown autoWidth="false" [style]="{'width':'100%'}"
           [options]="usersHODNames"
           formControlName="roleControl"
         ></p-dropdown>
