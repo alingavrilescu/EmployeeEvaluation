@@ -1,2 +1,10 @@
-<h1>Hello, world!</h1>
-<p-button label="Click" routerLink="head-of-department"></p-button>
+
+
+<div *ngIf="(isHeadOfDept$ | async)">
+    <app-head-of-department-page></app-head-of-department-page>
+</div>
+<div *ngIf="(isTeamLead$ | async)">
+    TeamLead
+</div>
+
+
