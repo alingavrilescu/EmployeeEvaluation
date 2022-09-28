@@ -108,16 +108,6 @@ export class AuthorizeService {
   {
     return this.userHasRole(DefaultRoles.ProjectManager);
   }
-  
-
-  {
-    return this.getRole().pipe(map(role => role === DefaultRoles.ProjectManager));
-  }
-
-  public isUserTeamLead(): Observable<boolean>
-  {
-    return this.getRole().pipe(map(role => role === DefaultRoles.TeamLead));
-  }
 
   // We try to authenticate the user in three different ways:
   // 1) We try to see if we can authenticate the user silently. This happens
