@@ -16,33 +16,48 @@
           </div>
         </div>
       </ng-template>
-      <p-accordionTab *ngFor="let formCriteria of formSection.formCriteria">
-        <ng-template pTemplate="header">
-          <div>
-            {{formCriteria.name}}
-          </div>
-          <p-table>
+      <div class="criteria-table-container">
+        <div class="criteria-table">
+          <p-table responsiveLayout="scroll">
             <ng-template pTemplate="header">
-              <tr>
-                <th></th>
-                <th>Done</th>
-                <th>Checked</th>
-                <th>Untouched</th>
-              </tr>
+                <tr>
+                    <th></th>
+                    <th>Done</th>
+                    <th>Looked at</th>
+                    <th>Untouched</th>
+                </tr>
             </ng-template>
-          </p-table>
-        </ng-template>
-        <div style="display: flex; justify-content: space-between;">
-          <p-card header="Criteria Description" [style]="{'width': '25rem', 'margin-bottom': '2em'}">
-            <ng-template pTemplate="header">
-            </ng-template>
-            <p>{{formCriteria.description}}</p>
-          </p-card>
+            
+        </p-table>
         </div>
-        <ul *ngFor="let criteriaComments of formCriteria.criteriaComments">
-          <li>{{criteriaComments.comment}}</li>
-          <li>{{criteriaComments.attachment}}</li>
-        </ul>
-      </p-accordionTab>
+        <p-accordionTab class="criteria-accordion" *ngFor="let formCriteria of formSection.formCriteria">
+          <ng-template pTemplate="header">
+            
+            <div class="criteria-container">
+              <div class="criteria-name-container">
+                {{formCriteria.name}}
+              </div>
+              <div class="criteria-desc-container">
+                {{formCriteria.description}}
+              </div>
+
+              <div class="btn-container">
+                <div class="add-comm-btn">
+                  <button type="button" class="add-btn btn-pos p-button-help" pButton pRipple label="Add Comment" icon="pi pi-plus"></button>
+                </div>
+                <div class="add-review-btn">
+                  <button pButton pRipple type="button" label="Add Review" class="add-btn btn-pos p-button-warning" icon="pi pi-plus"></button>
+                </div>
+              </div>
+
+            </div>
+          </ng-template>
+          <ul *ngFor="let criteriaComments of formCriteria.criteriaComments">
+            <li>{{criteriaComments.comment}}</li>
+            <li>{{criteriaComments.attachment}}</li>
+          </ul>
+        </p-accordionTab>
+      </div>
+      
     </p-accordionTab>
     <!-- ----------------------------------------------- -->

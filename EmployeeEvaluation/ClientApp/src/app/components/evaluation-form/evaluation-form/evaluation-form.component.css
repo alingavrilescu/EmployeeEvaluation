@@ -24,23 +24,96 @@ input[type=text], select {
     text-transform: uppercase;
 }
 
-/* ===========================================SECTION STYLING===================================================== */
+/* ===========================================SECTION & CRITERIA STYLING===================================================== */
 
-.section-container{
+.section-container,
+.criteria-container{
     display: flex;
     flex-direction: column;
     padding: 1%;
     width: 100%;
 }
 
-.section-name-container{
+.section-name-container,
+.criteria-name-container{
     margin-bottom: 0.5%;
     font-size: 28px;
     color: rgba(0, 0, 0, 0.75);
 }
 
-.section-desc-container{
+.section-desc-container,
+.criteria-desc-container{
     padding-left: 1%;
     font-size: 14px;
     color: rgba(0, 0, 0, 0.6);
+}
+
+/* ===========================================CRITERIA STYLING===================================================== */
+
+.criteria-name-container{
+    font-size: 18px;
+}
+
+.criteria-desc-container{
+    font-size: 14px;
+}
+
+.criteria-table-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.criteria-accordion{
+    max-width: 100%;
+}
+.criteria-accordion > a{
+    width: 20%;
+}
+
+.criteria-table{
+    width: 35%;
+    align-self: flex-end;
+}
+
+tr > th {
+    border: none;
+    border-width: none;
+    background: none;
+}
+
+.criteria-name-container{
+    width: 65%;
+    float: left;
+}
+
+.radio-btn-container{
+    width: 35%;
+    float: right;
+}
+
+.radio-btn-container > p-radioButton{
+    padding: 1rem 1rem;
+}
+
+.p-accordion-header > a{
+    width: 20%;
+    border: 5px solid red;
+}
+
+.btn-container{
+    display: flex;
+    flex-direction: column;
+    align-self: flex-end;
+    position: absolute;
+}
+
+.add-comm-btn,
+.add-review-btn{
+    width: 150px;
+    margin-bottom: 1%;
+}
+
+.add-btn{
+    font-size: 14px;
+    padding: 6px 8px;
 }

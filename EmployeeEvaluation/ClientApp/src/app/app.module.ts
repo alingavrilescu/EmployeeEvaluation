@@ -34,7 +34,7 @@ import { DataViewModule } from 'primeng/dataview';
 import { ListboxModule } from 'primeng/listbox';
 import { HeadOfDepartmentPageComponent } from './components/head-of-department-page/head-of-department-page.component';
 import { DefaultRoles } from 'src/api-authorization/role-defines';
-
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -73,6 +73,7 @@ import { DefaultRoles } from 'src/api-authorization/role-defines';
     RippleModule,
     InputTextModule,
     ListboxModule,
+    RadioButtonModule,
     TableModule,
     RouterModule.forRoot([
       { path: 'departments/:depId/projects', component: ProjectsComponent },
