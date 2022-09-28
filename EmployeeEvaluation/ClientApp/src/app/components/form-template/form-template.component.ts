@@ -36,6 +36,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   displayCriterionEditModal: boolean = false;
   displayCriterionDeleteModal: boolean = false;
   departmentId: any;
+  selectedSection!:FormTemplateSection;
 
 
   editFormTemplateFormGroup = new FormGroup({
@@ -183,29 +184,41 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   //===================SECTIONS=====================
 
   setCurrentSectionId(id: Guid) {
-    this.currentTemplateSectionId = id;
-    this.formTemplateSectionList.forEach((section) => {
-      if (section.id === id) {
-        this.editSectionFormGroup.controls.nameControl.setValue(section.name);
-        this.editSectionFormGroup.controls.descriptionControl.setValue(section.description);
+    let selectedSection=this.formTemplateSectionList.find(formTemplateSection=>formTemplateSection.id===id)
+      if (selectedSection) {
+        this.currentTemplateSectionId = id;
+        this.editSectionFormGroup.controls.nameControl.setValue(FormTemplateSection.name);
+        this.editSectionFormGroup.controls.descriptionControl.setValue(FormTemplateSection.description);
       }
-  });
 }
+setSelectedSection(sectionToSet: FormTemplateSection)
+  {
+    this.selectedSection = sectionToSet;
+    if (this.selectedSection)sectionToSet
+    {
+      this.currentTemplateSectionId != this.selectedSection.id;
+      this.editSectionFormGroup.controls.nameControl.setValue(this.selectedSection.name);
+      this.editSectionFormGroup.controls.descriptionControl.setValue(this.selectedSection.description);
 
+    }  
+  }
   showAddDialogSection() {
     this.displaySectionAddModal = true;
   }
   hideAddDialogSection() {
     this.displaySectionAddModal = false;
   }
-  showEditDialogSection() {
-    this.displaySectionEditModal = true;
+  showEditDialogSection(formTemplateSection:FormTemplateSection) {
+    this.setSelectedSection(formTemplateSection);
+    this.displaySectionEditModal= true;
+
   }
   hideEditDialogSection() {
     this.displaySectionEditModal = false;
   }
-  showDeleteDialogSection() {
-    this.displaySectionDeleteModal = true;
+  showDeleteDialogSection(formTemplateSection:FormTemplateSection) {
+    this.setSelectedSection(formTemplateSection);
+    this.displaySectionDeleteModal= true;
   }
   hideDeleteDialogSection() {
     this.displaySectionDeleteModal = false;
@@ -237,21 +250,15 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   }
 
   updateTemplateSection() {
-    if (this.currentTemplateSectionId !== undefined) {
-      var sectionToEdit = this.formTemplateSectionList[0];
-      this.formTemplateSectionList.forEach((section) => {
-        if (section.id === this.currentTemplateSectionId) sectionToEdit = section;
-      });
-      sectionToEdit.name = this.editCriterionFormGroup.controls.nameControl.value!;
-      sectionToEdit.description = this.editCriterionFormGroup.controls.descriptionControl.value!;
-      sectionToEdit.FormTemplateId = this.currentFormTemplateId;
-      this.formTemplateService.putTemplateSection(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId,this.formTemplateSection).subscribe({
+      this.selectedSection.name = this.editCriterionFormGroup.controls.nameControl.value!;
+      this.selectedSection.description = this.editCriterionFormGroup.controls.descriptionControl.value!;
+      this.selectedSection.FormTemplateId = this.currentFormTemplateId;
+      this.formTemplateService.putTemplateSection(this.departmentId,this.currentFormTemplateId,this.currentTemplateSectionId,this.selectedSection).subscribe({
         next: (response) => {
           this.getTemplateSections();
           console.log(response);
         },
       });
-    }
     this.hideEditDialogSection();
   }
 
