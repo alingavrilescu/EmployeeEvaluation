@@ -92,6 +92,13 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
+  removeUser(){
+    this.removeUsersFromProjectSubscription=this.projectService.removeUserFromProject(this.projectId,this.userToRemoveId).subscribe(()=>{
+      this.hideDeleteConfirmation();
+      this.getUsersOfProject();
+    })
+  }
+
   getUsersWithoutProject()
   {
     this.getUsersWithoutProjectSubscription=this.userService.getUsersWithoutProject(this.departmentId).subscribe(data =>{
@@ -107,13 +114,6 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
 
   hideAddDialog(){
     this.displayAddUsersModal = false;
-  }
-
-  removeUser(){
-    this.removeUsersFromProjectSubscription=this.projectService.removeUserFromProject(this.projectId,this.userToRemoveId).subscribe(()=>{
-      this.hideDeleteConfirmation();
-      this.getUsersOfProject();
-    })
   }
   
   getEventValue($event: any): string {

@@ -79,7 +79,7 @@ namespace EmployeeEvaluation.Controllers
                         var formCriteria = new FormCriteria();
                         formCriteria.Name = formTemplateCriteria.Name;
                         formCriteria.Description = formTemplateCriteria.Description;
-                        formCriteria.isChecked = false;
+                        //formCriteria.isChecked = false;
                         formSection.FormCriteria.Add(formCriteria);
                     }
                     evaluationFormToAdd.FormSections.Add(formSection);
@@ -111,7 +111,7 @@ namespace EmployeeEvaluation.Controllers
             {
                 Name = formCriteria.Name,
                 Description = formCriteria.Description,
-                isChecked = formCriteria.isChecked,
+                //isChecked = formCriteria.isChecked,
                 FormSectionId = formCriteria.FormSectionId
             };
             return this._evaluationFormService.AddFormCriteria(formCriteriaToAdd);
@@ -153,7 +153,7 @@ namespace EmployeeEvaluation.Controllers
         {
             var formCriteriaToUpdate = this._evaluationFormService.GetFormCriteriaById(criteriaId);
             formCriteriaToUpdate.Name = formCriteria.Name;
-            formCriteriaToUpdate.isChecked = formCriteria.isChecked;
+            //formCriteriaToUpdate.isChecked = formCriteria.isChecked;
             formCriteriaToUpdate.Description = formCriteria.Description;
 
             return this._evaluationFormService.UpdateFormCriteria(formCriteriaToUpdate);

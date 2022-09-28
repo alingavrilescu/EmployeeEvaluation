@@ -158,6 +158,33 @@ namespace EmployeeEvaluation.Controllers
                 return Problem("Unable to retrieve users associated data");
             }
         }
+        [HttpGet("department/{depId}/project-managers/without-project")]
+        public async Task<IActionResult> GetProjectManagersWithoutProject(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetProjectManagersWithoutProject(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/team-leads/without-project")]
+        public async Task<IActionResult> GetTeamLeadsWithoutProject(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetTeamLeadsWithoutProject(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
         [HttpGet("head-of-dep")]
         public async Task<IActionResult> GetHODepsWithoutDep()
         {
