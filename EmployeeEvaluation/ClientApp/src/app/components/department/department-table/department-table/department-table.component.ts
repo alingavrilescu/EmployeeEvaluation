@@ -26,6 +26,8 @@ export class DepartmentTableComponent implements OnInit {
   departments: Department[] = [];
   currentDepartmentId!: Guid;
   users: UserDTO[] = [];
+  usersHOD: UserDTO[] = [];
+  usersHODNames: string[] = [];
   constructor(
     private departmentsService: DepartmentsService,
     private usersService: UsersService
@@ -34,6 +36,17 @@ export class DepartmentTableComponent implements OnInit {
   ngOnInit(): void {
     this.httpGetDepartments();
     this.httpGetUsers();
+    this.getHOD();
+  }
+  getHOD() {
+    this.usersService.getHODepWithoutDep().subscribe({
+      next: (usersHOD) => {
+        this.usersHOD = usersHOD;
+        usersHOD.forEach((element) => {
+          this.usersHODNames.push(element.name);
+        });
+      },
+    });
   }
   setCurrentDepartmentId(id: Guid) {
     this.currentDepartmentId = id;
@@ -59,7 +72,8 @@ export class DepartmentTableComponent implements OnInit {
   }
   httpAddDepartment() {
     var newDepartment = new Department();
-    newDepartment.name =this.addDepartmentFormGroup.controls.nameControl.value!;
+    newDepartment.name =
+      this.addDepartmentFormGroup.controls.nameControl.value!;
     newDepartment.headOfDepartment = this.getHeadOfDepartment()!;
     this.departmentsService.addDepartment(newDepartment).subscribe({
       next: (department) => {
@@ -116,7 +130,7 @@ export class DepartmentTableComponent implements OnInit {
       .subscribe({
         next: (department) => {
           department.name =
-            this.addDepartmentFormGroup.controls.nameControl.value!;
+            this.editDepartmentFormGroup.controls.nameControl.value!;
           department.headOfDepartment = this.getHeadOfDepartmentByName()!;
           this.departmentsService
             .editDepartment(this.currentDepartmentId, department)
