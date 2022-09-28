@@ -67,9 +67,8 @@
                 >
                   <i
                     class="pi pi-pencil"
-                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"
-                    (click)="setCurrentUserId(user.id)"
-                    (click)="showEditDialog()"
+                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"                    
+                    (click)="showEditUserDialog(user)"
                   ></i>
                   <i
                     class="pi pi-trash"
@@ -321,16 +320,14 @@
       type="button"
       label="Cancel"
       class="p-button-danger"
-      (click)="showEditDialog()"
+      (click)="hideEditUserDialog()"
     ></button>
     <button
       pButton
       type="button"
       label="Submit"
-      class="p-button-success"
-      style=""
-      (click)="showEditDialog()"
-      (click)="httpEditUser()"
+      class="p-button-success"     
+      (click)="saveEditedUser()"      
       [disabled]="!editUserFormGroup.valid"
     ></button>
   </div>

@@ -6,6 +6,7 @@ import { UserDTO } from 'src/app/models/users.model';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Table } from 'primeng/table';
+import { DefaultRoles } from 'src/api-authorization/role-defines';
 
 @Component({
   selector: 'app-users-table',
@@ -25,16 +26,10 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   });
   users: UserDTO[] = [];
   user!: UserDTO;
-  roles = [
-    'HR',
-    'Development Manager',
-    'Head Of Department',
-    'Project Manager',
-    'Team Lead',
-    'Development Member',
-  ];
+  selectedUser!: UserDTO;
+  roles = DefaultRoles.AllRoles;
   projects: Project[] = [];
-  currentUserId!: Guid;
+  currentUserId?: Guid;
   loading: boolean = true;
   displayAddModal: boolean = false;
   displayEditModal: boolean = false;
@@ -54,8 +49,16 @@ export class UsersTableComponent implements OnInit, OnDestroy {
   showAddDialog() {
     this.displayAddModal = !this.displayAddModal;
   }
-  showEditDialog() {
-    this.displayEditModal = !this.displayEditModal;
+  
+  showEditUserDialog(user: UserDTO) 
+  {    
+    this.setSelectedUser(user);
+    this.displayEditModal = true;
+  }
+
+  hideEditUserDialog()
+  {
+    this.displayEditModal = false;
   }
   showDeleteDialog() {
     this.displayDeleteModal = !this.displayDeleteModal;
@@ -74,6 +77,7 @@ export class UsersTableComponent implements OnInit, OnDestroy {
     });
   }
   httpGetUsers() {
+   
     this.usersService.getUsers().subscribe({
       next: (users) => {
         this.users = users;
@@ -84,16 +88,29 @@ export class UsersTableComponent implements OnInit, OnDestroy {
       },
     });
   }
-  setCurrentUserId(id: Guid) {
-    this.currentUserId = id;
-    this.users.forEach((user) => {
-      if (user.id === id) {
-        this.editUserFormGroup.controls.nameControl.setValue(user.name);
-        this.editUserFormGroup.controls.emailControl.setValue(user.email);
-        this.editUserFormGroup.controls.roleControl.setValue(user.role);
-      }
-    });
+  setCurrentUserId(id: Guid) {    
+    let selectedUser = this.users.find(user=> user.id === id);
+    if (selectedUser)
+    {
+      this.currentUserId = id;
+      this.editUserFormGroup.controls.nameControl.setValue(selectedUser.name);
+      this.editUserFormGroup.controls.emailControl.setValue(selectedUser.email);
+      this.editUserFormGroup.controls.roleControl.setValue(selectedUser.role);
+    }      
   }
+
+  setSelectedUser(userToSet: UserDTO)
+  {
+    this.selectedUser = userToSet;
+    if (this.selectedUser)
+    {
+      this.currentUserId = this.selectedUser.id;
+      this.editUserFormGroup.controls.nameControl.setValue(this.selectedUser.name);
+      this.editUserFormGroup.controls.emailControl.setValue(this.selectedUser.email);
+      this.editUserFormGroup.controls.roleControl.setValue(this.selectedUser.role);
+    }  
+  }
+
   httpGetUserById(id?: Guid) {
     if (id !== undefined) {
       this.usersService.getUserById(id).subscribe({
@@ -135,17 +152,16 @@ export class UsersTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  httpEditUser() {
-    this.httpGetUserById(this.currentUserId);
-    var userToEdit = this.user;
-    userToEdit.name = this.editUserFormGroup.controls.nameControl.value!;
-    userToEdit.email = this.editUserFormGroup.controls.emailControl.value!;
-    userToEdit.role = this.editUserFormGroup.controls.roleControl.value!;
-    this.usersService.editUser(userToEdit.id!, userToEdit).subscribe({
+  saveEditedUser() {    
+    this.selectedUser.name = this.editUserFormGroup.controls.nameControl.value!;
+    this.selectedUser.email = this.editUserFormGroup.controls.emailControl.value!;
+    this.selectedUser.role = this.editUserFormGroup.controls.roleControl.value!;
+    this.usersService.editUser(this.selectedUser.id!, this.selectedUser).subscribe({
       next: (response) => {
         console.log(response);
         this.httpGetUsers();
       },
     });
+    this.hideEditUserDialog();
   }
 }
