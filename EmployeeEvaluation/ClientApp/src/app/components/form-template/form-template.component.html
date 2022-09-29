@@ -459,11 +459,11 @@
       <li *ngFor="let formTemplate of formTemplateList">
         <h5 style="text-align:center;">{{formTemplate.name}}</h5>
         <h6 class="indent" style="opacity:0.7">{{formTemplate.type}}</h6>
-
         <p-accordion>
           <ul>
-            <li *ngFor="let section of formTemplate.formTemplateSections">
-              <p-accordionTab header="{{section.name}}">
+            <li *ngFor="let section of formTemplate.templateSections">
+              <p-accordionTab header={{section.name}}>
+                <p>{{formTemplate.name}}</p>
                 <div class="indent">{{section.description}}</div>
               </p-accordionTab>
             </li>

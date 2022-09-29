@@ -5,5 +5,5 @@ export class FormTemplate {
     name:string="";
     departmentId?:Guid;
     type:string="";
-    formTemplateSections:FormTemplateSection[]=[];
+    templateSections:FormTemplateSection[]=[];
 }

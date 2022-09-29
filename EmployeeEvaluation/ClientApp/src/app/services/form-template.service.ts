@@ -38,9 +38,9 @@ export class FormTemplateService {
   public getTemplateSectionById(departmentId: Guid, formTemplateId: Guid, id: Guid): Observable<FormTemplateSection> {
     return this.httpClient.get<FormTemplateSection>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${id}`);
   }
-  public getSections(departmentId:Guid, formTemplateId:Guid):Observable<FormTemplateSection[]>
+  public getSections(departmentId:Guid):Observable<FormTemplateSection[]>
   {
-    return this.httpClient.get<FormTemplateSection[]>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection`);
+    return this.httpClient.get<FormTemplateSection[]>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/FormTemplateSection`);
   }
   public postTemplateSection(departmentId: Guid, formTemplateId: Guid, formTemplateSection: FormTemplateSection): Observable<FormTemplateSection> {
     return this.httpClient.post<FormTemplateSection>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection`, formTemplateSection);
