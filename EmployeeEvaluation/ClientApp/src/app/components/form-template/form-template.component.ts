@@ -19,7 +19,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
   selectedFormTemplate!: FormTemplate;
   selectedFormTemplateCriterion!: FormTemplateCriteria
-  currentFormTemplateId!: Guid;
+  currentFormTemplateId: Guid = Guid.parse(Guid.EMPTY);
   currentTemplateSectionId!: Guid;
   currentTemplateCriteriaId!: Guid;
   Type = SoftwareDeveloperType.AllTypes;
@@ -95,8 +95,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   setSelectedFormTemplate(formTemplateToSet: FormTemplate) {
 
     this.selectedFormTemplate = formTemplateToSet;
-    if (this.selectedFormTemplate) {
-      this.currentFormTemplateId != this.selectedFormTemplate.id;
+    if (this.selectedFormTemplate && this.selectedFormTemplate.id) {
+      this.currentFormTemplateId = this.selectedFormTemplate.id;
       this.editFormTemplateFormGroup.controls.nameControl.setValue(this.selectedFormTemplate.name);
       this.editFormTemplateFormGroup.controls.typeControl.setValue(this.selectedFormTemplate.type);
     }
@@ -206,8 +206,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   }
   setSelectedSection(sectionToSet: FormTemplateSection) {
     this.selectedSection = sectionToSet;
-    if (this.selectedSection) {
-      this.currentTemplateSectionId != this.selectedSection.id;
+    if (this.selectedSection && this.selectedSection.id) {
+      this.currentTemplateSectionId = this.selectedSection.id;
       this.editSectionFormGroup.controls.nameControl.setValue(this.selectedSection.name);
       this.editSectionFormGroup.controls.descriptionControl.setValue(this.selectedSection.description);
 
