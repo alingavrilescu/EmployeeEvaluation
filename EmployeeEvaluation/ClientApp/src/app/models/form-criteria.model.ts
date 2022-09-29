@@ -6,6 +6,7 @@ export class FormCriteria {
     name:string = "";
     isChecked: boolean = false;
     description: string = "";
+    review: string = "";
     formSectionId?: Guid;
     criteriaComments: CriteriaComments[] = [];
 }

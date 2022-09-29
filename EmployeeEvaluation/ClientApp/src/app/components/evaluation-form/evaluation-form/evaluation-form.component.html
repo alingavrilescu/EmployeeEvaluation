@@ -1,10 +1,9 @@
-<h2 style="text-align: center"> Evaluation </h2>
-<br>
-<br>
-<!-- ----------------------- Evaluation form for user --------------------------- -->
+<!-- ===============================================EVALUATION FORM========================================================= -->
+
 <div class="form-container">
   <h1 class="evaluation-form-name" *ngIf="evaluationForm">{{evaluationForm.name}}</h1>
   <p-accordion [multiple]="true" *ngFor="let formSection of evaluationForm.formSections">
+
     <p-accordionTab>
       <ng-template pTemplate="header">
         <div class="section-container">
@@ -16,6 +15,7 @@
           </div>
         </div>
       </ng-template>
+
       <div class="criteria-table-container">
         <div class="criteria-table">
           <p-table responsiveLayout="scroll">
@@ -26,10 +26,10 @@
                     <th>Looked at</th>
                     <th>Untouched</th>
                 </tr>
-            </ng-template>
-            
+            </ng-template>      
         </p-table>
         </div>
+
         <p-accordionTab class="criteria-accordion" *ngFor="let formCriteria of formSection.formCriteria">
           <ng-template pTemplate="header">
             
@@ -52,12 +52,31 @@
 
             </div>
           </ng-template>
+
           <ul *ngFor="let criteriaComments of formCriteria.criteriaComments">
             <li>{{criteriaComments.comment}}</li>
             <li>{{criteriaComments.attachment}}</li>
           </ul>
+
         </p-accordionTab>
-      </div>
-      
+      </div>  
     </p-accordionTab>
-    <!-- ----------------------------------------------- -->
+
+
+    <!-- ==================================================MODAL FOR ADDING A COMMENT==================================================================== -->
+
+<p-dialog header="Add Comment" [(visible)]="displayAddCommModal" [modal]="true" [style]="{width: '550px'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="addCommForm">
+    <label for="float-input">Comment</label>
+    <br />
+    <input placeholder="Add comment" id="float-input" type="text" pInputText formControlName="criteriaComment" [style]="{width: '100%'}"/>
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddCommDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
+
+    <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addCommForm.valid"
+      class="modal-button btn-pos p-button-success"></button>
+  </div>
+  </p-dialog>
