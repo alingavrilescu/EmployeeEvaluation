@@ -118,9 +118,9 @@
 </p-dialog>
 <!-- -------------------- Edit Section Modal ------------------------------ -->
 
-<p-dialog header="Edit Form Template Criterion" [(visible)]="displaySectionEditModal"
+<p-dialog header="Edit Form Template Section" [(visible)]="displaySectionEditModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true" [draggable]="false" [resizable]="false">
-  <form [formGroup]="editCriterionFormGroup">
+  <form [formGroup]="editSectionFormGroup">
     <br />
     <label for="float-input" class="required">Section's name</label>
     <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText
@@ -137,6 +137,7 @@
       (click)="updateTemplateSection()" [disabled]="!editSectionFormGroup.valid"></button>
   </div>
 </p-dialog>
+<!-- ====================== CRITERION ================================= -->
 <!-- --------------------- Add Criterion Modal  --------------------------- -->
 <p-dialog header="Add Form Template" [(visible)]="displayCriterionAddModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
@@ -463,8 +464,16 @@
           <ul>
             <li *ngFor="let section of formTemplate.templateSections">
               <p-accordionTab header={{section.name}}>
-                <p>{{formTemplate.name}}</p>
                 <div class="indent">{{section.description}}</div>
+                <div class="button-block">
+                  <button pButton type="button" label="Edit Section" (click)="showEditDialogSection(formTemplate,section)"
+                    class="p-button-warning">
+                  </button>
+                  <button pButton type="button" label="Delete Section" (click)="showDeleteDialogSection(formTemplate,section)" class="p-button-danger">
+                  </button>
+                  <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion()">
+                  </button>
+                </div>
               </p-accordionTab>
             </li>
           </ul>

@@ -123,7 +123,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     this.selectedFormTemplate.departmentId = this.departmentId;
     this.formTemplateService.updateFormTemplate(this.departmentId, this.selectedFormTemplate.id!, this.selectedFormTemplate).subscribe({
       next: (response) => {
-        this.getFormTemplates();
+        this.refreshFormTemplate();
         console.log(response);
       },
     });
@@ -131,11 +131,11 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   }
 
 
-  deleteFormTemplate(id?: Guid) {
+  deleteFormTemplate() {
     if (this.currentFormTemplateId !== undefined) {
       this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
         next: (response) => {
-          this.getFormTemplates();
+          this.refreshFormTemplate();
           console.log(response);
         },
       });
@@ -197,7 +197,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   //===================SECTIONS=====================
 
   setCurrentSectionId(id: Guid) {
-    let selectedSection = this.formTemplateSectionList.find(formTemplateSection => formTemplateSection.id === id)
+    let selectedSection = this.selectedFormTemplate.templateSections.find(formTemplateSection => formTemplateSection.id === id)
     if (selectedSection) {
       this.currentTemplateSectionId = id;
       this.editSectionFormGroup.controls.nameControl.setValue(this.selectedSection.name);
@@ -268,7 +268,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     this.selectedSection.FormTemplateId = this.currentFormTemplateId;
     this.formTemplateService.putTemplateSection(this.departmentId, this.currentFormTemplateId, this.currentTemplateSectionId, this.selectedSection).subscribe({
       next: (response) => {
-        this.getTemplateSections();
+        this.refreshFormTemplate();
         console.log(response);
       },
     });
@@ -279,12 +279,12 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     if (this.currentTemplateSectionId !== undefined) {
       this.formTemplateService.deleteSection(this.departmentId, this.currentFormTemplateId, this.currentTemplateSectionId).subscribe({
         next: (response) => {
-          this.getTemplateSections();
+          this.refreshFormTemplate();
           console.log(response);
         },
       });
     }
-    this.hideEditDialogSection();
+    this.hideDeleteDialogSection();
   }
 
   addFormTemplateSection() {
@@ -294,7 +294,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     newFormTemplateSection.FormTemplateId = this.currentFormTemplateId;
     this.formTemplateService.postTemplateSection(this.departmentId, this.currentFormTemplateId, newFormTemplateSection).subscribe({
       next: (formTemplateSection) => {
-        this.getTemplateSections();
+        this.refreshFormTemplate();
       },
       error: (response) => {
         console.log(response);
@@ -324,7 +324,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     this.formTemplateService.getCriteria(this.departmentId, this.currentFormTemplateId, this.currentTemplateSectionId)
       .subscribe({
         next: (formTemplateCriteriaList) => {
-          this.selectedSection.formTemplateCriteria = formTemplateCriteriaList;
+          this.selectedSection.TemplateCriteria = formTemplateCriteriaList;
         },
         error: (response) => {
           console.log(response);
