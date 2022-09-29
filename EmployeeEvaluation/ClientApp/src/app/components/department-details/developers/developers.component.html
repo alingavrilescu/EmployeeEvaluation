@@ -3,7 +3,7 @@
     id="userInfo"
     style="width: 100%; padding-right: 100px; padding-left: 100px"
   >
-    <p style="font-size: 20px"><b>Departament #1 Developers</b></p>
+    <p style="font-size: 20px"><b>Departament #1 developers</b></p>
     <div class="card">
       <p-dataView
         #dv
@@ -34,7 +34,7 @@
                   class="col-10"
                   style="display: flex; padding-top: 20px; padding-bottom: 20px"
                   id="user"
-                  routerLink="../../../users/userDetails/{{ user.id }}"
+                  routerLink="../../../../users/userDetails/{{ user.id }}"
                 >
                   <div><i class="pi pi-user" style="font-size: 6rem"></i></div>
                   <div
@@ -50,6 +50,20 @@
                     <div><b>Evaluation Forms: </b>2</div>
                   </div>
                 </div>
+                <div
+                  class="col"
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
+                  <i
+                    class="pi pi-trash"
+                    style="font-size: 2rem; cursor: pointer; margin-left: 50px"
+                    (click)="showDeleteDialog(user.id)"
+                  ></i>
+                </div>
               </div>
             </div>
           </div>
@@ -58,3 +72,45 @@
     </div>
   </div>
 </div>
+
+<!---------------------- DELETE DIALOG ------------------------>
+<p-dialog
+  [(visible)]="displayDeleteDialog"
+  styleClass="user-dialog"
+  [modal]="true"
+>
+  <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+    <i
+      class="pi pi-times-circle"
+      style="font-size: 7rem; align-self: center"
+    ></i>
+    <h3 style="margin-top: 10px; text-align: center">Are you sure?</h3>
+    <p style="margin-top: 10px; text-align: center">
+      Do you realy want to delete this user? This process cannot be undone.
+    </p>
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 40px;
+      "
+    >
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-danger"
+        (click)="hideDeleteDialog()"
+        style=""
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Delete"
+        class="p-button-success"
+        (click)="deleteUserFromDepartment()"
+      ></button>
+    </div>
+  </div>
+</p-dialog>
