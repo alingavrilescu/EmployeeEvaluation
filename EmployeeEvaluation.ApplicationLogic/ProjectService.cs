@@ -30,6 +30,10 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._projectRepository.AddUsersToProject(proId, users);
         }
+        public Project AddUserToProject(Guid proId, User user)
+        {
+            return this._projectRepository.AddUserToProject(proId, user);
+        }
         public Project RemoveUserFromProject(Guid proId, User user)
         {
             return this._projectRepository.RemoveUserFromProject(proId,user);

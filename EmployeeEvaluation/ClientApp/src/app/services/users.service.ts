@@ -48,8 +48,12 @@ export class UsersService {
     return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}/team-leads`);
   }
 
-  public getPMWithoutProj(depId: Guid): Observable<UserDTO[]> {
-    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}/project-managers/without-project`);
+  public getPMWithoutProj(depId: Guid, proId:Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}/${proId}/project-managers/without-project`);
+  }
+
+  public getTLForEdit(depId: Guid, proId:Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/department/${depId}/${proId}/team-leads/without-project`);
   }
 
   public getTLWithoutProj(depId: Guid): Observable<UserDTO[]> {

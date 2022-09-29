@@ -39,11 +39,12 @@
   <form [formGroup]="editProjectForm">
     <label for="float-input">Team Lead</label>
     <br>
-    <p-dropdown [options]="projectTeamLeads" formControlName="projectTeamLead" optionLabel="name" optionValue="id"></p-dropdown>
+    <p-dropdown [options]="projectTeamLeads" formControlName="projectTeamLead" optionLabel="name" optionValue="id" [style]="{width: '100%'}"></p-dropdown>
     <br>
     <label for="float-input">Project Manager</label>
     <br>
-    <p-dropdown [options]="projectManagers" formControlName="projectManager" optionLabel="name" optionValue="id"></p-dropdown>
+    <p-dropdown [options]="projectManagers" formControlName="projectManager" optionLabel="name" optionValue="id" 
+    placeholder="Select a Project Manager" [showClear]="true" [style]="{width: '100%'}"></p-dropdown>
     <br>
     <label for="float-input">Name</label>
     <br />
