@@ -35,6 +35,14 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return project;
         }
 
+        public Project AddUserToProject(Guid proId, User user)
+        {
+            var project = GetById(proId);
+            project.Users.Add(user);
+            this._dbcontext.SaveChanges();
+            return project;
+        }
+
         public Project RemoveUserFromProject(Guid proId, User user)
         {
             var project = GetById(proId);

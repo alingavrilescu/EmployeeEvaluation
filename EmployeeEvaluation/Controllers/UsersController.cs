@@ -158,12 +158,26 @@ namespace EmployeeEvaluation.Controllers
                 return Problem("Unable to retrieve users associated data");
             }
         }
-        [HttpGet("department/{depId}/project-managers/without-project")]
-        public async Task<IActionResult> GetProjectManagersWithoutProject(Guid depId)
+        [HttpGet("department/{depId}/{proId}/project-managers/without-project")]
+        public async Task<IActionResult> GetProjectManagersWithoutProject(Guid depId, Guid proId)
         {
             try
             {
-                var users = await aggregationService.GetProjectManagersWithoutProject(depId);
+                var users = await aggregationService.GetProjectManagersWithoutProject(depId, proId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
+
+        [HttpGet("department/{depId}/{proId}/team-leads/without-project")]
+        public async Task<IActionResult> GetTeamLeadsWithoutProject(Guid depId, Guid proId)
+        {
+            try
+            {
+                var users = await aggregationService.GetTeamLeadsWithoutProject(depId, proId);
                 return Ok(users);
             }
             catch (Exception)
@@ -185,6 +199,7 @@ namespace EmployeeEvaluation.Controllers
                 return Problem("Unable to retrieve users associated data");
             }
         }
+
         [HttpGet("head-of-dep")]
         public async Task<IActionResult> GetHODepsWithoutDep()
         {
@@ -199,6 +214,19 @@ namespace EmployeeEvaluation.Controllers
             }
         }
 
+        [HttpGet("{depId}/head-of-dep")]
+        public async Task<IActionResult> GetHODeps(Guid depId)
+        {
+            try
+            {
+                var users = await aggregationService.GetHODeps(depId);
+                return Ok(users);
+            }
+            catch (Exception)
+            {
+                return Problem("Unable to retrieve users associated data");
+            }
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)

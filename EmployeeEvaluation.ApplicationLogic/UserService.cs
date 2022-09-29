@@ -48,6 +48,10 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._userRepository.GetHODepsWithoutDep();
         }
+        public IEnumerable<User> GetHODeps(Guid depId)
+        {
+            return this._userRepository.GetHODeps(depId);
+        }
         public IEnumerable<User> GetProjectManagers(Guid depId) 
         { 
             return this._userRepository.GetProjectManagers(depId);
@@ -56,15 +60,18 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._userRepository.GetTeamLeads(depId);
         }
-        public IEnumerable<User> GetProjectManagersWithoutProject(Guid depId)
+        public IEnumerable<User> GetProjectManagersWithoutProject(Guid depId, Guid proId)
         {
-            return this._userRepository.GetProjectManagersWithoutProject(depId);
+            return this._userRepository.GetProjectManagersWithoutProject(depId, proId);
+        }
+        public IEnumerable<User> GetTeamLeadsWithoutProject(Guid depId, Guid proId)
+        {
+            return this._userRepository.GetTeamLeadsWithoutProject(depId, proId);
         }
         public IEnumerable<User> GetTeamLeadsWithoutProject(Guid depId)
         {
             return this._userRepository.GetTeamLeadsWithoutProject(depId);
         }
-
         public User AddUser(User toAdd)
         {
             return _userRepository.Add(toAdd);
