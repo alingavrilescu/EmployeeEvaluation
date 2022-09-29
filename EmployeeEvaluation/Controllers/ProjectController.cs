@@ -55,18 +55,27 @@ namespace EmployeeEvaluation.Controllers
                 Department=department,
                 TeamLeadId=project.TeamLeadId
             };
-            return this._projectService.AddProject(projectToAdd);
+            //this._projectService.AddProject(projectToAdd);
+            return this.AddUserToProject(this._projectService.AddProject(projectToAdd).Id, project.TeamLeadId);
         }
+
         [HttpPost("{proId}/add-users")]
-        public Project AddUsersToProject(Guid proId,[FromBody] List<Guid> usersIds)
+        public Project AddUsersToProject(Guid proId, [FromBody] List<Guid> usersIds)
         {
-            var users=new List<User>();
-            foreach(var id in usersIds)
+            var users = new List<User>();
+            foreach (var id in usersIds)
             {
                 var userToAdd = _userService.GetUserById(id);
                 users.Add(userToAdd);
             }
             return _projectService.AddUsersToProject(proId, users);
+        }
+
+        [HttpPost("{proId}/add-users/{userId}")]
+        public Project AddUserToProject(Guid proId, Guid userId)
+        {
+            var user = _userService.GetUserById(userId);
+            return _projectService.AddUserToProject(proId, user);
         }
 
         [HttpDelete("{proId}/{userId}")]
@@ -84,8 +93,30 @@ namespace EmployeeEvaluation.Controllers
             var projectToEdit = _projectService.GetProjectById(id);
             projectToEdit.Name = project.Name;
             projectToEdit.Description = project.Description;
-            projectToEdit.ProjectManagerId = project.ProjectManagerId;
+            if(projectToEdit.TeamLeadId != project.TeamLeadId)
+            {
+                this.RemoveUserFromProject(id, projectToEdit.TeamLeadId);
+                this.AddUserToProject(id, project.TeamLeadId);
+            }
             projectToEdit.TeamLeadId = project.TeamLeadId;
+            if (projectToEdit.ProjectManagerId != project.ProjectManagerId)
+            {
+                if (project.ProjectManagerId == null)
+                {
+                    this.RemoveUserFromProject(id, projectToEdit.ProjectManagerId.GetValueOrDefault());
+                }
+                else if(projectToEdit.ProjectManagerId==null)
+                {
+                    this.AddUserToProject(id, project.ProjectManagerId.GetValueOrDefault());
+                }
+                else
+                {
+                    this.RemoveUserFromProject(id, projectToEdit.ProjectManagerId.GetValueOrDefault());
+                    this.AddUserToProject(id, project.ProjectManagerId.GetValueOrDefault());
+                }
+
+            }
+            projectToEdit.ProjectManagerId = project.ProjectManagerId;
             return this._projectService.UpdateProject(projectToEdit);
         }
 

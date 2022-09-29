@@ -106,14 +106,11 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   {
     this.refreshProjectsSubscription=this.projectService.getProjects().subscribe(data=>{
       this.projectsList=data;
-      this.getPMs();
-      this.getTLs();
-
     })
   }
 
   getPMs(){
-    this.getPMsSubscription=this.usersService.getPMWithoutProj(this.departmentId).subscribe(data=>{
+    this.getPMsSubscription=this.usersService.getPMWithoutProj(this.departmentId, this.projectId).subscribe(data=>{
       this.projectManagers=data;
     })
   }
@@ -122,14 +119,20 @@ export class ProjectsComponent implements OnInit, OnDestroy {
       this.projectTeamLeads=data;
     })
   }
-  getCurrentPM(id?:string)
-  {
-    if(id)
-      this.projectManagerName=this.usersService.getUserById(Guid.parse(id)).pipe(map(user=>user.name));
+  getTLsForEdit(){
+    this.getPMsSubscription=this.usersService.getTLForEdit(this.departmentId, this.projectId).subscribe(data=>{
+      this.projectTeamLeads=data;
+    })
   }
+  // getCurrentPM(id?:string)
+  // {
+  //   if(id)
+  //     this.projectManagerName=this.projectManagers.find((user) => user.name === name);
+  // }
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog(){
+    this.getTLs();
     this.displayAddModal = true;
   }
 
@@ -143,10 +146,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     {
       this.projectId=project.id;
     }
+    this.getTLsForEdit();
+    this.getPMs();
     this.editProjectForm.controls.projectName.setValue(project.name);
     this.editProjectForm.controls.projectDescription.setValue(project.description);
-    this.editProjectForm.controls.projectManager.setValue(project.projectManagerId?.toString()!);
-    this.editProjectForm.controls.projectTeamLead.setValue(project.teamLeadId?.toString()!);
+    this.editProjectForm.controls.projectManager.setValue(project.projectManagerId!);
+    this.editProjectForm.controls.projectTeamLead.setValue(project.teamLeadId!);
   }
 
   hideEditDialog()

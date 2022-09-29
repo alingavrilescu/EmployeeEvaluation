@@ -77,6 +77,14 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                             .Include(p => p.Project)
                             .Include(ef => ef.EvaluationForms).ToList();
         }
+        public IEnumerable<User> GetHODeps(Guid depId)
+        {
+            return dbContext.Set<User>()
+                            .Where(d => d.DepartmentId==depId || d.DepartmentId == null)
+                            .Where(u => u.Role == "Head Of Department")
+                            .Include(p => p.Project)
+                            .Include(ef => ef.EvaluationForms).ToList();
+        }
         public IEnumerable<User> GetProjectManagers(Guid depId)
         {
             return dbContext.Set<User>()
@@ -93,12 +101,20 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                             .Include(p => p.Project)
                             .Include(ef => ef.EvaluationForms).ToList();
         }
-        public IEnumerable<User> GetProjectManagersWithoutProject(Guid depId)
+        public IEnumerable<User> GetProjectManagersWithoutProject(Guid depId, Guid proId)
         {
             return dbContext.Set<User>()
                             .Where(d => d.DepartmentId == depId)
                             .Where(u => u.Role == "Project Manager")
-                            .Where(p => p.ProjectId == null)
+                            .Where(p => p.ProjectId == proId || p.ProjectId == null)
+                            .ToList();
+        }
+        public IEnumerable<User> GetTeamLeadsWithoutProject(Guid depId, Guid proId)
+        {
+            return dbContext.Set<User>()
+                            .Where(d => d.DepartmentId == depId)
+                            .Where(u => u.Role == "Team Lead")
+                            .Where(p => p.ProjectId == proId || p.ProjectId == null)
                             .ToList();
         }
         public IEnumerable<User> GetTeamLeadsWithoutProject(Guid depId)
