@@ -5,6 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { EvaluationForm } from 'src/app/models/evaluation-form.model';
 import { EvaluationFormService } from 'src/app/services/evaluation-form.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormCriteria } from 'src/app/models/form-criteria.model';
+import { CriteriaComments } from 'src/app/models/criteria-comments.model';
 
 @Component({
   selector: 'app-evaluation-form',
@@ -12,7 +14,16 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./evaluation-form.component.css'],
 })
 export class EvaluationFormComponent implements OnInit, OnDestroy {
+
+  addCommForm = new FormGroup({
+    criteriaComment: new FormControl('', Validators.required),
+    criteriaAttachment: new FormControl('')
+  });
+
   constructor(private evaluationFormService: EvaluationFormService, private activatedRoute: ActivatedRoute) { }
+
+
+  displayAddCommModal: boolean = false;
 
   deleteSubscription!: Subscription;
 
@@ -30,10 +41,26 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     this.deleteSubscription?.unsubscribe();
   }
 
+  addComm(){
+    var newComment = new CriteriaComments();
+    newComment.comment = this.addCommForm.controls.criteriaComment.value!;
+    newComment.attachment = this.addCommForm.controls.criteriaAttachment.value!;
+  }
+
   refreshEvaluationFormList() {
     this.evaluationFormService.getEvaluationForms(this.userId).subscribe(data => {
       this.evaluationForm = data;
       console.log(this.evaluationForm.formSections)
     })
+
+    //NOT FINISHED YET
+  }
+
+  showAddCommDialog(){
+    this.displayAddCommModal = true;
+  }
+
+  hideAddCommDialog(){
+    this.displayAddCommModal = false;
   }
 }
