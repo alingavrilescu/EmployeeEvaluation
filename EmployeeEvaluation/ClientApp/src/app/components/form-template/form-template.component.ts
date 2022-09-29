@@ -263,8 +263,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   }
 
   updateTemplateSection() {
-    this.selectedSection.name = this.editCriterionFormGroup.controls.nameControl.value!;
-    this.selectedSection.description = this.editCriterionFormGroup.controls.descriptionControl.value!;
+    this.selectedSection.name = this.editSectionFormGroup.controls.nameControl.value!;
+    this.selectedSection.description = this.editSectionFormGroup.controls.descriptionControl.value!;
     this.selectedSection.FormTemplateId = this.currentFormTemplateId;
     this.formTemplateService.putTemplateSection(this.departmentId, this.currentFormTemplateId, this.currentTemplateSectionId, this.selectedSection).subscribe({
       next: (response) => {
