@@ -131,16 +131,16 @@ namespace EmployeeEvaluation.Controllers
         }
 
         // POST api/<FormTemplateController>
-        [HttpPost("{formTemplateId}/FormTemplateSection/{formSectionId}/FormTemplateCriteria")]
-        public FormTemplateSection PostFormTemplate(Guid formSectionId,[FromBody] FormTemplateCriteria formTemplateCriteria)
+        [HttpPost("{formTemplateId}/FormTemplateSection/{formTemplateSectionId}/FormTemplateCriteria")]
+        public FormTemplateSection PostFormTemplate(Guid formTemplateSectionId,[FromBody] FormTemplateCriteria formTemplateCriteria)
         {
             var formTemplateCriteriaToAdd = new FormTemplateCriteria
             {
                 Name = formTemplateCriteria.Name,
                 Description = formTemplateCriteria.Description,
-                FormTemplateSectionId = formSectionId
+                FormTemplateSectionId = formTemplateSectionId
             };
-            return formTemplateService.AddTemplateCriteria(formSectionId,formTemplateCriteriaToAdd);
+            return formTemplateService.AddTemplateCriteria(formTemplateSectionId,formTemplateCriteriaToAdd);
         }
 
         // PUT api/<FormTemplateController>/5

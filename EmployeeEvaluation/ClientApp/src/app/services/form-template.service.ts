@@ -13,8 +13,6 @@ import { ReturnUrlType } from 'src/api-authorization/api-authorization.constants
 export class FormTemplateService {
 
   private readonly url = "FormTemplate";
-  private readonly urlFormSection = "FormTemplate/FormTemplateSection";
-  private readonly urlFormCriteria = "FormTemplate/FormTemplateSection/FormTemplateCriteria";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -54,18 +52,18 @@ export class FormTemplateService {
 
 
   public getCriterionById(departmentId: Guid, formTemplateId:Guid,formSectionId:Guid,id: Guid): Observable<FormTemplateCriteria> {
-    return this.httpClient.get<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}/${id}`);
+    return this.httpClient.get<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${id}`);
   }
   public getCriteria(departmentId: Guid, formTemplateId:Guid,formSectionId:Guid): Observable<FormTemplateCriteria[]> {
-    return this.httpClient.get<FormTemplateCriteria[]>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}`);
+    return this.httpClient.get<FormTemplateCriteria[]>(`${environment.apiUrl}/Department/${departmentId}/${this.url}${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria`);
   }
   public postFormTemplateCriterion(departmentId: Guid, formTemplateId:Guid,formSectionId:Guid,formTemplateCriteria: FormTemplateCriteria): Observable<FormTemplateCriteria> {
-    return this.httpClient.post<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}`, formTemplateCriteria);
+    return this.httpClient.post<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria`, formTemplateCriteria);
   }
   public putFormTemplateCriterion(departmentId: Guid, formTemplateId:Guid,formSectionId:Guid,id: Guid, formTemplateCriteria: FormTemplateCriteria): Observable<FormTemplateCriteria> {
-    return this.httpClient.put<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}/${id}`, formTemplateCriteria);
+    return this.httpClient.put<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${id}`, formTemplateCriteria);
   }
   public deleteCriterion(departmentId:Guid, formTemplateId:Guid, formSectionId:Guid,id: Guid): Observable<FormTemplateCriteria> {
-    return this.httpClient.delete<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}/${id}`);
+    return this.httpClient.delete<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${id}`);
   }
 }

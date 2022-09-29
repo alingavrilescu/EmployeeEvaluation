@@ -1,9 +1,9 @@
 import { Guid } from "guid-typescript";
 import { FormTemplateSection } from "./form-template-section.model";
 export class FormTemplate {
-    id?:Guid;
+    id!:Guid;
     name:string="";
-    departmentId?:Guid;
+    departmentId!:Guid;
     type:string="";
     templateSections:FormTemplateSection[]=[];
 }
