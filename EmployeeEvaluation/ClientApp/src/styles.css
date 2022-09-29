@@ -14,3 +14,29 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.head-of-dept-card
+{
+  min-height: 90% !important;
+}
+.full-height-list
+{
+  height: 100%;
+}
+
+.p-element .p-listbox.p-component
+{
+  height: 100%;
+}
+.p-card-body{
+  height: 100%;
+}
+.hod-listbox.p-listbox-list-wrapper{
+  max-height: 250px;
+}
+@media(min-width:992px)
+{ 
+  .hod-listbox.p-listbox-list-wrapper{
+    max-height: 60vh;
+  }
+}
