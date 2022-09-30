@@ -70,6 +70,22 @@ export class AuthorizeService {
                                               }));
     
   }
+
+  public getUserId(): Observable<string | null>{
+    return this.getUser().pipe(map(user => {
+        let newUser = user as Profile;
+        return (newUser && newUser["sub"]);  
+    }));
+  }
+
+  public getUserDepartmentId(): Observable<string>
+  {
+    return this.getUser().pipe(map(user => {
+      let newUser = user as Profile;
+      return (newUser && newUser["department"]); 
+    }));
+  }
+
   private userHasRole(roleToCheck: string):Observable<boolean>
   {
       return this.getRole().pipe(map(role => role === roleToCheck));
