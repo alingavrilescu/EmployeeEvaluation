@@ -51,7 +51,9 @@ export class HeadOfDepartmentPageComponent implements OnInit {
                                                     this.formTemplates = this.formTemplatesService
                                                                             .getFormTemplates(Guid.parse(depId));
                                                     this.projects = this.projectsService.getProjects()
-                                                                                        .pipe(filter((projectsList, index) => projectsList[index].departmentId == Guid.parse(depId)));
+                                                                                        .pipe(
+                                                                                            map(projects => projects.filter(project=> project.departmentId == Guid.parse(depId)))
+                                                                                          );
                                                     this.members = this.userService.getUsersOfDepartment(Guid.parse(depId));
                                                   }
                                                 }
