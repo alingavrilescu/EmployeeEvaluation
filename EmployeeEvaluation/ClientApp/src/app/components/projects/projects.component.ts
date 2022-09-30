@@ -39,6 +39,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   addProjectSubscription!:Subscription;
   updateProjectSubscription!:Subscription;
   getPMsSubscription!:Subscription;
+  getTLsSubscription!:Subscription;
   getCurrentPMSubscription!:Subscription;
   projectsList!:Observable<Project[]>;
 
@@ -71,6 +72,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.addProjectSubscription?.unsubscribe();
     this.updateProjectSubscription?.unsubscribe();
     this.getPMsSubscription?.unsubscribe();
+    this.getTLsSubscription?.unsubscribe();
     this.getCurrentPMSubscription?.unsubscribe();
   }
 
@@ -121,16 +123,19 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   getPMsList()
   {
     return this.usersService.getUsersOfDepartment(this.departmentId)
-                            .pipe(filter((users, index)=> users[index].role === DefaultRoles.ProjectManager));
+                            .pipe(
+                                map(userData => userData.filter(user => user.role === DefaultRoles.ProjectManager))                             
+                                );
   }
-  getPMForProject(allPms: UserDTO[] | null, projectId?: Guid)
+  getPMForProject(allPms: UserDTO[] | null, projectId?: Guid): UserDTO | undefined
   {
-      return allPms?.find(user => user.projectId === projectId);
+      let user = allPms?.find(user => user.projectId === projectId);
+      return user;
   }
   getTLsList()
   {
     return this.usersService.getUsersOfDepartment(this.departmentId)
-                            .pipe(filter((users, index)=> users[index].role === DefaultRoles.TeamLead));
+                            .pipe(map(userData => userData.filter(user => user.role === DefaultRoles.TeamLead)));
   }
   getTLForProject(allTls: UserDTO[] | null, projectId?: Guid)
   {
@@ -143,20 +148,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     })
   }
   getTLs(){
-    this.getPMsSubscription=this.usersService.getTLWithoutProj(this.departmentId).subscribe(data=>{
+    this.getTLsSubscription=this.usersService.getTLWithoutProj(this.departmentId).subscribe(data=>{
       this.projectTeamLeads=data;
     })
   }
   getTLsForEdit(){
-    this.getPMsSubscription=this.usersService.getTLForEdit(this.departmentId, this.projectId).subscribe(data=>{
+    this.getTLsSubscription=this.usersService.getTLForEdit(this.departmentId, this.projectId).subscribe(data=>{
       this.projectTeamLeads=data;
     })
   }
-  // getCurrentPM(id?:string)
-  // {
-  //   if(id)
-  //     this.projectManagers.find((user) => user.id === id);
-  // }
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog(){
