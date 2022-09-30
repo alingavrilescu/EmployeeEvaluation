@@ -86,8 +86,12 @@
 
 <!-- ================================CARD================================= -->
 
-<div class="card-container" *ngFor="let project of projectsList">
- <p-card class="card-content" header={{project.name}} subheader="Project Manager: " [style]="{width: '360px'}" styleClass="p-card-shadow">
+<div class="card-container" *ngFor="let project of (projectsList | async)">
+ <p-card class="card-content" header={{project.name}} [style]="{width: '360px'}" styleClass="p-card-shadow">
+  <ng-template pTemplate="subtitle">
+    <p *ngIf="getPMForProject((pmsList | async), project.id); let pm"> <strong>Project Manager:</strong> {{pm?.name}}</p>
+    <p><strong>Team Lead:</strong> {{getTLForProject((tlsList |async), project.id)?.name}}</p>
+  </ng-template>
     <div class="card-buttons">
       <div title="More Details" class="card-button pi pi-bars" routerLink="{{project.id}}"></div>
       <div title="Edit Project" class="card-button pi pi-pencil" (click)="showEditDialog(project)"></div>

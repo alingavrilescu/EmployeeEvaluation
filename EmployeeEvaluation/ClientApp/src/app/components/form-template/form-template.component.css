@@ -67,6 +67,7 @@ button
 .button-block
 {
   float:right;
+  
 }
 .required:after {
   content:" *";
@@ -76,3 +77,11 @@ button
   padding: 6px 8px;
   width: 65px;
 }
+.buttons-container{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  align-self:flex-end;
+  align-content:flex-end;
+}
+  

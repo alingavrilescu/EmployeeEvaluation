@@ -5,8 +5,6 @@
 <p-dialog header="Add users to project" [(visible)]="displayAddUsersModal" [modal]="true" [style]="{width: '550px'}" 
   [draggable]="false" [resizable]="false">
   <form [formGroup]="addUsersToProjectForm">
-    <label for="float-input">Name</label>
-    <br />
     <p-listbox [options]="usersWithoutProject" optionLabel="name" optionValue="id" [multiple]="true" [checkbox]="true" [filter]="true" (onChange)="onListActions($event)"></p-listbox>
   </form>
   <div class="buttons-container">
@@ -17,10 +15,12 @@
   </div>
 </p-dialog>
 
-<!-- =====================================ADD USERS TO PROJECT BUTTON=============================== -->
+<!-- =====================================ADD USERS BTN AND EDIT BTN=============================== -->
 <div class="add-button-container">
   <button type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
-      pButton pRipple label="Add Users" icon="pi pi-plus" (click)="showAddDialog()"></button>
+  pButton pRipple label="Edit project" icon="pi pi-pencil" (click)="showEditDialog()" ></button>
+  <button type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
+  pButton pRipple label="Add Users" icon="pi pi-plus" (click)="showAddDialog()"></button>
 </div>
 
 <!-- =============================CONFIRMATION DIALOGUE================================= -->
@@ -63,8 +63,8 @@
           <div class="col-12">
             <div class="container">
               <div class="row">
-                <div class="col-10" style="display: flex; padding-top: 20px; padding-bottom: 20px"
-                  id="user" routerLink="../../../users/userDetails/{{ user.id }}">
+                <div class="col-10" style="display: flex; padding-top: 20px; padding-bottom: 20px; cursor: pointer;"
+                  id="hover" routerLink="../../../../users/userDetails/{{ user.id }}">
                   <div><i class="pi pi-user" style="font-size: 6rem"></i></div>
                   <div style="display: flex; flex-direction: column; margin-left: 30px;">
                     <div><b>Name: </b>{{ user.name }}</div>
@@ -73,6 +73,7 @@
                   </div>
                 </div>
                 <div class="col"style="display: flex; justify-content: center; align-items: center;">
+                  
                   <i class="pi pi-trash" style="font-size: 2rem; cursor: pointer; margin-left: 50px"
                     (click)="showDeleteConfirmation(user.id)">
                   </i>
@@ -85,4 +86,36 @@
     </div>
   </div>
 </div>
+
+<!-- ============================MODAL TO EDIT PROJECT ============================== -->
+<p-dialog header="Edit Project" [(visible)]="displayEditModal" [modal]="true" [style]="{width: '550px'}" 
+  [draggable]="false" [resizable]="false">
+  <form [formGroup]="editProjectForm">
+    <label for="float-input">Team Lead</label>
+    <br>
+    <p-dropdown [options]="projectTeamLeads" formControlName="projectTeamLead" optionLabel="name" optionValue="id" [style]="{width: '100%'}"></p-dropdown>
+    <br>
+    <label for="float-input">Project Manager</label>
+    <br>
+    <p-dropdown [options]="projectManagers" formControlName="projectManager" optionLabel="name" optionValue="id" 
+    placeholder="Select a Project Manager" [showClear]="true" [style]="{width: '100%'}"></p-dropdown>
+    <br>
+    <label for="float-input">Name</label>
+    <br />
+    <input placeholder="Project's Name" id="float-input" type="text" pInputText formControlName="projectName" [style]="{width: '100%'}"/>
+    <br />
+    <br />
+    <label for="float-input">Description</label>
+    <br />
+    <textarea placeholder="Project's Description" id="float-input" 
+    class="textbox form-control input-textarea" formControlName="projectDescription" rows="5" cols="60" ></textarea>
+  </form>
+  <div class="buttons-container">
+    <button pButton pRipple type="button" label="Close" (click) = "hideEditDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
+
+    <button pButton pRipple type="submit" label="Submit" (click)="updateProject()" [disabled]="!editProjectForm.valid"
+     class="modal-button btn-pos p-button-success"></button>
+  </div>
+</p-dialog>
 

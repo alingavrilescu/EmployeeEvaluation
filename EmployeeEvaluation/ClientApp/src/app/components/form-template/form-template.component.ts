@@ -20,18 +20,14 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
   
   selectedFormTemplate!: FormTemplate;
+  selectedSection!: FormTemplateSection;
   selectedFormTemplateCriterion!: FormTemplateCriteria;
   currentFormTemplateId: Guid = Guid.parse(Guid.EMPTY);
   currentTemplateSectionId: Guid =Guid.parse(Guid.EMPTY);
   currentTemplateCriteriaId: Guid =Guid.parse(Guid.EMPTY);
-  Type = SoftwareDeveloperType.AllTypes;
+  types = SoftwareDeveloperType.AllTypes;
   formTemplateListObs!:Observable<FormTemplate[]>;
   formTemplateList: FormTemplate[] = [];
-  formTemplate!: FormTemplate;
-  formTemplateSectionList: FormTemplateSection[] = [];
-  formTemplateSection!: FormTemplateSection;
-  formTemplateCriteriaList: FormTemplateCriteria[] = [];
-  formTemplateCriteria!: FormTemplateCriteria;
   displayFormTemplateAddModal: boolean = false;
   displayFormTemplateEditModal: boolean = false;
   displayFormTemplateDeleteModal: boolean = false;
@@ -42,7 +38,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   displayCriterionEditModal: boolean = false;
   displayCriterionDeleteModal: boolean = false;
   departmentId: any;
-  selectedSection!: FormTemplateSection;
+
 
   editFormTemplateFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
@@ -205,7 +201,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
     }
   }
-  showAddDialogSection() {
+  showAddDialogSection(formTemplate:FormTemplate) {
+    this.setSelectedFormTemplate(formTemplate);
     this.displaySectionAddModal = true;
   }
   hideAddDialogSection() {
@@ -232,7 +229,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   updateTemplateSection() {
     this.selectedSection.name = this.editSectionFormGroup.controls.nameControl.value!;
     this.selectedSection.description = this.editSectionFormGroup.controls.descriptionControl.value!;
-    this.selectedSection.FormTemplateId = this.currentFormTemplateId;
+    this.selectedSection.formTemplateId = this.currentFormTemplateId;
     this.formTemplateService.putTemplateSection(this.departmentId, this.currentFormTemplateId, this.currentTemplateSectionId, this.selectedSection).subscribe({
       next: (response) => {
         this.refreshFormTemplate();
@@ -258,7 +255,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     var newFormTemplateSection = new FormTemplateSection();
     newFormTemplateSection.name = this.addSectionGroup.controls.nameControl.value!;
     newFormTemplateSection.description = this.addSectionGroup.controls.descriptionControl.value!;
-    newFormTemplateSection.FormTemplateId = this.currentFormTemplateId;
+    newFormTemplateSection.formTemplateId = this.currentFormTemplateId;
     this.formTemplateService.postTemplateSection(this.departmentId, this.currentFormTemplateId, newFormTemplateSection).subscribe({
       next: (formTemplateSection) => {
         this.refreshFormTemplate();
@@ -329,8 +326,10 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     this.hideDeleteDialogCriterion();
   }
 
-  showAddDialogCriterion() {
+  showAddDialogCriterion(formTemplate:FormTemplate,section:FormTemplateSection) {
     this.displayCriterionAddModal = true;
+    this.setSelectedFormTemplate(formTemplate);
+    this.setSelectedSection(section);
   }
   hideAddDialogCriterion() {
     this.displayCriterionAddModal = false;
