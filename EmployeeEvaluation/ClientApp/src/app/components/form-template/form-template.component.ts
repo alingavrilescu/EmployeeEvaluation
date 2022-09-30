@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormTemplateSection } from 'src/app/models/form-template-section.model';
 import { FormTemplateCriteria } from 'src/app/models/form-template-criteria.model';
 import { SoftwareDeveloperType } from 'src/app/software-developer-type';
+import { Observable, Subscription } from 'rxjs';
 
 
 @Component({
@@ -17,12 +18,14 @@ import { SoftwareDeveloperType } from 'src/app/software-developer-type';
 
 export class FormTemplateComponent implements OnInit, OnDestroy {
 
+  
   selectedFormTemplate!: FormTemplate;
   selectedFormTemplateCriterion!: FormTemplateCriteria;
   currentFormTemplateId: Guid = Guid.parse(Guid.EMPTY);
   currentTemplateSectionId: Guid =Guid.parse(Guid.EMPTY);
   currentTemplateCriteriaId: Guid =Guid.parse(Guid.EMPTY);
   Type = SoftwareDeveloperType.AllTypes;
+  formTemplateListObs!:Observable<FormTemplate[]>;
   formTemplateList: FormTemplate[] = [];
   formTemplate!: FormTemplate;
   formTemplateSectionList: FormTemplateSection[] = [];
@@ -40,7 +43,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   displayCriterionDeleteModal: boolean = false;
   departmentId: any;
   selectedSection!: FormTemplateSection;
-
 
   editFormTemplateFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
@@ -179,21 +181,11 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     this.formTemplateService.getFormTemplates(this.departmentId).subscribe(data => {
       this.formTemplateList = data;
       console.log(this.formTemplateList)
-    })
-  }
-  getFormTemplateById(id: Guid) {
-    if (id !== undefined) {
-      this.formTemplateService.getFormTemplateById(this.departmentId, id).subscribe({
-        next: (formTemplate) => {
-          this.formTemplate = formTemplate;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-    }
-  }
+    });
 
+    this.formTemplateListObs=this.formTemplateService.getFormTemplates(this.departmentId);
+  }
+  
   //===================SECTIONS=====================
 
   setCurrentSectionId(id: Guid) {
@@ -235,31 +227,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   }
   hideDeleteDialogSection() {
     this.displaySectionDeleteModal = false;
-  }
-
-  getTemplateSections() {
-    this.formTemplateService.getSections(this.departmentId)
-      .subscribe({
-        next: (formTemplateSectionList) => {
-          this.selectedFormTemplate.templateSections = formTemplateSectionList;
-        },
-        error: (response) => {
-          console.log(response);
-        },
-      });
-  }
-
-  getTemplateSectionById(id: Guid) {
-    if (id !== undefined) {
-      this.formTemplateService.getTemplateSectionById(this.departmentId, this.currentFormTemplateId, id).subscribe({
-        next: (formTemplateSection) => {
-          this.formTemplateSection = formTemplateSection;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-    }
   }
 
   updateTemplateSection() {
@@ -305,7 +272,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   // ================= FORM CRITERIA =================
 
   setCurrentCriterionId(id: Guid) {
-    let selectedCriterion = this.selectedSection.TemplateCriteria.find(formTemplate => formTemplate.id === id);
+    let selectedCriterion = this.selectedSection.templateCriteria.find(formTemplate => formTemplate.id === id);
     if (selectedCriterion) {
       this.currentFormTemplateId = id;
       this.editFormTemplateFormGroup.controls.nameControl.setValue(selectedCriterion.name);
@@ -319,17 +286,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
       this.editCriterionFormGroup.controls.nameControl.setValue(this.selectedFormTemplateCriterion.name);
       this.editCriterionFormGroup.controls.descriptionControl.setValue(this.selectedFormTemplateCriterion.description);
     }
-  }
-  getCriteria() {
-    this.formTemplateService.getCriteria(this.departmentId, this.currentFormTemplateId, this.currentTemplateSectionId)
-      .subscribe({
-        next: (formTemplateCriteriaList) => {
-          this.selectedSection.TemplateCriteria = formTemplateCriteriaList;
-        },
-        error: (response) => {
-          console.log(response);
-        },
-      });
   }
 
   updateCriterion() {

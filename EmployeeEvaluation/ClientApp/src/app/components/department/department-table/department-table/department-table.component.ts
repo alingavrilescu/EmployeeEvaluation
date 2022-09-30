@@ -67,13 +67,15 @@ export class DepartmentTableComponent implements OnInit {
   hideAddDialog() {
     this.displayAddModal = false;
   }
-  showEditDialog() {
+  showEditDialog(id: Guid) {
+    this.setCurrentDepartmentId(id);
     this.displayEditModal = true;
   }
   hideEditDialog() {
     this.displayEditModal = false;
   }
-  showDeleteDialog() {
+  showDeleteDialog(id: Guid) {
+    this.setCurrentDepartmentId(id);
     this.displayDeleteModal = true;
   }
   hideDeleteDialog() {
