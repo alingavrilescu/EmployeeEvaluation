@@ -43,16 +43,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   displayCriterionDeleteModal: boolean = false;
   departmentId: any;
   selectedSection!: FormTemplateSection;
-  addFormTemplateSubscription!:Subscription;
-  editFormTemplateSubscription!:Subscription;
-  deleteFormTemplateSubscription!:Subscription;
-  getFormTemplatesSubscription!:Subscription;
-  addSectionSubscription!:Subscription;
-  editSectionSubscription!:Subscription;
-  deleteSectionSubscription!:Subscription;
-  addCriterionSubscription!:Subscription;
-  editCriterionSubscription!:Subscription;
-  deleteCriterionSubscription!:Subscription;
 
   editFormTemplateFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
@@ -118,7 +108,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     newFormTemplate.name = this.addFormTemplateFormGroup.controls.nameControl.value!;
     newFormTemplate.type = this.addFormTemplateFormGroup.controls.typeControl.value!;
     newFormTemplate.departmentId = this.departmentId;
-    this.addFormTemplateSubscription=this.formTemplateService.postFormTemplate(this.departmentId, newFormTemplate).subscribe({
+    this.formTemplateService.postFormTemplate(this.departmentId, newFormTemplate).subscribe({
       next: (formTemplate) => {
         this.refreshFormTemplate();
       },
@@ -133,7 +123,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     this.selectedFormTemplate.name = this.editFormTemplateFormGroup.controls.nameControl.value!;
     this.selectedFormTemplate.type = this.editFormTemplateFormGroup.controls.typeControl.value!;
     this.selectedFormTemplate.departmentId = this.departmentId;
-    this.editFormTemplateSubscription=this.formTemplateService.updateFormTemplate(this.departmentId, this.selectedFormTemplate.id!, this.selectedFormTemplate).subscribe({
+    this.formTemplateService.updateFormTemplate(this.departmentId, this.selectedFormTemplate.id!, this.selectedFormTemplate).subscribe({
       next: (response) => {
         this.refreshFormTemplate();
         console.log(response);
@@ -145,7 +135,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
   deleteFormTemplate() {
     if (this.currentFormTemplateId !== undefined) {
-      this.deleteFormTemplateSubscription=this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
+      this.formTemplateService.deleteFormTemplate(this.departmentId, this.currentFormTemplateId).subscribe({
         next: (response) => {
           this.refreshFormTemplate();
           console.log(response);
@@ -176,7 +166,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     this.displayFormTemplateDeleteModal = false;
   }
   getFormTemplates() {
-    this.getFormTemplatesSubscription=this.formTemplateService.getFormTemplates(this.departmentId)
+    this.formTemplateService.getFormTemplates(this.departmentId)
       .subscribe({
         next: (formTemplateList) => {
           this.formTemplateList = formTemplateList;
@@ -195,19 +185,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
     this.formTemplateListObs=this.formTemplateService.getFormTemplates(this.departmentId);
   }
-  getFormTemplateById(id: Guid) {
-    if (id !== undefined) {
-      this.formTemplateService.getFormTemplateById(this.departmentId, id).subscribe({
-        next: (formTemplate) => {
-          this.formTemplate = formTemplate;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-    }
-  }
-
+  
   //===================SECTIONS=====================
 
   setCurrentSectionId(id: Guid) {
@@ -249,31 +227,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   }
   hideDeleteDialogSection() {
     this.displaySectionDeleteModal = false;
-  }
-
-  getTemplateSections() {
-    this.formTemplateService.getSections(this.departmentId)
-      .subscribe({
-        next: (formTemplateSectionList) => {
-          this.selectedFormTemplate.templateSections = formTemplateSectionList;
-        },
-        error: (response) => {
-          console.log(response);
-        },
-      });
-  }
-
-  getTemplateSectionById(id: Guid) {
-    if (id !== undefined) {
-      this.formTemplateService.getTemplateSectionById(this.departmentId, this.currentFormTemplateId, id).subscribe({
-        next: (formTemplateSection) => {
-          this.formTemplateSection = formTemplateSection;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-    }
   }
 
   updateTemplateSection() {
@@ -333,17 +286,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
       this.editCriterionFormGroup.controls.nameControl.setValue(this.selectedFormTemplateCriterion.name);
       this.editCriterionFormGroup.controls.descriptionControl.setValue(this.selectedFormTemplateCriterion.description);
     }
-  }
-  getCriteria() {
-    this.formTemplateService.getCriteria(this.departmentId, this.currentFormTemplateId, this.currentTemplateSectionId)
-      .subscribe({
-        next: (formTemplateCriteriaList) => {
-          this.selectedSection.templateCriteria = formTemplateCriteriaList;
-        },
-        error: (response) => {
-          console.log(response);
-        },
-      });
   }
 
   updateCriterion() {
