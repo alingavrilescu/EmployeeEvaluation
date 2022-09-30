@@ -67,9 +67,17 @@ button
 .button-block
 {
   float:right;
+  
 }
 .required:after {
   content:" *";
   color: red;
+}
+.buttons-container{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  align-self:flex-end;
+  align-content:flex-end;
 }
   
