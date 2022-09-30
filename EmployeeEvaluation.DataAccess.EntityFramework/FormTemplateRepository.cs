@@ -80,12 +80,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
                                                                            .ToList();
             return formTemplateSections;
         }
-        //public FormTemplateSection AddSectionTemplate(FormTemplateSection toAdd)
-        //{
-        //    var entity = dbContext.Set<FormTemplateSection>().Add(toAdd);
-        //    dbContext.SaveChanges();
-        //    return entity.Entity;
-        //}
+       
         public FormTemplate AddSectionToFormTemplate(Guid formTemplateId, FormTemplateSection formTemplateSection)
         {
             var formTemplate = GetFormTemplateById(formTemplateId);
@@ -130,12 +125,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             this.dbContext.SaveChanges();
             return formTemplateSection;
         }
-        //public FormTemplateCriteria AddCriteriaTemplate(FormTemplateCriteria toAdd)
-        //{
-        //    var entity = dbContext.Set<FormTemplateCriteria>().Add(toAdd);
-        //    dbContext.SaveChanges();
-        //    return entity.Entity;
-        //}
         public FormTemplateCriteria UpdateCriteria(FormTemplateCriteria toUpdate)
         {
             dbContext.Set<FormTemplateCriteria>().Update(toUpdate);

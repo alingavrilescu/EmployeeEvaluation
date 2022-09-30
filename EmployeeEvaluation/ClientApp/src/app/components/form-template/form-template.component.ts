@@ -20,18 +20,14 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
   
   selectedFormTemplate!: FormTemplate;
+  selectedSection!: FormTemplateSection;
   selectedFormTemplateCriterion!: FormTemplateCriteria;
   currentFormTemplateId: Guid = Guid.parse(Guid.EMPTY);
   currentTemplateSectionId: Guid =Guid.parse(Guid.EMPTY);
   currentTemplateCriteriaId: Guid =Guid.parse(Guid.EMPTY);
-  Type = SoftwareDeveloperType.AllTypes;
+  types = SoftwareDeveloperType.AllTypes;
   formTemplateListObs!:Observable<FormTemplate[]>;
   formTemplateList: FormTemplate[] = [];
-  formTemplate!: FormTemplate;
-  formTemplateSectionList: FormTemplateSection[] = [];
-  formTemplateSection!: FormTemplateSection;
-  formTemplateCriteriaList: FormTemplateCriteria[] = [];
-  formTemplateCriteria!: FormTemplateCriteria;
   displayFormTemplateAddModal: boolean = false;
   displayFormTemplateEditModal: boolean = false;
   displayFormTemplateDeleteModal: boolean = false;
@@ -42,7 +38,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   displayCriterionEditModal: boolean = false;
   displayCriterionDeleteModal: boolean = false;
   departmentId: any;
-  selectedSection!: FormTemplateSection;
+
 
   editFormTemplateFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
@@ -205,7 +201,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
     }
   }
-  showAddDialogSection() {
+  showAddDialogSection(formTemplate:FormTemplate) {
+    this.setSelectedFormTemplate(formTemplate);
     this.displaySectionAddModal = true;
   }
   hideAddDialogSection() {
