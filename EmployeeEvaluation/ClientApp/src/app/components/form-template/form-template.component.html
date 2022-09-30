@@ -1,6 +1,4 @@
-<h2 style="text-align: center"> Form Templates </h2>
-<br>
-<br>
+
 <!-- ------------------ Add Form Template Modal Button ---------------------- -->
 <button pButton type="button" label="+ Add Form Template" (click)="showAddDialog()" class="button-block">
 </button>
@@ -205,7 +203,7 @@
 
 <!-- ----------------------- Accordion form templates --------------------------- -->
 
-<div class="accordion accordion-flush" id="accordionFlushExample">
+<!-- <div class="accordion accordion-flush" id="accordionFlushExample">
   <h5 style="text-align: center;">Form Template name</h5>
   <div class="accordion-item">
     <h2 class="accordion-header" id="flush-headingOne">
@@ -223,11 +221,11 @@
           Donec non blandit est. Maecenas congue diam sed ante ornare, sit amet aliquam justo tempus. Quisque odio est,
           suscipit in euismod vitae, ornare non nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
           posuere cubilia curae; Donec nec scelerisque sem. Donec id lorem sit amet eros placerat sodales cursus ut
-          purus. Cras interdum nunc eget faucibus viverra.<br><br>
+          purus. Cras interdum nunc eget faucibus viverra.<br><br> -->
 
           <!-- ---------- Delete, Edit section + Add criterion ------------ -->
 
-          <div class="button-block">
+          <!-- <div class="button-block">
             <button pButton type="button" label="Edit Section" data-bs-toggle="modal" data-bs-target="#editSectionModal"
               class="p-button-warning">
             </button>
@@ -298,7 +296,7 @@
         representative of how this would look in a real-world application.
       </div>
 
-    </div>
+    </div> -->
 
     <!-- --------------Delete and Edit form template butttons and Add Section ------------------ -->
     <!-- <div class="button-block">
@@ -453,7 +451,7 @@
   <br>
   </li>
   </ul> -->
-
+<br><br>
     <br>
     <br>
     <ul>
@@ -473,10 +471,10 @@
                       {{criterion.description}}
                       <br>
                       <div class="button-block">
-                        <button pButton type="button" label="Edit Criterion"
+                        <button pButton type="button" label="Edit Criterion" title="Edit Criterion"
                           (click)="showEditDialogCriterion(section,criterion)" class="btn-resize p-button-warning">
                         </button>
-                        <button pButton type="button" label="Delete Criterion"
+                        <button pButton type="button" label="Delete Criterion" title="Delete Criterion"
                           (click)="showDeleteDialogCriterion(section,criterion)" class="btn-resize p-button-danger">
                         </button>
                       </div>
@@ -484,12 +482,12 @@
                   </ul>
                   <div class="button-block">
                     <button pButton type="button" label="Edit"
-                      (click)="showEditDialogSection(formTemplate,section)" class="btn-resize p-button-warning">
+                      (click)="showEditDialogSection(formTemplate,section)" title="Edit Section" class="btn-resize p-button-warning">
                     </button>
                     <button pButton type="button" label="Delete"
-                      (click)="showDeleteDialogSection(formTemplate,section)" class="btn-resize p-button-danger">
+                      (click)="showDeleteDialogSection(formTemplate,section)" title="Delete Section" class="btn-resize p-button-danger">
                     </button>
-                    <button pButton type="button" label="+ Add" (click)="showAddDialogCriterion()" class="btn-resize">
+                    <button pButton type="button" label="+ Add" title="Add Criterion" (click)="showAddDialogCriterion()" class="btn-resize">
                     </button>
                   </div>
                   <br>
@@ -502,11 +500,11 @@
 
         <!-- --------------Delete and Edit form template butttons and Add Section ------------------  -->
         <div class="button-block">
-          <button pButton pRipple type="button" label="Edit" class="btn-resize p-button-warning"
+          <button pButton pRipple type="button" label="Edit" title="Edit Form Template" class="btn-resize p-button-warning"
             (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
-          <button pButton pRipple type="button" label="Delete" class="btn-resize p-button-danger"
+          <button pButton pRipple type="button" label="Delete" title="Delete Form Template" class="btn-resize p-button-danger"
             (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
-          <button pButton type="button" label="+ Add" (click)="setCurrentFormTemplateId(formTemplate.id!)"
+          <button pButton type="button" label="+ Add" title="Add Section" (click)="setCurrentFormTemplateId(formTemplate.id!)"
             (click)="showAddDialogSection()" class="btn-resize"></button>
         </div>
         <br>
