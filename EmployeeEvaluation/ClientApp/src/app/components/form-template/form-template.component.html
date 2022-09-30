@@ -1,14 +1,11 @@
-<<<<<<< HEAD
- <!-- =========================== FORM TEMPLATES MODALS ============================ -->
 
-=======
 <h2 style="text-align: center"> Form Templates </h2>
 <br>
 <br>
 <!-- ------------------ Add Form Template Modal Button ---------------------- -->
 <button pButton type="button" label="+ Add Form Template" (click)="showAddDialog()" class="button-block">
 </button>
->>>>>>> AlexandraBranch
+
 <!-- --------------------- Modal for Adding Form Template --------------------------- -->
 
 <p-dialog header="Add Form Template" [(visible)]="displayFormTemplateAddModal"
@@ -238,12 +235,9 @@
               <p-accordionTab header="{{section.name}}">
                 <div><b> Description: </b>{{section.description}}
                   <br>
-<<<<<<< HEAD
-                  <br>
-   <!-- --------------------- EDIT, DELETE SECTION | ADD CRITERION BUTTONS ------------------- -->
-=======
+
                   <ul>
-                    <li *ngFor="let criterion of section.TemplateCriteria">
+                    <li *ngFor="let criterion of section.templateCriteria">
                       <b>{{criterion.name}}</b>
                       <hr>
                       {{criterion.description}}

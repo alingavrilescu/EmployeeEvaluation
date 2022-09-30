@@ -24,7 +24,7 @@ export class HeadOfDepartmentPageComponent implements OnInit {
   formTemplates!: Observable<FormTemplate[]>;
   projects!: Observable<Project[]>;
   members!: Observable<UserDTO[]>;
-  cities: City[];
+ 
   constructor(
     private authorizeService: AuthorizeService,
     private userService: UsersService,
@@ -33,21 +33,7 @@ export class HeadOfDepartmentPageComponent implements OnInit {
     private projectsService: ProjectsService
   ) {
 
-    this.cities = [
-      { name: "New York", code: "NY" },
-      { name: "Rome", code: "RM" },
-      { name: "London", code: "LDN" },
-      { name: "Istanbul", code: "IST" },
-      { name: "Paris", code: "PRS" },
-      { name: "Rome", code: "RM" },
-      { name: "London", code: "LDN" },
-      { name: "Istanbul", code: "IST" },
-      { name: "Paris", code: "PRS" },
-      { name: "Rome", code: "RM" },
-      { name: "London", code: "LDN" },
-      { name: "Istanbul", code: "IST" },
-      { name: "Paris", code: "PRS" }
-    ];
+    
   }
 
   ngOnInit() {   
