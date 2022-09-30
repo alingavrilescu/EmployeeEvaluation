@@ -3,7 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
+import { DefaultRoles } from 'src/api-authorization/role-defines';
 import { UserDTO } from 'src/app/models/users.model';
 import { UsersService } from 'src/app/services/users.service';
 import { Project } from '../../models/project.model';
@@ -38,8 +39,10 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   addProjectSubscription!:Subscription;
   updateProjectSubscription!:Subscription;
   getPMsSubscription!:Subscription;
+  getTLsSubscription!:Subscription;
   getCurrentPMSubscription!:Subscription;
-  projectsList: Project[]=[];
+  projectsList!:Observable<Project[]>;
+
   projectId:any;
   projectIdToDelete: any;
   departmentId:any;
@@ -48,6 +51,8 @@ export class ProjectsComponent implements OnInit, OnDestroy {
   projectTeamLeads:UserDTO[]=[];
   currentProjectManager!:UserDTO;
   projectManagerName!:Observable<string>;
+  pmsList!: Observable<UserDTO[]>;
+  tlsList!:Observable<UserDTO[]>;
 
   displayAddModal: boolean = false;
   displayEditModal: boolean = false;
@@ -67,6 +72,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     this.addProjectSubscription?.unsubscribe();
     this.updateProjectSubscription?.unsubscribe();
     this.getPMsSubscription?.unsubscribe();
+    this.getTLsSubscription?.unsubscribe();
     this.getCurrentPMSubscription?.unsubscribe();
   }
 
@@ -104,9 +110,36 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   refreshProjectList()
   {
-    this.refreshProjectsSubscription=this.projectService.getProjects().subscribe(data=>{
-      this.projectsList=data;
-    })
+    this.projectsList = this.projectService.getProjects()
+                                            .pipe(
+                                                  tap((projects) => 
+                                                      { 
+                                                        this.pmsList = this.getPMsList();
+                                                        this.tlsList = this.getTLsList();
+                                                      })
+                                                );
+  }
+
+  getPMsList()
+  {
+    return this.usersService.getUsersOfDepartment(this.departmentId)
+                            .pipe(
+                                map(userData => userData.filter(user => user.role === DefaultRoles.ProjectManager))                             
+                                );
+  }
+  getPMForProject(allPms: UserDTO[] | null, projectId?: Guid): UserDTO | undefined
+  {
+      let user = allPms?.find(user => user.projectId === projectId);
+      return user;
+  }
+  getTLsList()
+  {
+    return this.usersService.getUsersOfDepartment(this.departmentId)
+                            .pipe(map(userData => userData.filter(user => user.role === DefaultRoles.TeamLead)));
+  }
+  getTLForProject(allTls: UserDTO[] | null, projectId?: Guid)
+  {
+      return allTls?.find(user => user.projectId === projectId);
   }
 
   getPMs(){
@@ -115,20 +148,15 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     })
   }
   getTLs(){
-    this.getPMsSubscription=this.usersService.getTLWithoutProj(this.departmentId).subscribe(data=>{
+    this.getTLsSubscription=this.usersService.getTLWithoutProj(this.departmentId).subscribe(data=>{
       this.projectTeamLeads=data;
     })
   }
   getTLsForEdit(){
-    this.getPMsSubscription=this.usersService.getTLForEdit(this.departmentId, this.projectId).subscribe(data=>{
+    this.getTLsSubscription=this.usersService.getTLForEdit(this.departmentId, this.projectId).subscribe(data=>{
       this.projectTeamLeads=data;
     })
   }
-  // getCurrentPM(id?:string)
-  // {
-  //   if(id)
-  //     this.projectManagerName=this.projectManagers.find((user) => user.name === name);
-  // }
   // ======================= MODALS CONTROLS =====================================
 
   showAddDialog(){

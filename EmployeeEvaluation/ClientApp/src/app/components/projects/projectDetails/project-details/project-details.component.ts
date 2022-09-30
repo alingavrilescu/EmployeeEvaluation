@@ -21,6 +21,13 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     users: new FormControl('', Validators.required)
   });
 
+  editProjectForm = new FormGroup({
+    projectName: new FormControl('', Validators.required),
+    projectDescription: new FormControl('', Validators.required),
+    projectTeamLead:new FormControl('', Validators.required),
+    projectManager:new FormControl(''),
+  });
+
   constructor(private projectService:ProjectsService, private activatedRoute: ActivatedRoute, private userService: UsersService) { }
 
   projectId:any;
@@ -32,16 +39,22 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   selectedUsers:UserDTO[] = [];
   selectedUsersIds:Guid[]=[];
   disabledSubmit:boolean=true;
+  projectManagers:UserDTO[]=[];
+  projectTeamLeads:UserDTO[]=[];
+
   getProjectSubscription!:Subscription;
   getDepartmentsSubscription!:Subscription;
   getUsersOfProjectSubscription!:Subscription;
   getUsersWithoutProjectSubscription!:Subscription;
   addUsersToProjectSubscription!:Subscription;
   removeUsersFromProjectSubscription!:Subscription;
-
+  updateProjectSubscription!:Subscription;
+  getPMsSubscription!:Subscription;
+  getTlsSubscription!:Subscription;
 
   displayAddUsersModal:Boolean=false;
   displayConfirmationDialogue:boolean=false;
+  displayEditModal: boolean = false;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -57,6 +70,9 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     this.getUsersWithoutProjectSubscription?.unsubscribe();
     this.addUsersToProjectSubscription?.unsubscribe();
     this.removeUsersFromProjectSubscription?.unsubscribe();
+    this.updateProjectSubscription?.unsubscribe();
+    this.getPMsSubscription?.unsubscribe();
+    this.getTlsSubscription?.unsubscribe();
   }
 
   getProject(){
@@ -127,5 +143,44 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
 
   hideDeleteConfirmation(){
     this.displayConfirmationDialogue=false;
+  }
+
+  showEditDialog(){
+    this.getPMs();
+    this.getTLsForEdit();
+    this.displayEditModal = true;
+    this.editProjectForm.controls.projectName.setValue(this.project.name);
+    this.editProjectForm.controls.projectDescription.setValue(this.project.description);
+    this.editProjectForm.controls.projectManager.setValue(this.project.projectManagerId!);
+    this.editProjectForm.controls.projectTeamLead.setValue(this.project.teamLeadId!);
+  }
+
+  hideEditDialog()
+  {
+    this.displayEditModal = false;
+  }
+
+  updateProject()
+  {
+    var project ={
+      name:this.editProjectForm.controls.projectName.value!,
+      description:this.editProjectForm.controls.projectDescription.value!,
+      projectManagerId:this.editProjectForm.controls.projectManager.value!,
+      TeamLeadId:this.editProjectForm.controls.projectTeamLead.value!
+    }
+    this.updateProjectSubscription=this.projectService.updateProject(this.projectId, project).subscribe(()=>{this.getProject();});
+    this.hideEditDialog();
+  }
+
+  getPMs(){
+    this.getPMsSubscription=this.userService.getPMWithoutProj(this.departmentId, this.projectId).subscribe(data=>{
+      this.projectManagers=data;
+    })
+  }
+
+  getTLsForEdit(){
+    this.getPMsSubscription=this.userService.getTLForEdit(this.departmentId, this.projectId).subscribe(data=>{
+      this.projectTeamLeads=data;
+    })
   }
 }
