@@ -1,6 +1,6 @@
-
+<div class="d-none">{{(departmentId | async)}}</div>
 <h1 class="page-header">
-  .NET Department
+  {{ (department | async)?.name }}
   <br>
 </h1>
 <br>
@@ -16,13 +16,13 @@
         </div>
 
       <p-listbox [filter]="true" 
-            [options]="cities"  
+            [options]="getVerifiedTemplates((formTemplates | async))"  
             optionLabel="name" listStyleClass="hod-listbox"
             [style]="{ 'height': '100%' }"
             [metaKeySelection]="false" >
-            <ng-template let-country pTemplate="item">
-              <div class="country-item">
-                <div>{{ country.name }}</div>
+            <ng-template let-formTemplate pTemplate="item">
+              <div class="formTemplate-item">
+                <div>{{ formTemplate.name }}</div>
               </div>
             </ng-template>
           
@@ -40,13 +40,13 @@
       </div>
 
     <p-listbox [filter]="true" 
-          [options]="cities"  
+          [options]="getVerifiedProjects((projects | async))"  
           optionLabel="name" listStyleClass="hod-listbox"
           [style]="{ 'height': '100%' }"
           [metaKeySelection]="false" >
-          <ng-template let-country pTemplate="item">
-            <div class="country-item">
-              <div>{{ country.name }}</div>
+          <ng-template let-project pTemplate="item">
+            <div class="project-item">
+              <div>{{ project.name }}</div>
             </div>
           </ng-template>
         
@@ -65,13 +65,13 @@
         </a>
       </div>
     <p-listbox [filter]="true" 
-          [options]="cities"  
+          [options]="getVerifiedMembers((members|async))"  
           optionLabel="name" listStyleClass="hod-listbox"
           [style]="{ 'height': '100%' }"
           [metaKeySelection]="false" >
-          <ng-template let-country pTemplate="item">
-            <div class="country-item">
-              <div>{{ country.name }}</div>
+          <ng-template let-member pTemplate="item">
+            <div class="member-item">
+              <div>{{ member.name }}</div>
             </div>
           </ng-template>
         
