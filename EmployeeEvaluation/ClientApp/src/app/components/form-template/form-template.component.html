@@ -457,31 +457,16 @@
     <br>
     <br>
     <ul>
-      <li *ngFor="let formTemplate of formTemplateList">
+      <li *ngFor="let formTemplate of (formTemplateListObs | async)">
         <h5 style="text-align:center;">{{formTemplate.name}}</h5>
         <h6 class="indent" style="opacity:0.7">{{formTemplate.type}}</h6>
         <p-accordion>
-          <ul>
+          <ul >
             <li *ngFor="let section of formTemplate.templateSections">
-              <p-accordionTab header={{section.name}}>
-                <div class="indent"><b> Description: </b>{{section.description}}
+              <p-accordionTab header="{{section.name}}">
+                <div><b> Description: </b>{{section.description}}
                   <br>
-                  <ul>
-                    <li *ngFor="let criterion of section.TemplateCriteria">
-                      <b>{{criterion.name}}</b>
-                      <hr>
-                      {{criterion.description}}
-                      <br>
-                      <div class="button-block">
-                        <button pButton type="button" label="Edit Criterion"
-                          (click)="showEditDialogCriterion(section,criterion)" class="p-button-warning">
-                        </button>
-                        <button pButton type="button" label="Delete Criterion"
-                          (click)="showDeleteDialogCriterion(section,criterion)" class="p-button-danger">
-                        </button>
-                      </div>
-                    </li>
-                  </ul>
+                  <br>
                   <div class="button-block">
                     <button pButton type="button" label="Edit Section"
                       (click)="showEditDialogSection(formTemplate,section)" class="p-button-warning">
@@ -492,6 +477,27 @@
                     <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion()">
                     </button>
                   </div>
+                  <br>
+                  <br>
+                  <ul>
+                    <li *ngFor="let criterion of section.templateCriteria">
+                      <b>{{criterion.name}}</b>
+                      <hr>
+                      {{criterion.description}}
+                      <br>
+                      <br>
+                      <div class="button-block">
+                        <button pButton type="button" label="Edit Criterion"
+                          (click)="showEditDialogCriterion(section,criterion)" class="p-button-warning">
+                        </button>
+                        <button pButton type="button" label="Delete Criterion"
+                          (click)="showDeleteDialogCriterion(section,criterion)" class="p-button-danger">
+                        </button>
+                      </div>
+                      <br>
+                      <br>
+                    </li>
+                  </ul>
                   <br>
                   <br>
                 </div>

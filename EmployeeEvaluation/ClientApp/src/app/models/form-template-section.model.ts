@@ -6,5 +6,5 @@ export class FormTemplateSection {
     name:string = "";
     description:string = "";
     FormTemplateId!: Guid;
-    TemplateCriteria:FormTemplateCriteria[]=[];
+    templateCriteria:FormTemplateCriteria[]=[];
 }
