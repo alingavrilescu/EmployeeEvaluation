@@ -1,24 +1,85 @@
-<div style="display: flex; flex-direction: column; gap: 100px">
-  <h1
-    style="
-      text-align: center;
-      margin-top: 50px;
-      color: rgb(75, 75, 75);
-      border-bottom: 1px solid rgb(72, 72, 72);
-    "
-  >
-    Softelligence Department
-  </h1>
-  <p-card header="Projects" style="cursor: pointer">
-    <p style="background-color: rgb(239, 237, 237)">License Management</p>
-    <p style="background-color: rgb(239, 237, 237)">Employee Evaluation</p>
-  </p-card>
 
-  <p-card header="Members" style="cursor: pointer">
-    <div style="background-color: #f1f0f0"><b>Project leads: </b>3</div>
-    <div tyle="background-color: #f7f7f7"><b>Project managers: </b>3</div>
-    <div style="background-color: #f1f0f0"><b>Developers: </b> 7</div>
-  </p-card>
+<h1 class="page-header">
+  .NET Department
+  <br>
+</h1>
+<br>
+<div class="row main-container">
+  <div class="col-12 col-lg-4 card-container">
+    <div class="head-of-dept-card" >
+        <div class="listbox-title d-flex justify-content-between">
+          <span>Evaluation Templates</span>
+          <a href="http://google.com" style="text-decoration:none;">
+            <button href="" title="Manage Templates" pButton class="p-button" label="Manage"  icon="pi pi-th-large" iconPos="left">
+            </button>
+          </a>
+        </div>
+
+      <p-listbox [filter]="true" 
+            [options]="cities"  
+            optionLabel="name" listStyleClass="hod-listbox"
+            [style]="{ 'height': '100%' }"
+            [metaKeySelection]="false" >
+            <ng-template let-country pTemplate="item">
+              <div class="country-item">
+                <div>{{ country.name }}</div>
+              </div>
+            </ng-template>
+          
+    </p-listbox>
+  </div>
+  </div>
+  <div class="col-12 col-lg-4 card-container">
+    <div class="head-of-dept-card" >
+      <div class="listbox-title d-flex justify-content-between">
+        <span>Projects</span>
+        <a href="http://google.com" style="text-decoration:none;">
+          <button href="" title="Manage Members" pButton class="p-button" label="Manage"  icon="pi pi-th-large" iconPos="left">
+          </button>
+        </a>
+      </div>
+
+    <p-listbox [filter]="true" 
+          [options]="cities"  
+          optionLabel="name" listStyleClass="hod-listbox"
+          [style]="{ 'height': '100%' }"
+          [metaKeySelection]="false" >
+          <ng-template let-country pTemplate="item">
+            <div class="country-item">
+              <div>{{ country.name }}</div>
+            </div>
+          </ng-template>
+        
+  </p-listbox>
+</div>
+    
+  </div>
+  
+  <div class="col-12 col-lg-4 card-container">
+    <div class="head-of-dept-card" >
+      <div class="listbox-title d-flex justify-content-between">
+        <span>Members</span>
+        <a href="http://google.com" style="text-decoration:none;">
+          <button href="" title="Manage Members" pButton class="p-button" label="Manage"  icon="pi pi-th-large" iconPos="left">
+          </button>
+        </a>
+      </div>
+    <p-listbox [filter]="true" 
+          [options]="cities"  
+          optionLabel="name" listStyleClass="hod-listbox"
+          [style]="{ 'height': '100%' }"
+          [metaKeySelection]="false" >
+          <ng-template let-country pTemplate="item">
+            <div class="country-item">
+              <div>{{ country.name }}</div>
+            </div>
+          </ng-template>
+        
+  </p-listbox>
+</div>
+  </div>
+  
+
 </div>
 
 <!-- 

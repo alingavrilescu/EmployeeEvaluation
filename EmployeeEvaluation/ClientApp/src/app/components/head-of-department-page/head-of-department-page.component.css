@@ -6,3 +6,39 @@
 #projects:hover {
   background-color: darkgrey;
 }
+
+.row.main-container
+{
+  width: 100%;;
+}
+
+
+.page-header{
+  text-align: left; 
+  margin-top: 10px; 
+  color: rgb(115, 115, 115); 
+  border-bottom: 1px solid rgb(227, 227, 227);
+}
+
+.card-container{
+    margin-bottom: 20px;
+}
+
+
+.full-height-list
+{
+  height: 100%;
+}
+.listbox-title
+{
+  font-size: 26px;
+  font-weight: bold;
+  color: #5a5a5a;
+  margin-bottom: 10px;
+}
+@media(min-width:992px)
+{
+  .card-container{
+    max-height: 60vh;
+  }  
+}
