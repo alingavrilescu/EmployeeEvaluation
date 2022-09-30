@@ -29,6 +29,10 @@ export class EvaluationFormService {
     return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}`, evaluationForm);
   }
 
+  public createCriteriaComments(id: Guid, criteriaComment: CriteriaComments): Observable<EvaluationForm> {
+    return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}`, criteriaComment);
+  }
+
   public getFormSections(): Observable<FormSection[]> {
     return this.httpClient.get<FormSection[]>(`${environment.apiUrl}/${this.urlFormSection}`);
   }
