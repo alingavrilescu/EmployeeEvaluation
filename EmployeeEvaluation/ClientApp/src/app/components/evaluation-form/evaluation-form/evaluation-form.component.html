@@ -4,63 +4,10 @@
   <h1 class="evaluation-form-name" *ngIf="evaluationForm">{{evaluationForm.name}}</h1>
   <p-accordion [multiple]="true" *ngFor="let formSection of evaluationForm.formSections">
 
-    <p-accordionTab>
-      <ng-template pTemplate="header">
-        <div class="section-container">
-          <div class="section-name-container">
-            {{formSection.name}}
-          </div>
-          <div class="section-desc-container">
-            {{formSection.description}}
-          </div>
-        </div>
-      </ng-template>
-
-      <div class="criteria-table-container">
-        <div class="criteria-table">
-          <p-table responsiveLayout="scroll">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th></th>
-                    <th>Done</th>
-                    <th>Looked at</th>
-                    <th>Untouched</th>
-                </tr>
-            </ng-template>      
-        </p-table>
-        </div>
-
-        <p-accordionTab class="criteria-accordion" *ngFor="let formCriteria of formSection.formCriteria">
-          <ng-template pTemplate="header">
-            
-            <div class="criteria-container">
-              <div class="criteria-name-container">
-                {{formCriteria.name}}
-              </div>
-              <div class="criteria-desc-container">
-                {{formCriteria.description}}
-              </div>
-
-              <div class="btn-container">
-                <div class="add-comm-btn">
-                  <button type="button" class="add-btn btn-pos p-button-help" pButton pRipple label="Add Comment" icon="pi pi-plus"></button>
-                </div>
-                <div class="add-review-btn">
-                  <button pButton pRipple type="button" label="Add Review" class="add-btn btn-pos p-button-warning" icon="pi pi-plus"></button>
-                </div>
-              </div>
-
-            </div>
-          </ng-template>
-
-          <ul *ngFor="let criteriaComments of formCriteria.criteriaComments">
-            <li>{{criteriaComments.comment}}</li>
-            <li>{{criteriaComments.attachment}}</li>
-          </ul>
-
-        </p-accordionTab>
-      </div>  
-    </p-accordionTab>
+    
+    
+  </p-accordion>
+</div>
 
 
     <!-- ==================================================MODAL FOR ADDING A COMMENT==================================================================== -->
@@ -80,3 +27,21 @@
       class="modal-button btn-pos p-button-success"></button>
   </div>
   </p-dialog>
+
+  <!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
+
+<p-dialog header="Add Review" [(visible)]="displayAddRevModal" [modal]="true" [style]="{width: '550px'}" 
+[draggable]="false" [resizable]="false">
+<form [formGroup]="addRevForm">
+  <label for="float-input">Review</label>
+  <br />
+  <input placeholder="Add review" id="float-input" type="text" pInputText formControlName="review" [style]="{width: '100%'}"/>
+</form>
+<div class="buttons-container">
+  <button pButton pRipple type="submit" label="Close" (click) = "hideAddRevDialog()" 
+    class="modal-button btn-pos p-button-danger"></button>
+
+  <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addRevForm.valid"
+    class="modal-button btn-pos p-button-success"></button>
+</div>
+</p-dialog>

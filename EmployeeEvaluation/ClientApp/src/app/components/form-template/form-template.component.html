@@ -1,4 +1,10 @@
- <!-- =========================== FORM TEMPLATES MODALS ============================ -->
+
+<h2 style="text-align: center"> Form Templates </h2>
+<br>
+<br>
+<!-- ------------------ Add Form Template Modal Button ---------------------- -->
+<button pButton type="button" label="+ Add Form Template" (click)="showAddDialog()" class="button-block">
+</button>
 
 <!-- --------------------- Modal for Adding Form Template --------------------------- -->
 
@@ -229,16 +235,32 @@
               <p-accordionTab header="{{section.name}}">
                 <div><b> Description: </b>{{section.description}}
                   <br>
-                  <br>
-   <!-- --------------------- EDIT, DELETE SECTION | ADD CRITERION BUTTONS ------------------- -->
+
+                  <ul>
+                    <li *ngFor="let criterion of section.templateCriteria">
+                      <b>{{criterion.name}}</b>
+                      <hr>
+                      {{criterion.description}}
+                      <br>
+                      <div class="button-block">
+                        <button pButton type="button" label="Edit Criterion"
+                          (click)="showEditDialogCriterion(section,criterion)" class="btn-resize p-button-warning">
+                        </button>
+                        <button pButton type="button" label="Delete Criterion"
+                          (click)="showDeleteDialogCriterion(section,criterion)" class="btn-resize p-button-danger">
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+>>>>>>> AlexandraBranch
                   <div class="button-block">
-                    <button pButton type="button" label="Edit Section"
-                      (click)="showEditDialogSection(formTemplate,section)" class="p-button-warning">
+                    <button pButton type="button" label="Edit"
+                      (click)="showEditDialogSection(formTemplate,section)" class="btn-resize p-button-warning">
                     </button>
-                    <button pButton type="button" label="Delete Section"
-                      (click)="showDeleteDialogSection(formTemplate,section)" class="p-button-danger">
+                    <button pButton type="button" label="Delete"
+                      (click)="showDeleteDialogSection(formTemplate,section)" class="btn-resize p-button-danger">
                     </button>
-                    <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion()">
+                    <button pButton type="button" label="+ Add" (click)="showAddDialogCriterion()" class="btn-resize">
                     </button>
                   </div>
                   <br>
@@ -275,12 +297,12 @@
         <!-- -------------- DELETE, EDIT FORM TEMPLATE | ADD SECTION BUTTONS ------------------  -->
 
         <div class="button-block">
-          <button pButton pRipple type="button" label="Edit" class="p-button-warning"
+          <button pButton pRipple type="button" label="Edit" class="btn-resize p-button-warning"
             (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
-          <button pButton pRipple type="button" label="Delete" class="p-button-danger"
+          <button pButton pRipple type="button" label="Delete" class="btn-resize p-button-danger"
             (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
-          <button pButton type="button" label="+ Add Section" (click)="setCurrentFormTemplateId(formTemplate.id!)"
-            (click)="showAddDialogSection()"></button>
+          <button pButton type="button" label="+ Add" (click)="setCurrentFormTemplateId(formTemplate.id!)"
+            (click)="showAddDialogSection()" class="btn-resize"></button>
         </div>
         <br>
         <br>
