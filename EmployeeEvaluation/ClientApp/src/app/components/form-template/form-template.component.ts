@@ -329,8 +329,10 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     this.hideDeleteDialogCriterion();
   }
 
-  showAddDialogCriterion() {
+  showAddDialogCriterion(formTemplateId:Guid,sectionId: Guid) {
     this.displayCriterionAddModal = true;
+    this.currentFormTemplateId=formTemplateId;
+    this.currentTemplateSectionId = sectionId;
   }
   hideAddDialogCriterion() {
     this.displayCriterionAddModal = false;

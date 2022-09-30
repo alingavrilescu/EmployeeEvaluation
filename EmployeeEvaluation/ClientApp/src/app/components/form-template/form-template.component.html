@@ -238,7 +238,7 @@
                     <button pButton type="button" label="Delete Section"
                       (click)="showDeleteDialogSection(formTemplate,section)" class="p-button-danger">
                     </button>
-                    <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion()">
+                    <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion(formTemplate.id,section.id)">
                     </button>
                   </div>
                   <br>
