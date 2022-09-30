@@ -41,14 +41,12 @@
       <i
         class="pi pi-pencil"
         style="cursor: pointer"
-        (click)="setCurrentDepartmentId(department.id!)"
-        (click)="showEditDialog()"
+        (click)="showEditDialog(department.id!)"
       ></i>
       <i
         class="pi pi-trash"
         style="cursor: pointer"
-        (click)="setCurrentDepartmentId(department.id!)"
-        (click)="showDeleteDialog()"
+        (click)="showDeleteDialog(department.id!)"
       ></i>
     </div>
     <div class="card" style="width: 100%; margin-top: 30px">
@@ -167,7 +165,9 @@
         <label for="float-input">Name of Department</label>
       </span>
       <span class="p-float-label" style="margin-top: 30px">
-        <p-dropdown autoWidth="false" [style]="{'width':'100%'}"
+        <p-dropdown
+          autoWidth="false"
+          [style]="{ width: '100%' }"
           [options]="usersHODNames"
           formControlName="headOfDepartmentControl"
         ></p-dropdown>
@@ -229,10 +229,12 @@
         />
         <label for="float-input">New name of Department</label>
       </span>
-      <span class="p-float-label" style="margin-top: 30px;">
-        <p-dropdown autoWidth="false" [style]="{'width':'100%'}"
+      <span class="p-float-label" style="margin-top: 30px">
+        <p-dropdown
+          autoWidth="false"
+          [style]="{ width: '100%' }"
           [options]="usersHODNames"
-          formControlName="roleControl"
+          formControlName="headOfDepartmentControl"
         ></p-dropdown>
       </span>
     </form>
