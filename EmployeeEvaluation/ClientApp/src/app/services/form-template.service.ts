@@ -13,14 +13,10 @@ import { ReturnUrlType } from 'src/api-authorization/api-authorization.constants
 export class FormTemplateService {
 
   private readonly url = "FormTemplate";
-  private readonly urlFormSection = "FormTemplate/FormTemplateSection";
-  private readonly urlFormCriteria = "FormTemplate/FormTemplateSection/FormTemplateCriteria";
 
   constructor(private httpClient: HttpClient) { }
 
-  public getFormTemplateById(departmentId:Guid,id: Guid): Observable<FormTemplate> {
-    return this.httpClient.get<FormTemplate>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${id}`);
-  }
+ 
   public getFormTemplates(departmentId: Guid): Observable<FormTemplate[]> {
     return this.httpClient.get<FormTemplate[]>(`${environment.apiUrl}/Department/${departmentId}/${this.url}`);
   }
@@ -35,13 +31,7 @@ export class FormTemplateService {
   }
 
 
-  public getTemplateSectionById(departmentId: Guid, formTemplateId: Guid, id: Guid): Observable<FormTemplateSection> {
-    return this.httpClient.get<FormTemplateSection>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${id}`);
-  }
-  public getSections(departmentId:Guid):Observable<FormTemplateSection[]>
-  {
-    return this.httpClient.get<FormTemplateSection[]>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/FormTemplateSection`);
-  }
+  
   public postTemplateSection(departmentId: Guid, formTemplateId: Guid, formTemplateSection: FormTemplateSection): Observable<FormTemplateSection> {
     return this.httpClient.post<FormTemplateSection>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection`, formTemplateSection);
   }
@@ -53,19 +43,13 @@ export class FormTemplateService {
   }
 
 
-  public getCriterionById(departmentId: Guid, formTemplateId:Guid,formSectionId:Guid,id: Guid): Observable<FormTemplateCriteria> {
-    return this.httpClient.get<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}/${id}`);
-  }
-  public getCriteria(departmentId: Guid, formTemplateId:Guid,formSectionId:Guid): Observable<FormTemplateCriteria[]> {
-    return this.httpClient.get<FormTemplateCriteria[]>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}`);
-  }
   public postFormTemplateCriterion(departmentId: Guid, formTemplateId:Guid,formSectionId:Guid,formTemplateCriteria: FormTemplateCriteria): Observable<FormTemplateCriteria> {
-    return this.httpClient.post<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}`, formTemplateCriteria);
+    return this.httpClient.post<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria`, formTemplateCriteria);
   }
   public putFormTemplateCriterion(departmentId: Guid, formTemplateId:Guid,formSectionId:Guid,id: Guid, formTemplateCriteria: FormTemplateCriteria): Observable<FormTemplateCriteria> {
-    return this.httpClient.put<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}/${id}`, formTemplateCriteria);
+    return this.httpClient.put<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${id}`, formTemplateCriteria);
   }
   public deleteCriterion(departmentId:Guid, formTemplateId:Guid, formSectionId:Guid,id: Guid): Observable<FormTemplateCriteria> {
-    return this.httpClient.delete<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${this.url}/${id}`);
+    return this.httpClient.delete<FormTemplateCriteria>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${formTemplateId}/FormTemplateSection/${formSectionId}/FormTemplateCriteria/${id}`);
   }
 }

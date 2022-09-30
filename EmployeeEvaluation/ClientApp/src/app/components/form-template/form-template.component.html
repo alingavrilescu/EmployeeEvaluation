@@ -1,10 +1,16 @@
+<<<<<<< HEAD
+ <!-- =========================== FORM TEMPLATES MODALS ============================ -->
+
+=======
 <h2 style="text-align: center"> Form Templates </h2>
 <br>
 <br>
 <!-- ------------------ Add Form Template Modal Button ---------------------- -->
-<button pButton type="button" label="+ Add Form Template" (click)="showAddDialog()">
+<button pButton type="button" label="+ Add Form Template" (click)="showAddDialog()" class="button-block">
 </button>
+>>>>>>> AlexandraBranch
 <!-- --------------------- Modal for Adding Form Template --------------------------- -->
+
 <p-dialog header="Add Form Template" [(visible)]="displayFormTemplateAddModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '30vw', height: '70vh' }" [modal]="true">
   <div style="display: flex; flex-direction: column;">
@@ -29,6 +35,7 @@
 </p-dialog>
 
 <!---------------------- Delete Form Template Modal ------------------------>
+
 <p-dialog [(visible)]="displayFormTemplateDeleteModal" [modal]="true">
   <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
     <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
@@ -47,6 +54,7 @@
     </div>
   </div>
 </p-dialog>
+
 <!-- ------------------ Edit Form Template Modal ------------------------ -->
 
 
@@ -61,7 +69,6 @@
     <br />
     <br />
     <label for="float-input" class="required">Software developer type</label>
-    <!-- <p-dropdown [options]="Type" formControlName="typeControl"></p-dropdown> -->
     <select formControlName="typeControl">
       <option *ngFor="let t of Type" [ngValue]="t">{{t}}</option>
     </select>
@@ -72,7 +79,7 @@
       (click)="updateFormTemplate()" [disabled]="!editFormTemplateFormGroup.valid"></button>
   </div>
 </p-dialog>
-<!-- ========================================== -->
+<!-- ================== SECTION MODALS ======================== -->
 
 <!-- --------------------- Add Section Modal ------------------------ -->
 
@@ -96,7 +103,9 @@
       (click)="addFormTemplateSection()" [disabled]="!addSectionGroup.valid"></button>
   </div>
 </p-dialog>
+
 <!-- ----------------------------Delete Section Modal -------------------------- -->
+
 <p-dialog [(visible)]="displaySectionDeleteModal" [modal]="true">
   <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
     <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
@@ -138,7 +147,9 @@
   </div>
 </p-dialog>
 <!-- ====================== CRITERION ================================= -->
+
 <!-- --------------------- Add Criterion Modal  --------------------------- -->
+
 <p-dialog header="Add Form Template" [(visible)]="displayCriterionAddModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
   <div style="display: flex; flex-direction: column;">
@@ -154,13 +165,14 @@
     </form>
   </div>
   <div style="display: flex; flex-direction: row; margin-top:  100px">
-    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="showAddDialogCriterion()"></button>
+    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideAddDialogCriterion()"></button>
     <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
       (click)="addCriterion()" [disabled]="!addCriterionFormGroup.valid"></button>
   </div>
 </p-dialog>
 
 <!---------------------- Delete Criterion Modal ------------------------>
+
 <p-dialog [(visible)]="displayCriterionDeleteModal" [modal]="true">
   <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
     <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
@@ -203,290 +215,100 @@
   </div>
 </p-dialog>
 
-<!-- ----------------------- Accordion form templates --------------------------- -->
-
-<div class="accordion accordion-flush" id="accordionFlushExample">
-  <h5 style="text-align: center;">Form Template name</h5>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingOne">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-        Accordion Item #1
-      </button>
-    </h2>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-      data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">
-        <div><b> Description: </b> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur, lorem at
-          sollicitudin accumsan, turpis eros dictum libero, et posuere risus lacus vitae eros. Pellentesque nec pharetra
-          velit. Proin ut nunc aliquet, feugiat tellus at, tristique tellus. Etiam consequat pretium elit eu placerat.
-          Donec non blandit est. Maecenas congue diam sed ante ornare, sit amet aliquam justo tempus. Quisque odio est,
-          suscipit in euismod vitae, ornare non nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-          posuere cubilia curae; Donec nec scelerisque sem. Donec id lorem sit amet eros placerat sodales cursus ut
-          purus. Cras interdum nunc eget faucibus viverra.<br><br>
-
-          <!-- ---------- Delete, Edit section + Add criterion ------------ -->
-
-          <div class="button-block">
-            <button pButton type="button" label="Edit Section" data-bs-toggle="modal" data-bs-target="#editSectionModal"
-              class="p-button-warning">
-            </button>
-            <button pButton type="button" label="Delete Section" data-bs-toggle="modal"
-              data-bs-target="#deleteSectionModal" class="p-button-danger">
-            </button>
-            <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion()">
-            </button>
-          </div>
-        </div>
-        <br>
-        <ul>
-          <li><b>Criteria name</b>
-            <hr>
-            Suspendisse sit amet justo vel leo blandit interdum nec ut dui. Aliquam velit odio,
-            scelerisque quis risus non, imperdiet cursus orci. Vestibulum ut sapien at tortor rhoncus pulvinar.
-            Phasellus quam quam, mollis sit amet sapien sed, aliquam pellentesque felis. Pellentesque enim erat,
-            accumsan at rutrum id, blandit pulvinar neque. Ut odio est, condimentum vitae lacinia at, finibus vitae
-            augue. Ut neque arcu, ullamcorper eget nunc at, hendrerit aliquam eros. Cras id turpis luctus nunc gravida
-            iaculis.
-            <br><br>
-            <div class="button-block">
-              <button pButton type="button" label="Edit Criterion" class="p-button-warning">
-              </button>
-              <button pButton type="button" label="Delete Criterion" class="p-button-danger">
-              </button>
-            </div>
-          </li>
-          <br>
-          <li><b>Criteria name2</b>
-            <hr> Suspendisse feugiat molestie sollicitudin. Proin id convallis ligula. Nulla posuere lectus
-            pharetra ligula fermentum, id vulputate nunc semper. Nunc sed urna sapien. Vestibulum eros est, placerat
-            vitae nulla at, posuere fringilla sem. Pellentesque habitant morbi tristique senectus et netus et malesuada
-            fames ac turpis egestas. Suspendisse potenti. Vestibulum eleifend, mi lobortis porttitor pretium, magna
-            risus cursus purus, sed rhoncus odio nulla nec risus. Nunc et accumsan dolor. Nam vitae efficitur nulla.
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingTwo">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-        Accordion Item #2
-      </button>
-    </h2>
-    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-      data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-        <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled
-        with some actual content.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-        Accordion Item #3
-      </button>
-    </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree"
-      data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-        <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening
-        here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more
-        representative of how this would look in a real-world application.
-      </div>
-
-    </div>
-
-    <!-- --------------Delete and Edit form template butttons and Add Section ------------------ -->
-    <!-- <div class="button-block">
-    <button pButton pRipple type="button" label="Edit" class="p-button-warning"></button>
-    <button pButton pRipple type="button" label="Delete" class="p-button-danger" ></button>
-    <button pButton type="button" label="+ Add Section" data-bs-toggle="modal"
-    data-bs-target="#addSectionModal">
-  </button>
-    </div>
-  </div>
-</div>
+<h2 style="text-align: center"> Form Templates </h2>
 <br>
 <br>
-<br>
-<div class="accordion accordion-flush" id="accordionFlushExample2">
-  <h5 style="text-align: center;">Form Template name</h5>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingOne2">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#flush-collapseOne2" aria-expanded="false" aria-controls="flush-collapseOne2">
-        Accordion Item #1
-      </button>
-    </h2>
-    <div id="flush-collapseOne2" class="accordion-collapse collapse" aria-labelledby="flush-headingOne2"
-      data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-        <code>.accordion-flush</code> class. This is the first item's accordion body.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingTwo2">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#flush-collapseTwo2" aria-expanded="false" aria-controls="flush-collapseTwo2">
-        Accordion Item #2
-      </button>
-    </h2>
-    <div id="flush-collapseTwo2" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo2"
-      data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-        <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled
-        with some actual content.
-      </div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="flush-headingThree">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-        data-bs-target="#flush-collapseThree2" aria-expanded="false" aria-controls="flush-collapseThree2">
-        Accordion Item #3
-      </button>
-    </h2>
-    <div id="flush-collapseThree2" class="accordion-collapse collapse" aria-labelledby="flush-headingThree2"
-      data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the
-        <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening
-        here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more
-        representative of how this would look in a real-world application.
-      </div>
-    </div>
-  </div>
-</div>
 
+<!-- ------------------ ADD FORM TEMPLATE BUTTON ---------------------- -->
 
+<button pButton type="button" label="+ Add Form Template" (click)="showAddDialog()">
+</button>
 
- -->
-
-    <!-- 
-    <ul>
-      <br>
-      <li *ngFor="let formTemplate of formTemplateList; index as formTemplateIterator">
-        <div class="accordion accordion-flush" id=`accordionFlushExample${formTemplateIterator}`>
-          <h5 style="text-align: center;">{{formTemplate.name}}</h5>
-          <h6 class="indent" style="opacity: 0.7;">{{formTemplate.type}}</h6>
-      <li *ngFor="let formTemplateSection of formTemplate.formTemplateSections; index as formTemplateSectionIterator">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id=`flush-heading${formTemplateSectionIterator}`>
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target=`#flush-collapse${formTemplateSectionIterator}` aria-expanded="false"
-              aria-controls=`flush-collapse${formTemplateSectionIterator}`>
-              {{formTemplateSection.name}}
-            </button>
-          </h2>
-          <div id=`flush-collapse${formTemplateSectionIterator}` class="accordion-collapse collapse"
-            aria-labelledby=`flush-heading${formTemplateSectionIterator}`
-            data-bs-parent=`#accordionFlushExample${formTemplateIterator}>
-            <div class="accordion-body">
-              <div><b> Description: </b> {{formTemplateSection.description}} <br><br>
-
-               ---------- Delete, Edit section + Add criterion ------------ 
-
-                <div class="button-block">
-                  <button pButton type="button" label="Edit Section" class="p-button-warning">
-                  </button>
-                  <button pButton type="button" label="Delete Section" class="p-button-danger">
-                  </button>
-                  <button pButton type="button" label="+ Add Criterion">
-                  </button>
-                </div>
-              </div>
-              <br>
-              <ul>
-                <li><b>Criteria name</b>
-                  <hr>
-                  Suspendisse sit amet justo vel leo blandit interdum nec ut dui. Aliquam velit odio,
-                  scelerisque quis risus non, imperdiet cursus orci. Vestibulum ut sapien at tortor rhoncus pulvinar.
-                  Phasellus quam quam, mollis sit amet sapien sed, aliquam pellentesque felis. Pellentesque enim erat,
-                  accumsan at rutrum id, blandit pulvinar neque. Ut odio est, condimentum vitae lacinia at, finibus
-                  vitae
-                  augue. Ut neque arcu, ullamcorper eget nunc at, hendrerit aliquam eros. Cras id turpis luctus nunc
-                  gravida
-                  iaculis.
-                  <br><br>
-                  <div class="button-block">
-                    <button pButton type="button" label="Edit Criterion" data-bs-toggle="modal"
-                      data-bs-target="#editCriterionModal" class="p-button-warning">
-                    </button>
-                    <button pButton type="button" label="Delete Criterion" data-bs-toggle="modal"
-                      data-bs-target="#deleteCriterionModal" class="p-button-danger">
-                    </button>
-                  </div>
-                </li>
-                <br>
-                <li><b>Criteria name2</b>
-                  <hr> Suspendisse feugiat molestie sollicitudin. Proin id convallis ligula. Nulla posuere lectus
-                  pharetra ligula fermentum, id vulputate nunc semper. Nunc sed urna sapien. Vestibulum eros est,
-                  placerat
-                  vitae nulla at, posuere fringilla sem. Pellentesque habitant morbi tristique senectus et netus et
-                  malesuada
-                  fames ac turpis egestas. Suspendisse potenti. Vestibulum eleifend, mi lobortis porttitor pretium,
-                  magna
-                  risus cursus purus, sed rhoncus odio nulla nec risus. Nunc et accumsan dolor. Nam vitae efficitur
-                  nulla.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </li>
-       --------------Delete and Edit form template butttons and Add Section ------------------ 
-      <div class="button-block">
-        <button pButton pRipple type="button" label="Edit" class="p-button-warning"
-          (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
-        <button pButton pRipple type="button" label="Delete" class="p-button-danger"
-          (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
-        <button pButton type="button" label="+ Add Section" (click)="setCurrentFormTemplateId(formTemplate.id!)"
-          (click)="showAddDialogSection()"></button>>
-      </div>
-  </div>
-  <br>
-  <br>
-  <br>
-  </li>
-  </ul> -->
+<!-- ------------------- ACCORDION NG PRIME --------------------- -->
 
     <br>
     <br>
     <ul>
-      <li *ngFor="let formTemplate of formTemplateList">
+      <li *ngFor="let formTemplate of (formTemplateListObs | async)">
         <h5 style="text-align:center;">{{formTemplate.name}}</h5>
         <h6 class="indent" style="opacity:0.7">{{formTemplate.type}}</h6>
         <p-accordion>
           <ul>
             <li *ngFor="let section of formTemplate.templateSections">
-              <p-accordionTab header={{section.name}}>
-                <div class="indent">{{section.description}}</div>
-                <div class="button-block">
-                  <button pButton type="button" label="Edit Section" (click)="showEditDialogSection(formTemplate,section)"
-                    class="p-button-warning">
-                  </button>
-                  <button pButton type="button" label="Delete Section" (click)="showDeleteDialogSection(formTemplate,section)" class="p-button-danger">
-                  </button>
-                  <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion()">
-                  </button>
+              <p-accordionTab header="{{section.name}}">
+                <div><b> Description: </b>{{section.description}}
+                  <br>
+<<<<<<< HEAD
+                  <br>
+   <!-- --------------------- EDIT, DELETE SECTION | ADD CRITERION BUTTONS ------------------- -->
+=======
+                  <ul>
+                    <li *ngFor="let criterion of section.TemplateCriteria">
+                      <b>{{criterion.name}}</b>
+                      <hr>
+                      {{criterion.description}}
+                      <br>
+                      <div class="button-block">
+                        <button pButton type="button" label="Edit Criterion"
+                          (click)="showEditDialogCriterion(section,criterion)" class="btn-resize p-button-warning">
+                        </button>
+                        <button pButton type="button" label="Delete Criterion"
+                          (click)="showDeleteDialogCriterion(section,criterion)" class="btn-resize p-button-danger">
+                        </button>
+                      </div>
+                    </li>
+                  </ul>
+>>>>>>> AlexandraBranch
+                  <div class="button-block">
+                    <button pButton type="button" label="Edit"
+                      (click)="showEditDialogSection(formTemplate,section)" class="btn-resize p-button-warning">
+                    </button>
+                    <button pButton type="button" label="Delete"
+                      (click)="showDeleteDialogSection(formTemplate,section)" class="btn-resize p-button-danger">
+                    </button>
+                    <button pButton type="button" label="+ Add" (click)="showAddDialogCriterion()" class="btn-resize">
+                    </button>
+                  </div>
+                  <br>
+                  <br>
+                  <ul>
+                    <li *ngFor="let criterion of section.templateCriteria; index as index">
+                      <b>{{criterion.name}}</b>
+                      <hr>
+                      {{criterion.description}}
+                      <br>
+                      <br>
+                      <div class="button-block">
+                        <button pButton type="button" label="Edit Criterion"
+                          (click)="showEditDialogCriterion(section,criterion)" class="p-button-warning">
+                        </button>
+                        <button pButton type="button" label="Delete Criterion"
+                          (click)="showDeleteDialogCriterion(section,criterion)" class="p-button-danger">
+                        </button>
+                      </div>
+                      <br>
+                      <div *ngIf="index!=section.templateCriteria.length-1">
+                      <br>
+                    </div>
+                    </li>
+                  </ul>
+                  <br>
+                  <br>
                 </div>
               </p-accordionTab>
             </li>
           </ul>
         </p-accordion>
 
-        <!-- --------------Delete and Edit form template butttons and Add Section ------------------  -->
+        <!-- -------------- DELETE, EDIT FORM TEMPLATE | ADD SECTION BUTTONS ------------------  -->
+
         <div class="button-block">
-          <button pButton pRipple type="button" label="Edit" class="p-button-warning"
+          <button pButton pRipple type="button" label="Edit" class="btn-resize p-button-warning"
             (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
-          <button pButton pRipple type="button" label="Delete" class="p-button-danger"
+          <button pButton pRipple type="button" label="Delete" class="btn-resize p-button-danger"
             (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
-          <button pButton type="button" label="+ Add Section" (click)="setCurrentFormTemplateId(formTemplate.id!)"
-            (click)="showAddDialogSection()"></button>
+          <button pButton type="button" label="+ Add" (click)="setCurrentFormTemplateId(formTemplate.id!)"
+            (click)="showAddDialogSection()" class="btn-resize"></button>
         </div>
         <br>
         <br>

@@ -20,10 +20,15 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     criteriaAttachment: new FormControl('')
   });
 
+  addRevForm = new FormGroup({
+    review: new FormControl('', Validators.required)
+  })
+
   constructor(private evaluationFormService: EvaluationFormService, private activatedRoute: ActivatedRoute) { }
 
 
   displayAddCommModal: boolean = false;
+  displayAddRevModal: boolean = false;
 
   deleteSubscription!: Subscription;
 
@@ -47,6 +52,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     newComment.attachment = this.addCommForm.controls.criteriaAttachment.value!;
   }
 
+
   refreshEvaluationFormList() {
     this.evaluationFormService.getEvaluationForms(this.userId).subscribe(data => {
       this.evaluationForm = data;
@@ -62,5 +68,13 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   hideAddCommDialog(){
     this.displayAddCommModal = false;
+  }
+
+  showAddRevDialog(){
+    this.displayAddRevModal = true;
+  }
+
+  hideAddRevDialog(){
+    this.displayAddRevModal = false;
   }
 }
