@@ -43,10 +43,10 @@
 
               <div class="btn-container">
                 <div class="add-comm-btn">
-                  <button type="button" class="add-btn btn-pos p-button-help" pButton pRipple label="Add Comment" icon="pi pi-plus"></button>
+                  <button type="button" (click)="showAddCommDialog()" class="add-btn btn-pos p-button-help" pButton pRipple label="Add Comment" icon="pi pi-plus"></button>
                 </div>
                 <div class="add-review-btn">
-                  <button pButton pRipple type="button" label="Add Review" class="add-btn btn-pos p-button-warning" icon="pi pi-plus"></button>
+                  <button pButton pRipple (click)="showAddRevDialog()" type="button" label="Add Review" class="add-btn btn-pos p-button-warning" icon="pi pi-plus"></button>
                 </div>
               </div>
 
@@ -80,3 +80,21 @@
       class="modal-button btn-pos p-button-success"></button>
   </div>
   </p-dialog>
+
+  <!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
+
+<p-dialog header="Add Review" [(visible)]="displayAddRevModal" [modal]="true" [style]="{width: '550px'}" 
+[draggable]="false" [resizable]="false">
+<form [formGroup]="addRevForm">
+  <label for="float-input">Review</label>
+  <br />
+  <input placeholder="Add review" id="float-input" type="text" pInputText formControlName="review" [style]="{width: '100%'}"/>
+</form>
+<div class="buttons-container">
+  <button pButton pRipple type="submit" label="Close" (click) = "hideAddRevDialog()" 
+    class="modal-button btn-pos p-button-danger"></button>
+
+  <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addRevForm.valid"
+    class="modal-button btn-pos p-button-success"></button>
+</div>
+</p-dialog>
