@@ -30,7 +30,7 @@ export class DepartmentTableComponent implements OnInit {
   users: UserDTO[] = [];
   usersHOD: UserDTO[] = [];
   usersHODNames: string[] = [];
-  statistics:Map<Guid | undefined,Observable<DepartmentStatistics> | null>=new Map;
+  statistics!:Map<Guid | undefined, Observable<DepartmentStatistics> | null>;
 
   constructor(private departmentsService: DepartmentsService, private usersService: UsersService) {}
 
@@ -109,10 +109,12 @@ export class DepartmentTableComponent implements OnInit {
     this.departmentsService.getDepartments().subscribe({
       next: (departments) => {
         this.departments = departments;
+        let stats:Map<Guid | undefined,Observable<DepartmentStatistics> | null> = new Map;
         departments.forEach(department => {
           if(department&&department.id)
-          this.statistics.set(department.id,this.getDepartmentStatistics(department.id));
+          stats.set(department.id,this.getDepartmentStatistics(department.id));
         });
+        this.statistics = stats;
       },
       error: (response) => {
         console.log(response);
@@ -174,6 +176,11 @@ export class DepartmentTableComponent implements OnInit {
     if(depId)
     return this.departmentsService.getDepartmentStatistics(depId);
     return null;
+  }
+  logStat(stat: any): number
+  {
+    console.log(stat);
+    return  1;
   }
 
 }
