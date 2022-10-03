@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
+
 import { Observable } from 'rxjs/internal/Observable';
-import { filter, map, tap, toArray } from 'rxjs/operators';
+import { map, tap, toArray } from 'rxjs/operators';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { Department } from 'src/app/models/department.model';
 import { FormTemplate } from 'src/app/models/form-template.model';
@@ -11,6 +13,7 @@ import { DepartmentsService } from 'src/app/services/departments.service';
 import { FormTemplateService } from 'src/app/services/form-template.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { UsersService } from 'src/app/services/users.service';
+
 interface City {
   name: string;
   code: string;
@@ -25,6 +28,7 @@ interface City {
 export class HeadOfDepartmentPageComponent implements OnInit {
   headOfDepartment!: UserDTO;
   departmentId!: Observable<string>; 
+  departmentIdValue!: string;
   department!: Observable<Department>; 
   formTemplates!: Observable<FormTemplate[]>;
   projects!: Observable<Project[]>;
@@ -35,7 +39,8 @@ export class HeadOfDepartmentPageComponent implements OnInit {
     private userService: UsersService,
     private departmentService: DepartmentsService,
     private formTemplatesService: FormTemplateService,
-    private projectsService: ProjectsService
+    private projectsService: ProjectsService,
+    private router: Router
   ) {
 
     
@@ -47,6 +52,7 @@ export class HeadOfDepartmentPageComponent implements OnInit {
                             .pipe(tap((depId) => {                              
                                                   if (depId)
                                                   {
+                                                    this.departmentIdValue = depId;
                                                     this.department = this.departmentService.getDepartmentById(Guid.parse(depId));
                                                     this.formTemplates = this.formTemplatesService
                                                                             .getFormTemplates(Guid.parse(depId));
@@ -82,5 +88,22 @@ export class HeadOfDepartmentPageComponent implements OnInit {
     if (projectsList)
       return projectsList;
     return [];
+  }
+
+  onTemplateSelected(eventData: any):void
+  {
+      let template: FormTemplate = eventData.option;      
+    this.router.navigate([`departments/${this.departmentIdValue}/form-templates`]);
+     ;
+  }
+  onProjectSelected(eventData: any):void
+  {
+    let project: Project = eventData.option;
+    this.router.navigate([`departments/${this.departmentIdValue}/projects/${project.id}`])
+  }
+  onUserSelected(eventData: any): void
+  {
+    let user : UserDTO = eventData.option;
+    this.router.navigate([`users/userDetails/${user.id}`]);
   }
 }

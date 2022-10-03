@@ -19,7 +19,8 @@
             [options]="getVerifiedTemplates((formTemplates | async))"  
             optionLabel="name" listStyleClass="hod-listbox"
             [style]="{ 'height': '100%' }"
-            [metaKeySelection]="false" >
+            [metaKeySelection]="false"
+            (onClick)="onTemplateSelected($event)" >
             <ng-template let-formTemplate pTemplate="item">
               <div class="formTemplate-item">
                 <div>{{ formTemplate.name }}</div>
@@ -43,7 +44,8 @@
           [options]="getVerifiedProjects((projects | async))"  
           optionLabel="name" listStyleClass="hod-listbox"
           [style]="{ 'height': '100%' }"
-          [metaKeySelection]="false" >
+          [metaKeySelection]="false"
+          (onClick)="onProjectSelected($event)" >
           <ng-template let-project pTemplate="item">
             <div class="project-item">
               <div>{{ project.name }}</div>
@@ -68,7 +70,8 @@
           [options]="getVerifiedMembers((members|async))"  
           optionLabel="name" listStyleClass="hod-listbox"
           [style]="{ 'height': '100%' }"
-          [metaKeySelection]="false" >
+          [metaKeySelection]="false"
+          (onClick)="onUserSelected($event)" >
           <ng-template let-member pTemplate="item">
             <div class="member-item">
               <div>{{ member.name }}</div>
