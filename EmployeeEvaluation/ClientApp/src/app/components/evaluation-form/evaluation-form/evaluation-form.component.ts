@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Guid } from 'guid-typescript';
 import { Observable, Subscription } from 'rxjs';
 import { EvaluationForm } from 'src/app/models/evaluation-form.model';
 import { EvaluationFormService } from 'src/app/services/evaluation-form.service';
@@ -29,17 +28,16 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   displayAddCommModal: boolean = false;
   displayAddRevModal: boolean = false;
-
   deleteSubscription!: Subscription;
-
-  evaluationForm!: EvaluationForm;
+  evaluationForm!: Observable<EvaluationForm>;
   userId: any;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.userId = params.get('id');
+      this.refreshEvaluationFormList();
     });
-    this.refreshEvaluationFormList();
+  
   }
 
   ngOnDestroy(): void {
@@ -54,12 +52,9 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
 
   refreshEvaluationFormList() {
-    this.evaluationFormService.getEvaluationForms(this.userId).subscribe(data => {
-      this.evaluationForm = data;
-      console.log(this.evaluationForm.formSections)
-    })
+    this.evaluationForm=this.evaluationFormService.getEvaluationForms(this.userId);
 
-    //NOT FINISHED YET
+    //NOT FINISHED YET  
   }
 
   showAddCommDialog(){
@@ -76,5 +71,10 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   hideAddRevDialog(){
     this.displayAddRevModal = false;
+  }
+
+  onCriteriaChange(event: any):void
+  {
+    console.log("Updated criteria with id: " + event.target.name + "; selected value: " + event.target.value);
   }
 }

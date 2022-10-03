@@ -26,6 +26,23 @@ input[type=text], select {
 
 /* ===========================================SECTION & CRITERIA STYLING===================================================== */
 
+.criteria-header
+{
+    font-size: 18px;
+    font-weight: bold;
+}
+.criteria-name{
+    font-size: 18px;
+}
+.criteria-description
+{
+    font-size: 12px;
+}
+.criteria-entry
+{
+    margin-top: 10px;    
+}
+
 .section-container,
 .criteria-container{
     display: flex;
