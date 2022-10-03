@@ -11,12 +11,17 @@ import { DepartmentsService } from 'src/app/services/departments.service';
 import { FormTemplateService } from 'src/app/services/form-template.service';
 import { ProjectsService } from 'src/app/services/projects.service';
 import { UsersService } from 'src/app/services/users.service';
-
+interface City {
+  name: string;
+  code: string;
+}
 @Component({
   selector: 'app-head-of-department-page',
   templateUrl: './head-of-department-page.component.html',
   styleUrls: ['./head-of-department-page.component.css'],
 })
+
+
 export class HeadOfDepartmentPageComponent implements OnInit {
   headOfDepartment!: UserDTO;
   departmentId!: Observable<string>; 
@@ -46,7 +51,9 @@ export class HeadOfDepartmentPageComponent implements OnInit {
                                                     this.formTemplates = this.formTemplatesService
                                                                             .getFormTemplates(Guid.parse(depId));
                                                     this.projects = this.projectsService.getProjects()
-                                                                                        .pipe(filter((projectsList, index) => projectsList[index].departmentId == Guid.parse(depId)));
+                                                                                        .pipe(
+                                                                                            map(projects => projects.filter(project=> project.departmentId == Guid.parse(depId)))
+                                                                                          );
                                                     this.members = this.userService.getUsersOfDepartment(Guid.parse(depId));
                                                   }
                                                 }
