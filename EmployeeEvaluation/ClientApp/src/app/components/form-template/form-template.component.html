@@ -1,3 +1,10 @@
+
+<!-- ------------------ Add Form Template Modal Button ---------------------- -->
+<div class="add-button-container">
+  <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help" [style]="{width: '200px', height: '40px'}" 
+      pButton pRipple label="Add Form Template" icon="pi pi-plus"></button>
+</div>
+
 <!-- --------------------- Modal for Adding Form Template --------------------------- -->
 
 <p-dialog header="Add Form Template" [(visible)]="displayFormTemplateAddModal"
@@ -139,7 +146,7 @@
 
 <!-- --------------------- Add Criterion Modal  --------------------------- -->
 
-<p-dialog header="Add Form Template" [(visible)]="displayCriterionAddModal"
+<p-dialog header="Add Criterion" [(visible)]="displayCriterionAddModal"
   [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
   <div style="display: flex; flex-direction: column;">
     <form [formGroup]="addCriterionFormGroup">
@@ -154,7 +161,8 @@
     </form>
   </div>
   <div class="buttons-container">
-    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideAddDialogCriterion()"></button>
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
     <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
       (click)="addCriterion()" [disabled]="!addCriterionFormGroup.valid"></button>
   </div>
@@ -210,72 +218,77 @@
 
 <!-- ------------------ ADD FORM TEMPLATE BUTTON ---------------------- -->
 
-<button pButton pRipple type="button" label="+ Add Form Template" (click)="showAddDialog()" class="p-button-help">
+<button pButton type="button" label="+ Add Form Template" (click)="showAddDialog()">
 </button>
 
 <!-- ------------------- ACCORDION NG PRIME --------------------- -->
 
-<br>
-<br>
-<ul>
-  <li *ngFor="let formTemplate of (formTemplateListObs | async)">
-    <h5 style="text-align:center;">{{formTemplate.name}} <span style="opacity:0.7;">| {{formTemplate.type}} </span>
-    </h5>
-    <p-accordion>
-      <ul>
-        <li *ngFor="let section of formTemplate.templateSections">
-          <p-accordionTab header="{{section.name}}">
-            <div><b> Description: </b>{{section.description}}
-              <br>
-              <ul>
-                <li *ngFor="let criterion of section.templateCriteria;">
-                  <b>{{criterion.name}}</b>
-                  <hr>
-                  {{criterion.description}}
+    <br> <br> <br> <br>
+    <ul>
+      <li *ngFor="let formTemplate of (formTemplateListObs | async)">
+        <h5 style="text-align:center;">{{formTemplate.name}}</h5>
+        <br>
+        <h6 class="indent" style="opacity:0.7">{{formTemplate.type}}</h6>
+        <p-accordion>
+          <ul>
+            <li *ngFor="let section of formTemplate.templateSections">
+              <p-accordionTab header="{{section.name}}">
+                <div><b> Description: </b>{{section.description}}
                   <br>
+
                   <div class="button-block">
-                    <button pButton type="button" label="Edit Criterion"
-                      (click)="showEditDialogCriterion(section,criterion)" class="btn-resize p-button-warning">
+                    <button pButton type="button" label="Edit Section"
+                      (click)="showEditDialogSection(formTemplate,section)" class="buttons-height p-button-warning">
                     </button>
-                    <button pButton type="button" label="Delete Criterion"
-                      (click)="showDeleteDialogCriterion(section,criterion)" class="btn-resize p-button-danger">
+                    <button pButton type="button" label="Delete Section"
+                      (click)="showDeleteDialogSection(formTemplate,section)" class="p-button-danger buttons-height">
+                    </button>
+                    <button pButton type="button" label="Add Criterion"  icon="pi pi-plus" (click)="showAddDialogCriterion(formTemplate,section)" class="p-button-help buttons-height">
                     </button>
                   </div>
-                </li>
-              </ul>
-              <div class="button-block">
-                <button pButton type="button" label="Edit" (click)="showEditDialogSection(formTemplate,section)"
-                  class="btn-resize p-button-warning">
-                </button>
-                <button pButton type="button" label="Delete" (click)="showDeleteDialogSection(formTemplate,section)"
-                  class="btn-resize p-button-danger">
-                </button>
-                <button pButton type="button" label="+ Add" (click)="showAddDialogCriterion(formTemplate,section)"
-                  class="btn-resize" class="p-button-help">
-                </button>
-              </div>
-              <br>
-              <br>
-              <br>
-              <br>
-            </div>
-          </p-accordionTab>
-        </li>
-      </ul>
-    </p-accordion>
+                  <br>
+                  <br>
+                  <ul>
+                    <li *ngFor="let criterion of section.templateCriteria; index as index">
+                      <b>{{criterion.name}}</b>
+                      <hr>
+                      {{criterion.description}}
+                      <br>
+                      <br>
+                      <div class="button-block">
+                        <button pButton type="button" label="Edit Criterion"
+                          (click)="showEditDialogCriterion(section,criterion)" class="buttons-height p-button-warning">
+                        </button>
+                        <button pButton type="button" label="Delete Criterion"
+                          (click)="showDeleteDialogCriterion(section,criterion)" class="buttons-height p-button-danger">
+                        </button>
+                      </div>
+                      <br>
+                      <div *ngIf="index!=section.templateCriteria.length-1">
+                      <br>
+                    </div>
+                    </li>
+                  </ul>
+                  <br>
+                  <br>
+                </div>
+              </p-accordionTab>
+            </li>
+          </ul>
+        </p-accordion>
 
     <!-- -------------- DELETE, EDIT FORM TEMPLATE | ADD SECTION BUTTONS ------------------  -->
 
-    <div class="button-block">
-      <button pButton pRipple type="button" label="Edit" class="btn-resize p-button-warning"
-        (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
-      <button pButton pRipple type="button" label="Delete" class="btn-resize p-button-danger"
-        (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
-      <button pButton type="button" label="+ Add" class="p-button-help" (click)="showAddDialogSection(formTemplate)"
-        class="btn-resize"></button>
-    </div>
-    <br>
-    <br>
-    <br>
-  </li>
-</ul>
+        <div class="button-block">
+          <button pButton pRipple type="button" label="Edit Form Template" class=" p-button-warning buttons-height" 
+            (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
+          <button pButton pRipple type="button" label="Delete Form Template" class=" p-button-danger buttons-height" 
+            (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
+          <button  type="button"  pButton pRipple label="Add Section" icon="pi pi-plus" (click)="setCurrentFormTemplateId(formTemplate.id!)" class=" p-button-help buttons-height"
+            (click)="showAddDialogSection()"></button>
+        </div>
+        <br>
+        <br>
+        <br>
+      </li>
+    </ul>
