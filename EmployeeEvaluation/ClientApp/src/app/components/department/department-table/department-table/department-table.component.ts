@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Guid } from 'guid-typescript';
+import { Observable } from 'rxjs';
 import { Department } from 'src/app/models/department.model';
+import { DepartmentStatistics } from 'src/app/models/departments-statistics';
 import { UserDTO } from 'src/app/models/users.model';
 import { DepartmentsService } from 'src/app/services/departments.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -28,10 +30,9 @@ export class DepartmentTableComponent implements OnInit {
   users: UserDTO[] = [];
   usersHOD: UserDTO[] = [];
   usersHODNames: string[] = [];
-  constructor(
-    private departmentsService: DepartmentsService,
-    private usersService: UsersService
-  ) {}
+  statistics:Map<Guid | undefined,Observable<DepartmentStatistics> | null>=new Map;
+
+  constructor(private departmentsService: DepartmentsService, private usersService: UsersService) {}
 
   ngOnInit(): void {
     this.httpGetDepartments();
@@ -108,6 +109,10 @@ export class DepartmentTableComponent implements OnInit {
     this.departmentsService.getDepartments().subscribe({
       next: (departments) => {
         this.departments = departments;
+        departments.forEach(department => {
+          if(department&&department.id)
+          this.statistics.set(department.id,this.getDepartmentStatistics(department.id));
+        });
       },
       error: (response) => {
         console.log(response);
@@ -163,4 +168,12 @@ export class DepartmentTableComponent implements OnInit {
     }
     return null;
   }
+
+  getDepartmentStatistics(depId?:Guid)
+  {
+    if(depId)
+    return this.departmentsService.getDepartmentStatistics(depId);
+    return null;
+  }
+
 }
