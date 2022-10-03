@@ -12,11 +12,13 @@ namespace EmployeeEvaluation.Controllers
         private readonly DepartmentService departmentService;
         private readonly UserService userService;
         private readonly ProjectService projectService;
-        public DepartmentController(DepartmentService departmentService, UserService userService, ProjectService projectService)
+        private readonly FormTemplateService formTemplateService;
+        public DepartmentController(DepartmentService departmentService, UserService userService, ProjectService projectService, FormTemplateService formTemplateService)
         {
             this.departmentService = departmentService;
             this.userService = userService;
             this.projectService = projectService;
+            this.formTemplateService = formTemplateService;
         }
         [HttpGet]
         public IEnumerable<Department> Get()
@@ -28,6 +30,22 @@ namespace EmployeeEvaluation.Controllers
         {
             return this.departmentService.GetDepartmentById(id);
         }
+
+        [HttpGet("{depId}/statistics")]
+        public DepartmentStatisticsDTO GetStatisticsForDep(Guid depId)
+        {
+            var departmentStatistics = new DepartmentStatisticsDTO
+            {
+                DevCount = this.userService.GetDevs(depId).Count(),
+                PMCount = this.userService.GetProjectManagers(depId).Count(),
+                TLCount = this.userService.GetTeamLeads(depId).Count(),
+                MembersCount = this.userService.GetUsersOfDepartment(depId).Count(),
+                ProjectsCounts = this.projectService.GetProjectsOfDepartment(depId).Count(),
+                FormTemplatesCount = this.formTemplateService.GetFormTemplatesOfDepartment(depId).Count()
+            };
+            return departmentStatistics;
+        }
+
         [HttpPost]
         public Department Post([FromBody] DepartmentDTO department)
         {

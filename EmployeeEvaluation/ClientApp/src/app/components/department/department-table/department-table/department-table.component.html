@@ -49,7 +49,7 @@
         (click)="showDeleteDialog(department.id!)"
       ></i>
     </div>
-    <div class="card" style="width: 100%; margin-top: 30px">
+    <div class="card" style="width: 100%; margin-top: 30px" *ngIf="statistics.get(department.id); let stats">
       <div
         id="hover"
         style="
@@ -63,7 +63,7 @@
         routerLink="{{ this.department.id }}/projects"
       >
         <div>Projects:</div>
-        <div style="padding-right: 10px"><b>3</b></div>
+        <div style="padding-right: 10px"><b>{{(stats | async)?.projectsCount}}</b></div>
       </div>
       <div
         id="hover"
@@ -78,7 +78,7 @@
         routerLink="details/project-leads/{{ this.department.id }}"
       >
         <div>Project leads:</div>
-        <div style="padding-right: 10px"><b>4</b></div>
+        <div style="padding-right: 10px"><b>{{department.id}}</b></div>
       </div>
       <div
         id="hover"
@@ -93,7 +93,7 @@
         routerLink="details/project-managers/{{ this.department.id }}"
       >
         <div>Project managers:</div>
-        <div style="padding-right: 10px"><b>5</b></div>
+        <div style="padding-right: 10px"><b>{{department.id}}</b></div>
       </div>
       <div
         id="hover"
@@ -108,7 +108,7 @@
         routerLink="details/developers/{{ this.department.id }}"
       >
         <div>Developers:</div>
-        <div style="padding-right: 10px"><b>6</b></div>
+        <div style="padding-right: 10px"><b></b></div>
       </div>
       <div
         id="hover"

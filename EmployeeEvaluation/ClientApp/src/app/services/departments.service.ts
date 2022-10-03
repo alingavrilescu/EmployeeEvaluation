@@ -4,6 +4,7 @@ import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Department } from '../models/department.model';
+import { DepartmentStatistics } from '../models/departments-statistics';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,12 @@ export class DepartmentsService {
       `${environment.apiUrl}/${this.url}`
     );
   }
-  
+
+  public getDepartmentStatistics(depId: Guid): Observable<DepartmentStatistics>
+  {
+    return this.httpClient.get<DepartmentStatistics>(`${environment.apiUrl}/${this.url}/${depId}/statistics`);
+  }
+
   public getDepartmentById(id: Guid): Observable<Department>
   {
     return this.httpClient.get<Department>(`${environment.apiUrl}/${this.url}/${id}`);
