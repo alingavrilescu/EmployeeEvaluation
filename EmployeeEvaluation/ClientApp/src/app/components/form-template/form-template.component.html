@@ -161,7 +161,8 @@
     </form>
   </div>
   <div class="buttons-container">
-    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideAddDialogCriterion()"></button>
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
     <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
       (click)="addCriterion()" [disabled]="!addCriterionFormGroup.valid"></button>
   </div>
@@ -232,7 +233,7 @@
                     <button pButton type="button" label="Delete Section"
                       (click)="showDeleteDialogSection(formTemplate,section)" class="p-button-danger buttons-height">
                     </button>
-                    <button pButton type="button" label="+ Add Criterion" (click)="showAddDialogCriterion(formTemplate,section)" class="buttons-height">
+                    <button pButton type="button" label="Add Criterion"  icon="pi pi-plus" (click)="showAddDialogCriterion(formTemplate,section)" class="p-button-help buttons-height">
                     </button>
                   </div>
                   <br>
@@ -269,11 +270,11 @@
         <!-- -------------- DELETE, EDIT FORM TEMPLATE | ADD SECTION BUTTONS ------------------  -->
 
         <div class="button-block">
-          <button pButton pRipple type="button" label="Edit Form Template" class=" p-button-warning buttons-height" title="Edit Form Template"
+          <button pButton pRipple type="button" label="Edit Form Template" class=" p-button-warning buttons-height" 
             (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
-          <button pButton pRipple type="button" label="Delete Form Template" class=" p-button-danger buttons-height" title="Delete Form Template"
+          <button pButton pRipple type="button" label="Delete Form Template" class=" p-button-danger buttons-height" 
             (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
-          <button  type="button"  pButton pRipple label="Add Section" icon="pi pi-plus" (click)="setCurrentFormTemplateId(formTemplate.id!)" class="buttons-height"
+          <button  type="button"  pButton pRipple label="Add Section" icon="pi pi-plus" (click)="setCurrentFormTemplateId(formTemplate.id!)" class=" p-button-help buttons-height"
             (click)="showAddDialogSection()"></button>
         </div>
         <br>
