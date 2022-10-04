@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { elementAt } from 'rxjs/operators';
@@ -16,12 +16,12 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class DepartmentTableComponent implements OnInit {
   addDepartmentFormGroup = new FormGroup({
-    nameControl: new FormControl(''),
-    headOfDepartmentControl: new FormControl(''),
+    nameControl: new FormControl('', Validators.required),
+    headOfDepartmentControl: new FormControl('', Validators.required),
   });
   editDepartmentFormGroup = new FormGroup({
-    nameControl: new FormControl(''),
-    headOfDepartmentControl: new FormControl(''),
+    nameControl: new FormControl('', Validators.required),
+    headOfDepartmentControl: new FormControl('', Validators.required),
   });
   displayAddModal: boolean = false;
   displayEditModal: boolean = false;

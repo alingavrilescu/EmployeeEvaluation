@@ -9,7 +9,7 @@
     type="button"
     class="p-button-help"
     icon="pi pi-plus"
-    (onClick)="showAddDialog()"
+    (click)="showAddDialog()"
   ></button>
 </div>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
@@ -192,7 +192,6 @@
           [options]="usersHODNames"
           formControlName="headOfDepartmentControl"
           placeholder="Select Head of Department"
-          [showClear]="true"
         ></p-dropdown>
 
         <!-- <input
