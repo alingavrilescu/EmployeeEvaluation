@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
+import { elementAt } from 'rxjs/operators';
 import { Department } from 'src/app/models/department.model';
 import { DepartmentStatistics } from 'src/app/models/departments-statistics';
 import { UserDTO } from 'src/app/models/users.model';
@@ -30,9 +31,12 @@ export class DepartmentTableComponent implements OnInit {
   users: UserDTO[] = [];
   usersHOD: UserDTO[] = [];
   usersHODNames: string[] = [];
-  statistics!:Map<Guid | undefined, Observable<DepartmentStatistics> | null>;
+  statistics!: Map<Guid | undefined, Observable<DepartmentStatistics> | null>;
 
-  constructor(private departmentsService: DepartmentsService, private usersService: UsersService) {}
+  constructor(
+    private departmentsService: DepartmentsService,
+    private usersService: UsersService
+  ) {}
 
   ngOnInit(): void {
     this.httpGetDepartments();
@@ -87,32 +91,32 @@ export class DepartmentTableComponent implements OnInit {
     var newDepartment = new Department();
     newDepartment.name =
       this.addDepartmentFormGroup.controls.nameControl.value!;
-    newDepartment.headOfDepartment = this.getHeadOfDepartment()!;
+    newDepartment.headOfDepartmentId = this.getHeadOfDepartmentByName()!;
     this.departmentsService.addDepartment(newDepartment).subscribe({
       next: (department) => {
         this.departments.push(department);
+        alert(department.headOfDepartmentId);
       },
       error: (response) => {
         console.log(response);
       },
     });
   }
-  getHeadOfDepartment() {
-    var name =
-      this.addDepartmentFormGroup.controls.headOfDepartmentControl.value!;
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].name == name) return this.users[i].id;
-    }
-    return null;
-  }
+
   httpGetDepartments() {
     this.departmentsService.getDepartments().subscribe({
       next: (departments) => {
         this.departments = departments;
-        let stats:Map<Guid | undefined,Observable<DepartmentStatistics> | null> = new Map;
-        departments.forEach(department => {
-          if(department&&department.id)
-          stats.set(department.id,this.getDepartmentStatistics(department.id));
+        let stats: Map<
+          Guid | undefined,
+          Observable<DepartmentStatistics> | null
+        > = new Map();
+        departments.forEach((department) => {
+          if (department && department.id)
+            stats.set(
+              department.id,
+              this.getDepartmentStatistics(department.id)
+            );
         });
         this.statistics = stats;
       },
@@ -152,7 +156,7 @@ export class DepartmentTableComponent implements OnInit {
         next: (department) => {
           department.name =
             this.editDepartmentFormGroup.controls.nameControl.value!;
-          department.headOfDepartment = this.getHeadOfDepartmentByName()!;
+          department.headOfDepartmentId = this.getHeadOfDepartmentByName()!;
           this.departmentsService
             .editDepartment(this.currentDepartmentId, department)
             .subscribe(() => {
@@ -170,17 +174,18 @@ export class DepartmentTableComponent implements OnInit {
     }
     return null;
   }
-
-  getDepartmentStatistics(depId?:Guid)
-  {
-    if(depId)
-    return this.departmentsService.getDepartmentStatistics(depId);
+  getNameOfHOD(id: Guid) {
+    for (let i = 0; i < this.usersHOD.length; i++) {
+      if (this.usersHOD[i].id === id) return this.usersHOD[i].name;
+    }
+    return 'No Head Of Department';
+  }
+  getDepartmentStatistics(depId?: Guid) {
+    if (depId) return this.departmentsService.getDepartmentStatistics(depId);
     return null;
   }
-  logStat(stat: any): number
-  {
+  logStat(stat: any): number {
     console.log(stat);
-    return  1;
+    return 1;
   }
-
 }
