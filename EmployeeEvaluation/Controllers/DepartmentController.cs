@@ -54,10 +54,11 @@ namespace EmployeeEvaluation.Controllers
                 Name = department.Name,
                 HeadOfDepartmentId = department.HeadOfDepartmentId
             };
-            return this.departmentService.AddDepartment(departmentToAdd);
+            return this.AddUserInDepartment(this.departmentService.AddDepartment(departmentToAdd).Id, department.HeadOfDepartmentId);
         }
+
         [HttpPost("{depId}/add-users")]
-        public Department AddUsersInDepartment(Guid depId,[FromBody] List<Guid>usersIds)
+        public Department AddUsersInDepartment(Guid depId, [FromBody] List<Guid> usersIds)
         {
             var users = new List<User>();
             foreach (var id in usersIds)
@@ -68,11 +69,17 @@ namespace EmployeeEvaluation.Controllers
             return this.departmentService.AddUsersToDepartment(depId, users);
         }
 
+        [HttpPost("{depId}/add-user/{userId}")]
+        public Department AddUserInDepartment(Guid depId, Guid userId)
+        {
+            var userToAdd = userService.GetUserById(userId);
+            return this.departmentService.AddUserToDepartment(depId, userToAdd);
+        }
+
         [HttpDelete("{depId}/{userId}")]
         public Department RemoveUserFromDepartment([FromRoute]Guid depId, [FromRoute] Guid userId)
         {
-            var userToRemove = new User();
-            userToRemove = userService.GetUserById(userId);
+            var userToRemove = userService.GetUserById(userId);
             if (userToRemove.ProjectId != null)
             {
               projectService.RemoveUserFromProject(userToRemove.ProjectId.Value, userToRemove);

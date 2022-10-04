@@ -29,6 +29,10 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return departmentRepository.Add(toAdd);
         }
+        public Department AddUserToDepartment(Guid depId, User user)
+        {
+            return departmentRepository.AddUserToDepartment(depId, user);
+        }
         public Department UpdateDepartment(Department department)
         {
             return departmentRepository.Update(department);
