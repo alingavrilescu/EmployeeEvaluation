@@ -29,7 +29,7 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._evaluationFormRepository.GetAllFormCriteria();
         }
-        public IEnumerable<CriteriaComments> GetAllCriteriaComments()
+        public IEnumerable<CriteriaReviews> GetAllCriteriaComments()
         { 
             return this._evaluationFormRepository.GetAllCriteriaComments(); 
         }
@@ -50,7 +50,7 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._evaluationFormRepository.GetFormCriteriaById(id);
         }
-        public CriteriaComments GetCriteriaCommentsById(Guid id)
+        public CriteriaReviews GetCriteriaCommentsById(Guid id)
         {
             return this._evaluationFormRepository.GetCriteriaCommentsById(id);
         }
@@ -69,7 +69,7 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return _evaluationFormRepository.AddFormCriteria(toAdd);
         }
-        public CriteriaComments AddCriteriaComments(CriteriaComments toAdd)
+        public CriteriaReviews AddCriteriaComments(CriteriaReviews toAdd)
         {
             return _evaluationFormRepository.AddCriteriaComments(toAdd);
         }
@@ -88,7 +88,7 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return _evaluationFormRepository.UpdateFormCriteria(formCriteria);
         }
-        public CriteriaComments UpdateCriteriaComments(CriteriaComments criteriaComments)
+        public CriteriaReviews UpdateCriteriaComments(CriteriaReviews criteriaComments)
         {
             return _evaluationFormRepository.UpdateCriteriaComments(criteriaComments);
         }

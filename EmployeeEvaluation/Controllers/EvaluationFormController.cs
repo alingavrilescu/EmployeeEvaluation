@@ -46,7 +46,7 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.GetAllFormCriteria();
         }
         [HttpGet("FormSection/FormCriteria/CriteriaComments")]
-        public IEnumerable<CriteriaComments> GetCriteriaComments()
+        public IEnumerable<CriteriaReviews> GetCriteriaComments()
         {
             return this._evaluationFormService.GetAllCriteriaComments();
         }
@@ -116,15 +116,16 @@ namespace EmployeeEvaluation.Controllers
             };
             return this._evaluationFormService.AddFormCriteria(formCriteriaToAdd);
         }
+        //=========================================DE MODIFICAT AICI =========================================
         [HttpPost("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}/CriteriaComments")]
-        public CriteriaComments AddCriteriaComments(Guid criteriaId, [FromBody] CriteriaCommentsDTO criteriaComments)
+        public CriteriaReviews AddCriteriaComments(Guid criteriaId, [FromBody] CriteriaCommentsDTO criteriaComments)
         {
             var existingFormCriteria = this._evaluationFormService.GetFormCriteriaById(criteriaId);
             criteriaComments.CriteriaId = existingFormCriteria.Id;
-            var criteriaCommentsToAdd = new CriteriaComments
+            var criteriaCommentsToAdd = new CriteriaReviews
             {
-                Comment = criteriaComments.Comment,
-                Attachment = criteriaComments.Attachment,
+                //Comment = criteriaComments.Comment,
+                //Attachment = criteriaComments.Attachment,
                 FormCriteriaId = criteriaComments.CriteriaId
             };
             return this._evaluationFormService.AddCriteriaComments(criteriaCommentsToAdd);
@@ -158,11 +159,13 @@ namespace EmployeeEvaluation.Controllers
 
             return this._evaluationFormService.UpdateFormCriteria(formCriteriaToUpdate);
         }
+
+        //=========================================DE MODIFICAT AICI =========================================
         [HttpPut("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}/CriteriaComments/{criteriaCommentsId}")]
-        public CriteriaComments UpdateCriteriaComments(Guid criteriaCommentsId, CriteriaCommentsDTO criteriaComments)
+        public CriteriaReviews UpdateCriteriaComments(Guid criteriaCommentsId, CriteriaCommentsDTO criteriaComments)
         {
             var criteriaCommentsToUpdate = this._evaluationFormService.GetCriteriaCommentsById(criteriaCommentsId);
-            criteriaCommentsToUpdate.Comment = criteriaComments.Comment;
+            criteriaCommentsToUpdate.Review = criteriaComments.Comment;
             criteriaComments.Attachment = criteriaComments.Attachment;
 
             return this._evaluationFormService.UpdateCriteriaComments(criteriaCommentsToUpdate);

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
     [DbContext(typeof(EmployeeEvaluationDbContext))]
-    [Migration("20220928133714_addPmAndTlToProj")]
-    partial class addPmAndTlToProj
+    [Migration("20221004072748_FinalMigrationIHope")]
+    partial class FinalMigrationIHope
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,22 +24,18 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.CriteriaComments", b =>
+            modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.CriteriaReviews", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Attachment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("FormCriteriaId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Review")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -96,7 +92,13 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Attachment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Choice")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -108,9 +110,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Review")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -274,10 +273,10 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.CriteriaComments", b =>
+            modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.CriteriaReviews", b =>
                 {
                     b.HasOne("EmployeeEvaluation.DataAccess.Model.FormCriteria", null)
-                        .WithMany("CriteriaComments")
+                        .WithMany("CriteriaReviews")
                         .HasForeignKey("FormCriteriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -377,7 +376,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 
             modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.FormCriteria", b =>
                 {
-                    b.Navigation("CriteriaComments");
+                    b.Navigation("CriteriaReviews");
                 });
 
             modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.FormSection", b =>

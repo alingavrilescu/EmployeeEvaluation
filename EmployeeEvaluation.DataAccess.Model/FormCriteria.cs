@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EmployeeEvaluation.DataAccess.Model
+﻿namespace EmployeeEvaluation.DataAccess.Model
 {
     public class FormCriteria
     {
@@ -12,10 +6,10 @@ namespace EmployeeEvaluation.DataAccess.Model
         public string Name { get; set; }
         public string? Choice { get; set; }
         public string Description { get; set; }
-        public string? Review { get; set; }
+        public string? Comment { get; set; }
+        public string? Attachment { get; set; }
         public Guid FormSectionId { get; set; }
-        //public FormSection? FormSection { get; set; }
-        public ICollection<CriteriaComments>? CriteriaComments { get; set; }
+        public ICollection<CriteriaReviews>? CriteriaReviews { get; set; }
 
     }
 }

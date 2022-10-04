@@ -9,11 +9,11 @@ namespace EmployeeEvaluation.DataAccess.Abstractions
 {
     public interface ICriteriaCommentsRepository
     {
-        public IEnumerable<CriteriaComments> GetAll();
-        public CriteriaComments GetById(Guid id);
-        public CriteriaComments Add(CriteriaComments toAdd);
+        public IEnumerable<CriteriaReviews> GetAll();
+        public CriteriaReviews GetById(Guid id);
+        public CriteriaReviews Add(CriteriaReviews toAdd);
         public void DeleteById(Guid id);
-        public CriteriaComments Update(CriteriaComments toUpdate);
+        public CriteriaReviews Update(CriteriaReviews toUpdate);
 
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
-    public partial class addPmAndTlToProj : Migration
+    public partial class FinalMigrationIHope : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -177,7 +177,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Choice = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Review = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Attachment = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FormSectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -196,8 +197,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Attachment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Review = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FormCriteriaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
