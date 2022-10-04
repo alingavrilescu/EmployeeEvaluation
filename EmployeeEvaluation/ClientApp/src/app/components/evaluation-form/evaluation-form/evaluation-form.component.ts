@@ -16,10 +16,10 @@ import { Guid } from 'guid-typescript';
 export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   addCommForm = new FormGroup({
-    criteriaName: new FormControl(''),
-    crieriaDescription: new FormControl(''),
-    criteriaChoice: new FormControl(''),
-    criteriaComment: new FormControl('', Validators.required),
+    name: new FormControl(''),
+    choice: new FormControl(''),
+    description: new FormControl(''),
+    criteriaComment: new FormControl(''),
     criteriaAttachment: new FormControl('')
   });
 
@@ -38,7 +38,6 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   formCriteriaSubscription!: Subscription;
   userId: any;
   criteriaId: any;
-  criteriaName: string = "";
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -54,15 +53,21 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   // DE MODIFICAT / NU MERGE
   addComm() {
-    var formCriteria = {
-      name: this.addCommForm.controls.criteriaName.value!,
-      choice: this.addCommForm.controls.criteriaChoice.value!,
-      description: this.addCommForm.controls.crieriaDescription.value!,
-      comment: this.addCommForm.controls.criteriaComment.value!,
-      attachment: this.addCommForm.controls.criteriaAttachment.value!,
+    var existingFormCriteria = {
+      name: this.addCommForm.controls.name.value!,
+      choice: this.addCommForm.controls.choice.value!,
+      description: this.addCommForm.controls.description.value!,
+      criteriaComment: this.addCommForm.controls.criteriaComment.value!,
+      criteriaAttachment: this.addCommForm.controls.criteriaAttachment.value!
     }
-    this.formCriteriaSubscription = this.evaluationFormService.updateFormCriteria(this.criteriaId, formCriteria).subscribe(() => { this.refreshEvaluationFormList(); });
-    this.hideAddCommDialog();
+    this.formCriteriaSubscription = this.evaluationFormService.createCriteriaComment(this.criteriaId, existingFormCriteria).subscribe(()=>{
+      this.refreshEvaluationFormList();
+    })
+
+    
+
+    
+    
   }
 
   addReview() {
@@ -83,11 +88,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   showAddCommDialog(formCriteria: FormCriteria) {
     this.displayAddCommModal = true;
     if (formCriteria.id) {
-      this.criteriaId = formCriteria.id;
+      this.criteriaId = formCriteria.id
     }
-    this.addCommForm.controls.criteriaName.setValue(formCriteria.name);
-    this.addCommForm.controls.crieriaDescription.setValue(formCriteria.description);
-    this.addCommForm.controls.criteriaChoice.setValue(formCriteria.choice);
   }
   hideAddCommDialog() {
     this.displayAddCommModal = false;

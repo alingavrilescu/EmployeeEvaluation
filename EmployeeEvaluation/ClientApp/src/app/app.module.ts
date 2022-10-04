@@ -39,6 +39,7 @@ import { ProjectLeadsComponent } from './components/department-details/project-l
 import { ProjectManagersComponent } from './components/department-details/project-managers/project-managers.component';
 import { DevelopersComponent } from './components/department-details/developers/developers.component';
 import { FormTemplateDetailsComponent } from './components/form-template/form-template-details/form-template-details/form-template-details.component';
+import { CriteriaDetailsComponent } from './components/evaluation-form/evaluation-form/criteria-details/criteria-details/criteria-details.component';
 
 
 @NgModule({
@@ -104,6 +105,7 @@ import { FormTemplateDetailsComponent } from './components/form-template/form-te
       { path: 'departments/:id/form-templates/:ftId',component: FormTemplateDetailsComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
       { path: 'evaluation-form/user/:id', component: EvaluationFormComponent },
+      { path: 'evaluation-form/user/:id/criteria-details/:criteriaId', component: CriteriaDetailsComponent},
       { path: 'departments/details/:id', component: DepartmentDetailsComponent },
       { path: 'head-of-department', component: HeadOfDepartmentPageComponent },
     ]),
