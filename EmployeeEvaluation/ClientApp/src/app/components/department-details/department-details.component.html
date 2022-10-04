@@ -1,9 +1,12 @@
 <div id="userDetails" style="display: flex; flex-direction: column">
-  <p-button
+  <button
     label="Add Members"
     (click)="showAddDialog()"
     style="align-self: flex-end"
-  ></p-button>
+    class="p-button-help"
+    icon="pi pi-plus"
+    pButton pRipple type="button"
+  ></button>
   <div
     id="userInfo"
     style="width: 100%; padding-right: 100px; padding-left: 100px"

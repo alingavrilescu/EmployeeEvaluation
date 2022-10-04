@@ -2,11 +2,15 @@
 <!-- <app-department-buttons></app-department-buttons> -->
 <!---------------------------- CONTAINER OF CARDS ------------------------------>
 <div style="display: flex; flex-direction: column; margin-top: 50px">
-  <p-button
+  <button
+    pButton pRipple
     label="Add Department"
-    (onClick)="showAddDialog()"
     style="align-self: flex-end"
-  ></p-button>
+    type="button"
+    class="p-button-help"
+    icon="pi pi-plus"
+    (onClick)="showAddDialog()"
+  ></button>
 </div>
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
   <p-card *ngFor="let department of departments" [style]="{ width: '360px' }">

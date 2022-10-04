@@ -2,7 +2,7 @@
 
 <div class="add-button-container">
   <button (click)="showAddDialog()" type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
-      pButton pRipple label="Add Project" icon="pi pi-plus"></button>
+  pButton pRipple label="Add Project" icon="pi pi-plus"></button>
 </div>
 
 <!-- =============================MODAL FOR ADDING A PROJECT================================= -->
@@ -12,7 +12,8 @@
   <form [formGroup]="addProjectForm">
     <label for="float-input">Technical lead</label>
     <br>
-    <p-dropdown [options]="projectTeamLeads" formControlName="projectTeamLead" optionLabel="name" optionValue="id" [style]="{width: '100%'}"></p-dropdown>
+    <p-dropdown [options]="projectTeamLeads" formControlName="projectTeamLead" optionLabel="name" optionValue="id"
+    [showClear]="true" placeholder="Select a Team Lead" [style]="{width: '100%'}"></p-dropdown>
     <br>
     <label for="float-input">Name</label>
     <br />
