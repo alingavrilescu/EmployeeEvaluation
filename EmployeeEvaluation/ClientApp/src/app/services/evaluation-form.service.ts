@@ -6,7 +6,7 @@ import { EvaluationForm } from '../models/evaluation-form.model';
 import { FormSection } from 'src/app/models/form-section.model';
 import { FormCriteria } from 'src/app/models/form-criteria.model';
 import { Guid } from 'guid-typescript';
-import { CriteriaComments } from '../models/criteria-comments.model';
+import {CriteriaReview } from '../models/criteria-review.model';
 
 
 
@@ -15,9 +15,6 @@ import { CriteriaComments } from '../models/criteria-comments.model';
 })
 export class EvaluationFormService {
   private readonly url = "Users/EvaluationForm";
-  private readonly urlFormSection = "Users/EvaluationForm/FormSection";
-  private readonly urlFormCriteria = "Users/EvaluationForm/FormSection/FormCriteria";
-  private readonly urlCriteriaComments = "Users/EvaluationForm/FormSection/FormCriteria/CriteriaComments";
 
   constructor(private httpClient: HttpClient) { }
 
@@ -29,18 +26,7 @@ export class EvaluationFormService {
     return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}`, evaluationForm);
   }
 
-  public createCriteriaComments(id: Guid, criteriaComment: CriteriaComments): Observable<EvaluationForm> {
-    return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}`, criteriaComment);
-  }
-
-  public getFormSections(): Observable<FormSection[]> {
-    return this.httpClient.get<FormSection[]>(`${environment.apiUrl}/${this.urlFormSection}`);
-  }
-
-  public getFormCriterias(): Observable<FormCriteria[]> {
-    return this.httpClient.get<FormCriteria[]>(`${environment.apiUrl}/${this.urlFormCriteria}`);
-  }
-  public getCriteriaComments(): Observable<CriteriaComments[]> {
-    return this.httpClient.get<CriteriaComments[]>(`${environment.apiUrl}/${this.urlCriteriaComments}`);
+  public createCriteriaReview(id: Guid, criteriaReview: CriteriaReview): Observable<EvaluationForm> {
+    return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}/CriteriaReview`, criteriaReview);
   }
 }

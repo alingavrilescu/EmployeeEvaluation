@@ -35,21 +35,6 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.GetEvaluationFormByUserId(id);
         }
 
-        [HttpGet("FormSection")]
-        public  IEnumerable<FormSection> GetFormSections()
-        {
-            return this._evaluationFormService.GetAllFormSections();
-        }
-        [HttpGet("FormSection/FormCriteria")]
-        public IEnumerable<FormCriteria> GetFormCriterias()
-        {
-            return this._evaluationFormService.GetAllFormCriteria();
-        }
-        [HttpGet("FormSection/FormCriteria/CriteriaComments")]
-        public IEnumerable<CriteriaReviews> GetCriteriaComments()
-        {
-            return this._evaluationFormService.GetAllCriteriaComments();
-        }
 
         [HttpPost("{id}")]
         public EvaluationForm AddEvaluationForm(Guid id,[FromBody] FormTemplate formTemplate)
@@ -89,87 +74,28 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.AddEvaluationForm(evaluationFormToAdd);
         }
 
-        [HttpPost("{formId}/FormSection")]
-        public FormSection AddSection(Guid formId, [FromBody] FormSectionDTO formSection)
-        {
-            var existingEvaluationForm = this._evaluationFormService.GetEvaluationFormById(formId);
-            formSection.EvaluationFormId = existingEvaluationForm.Id;
-            var formSectionToAdd = new FormSection
-            {
-                Name = formSection.Name,
-                Description = formSection.Description,
-                EvaluationFormId = formSection.EvaluationFormId
-            };
-            return this._evaluationFormService.AddFormSection(formSectionToAdd);
-        }
-        [HttpPost("{formId}/FormSection/{sectionId}/FormCriteria")]
-        public FormCriteria AddCriteria(Guid sectionId, [FromBody] FormCriteriaDTO formCriteria)
-        {
-            var existingFormSection = this._evaluationFormService.GetFormSectionById(sectionId);
-            formCriteria.FormSectionId = existingFormSection.Id;
-            var formCriteriaToAdd = new FormCriteria
-            {
-                Name = formCriteria.Name,
-                Description = formCriteria.Description,
-                //isChecked = formCriteria.isChecked,
-                FormSectionId = formCriteria.FormSectionId
-            };
-            return this._evaluationFormService.AddFormCriteria(formCriteriaToAdd);
-        }
         //=========================================DE MODIFICAT AICI =========================================
-        [HttpPost("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}/CriteriaComments")]
-        public CriteriaReviews AddCriteriaComments(Guid criteriaId, [FromBody] CriteriaCommentsDTO criteriaComments)
+        [HttpPost("{formId}/CriteriaReview")]
+        public CriteriaReviews AddCriteriaComments([FromBody] CriteriaReviewDTO criteriaReview)
         {
-            var existingFormCriteria = this._evaluationFormService.GetFormCriteriaById(criteriaId);
-            criteriaComments.CriteriaId = existingFormCriteria.Id;
-            var criteriaCommentsToAdd = new CriteriaReviews
+            var criteriaReviewToAdd = new CriteriaReviews
             {
-                //Comment = criteriaComments.Comment,
-                //Attachment = criteriaComments.Attachment,
-                FormCriteriaId = criteriaComments.CriteriaId
+                Review = criteriaReview.Review,
+                FormCriteriaId = criteriaReview.FormCriteriaId
             };
-            return this._evaluationFormService.AddCriteriaComments(criteriaCommentsToAdd);
-        }
-
-        [HttpPut("{id}")]
-        public EvaluationForm UpdateEvaluationForm(Guid id, EvaluationFormDTO evaluationForm)
-        {
-            var evaluationFormToUpdate = this._evaluationFormService.GetEvaluationFormById(id);
-            evaluationFormToUpdate.Name = evaluationForm.Name;
-            evaluationFormToUpdate.Type = evaluationForm.Type;
-
-            return this._evaluationFormService.UpdateEvaluationForm(evaluationFormToUpdate);
-        }
-        [HttpPut("{formId}/FormSection/{sectionId}")]
-        public FormSection UpdateFormSection(Guid sectionId, FormSectionDTO formSection)
-        {
-            var formSectionToUpdate = this._evaluationFormService.GetFormSectionById(sectionId);
-            formSectionToUpdate.Name = formSection.Name;
-            formSectionToUpdate.Description = formSection.Description;
-
-            return this._evaluationFormService.UpdateFormSection(formSectionToUpdate);
-        }
-        [HttpPut("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}")]
-        public FormCriteria UpdateFormCriteria(Guid criteriaId, FormCriteriaDTO formCriteria)
-        {
-            var formCriteriaToUpdate = this._evaluationFormService.GetFormCriteriaById(criteriaId);
-            formCriteriaToUpdate.Name = formCriteria.Name;
-            //formCriteriaToUpdate.isChecked = formCriteria.isChecked;
-            formCriteriaToUpdate.Description = formCriteria.Description;
-
-            return this._evaluationFormService.UpdateFormCriteria(formCriteriaToUpdate);
+            return this._evaluationFormService.AddCriteriaComments(criteriaReviewToAdd);
         }
 
         //=========================================DE MODIFICAT AICI =========================================
-        [HttpPut("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}/CriteriaComments/{criteriaCommentsId}")]
-        public CriteriaReviews UpdateCriteriaComments(Guid criteriaCommentsId, CriteriaCommentsDTO criteriaComments)
-        {
-            var criteriaCommentsToUpdate = this._evaluationFormService.GetCriteriaCommentsById(criteriaCommentsId);
-            criteriaCommentsToUpdate.Review = criteriaComments.Comment;
-            criteriaComments.Attachment = criteriaComments.Attachment;
+        //[HttpPut("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}/CriteriaComments/{criteriaCommentsId}")]
+        //public CriteriaReviews UpdateCriteriaComments(Guid criteriaCommentsId, CriteriaCommentsDTO criteriaComments)
+        //{
+        //    var criteriaCommentsToUpdate = this._evaluationFormService.GetCriteriaCommentsById(criteriaCommentsId);
+        //    criteriaCommentsToUpdate.Review = criteriaComments.Comment;
+        //    criteriaComments.Attachment = criteriaComments.Attachment;
 
-            return this._evaluationFormService.UpdateCriteriaComments(criteriaCommentsToUpdate);
-        }
+        //    return this._evaluationFormService.UpdateCriteriaComments(criteriaCommentsToUpdate);
+        //}
 
         [HttpDelete("{id}")]
         public void DeleteEvaluationForm(Guid id)
@@ -177,22 +103,6 @@ namespace EmployeeEvaluation.Controllers
             this._evaluationFormService.DeleteEvaluationFormById(id);
         }
 
-        [HttpDelete("{formId}/FormSection/{sectionId}")]
-        public void DeleteFormSection(Guid sectionId)
-        {
-            this._evaluationFormService.DeleteFormSectionById(sectionId);
-        }
-
-        [HttpDelete("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}")]
-        public void DeleteFormCriteria(Guid criteriaId)
-        {
-            this._evaluationFormService.DeleteFormCriteriaById(criteriaId);
-        }
-        [HttpDelete("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}/CriteriaComments/{criteriaCommentsId}")]
-        public void DeleteFormCriteriaComments(Guid criteriaCommentsId)
-        {
-            this._evaluationFormService.DeleteCriteriaCommentsById(criteriaCommentsId);
-        }
 
     }
 }

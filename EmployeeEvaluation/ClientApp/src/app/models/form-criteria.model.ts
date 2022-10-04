@@ -1,5 +1,5 @@
 import { Guid } from "guid-typescript";
-import { CriteriaComments } from "./criteria-comments.model";
+import { CriteriaReview } from "./criteria-review.model";
 
 export class FormCriteria {
     id?:Guid;
@@ -8,5 +8,5 @@ export class FormCriteria {
     description: string = "";
     review: string = "";
     formSectionId?: Guid;
-    criteriaComments: CriteriaComments[] = [];
+    criteriaReviews: CriteriaReview[] = [];
 }
