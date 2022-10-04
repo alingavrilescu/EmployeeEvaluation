@@ -1,0 +1,108 @@
+.add-button-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2%;
+  }
+  
+  .p-button-help,
+  .button{
+    padding: 5px;
+  }
+  
+  .btn-pos{
+    margin-left: 10px;
+    padding: 5px;
+    padding-right: 10px;
+    width: 90px;
+    height: 50px;
+  }
+  
+  .indent {
+    text-indent: 2em
+  }
+  
+  input {
+    display: block;
+    box-sizing: border-box;
+    margin-top: 100 px;
+  }
+  
+  input[type=text],
+  select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .ng-valid[required],
+  .ng-valid.required {
+    border-left: 5px solid #42A948;
+    /* green */
+  }
+  
+  .ng-invalid:not(form) {
+    border-left: 5px solid #a94442;
+    /* red */
+  }
+  
+  .alert div {
+    color: #820000;
+  }
+  
+  .form-group {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: .5rem;
+  }
+  
+  select {
+    width: 100%;
+    padding: .5rem;
+  }
+  
+  .required:after {
+    content: " *";
+    color: red;
+  }
+  
+  li {
+    list-style-type: none;
+  }
+  ul, li {
+    margin: 0;
+    padding: 0;
+    }
+  button
+  {
+    margin-right: 10px;
+  }
+  .button-block
+  {
+    float:right;
+    
+  }
+  .required:after {
+    content:" *";
+    color: red;
+  }
+  .btn-resize{
+    padding: 6px 8px;
+    width: 65px;
+  }
+  .buttons-container{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: row;
+    align-self:flex-end;
+    align-content:flex-end;
+  }
+  .buttons-height{
+    height:40px;
+  }

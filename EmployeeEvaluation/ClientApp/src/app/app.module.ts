@@ -38,6 +38,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
 import { ProjectLeadsComponent } from './components/department-details/project-leads/project-leads.component';
 import { ProjectManagersComponent } from './components/department-details/project-managers/project-managers.component';
 import { DevelopersComponent } from './components/department-details/developers/developers.component';
+import { FormTemplateDetailsComponent } from './components/form-template/form-template-details/form-template-details/form-template-details.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { DevelopersComponent } from './components/department-details/developers/
     HeadOfDepartmentPageComponent,
     ProjectLeadsComponent,
     ProjectManagersComponent,
-    DevelopersComponent
+    DevelopersComponent,
+    FormTemplateDetailsComponent
 
   ],
   imports: [
@@ -87,10 +89,7 @@ import { DevelopersComponent } from './components/department-details/developers/
       { path: 'departments/details/project-leads/:id', component: ProjectLeadsComponent },
       { path: 'departments/details/project-managers/:id', component: ProjectManagersComponent },
       { path: 'departments/details/developers/:id', component: DevelopersComponent },
-      {
-        path: 'departments/:depId/projects/:proId',
-        component: ProjectDetailsComponent,
-      },
+      { path: 'departments/:depId/projects/:proId',component: ProjectDetailsComponent},
       { path: '', component: HomeComponent, pathMatch: 'full' },
       {
         path: 'users',
@@ -101,20 +100,12 @@ import { DevelopersComponent } from './components/department-details/developers/
         },
       },
       { path: 'departments', component: DepartmentTableComponent },
-      {
-        path: 'departments/:id/form-templates',
-        component: FormTemplateComponent,
-      },
+      { path: 'departments/:id/form-templates',component: FormTemplateComponent },
+      { path: 'departments/:id/form-templates/:ftId',component: FormTemplateDetailsComponent },
       { path: 'users/userDetails/:id', component: UserDetailsComponent },
       { path: 'evaluation-form/user/:id', component: EvaluationFormComponent },
-      {
-        path: 'departments/details/:id',
-        component: DepartmentDetailsComponent,
-      },
-      {
-        path: 'head-of-department',
-        component: HeadOfDepartmentPageComponent,
-      },
+      { path: 'departments/details/:id', component: DepartmentDetailsComponent },
+      { path: 'head-of-department', component: HeadOfDepartmentPageComponent },
     ]),
   ],
   providers: [

@@ -1,0 +1,245 @@
+  <!---------------------- Delete Form Template Modal ------------------------>
+  
+  <p-dialog [(visible)]="displayFormTemplateDeleteModal" [modal]="true">
+    <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+      <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
+      <h3 style="margin-top: 10px; text-align: center">Are you sure you want to delete?</h3>
+      <p style="margin-top: 10px; text-align: center">
+        Do you realy want to delete this form template? This process cannot be undone.
+      </p>
+      <div style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin-top: 40px;
+        ">
+        <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="hideDeleteDialog()"></button>
+        <button pButton type="button" label="Delete" class="p-button-danger" (click)="deleteFormTemplate()"></button>
+      </div>
+    </div>
+  </p-dialog>
+  
+  <!-- ------------------ Edit Form Template Modal ------------------------ -->
+  
+  <p-dialog header="Edit Form Template" [(visible)]="displayFormTemplateEditModal"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '30vw', height: '75vh' }" [modal]="true"
+    [draggable]="false" [resizable]="false">
+    <form [formGroup]="editFormTemplateFormGroup">
+      <br />
+      <label for="float-input" class="required">Name</label>
+      <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText
+        formControlName="nameControl" [style]="{width: '100%'}" />
+      <br />
+      <br />
+      <label for="float-input" class="required">Software developer type</label>
+      <select formControlName="typeControl">
+        <option *ngFor="let t of types" [ngValue]="t">{{t}}</option>
+      </select>
+    </form>
+    <div class="buttons-container">
+      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialog()"></button>
+      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+        (click)="updateFormTemplate()" [disabled]="!editFormTemplateFormGroup.valid"></button>
+    </div>
+  </p-dialog>
+  <!-- ================== SECTION MODALS ======================== -->
+  
+  <!-- --------------------- Add Section Modal ------------------------ -->
+  
+  <p-dialog header="Add Section" [(visible)]="displaySectionAddModal"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
+    <div style="display: flex; flex-direction: column;">
+      <form [formGroup]="addSectionGroup">
+        <span class="p-float-label" style="margin-top: 30px">
+          <input id="float-input" type="text" pInputText formControlName="nameControl" />
+          <label for="float-input">Section's name</label>
+        </span>
+        <br>
+        <label class="required" for="descriptionControl">Section description</label>
+        <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
+          formControlName="descriptionControl" rows="5" cols="61"></textarea>
+      </form>
+    </div>
+    <div class="buttons-container">
+      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideAddDialogSection()"></button>
+      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+        (click)="addFormTemplateSection()" [disabled]="!addSectionGroup.valid"></button>
+    </div>
+  </p-dialog>
+  
+  <!-- ----------------------------Delete Section Modal -------------------------- -->
+  
+  <p-dialog [(visible)]="displaySectionDeleteModal" [modal]="true">
+    <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+      <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
+      <h3 style="margin-top: 10px; text-align: center">Are you sure you want to delete?</h3>
+      <p style="margin-top: 10px; text-align: center">
+        Do you realy want to delete this form template section? This process cannot be undone.
+      </p>
+      <div style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin-top: 40px;
+        ">
+        <button pButton type="button" label="Cancel" class="p-button-secondary"
+          (click)="hideDeleteDialogSection()"></button>
+        <button pButton type="button" label="Delete" class="p-button-danger" (click)="deleteSection()"></button>
+      </div>
+    </div>
+  </p-dialog>
+  <!-- -------------------- Edit Section Modal ------------------------------ -->
+  
+  <p-dialog header="Edit Form Template Section" [(visible)]="displaySectionEditModal"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true" [draggable]="false" [resizable]="false">
+    <form [formGroup]="editSectionFormGroup">
+      <br />
+      <label for="float-input" class="required">Section's name</label>
+      <input [value]="editSectionFormGroup.controls.nameControl" id="float-input" type="text" pInputText
+        formControlName="nameControl" [style]="{width: '100%'}" />
+      <br />
+      <br />
+      <label class="required" for="typeControl">Section description</label>
+      <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
+        formControlName="descriptionControl" rows="5" cols="61"></textarea>
+    </form>
+    <div class="buttons-container">
+      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialogSection()"></button>
+      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+        (click)="updateTemplateSection()" [disabled]="!editSectionFormGroup.valid"></button>
+    </div>
+  </p-dialog>
+  <!-- ====================== CRITERION ================================= -->
+  
+  <!-- --------------------- Add Criterion Modal  --------------------------- -->
+  
+  <p-dialog header="Add Criterion" [(visible)]="displayCriterionAddModal"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
+    <div style="display: flex; flex-direction: column;">
+      <form [formGroup]="addCriterionFormGroup">
+        <span class="p-float-label" style="margin-top: 30px">
+          <input id="float-input" type="text" pInputText formControlName="nameControl" />
+          <label for="float-input">Criterion's name</label>
+        </span>
+        <br>
+        <label class="required" for="typeControl">Criterion description</label>
+        <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
+          formControlName="descriptionControl" rows="5" cols="61"></textarea>
+      </form>
+    </div>
+    <div class="buttons-container">
+      <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
+        class="modal-button btn-pos p-button-danger"></button>
+      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+        (click)="addCriterion()" [disabled]="!addCriterionFormGroup.valid"></button>
+    </div>
+  </p-dialog>
+  
+  <!---------------------- Delete Criterion Modal ------------------------>
+  
+  <p-dialog [(visible)]="displayCriterionDeleteModal" [modal]="true">
+    <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
+      <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
+      <h3 style="margin-top: 10px; text-align: center">Are you sure you want to delete?</h3>
+      <p style="margin-top: 10px; text-align: center">
+        Do you realy want to delete this form template criterion? This process cannot be undone.
+      </p>
+      <div style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          margin-top: 40px;
+        ">
+        <button pButton type="button" label="Cancel" class="p-button-secondary"
+          (click)="hideDeleteDialogCriterion()"></button>
+        <button pButton type="button" label="Delete" class="p-button-danger" (click)="deleteCriterion()"></button>
+      </div>
+    </div>
+  </p-dialog>
+  <!-- ------------------ Edit Criterion Modal ------------------------ -->
+  
+  
+  <p-dialog header="Edit Form Template Criterion" [(visible)]="displayCriterionEditModal"
+    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true" [draggable]="false" [resizable]="false">
+    <form [formGroup]="editCriterionFormGroup">
+      <br />
+      <label for="float-input" class="required">Crieterion's name</label>
+      <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText
+        formControlName="nameControl" [style]="{width: '100%'}" />
+      <br />
+      <br />
+      <label class="required" for="typeControl">Criterion description</label>
+      <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
+        formControlName="descriptionControl" rows="5" cols="61"></textarea>
+    </form>
+    <div class="buttons-container">
+      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialogCriterion()"></button>
+      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+        (click)="updateCriterion()" [disabled]="!editCriterionFormGroup.valid"></button>
+    </div>
+  </p-dialog>
+  <!-- ------------------- ACCORDION NG PRIME --------------------- -->
+
+  <div *ngIf="formTemplate">
+    <h2 style="text-align:center;">{{formTemplate.name}}</h2>
+    <br>
+    <h6 class="indent" style="opacity:0.7">{{formTemplate.type}}</h6>
+    <p-accordion>
+      <ul>
+        <li *ngFor="let section of formTemplate.templateSections">
+          <p-accordionTab header="{{section.name}}">
+            <div><b> Description: </b>{{section.description}}
+              <br>
+
+              <div class="button-block">
+                <button pButton type="button" label="Edit Section"
+                  (click)="showEditDialogSection(formTemplate,section)" class="buttons-height p-button-warning">
+                </button>
+                <button pButton type="button" label="Delete Section"
+                  (click)="showDeleteDialogSection(formTemplate,section)" class="p-button-danger buttons-height">
+                </button>
+                <button pButton type="button" label="Add Criterion"  icon="pi pi-plus" (click)="showAddDialogCriterion(formTemplate,section)" class="p-button-help buttons-height">
+                </button>
+              </div>
+              <br>
+              <br>
+              <ul>
+                <li *ngFor="let criterion of section.templateCriteria; index as index">
+                  <b>{{criterion.name}}</b>
+                  <hr>
+                  {{criterion.description}}
+                  <br>
+                  <br>
+                  <div class="button-block">
+                    <button pButton type="button" label="Edit Criterion"
+                      (click)="showEditDialogCriterion(section,criterion)" class="buttons-height p-button-warning">
+                    </button>
+                    <button pButton type="button" label="Delete Criterion"
+                      (click)="showDeleteDialogCriterion(section,criterion)" class="buttons-height p-button-danger">
+                    </button>
+                  </div>
+                  <br>
+                  <div *ngIf="index!=section.templateCriteria.length-1">
+                  <br>
+                </div>
+                </li>
+              </ul>
+              <br>
+              <br>
+            </div>
+          </p-accordionTab>
+        </li>
+      </ul>
+    </p-accordion>
+
+    <!-- -------------- DELETE, EDIT FORM TEMPLATE | ADD SECTION BUTTONS ------------------  -->
+
+    <div class="button-block">
+      <button pButton pRipple type="button" label="Edit Form Template" class=" p-button-warning buttons-height" 
+        (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
+      <button pButton pRipple type="button" label="Delete Form Template" class=" p-button-danger buttons-height" 
+        (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
+      <button  type="button"  pButton pRipple label="Add Section" icon="pi pi-plus" (click)="setCurrentFormTemplateId(formTemplate.id!)" class=" p-button-help buttons-height"
+        (click)="showAddDialogSection(formTemplate)"></button>
+    </div>
+  </div>
