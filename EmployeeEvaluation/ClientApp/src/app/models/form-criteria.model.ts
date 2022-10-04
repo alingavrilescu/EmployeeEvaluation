@@ -9,5 +9,5 @@ export class FormCriteria {
     comment: string = "";
     attachment: string = "";
     formSectionId?: Guid;
-    criteriaReviews: CriteriaReview[] = [];
+    criteriaReviews?: CriteriaReview[];
 }

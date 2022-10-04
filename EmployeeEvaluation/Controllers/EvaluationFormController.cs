@@ -94,7 +94,7 @@ namespace EmployeeEvaluation.Controllers
             criteriaToUpdate.Comment = formCriteria.Comment;
             criteriaToUpdate.Attachment = formCriteria.Attachment;
 
-            return this._evaluationFormService.AddComment(criteriaToUpdate);
+            return this._evaluationFormService.UpdateFormCriteria(criteriaToUpdate);
         }
 
         [HttpDelete("{id}")]

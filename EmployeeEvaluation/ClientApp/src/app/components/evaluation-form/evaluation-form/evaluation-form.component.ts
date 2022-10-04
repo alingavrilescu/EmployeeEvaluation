@@ -16,7 +16,9 @@ import { Guid } from 'guid-typescript';
 export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   addCommForm = new FormGroup({
-    name: new FormControl(''),
+    criteriaName: new FormControl(''),
+    crieriaDescription: new FormControl(''),
+    criteriaChoice: new FormControl(''),
     criteriaComment: new FormControl('', Validators.required),
     criteriaAttachment: new FormControl('')
   });
@@ -36,6 +38,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   formCriteriaSubscription!: Subscription;
   userId: any;
   criteriaId: any;
+  criteriaName: string = "";
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -51,12 +54,14 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   // DE MODIFICAT / NU MERGE
   addComm() {
-    console.log(this.formCriteria.name)
     var formCriteria = {
+      name: this.addCommForm.controls.criteriaName.value!,
+      choice: this.addCommForm.controls.criteriaChoice.value!,
+      description: this.addCommForm.controls.crieriaDescription.value!,
       comment: this.addCommForm.controls.criteriaComment.value!,
-      attachment: this.addCommForm.controls.criteriaAttachment.value!,   
+      attachment: this.addCommForm.controls.criteriaAttachment.value!,
     }
-    this.formCriteriaSubscription = this.evaluationFormService.createCriteriaComment(this.criteriaId, this.formCriteria).subscribe(() => { this.refreshEvaluationFormList(); });
+    this.formCriteriaSubscription = this.evaluationFormService.updateFormCriteria(this.criteriaId, formCriteria).subscribe(() => { this.refreshEvaluationFormList(); });
     this.hideAddCommDialog();
   }
 
@@ -78,8 +83,11 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   showAddCommDialog(formCriteria: FormCriteria) {
     this.displayAddCommModal = true;
     if (formCriteria.id) {
-      this.criteriaId = formCriteria.id
+      this.criteriaId = formCriteria.id;
     }
+    this.addCommForm.controls.criteriaName.setValue(formCriteria.name);
+    this.addCommForm.controls.crieriaDescription.setValue(formCriteria.description);
+    this.addCommForm.controls.criteriaChoice.setValue(formCriteria.choice);
   }
   hideAddCommDialog() {
     this.displayAddCommModal = false;

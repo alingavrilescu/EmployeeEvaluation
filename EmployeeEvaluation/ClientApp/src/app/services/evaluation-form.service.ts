@@ -30,7 +30,7 @@ export class EvaluationFormService {
   public createCriteriaReview(id: Guid, criteriaReview: CriteriaReview): Observable<EvaluationForm> {
     return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}/CriteriaReview`, criteriaReview);
   }
-  public createCriteriaComment(id:Guid, formCriteria:FormCriteria):Observable<EvaluationForm>{
+  public updateFormCriteria(id:Guid, formCriteria:FormCriteria):Observable<EvaluationForm>{
     return this.httpClient.put<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}/FormCriteria`, formCriteria);
   }
 }

@@ -16,7 +16,7 @@ namespace EmployeeEvaluation.DataAccess.Abstractions
         public FormCriteria GetFormCriteriaById(Guid id);
         public EvaluationForm AddEvaluationForm (EvaluationForm evaluationFormToAdd);
         public CriteriaReviews AddCriteriaReviews(CriteriaReviews criteriaReviewsToAdd);
-        public FormCriteria AddComment(FormCriteria formCriteria);
+        public FormCriteria UpdateFormCriteria(FormCriteria formCriteria);
         public CriteriaReviews UpdateCriteriaReviews(CriteriaReviews criteriaReviewsToUpdate);
         public void DeleteEvaluationFormById(Guid id);
      

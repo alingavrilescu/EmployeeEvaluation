@@ -75,7 +75,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return criteriaReviews.Entity;
         }
 
-        public FormCriteria AddComment(FormCriteria formCriteria)
+        public FormCriteria UpdateFormCriteria(FormCriteria formCriteria)
         {
             _employeeEvaluationDbContext.Set<FormCriteria>().Update(formCriteria);
             _employeeEvaluationDbContext.SaveChanges();
