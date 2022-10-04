@@ -1,23 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Guid } from 'guid-typescript';
+import { Observable } from 'rxjs';
+import { FormTemplateCriteria } from 'src/app/models/form-template-criteria.model';
+import { FormTemplateSection } from 'src/app/models/form-template-section.model';
 import { FormTemplate } from 'src/app/models/form-template.model';
 import { FormTemplateService } from 'src/app/services/form-template.service';
-import { Guid } from 'guid-typescript';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { FormTemplateSection } from 'src/app/models/form-template-section.model';
-import { FormTemplateCriteria } from 'src/app/models/form-template-criteria.model';
 import { SoftwareDeveloperType } from 'src/app/software-developer-type';
-import { Observable, Subscription } from 'rxjs';
-
 
 @Component({
-  selector: 'app-form-template',
-  templateUrl: './form-template.component.html',
-  styleUrls: ['./form-template.component.css'],
+  selector: 'app-form-template-details',
+  templateUrl: './form-template-details.component.html',
+  styleUrls: ['./form-template-details.component.css']
 })
-
-export class FormTemplateComponent implements OnInit, OnDestroy {
-
+export class FormTemplateDetailsComponent implements OnInit {
   
   selectedFormTemplate!: FormTemplate;
   selectedSection!: FormTemplateSection;
@@ -27,7 +24,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   currentTemplateCriteriaId: Guid =Guid.parse(Guid.EMPTY);
   types = SoftwareDeveloperType.AllTypes;
   formTemplateListObs!:Observable<FormTemplate[]>;
-  formTemplateList: FormTemplate[] = [];
+  formTemplate!: FormTemplate;
   displayFormTemplateAddModal: boolean = false;
   displayFormTemplateEditModal: boolean = false;
   displayFormTemplateDeleteModal: boolean = false;
@@ -38,7 +35,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   displayCriterionEditModal: boolean = false;
   displayCriterionDeleteModal: boolean = false;
   departmentId: any;
-
+  formTemplateId: any;
 
   editFormTemplateFormGroup = new FormGroup({
     nameControl: new FormControl('', [Validators.required]),
@@ -71,6 +68,7 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
     this.activatedRoute.paramMap.subscribe((params) => {
       this.departmentId = params.get('id');
+      this.formTemplateId=params.get('ftId');
     });
     this.refreshFormTemplate();
 
@@ -81,9 +79,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
   // ================FORM TEMPLATES====================
 
-
   setCurrentFormTemplateId(id: Guid) {
-    let selectedFormTemplate = this.formTemplateList.find(formTemplate => formTemplate.id === id);
+    let selectedFormTemplate = this.formTemplate;
     if (selectedFormTemplate) {
       this.currentFormTemplateId = id;
       this.editFormTemplateFormGroup.controls.nameControl.setValue(selectedFormTemplate.name);
@@ -99,21 +96,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
       this.editFormTemplateFormGroup.controls.typeControl.setValue(this.selectedFormTemplate.type);
     }
   }
-  addFormTemplate() {
-    var newFormTemplate = new FormTemplate();
-    newFormTemplate.name = this.addFormTemplateFormGroup.controls.nameControl.value!;
-    newFormTemplate.type = this.addFormTemplateFormGroup.controls.typeControl.value!;
-    newFormTemplate.departmentId = this.departmentId;
-    this.formTemplateService.postFormTemplate(this.departmentId, newFormTemplate).subscribe({
-      next: (formTemplate) => {
-        this.refreshFormTemplate();
-      },
-      error: (response) => {
-        console.log(response);
-      },
-    });
-    this.hideAddDialog();
-  }
 
   updateFormTemplate() {
     this.selectedFormTemplate.name = this.editFormTemplateFormGroup.controls.nameControl.value!;
@@ -127,7 +109,6 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
     });
     this.hideEditDialog();
   }
-
 
   deleteFormTemplate() {
     if (this.currentFormTemplateId !== undefined) {
@@ -161,22 +142,11 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
   hideDeleteDialog() {
     this.displayFormTemplateDeleteModal = false;
   }
-  getFormTemplates() {
-    this.formTemplateService.getFormTemplates(this.departmentId)
-      .subscribe({
-        next: (formTemplateList) => {
-          this.formTemplateList = formTemplateList;
-          console.log(formTemplateList)
-        },
-        error: (response) => {
-          console.log(response);
-        },
-      });
-  }
   refreshFormTemplate() {
-    this.formTemplateService.getFormTemplates(this.departmentId).subscribe(data => {
-      this.formTemplateList = data;
+    this.formTemplateService.getFormTemplateById(this.departmentId, this.formTemplateId).subscribe(data => {
+      this.formTemplate = data;
     });
+
     this.formTemplateListObs=this.formTemplateService.getFormTemplates(this.departmentId);
   }
   

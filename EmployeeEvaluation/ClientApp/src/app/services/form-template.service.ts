@@ -20,6 +20,9 @@ export class FormTemplateService {
   public getFormTemplates(departmentId: Guid): Observable<FormTemplate[]> {
     return this.httpClient.get<FormTemplate[]>(`${environment.apiUrl}/Department/${departmentId}/${this.url}`);
   }
+  public getFormTemplateById(departmentId:Guid, ftId: Guid): Observable<FormTemplate>{
+    return this.httpClient.get<FormTemplate>(`${environment.apiUrl}/Department/${departmentId}/${this.url}/${ftId}`);
+  }
   public postFormTemplate(departmentId:Guid,formTemplate:FormTemplate){
     return this.httpClient.post<FormTemplate[]>(`${environment.apiUrl}/Department/${departmentId}/${this.url}`,formTemplate);
   } 
