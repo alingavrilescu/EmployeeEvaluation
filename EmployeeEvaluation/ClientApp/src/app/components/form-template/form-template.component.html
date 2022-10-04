@@ -8,7 +8,7 @@
 <!-- --------------------- Modal for Adding Form Template --------------------------- -->
 
 <p-dialog header="Add Form Template" [(visible)]="displayFormTemplateAddModal"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '30vw', height: '70vh' }" [modal]="true">
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
   <div style="display: flex; flex-direction: column;">
     <form [formGroup]="addFormTemplateFormGroup">
       <span class="p-float-label" style="margin-top: 30px">
@@ -24,8 +24,9 @@
     </form>
   </div>
   <div class="buttons-container">
-    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideAddDialog()"></button>
-    <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
+    <button pButton type="button" label="Submit" class="p-button-success btn-pos p-button-success"
       (click)="addFormTemplate()" [disabled]="!addFormTemplateFormGroup.valid"></button>
   </div>
 </p-dialog>
@@ -55,8 +56,7 @@
 
 
 <p-dialog header="Edit Form Template" [(visible)]="displayFormTemplateEditModal"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '30vw', height: '75vh' }" [modal]="true"
-  [draggable]="false" [resizable]="false">
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
   <form [formGroup]="editFormTemplateFormGroup">
     <br />
     <label for="float-input" class="required">Name</label>
@@ -71,7 +71,7 @@
   </form>
   <div class="buttons-container">
     <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialog()"></button>
-    <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+    <button pButton type="button" label="Submit" class="p-button-success"
       (click)="updateFormTemplate()" [disabled]="!editFormTemplateFormGroup.valid"></button>
   </div>
 </p-dialog>
@@ -80,7 +80,7 @@
 <!-- --------------------- Add Section Modal ------------------------ -->
 
 <p-dialog header="Add Section" [(visible)]="displaySectionAddModal"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
   <div style="display: flex; flex-direction: column;">
     <form [formGroup]="addSectionGroup">
       <span class="p-float-label" style="margin-top: 30px">
@@ -95,7 +95,7 @@
   </div>
   <div class="buttons-container">
     <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideAddDialogSection()"></button>
-    <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+    <button pButton type="button" label="Submit" class="p-button-success"
       (click)="addFormTemplateSection()" [disabled]="!addSectionGroup.valid"></button>
   </div>
 </p-dialog>
@@ -124,7 +124,7 @@
 <!-- -------------------- Edit Section Modal ------------------------------ -->
 
 <p-dialog header="Edit Form Template Section" [(visible)]="displaySectionEditModal"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true" [draggable]="false" [resizable]="false">
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
   <form [formGroup]="editSectionFormGroup">
     <br />
     <label for="float-input" class="required">Section's name</label>
@@ -138,7 +138,7 @@
   </form>
   <div class="buttons-container">
     <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialogSection()"></button>
-    <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+    <button pButton type="button" label="Submit" class="p-button-success"
       (click)="updateTemplateSection()" [disabled]="!editSectionFormGroup.valid"></button>
   </div>
 </p-dialog>
@@ -147,7 +147,7 @@
 <!-- --------------------- Add Criterion Modal  --------------------------- -->
 
 <p-dialog header="Add Criterion" [(visible)]="displayCriterionAddModal"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
   <div style="display: flex; flex-direction: column;">
     <form [formGroup]="addCriterionFormGroup">
       <span class="p-float-label" style="margin-top: 30px">
@@ -163,7 +163,7 @@
   <div class="buttons-container">
     <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
       class="modal-button btn-pos p-button-danger"></button>
-    <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+    <button pButton type="button" label="Submit" class="p-button-success" 
       (click)="addCriterion()" [disabled]="!addCriterionFormGroup.valid"></button>
   </div>
 </p-dialog>
@@ -193,7 +193,7 @@
 
 
 <p-dialog header="Edit Form Template Criterion" [(visible)]="displayCriterionEditModal"
-  [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true" [draggable]="false" [resizable]="false">
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
   <form [formGroup]="editCriterionFormGroup">
     <br />
     <label for="float-input" class="required">Crieterion's name</label>
@@ -207,7 +207,7 @@
   </form>
   <div class="buttons-container">
     <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialogCriterion()"></button>
-    <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
+    <button pButton type="button" label="Submit" class="p-button-success" 
       (click)="updateCriterion()" [disabled]="!editCriterionFormGroup.valid"></button>
   </div>
 </p-dialog>
