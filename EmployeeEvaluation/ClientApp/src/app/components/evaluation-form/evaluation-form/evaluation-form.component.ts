@@ -17,7 +17,9 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   addCommForm = new FormGroup({
     name: new FormControl(''),
-    criteriaComment: new FormControl('', Validators.required),
+    choice: new FormControl(''),
+    description: new FormControl(''),
+    criteriaComment: new FormControl(''),
     criteriaAttachment: new FormControl('')
   });
 
@@ -51,13 +53,21 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   // DE MODIFICAT / NU MERGE
   addComm() {
-    console.log(this.formCriteria.name)
-    var formCriteria = {
-      comment: this.addCommForm.controls.criteriaComment.value!,
-      attachment: this.addCommForm.controls.criteriaAttachment.value!,   
+    var existingFormCriteria = {
+      name: this.addCommForm.controls.name.value!,
+      choice: this.addCommForm.controls.choice.value!,
+      description: this.addCommForm.controls.description.value!,
+      criteriaComment: this.addCommForm.controls.criteriaComment.value!,
+      criteriaAttachment: this.addCommForm.controls.criteriaAttachment.value!
     }
-    this.formCriteriaSubscription = this.evaluationFormService.createCriteriaComment(this.criteriaId, this.formCriteria).subscribe(() => { this.refreshEvaluationFormList(); });
-    this.hideAddCommDialog();
+    this.formCriteriaSubscription = this.evaluationFormService.createCriteriaComment(this.criteriaId, existingFormCriteria).subscribe(()=>{
+      this.refreshEvaluationFormList();
+    })
+
+    
+
+    
+    
   }
 
   addReview() {

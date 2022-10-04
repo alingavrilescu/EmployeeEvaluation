@@ -2,7 +2,7 @@
 
 <div class="form-container">
   <h1 class="evaluation-form-name" *ngIf="(evaluationForm | async); let evalForm">{{evalForm.name}}</h1>
-  <p-accordion [multiple]="true" *ngFor="let formSection of (evaluationForm | async)?.formSections">
+  <p-accordion [multiple]="true" *ngFor="let formSection of (evaluationForm | async)?.formSections; let evalForm">
     <p-accordionTab>
 
       <ng-template pTemplate="header">
@@ -68,6 +68,7 @@
           
             <button pButton title="Comments" class="p-button-text p-button-help"(click)="showAddCommDialog(formCriteria)" icon="pi pi-comment"></button>
             <button pButton title="Reviews" class="p-button-text p-button-help" (click)="showAddRevDialog(formCriteria.id!)" icon="pi pi-comment"></button>
+            <button pButton title="view reviews" class="p-button-text p-button-help" icon="pi pi-file" routerLink="criteria-details/{{formCriteria.id}}"></button>
          
         </div>
      

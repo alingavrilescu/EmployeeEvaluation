@@ -6,8 +6,8 @@ export class FormCriteria {
     name: string = "";
     choice: string = "";
     description: string = "";
-    comment: string = "";
-    attachment: string = "";
+    comment?: string = "";
+    attachment?: string = "";
     formSectionId?: Guid;
-    criteriaReviews: CriteriaReview[] = [];
+    criteriaReviews?: CriteriaReview[] = [];
 }
