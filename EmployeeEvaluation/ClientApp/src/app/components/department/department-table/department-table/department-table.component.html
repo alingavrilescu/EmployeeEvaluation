@@ -12,7 +12,8 @@
   <p-card *ngFor="let department of departments" [style]="{ width: '360px' }">
     <h3>{{ department.name }}</h3>
     <div style="border-bottom: 1px solid darkgrey">
-      <b>Head of department: </b>Mark
+      <b>Head of department: </b>
+      {{ getNameOfHOD(department.headOfDepartmentId) }}
     </div>
     <div
       style="
@@ -49,7 +50,11 @@
         (click)="showDeleteDialog(department.id!)"
       ></i>
     </div>
-    <div class="card" style="width: 100%; margin-top: 30px" *ngIf="((statistics.get(department.id)) | async); let stat">
+    <div
+      class="card"
+      style="width: 100%; margin-top: 30px"
+      *ngIf="statistics.get(department.id) | async; let stat"
+    >
       <div
         id="hover"
         style="
@@ -63,8 +68,8 @@
         routerLink="{{ this.department.id }}/projects"
       >
         <div>Projects:</div>
-        <div style="padding-right: 10px" *ngIf="stat"><b>{{stat.projectsCounts}}</b>
-        
+        <div style="padding-right: 10px" *ngIf="stat">
+          <b>{{ stat.projectsCounts }}</b>
         </div>
       </div>
       <div
@@ -80,7 +85,9 @@
         routerLink="details/project-leads/{{ this.department.id }}"
       >
         <div>Project leads:</div>
-        <div style="padding-right: 10px"><b>{{stat.tlCount}}</b></div>
+        <div style="padding-right: 10px">
+          <b>{{ stat.tlCount }}</b>
+        </div>
       </div>
       <div
         id="hover"
@@ -95,7 +102,9 @@
         routerLink="details/project-managers/{{ this.department.id }}"
       >
         <div>Project managers:</div>
-        <div style="padding-right: 10px"><b>{{stat.pmCount}}</b></div>
+        <div style="padding-right: 10px">
+          <b>{{ stat.pmCount }}</b>
+        </div>
       </div>
       <div
         id="hover"
@@ -110,7 +119,9 @@
         routerLink="details/developers/{{ this.department.id }}"
       >
         <div>Developers:</div>
-        <div style="padding-right: 10px"><b>{{stat.devCount}}</b></div>
+        <div style="padding-right: 10px">
+          <b>{{ stat.devCount }}</b>
+        </div>
       </div>
       <div
         id="hover"
@@ -125,7 +136,9 @@
         routerLink="details/{{ this.department.id }}"
       >
         <div>All members:</div>
-        <div style="padding-right: 10px"><b>{{stat.membersCount}}</b></div>
+        <div style="padding-right: 10px">
+          <b>{{ stat.membersCount }}</b>
+        </div>
       </div>
       <div
         id="hover"
@@ -140,7 +153,9 @@
         routerLink="{{ this.department.id }}/form-templates"
       >
         <div>Form templates:</div>
-        <div style="padding-right: 10px"><b>{{stat.formTemplatesCount}}</b></div>
+        <div style="padding-right: 10px">
+          <b>{{ stat.formTemplatesCount }}</b>
+        </div>
       </div>
     </div>
   </p-card>
