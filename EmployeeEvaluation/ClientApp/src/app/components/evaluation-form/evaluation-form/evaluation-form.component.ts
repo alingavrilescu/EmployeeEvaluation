@@ -60,7 +60,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
       criteriaComment: this.addCommForm.controls.criteriaComment.value!,
       criteriaAttachment: this.addCommForm.controls.criteriaAttachment.value!
     }
-    this.formCriteriaSubscription = this.evaluationFormService.createCriteriaComment(this.criteriaId, existingFormCriteria).subscribe(()=>{
+    this.formCriteriaSubscription = this.evaluationFormService.updateFormCriteria(this.criteriaId, existingFormCriteria).subscribe(()=>{
       this.refreshEvaluationFormList();
     })
 

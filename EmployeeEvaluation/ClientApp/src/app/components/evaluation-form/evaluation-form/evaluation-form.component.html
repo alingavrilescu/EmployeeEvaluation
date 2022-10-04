@@ -82,23 +82,7 @@
 </div>
 
 
-    <!-- ==================================================MODAL FOR ADDING A COMMENT==================================================================== -->
 
-<p-dialog header="Add Comment" [(visible)]="displayAddCommModal" [modal]="true" [style]="{width: '550px'}" 
-  [draggable]="false" [resizable]="false">
-  <form [formGroup]="addCommForm">
-    <label for="float-input">Comment</label>
-    <br />
-    <input placeholder="Add comment" id="float-input" type="text" pInputText formControlName="criteriaComment" [style]="{width: '100%'}"/>
-  </form>
-  <div class="buttons-container">
-    <button pButton pRipple type="submit" label="Close" (click) = "hideAddCommDialog()" 
-      class="modal-button btn-pos p-button-danger"></button>
-
-    <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addCommForm.valid"
-      class="modal-button btn-pos p-button-success"></button>
-  </div>
-  </p-dialog>
 
   <!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
 
