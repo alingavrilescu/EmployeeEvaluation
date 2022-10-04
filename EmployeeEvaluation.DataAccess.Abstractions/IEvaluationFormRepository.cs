@@ -11,25 +11,14 @@ namespace EmployeeEvaluation.DataAccess.Abstractions
     {
 
         public IEnumerable<EvaluationForm> GetAll();
-        public IEnumerable<FormSection> GetAllFormSections();
-        public IEnumerable<FormCriteria> GetAllFormCriteria();
-        public IEnumerable<CriteriaReviews> GetAllCriteriaComments();
         public EvaluationForm GetEvaluationFormById(Guid id);
         public EvaluationForm GetEvaluationFormByUserId(Guid id);
-        public FormSection GetFormSectionById(Guid id);
         public FormCriteria GetFormCriteriaById(Guid id);
-        public CriteriaReviews GetCriteriaCommentsById(Guid id);
         public EvaluationForm AddEvaluationForm (EvaluationForm evaluationFormToAdd);
-        public FormSection AddFormSection(FormSection formSectionToAdd);
-        public FormCriteria AddFormCriteria(FormCriteria formCriteriaToAdd);
-        public CriteriaReviews AddCriteriaComments(CriteriaReviews criteriaCommentsToAdd);
-        public EvaluationForm UpdateEvaluationForm (EvaluationForm evaluationFormToUpdate);
-        public FormSection UpdateFormSection(FormSection formSectionToUpdate);
-        public FormCriteria UpdateFormCriteria(FormCriteria formCriteriaToUpdate);
-        public CriteriaReviews UpdateCriteriaComments(CriteriaReviews criteriaCommentsToUpdate);
+        public CriteriaReviews AddCriteriaReviews(CriteriaReviews criteriaReviewsToAdd);
+        public FormCriteria AddComment(FormCriteria formCriteria);
+        public CriteriaReviews UpdateCriteriaReviews(CriteriaReviews criteriaReviewsToUpdate);
         public void DeleteEvaluationFormById(Guid id);
-        public void DeleteFormSectionById(Guid id);
-        public void DeleteFormCriteriaById(Guid id);
-        public void DeleteCriteriaCommentsById(Guid id);
+     
     }
 }
