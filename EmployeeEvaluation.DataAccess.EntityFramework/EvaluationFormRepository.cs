@@ -38,6 +38,15 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return evaluationForm;
 
         }
+        public FormCriteria GetFormCriteriaById(Guid id)
+        {
+            var formCriteria = _employeeEvaluationDbContext.Set<FormCriteria>().Where(f => f.Id == id)
+                                                             .Include(c => c.CriteriaReviews)
+                                                             .FirstOrDefault();
+
+            return formCriteria;
+
+        }
         public EvaluationForm GetEvaluationFormByUserId(Guid id)
         {
             var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>().Where(f => f.UserId == id)
@@ -64,6 +73,13 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             var criteriaReviews = _employeeEvaluationDbContext.Set<CriteriaReviews>().Add(criteriaReviewsToAdd);
             _employeeEvaluationDbContext.SaveChanges();
             return criteriaReviews.Entity;
+        }
+
+        public FormCriteria AddComment(FormCriteria formCriteria)
+        {
+            _employeeEvaluationDbContext.Set<FormCriteria>().Update(formCriteria);
+            _employeeEvaluationDbContext.SaveChanges();
+            return formCriteria;
         }
 
 

@@ -66,7 +66,8 @@
         </div>
         <div class="col-12 col-lg-1  d-flex justify-content-lg-center align-items-center">
           
-            <button pButton title="Comments/Reviews" class="p-button-text p-button-help" icon="pi pi-comment"></button>
+            <button pButton title="Comments" class="p-button-text p-button-help"(click)="showAddCommDialog(formCriteria)" icon="pi pi-comment"></button>
+            <button pButton title="Reviews" class="p-button-text p-button-help" (click)="showAddRevDialog(formCriteria.id!)" icon="pi pi-comment"></button>
          
         </div>
      
@@ -111,7 +112,7 @@
   <button pButton pRipple type="submit" label="Close" (click) = "hideAddRevDialog()" 
     class="modal-button btn-pos p-button-danger"></button>
 
-  <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addRevForm.valid"
+  <button pButton pRipple type="submit" label="Submit" (click)="addReview()" [disabled]="!addRevForm.valid"
     class="modal-button btn-pos p-button-success"></button>
 </div>
 </p-dialog>

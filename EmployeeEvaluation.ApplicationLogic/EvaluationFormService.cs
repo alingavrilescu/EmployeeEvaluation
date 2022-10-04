@@ -30,6 +30,16 @@ namespace EmployeeEvaluation.ApplicationLogic
             return this._evaluationFormRepository.GetEvaluationFormByUserId(id);
         }
 
+        public FormCriteria GetFormCriteriaById(Guid id)
+        {
+            return this._evaluationFormRepository.GetFormCriteriaById(id);
+        }
+
+        public FormCriteria AddComment(FormCriteria formCriteria)
+        {
+            return this._evaluationFormRepository.AddComment(formCriteria);
+        }
+
         public EvaluationForm AddEvaluationForm(EvaluationForm toAdd)
         {
             return _evaluationFormRepository.AddEvaluationForm(toAdd);

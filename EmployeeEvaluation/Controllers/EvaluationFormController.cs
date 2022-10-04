@@ -37,9 +37,9 @@ namespace EmployeeEvaluation.Controllers
 
 
         [HttpPost("{id}")]
-        public EvaluationForm AddEvaluationForm(Guid id,[FromBody] FormTemplate formTemplate)
+        public EvaluationForm AddEvaluationForm(Guid id, Guid templateId)
         {
-            var formTemplateToGet = _formTemplateService.GetFormTemplateById(formTemplate.Id);
+            var formTemplateToGet = _formTemplateService.GetFormTemplateById(templateId);
 
             var evaluationFormToAdd = new EvaluationForm
             {
@@ -87,15 +87,15 @@ namespace EmployeeEvaluation.Controllers
         }
 
         //=========================================DE MODIFICAT AICI =========================================
-        //[HttpPut("{formId}/FormSection/{sectionId}/FormCriteria/{criteriaId}/CriteriaComments/{criteriaCommentsId}")]
-        //public CriteriaReviews UpdateCriteriaComments(Guid criteriaCommentsId, CriteriaCommentsDTO criteriaComments)
-        //{
-        //    var criteriaCommentsToUpdate = this._evaluationFormService.GetCriteriaCommentsById(criteriaCommentsId);
-        //    criteriaCommentsToUpdate.Review = criteriaComments.Comment;
-        //    criteriaComments.Attachment = criteriaComments.Attachment;
+        [HttpPut("{formId}/FormCriteria")]
+        public FormCriteria UpdateCriteriaComment(Guid criteriaId,[FromBody] FormCriteriaDTO formCriteria)
+        {
+            var criteriaToUpdate = this._evaluationFormService.GetFormCriteriaById(criteriaId);
+            criteriaToUpdate.Comment = formCriteria.Comment;
+            criteriaToUpdate.Attachment = formCriteria.Attachment;
 
-        //    return this._evaluationFormService.UpdateCriteriaComments(criteriaCommentsToUpdate);
-        //}
+            return this._evaluationFormService.AddComment(criteriaToUpdate);
+        }
 
         [HttpDelete("{id}")]
         public void DeleteEvaluationForm(Guid id)

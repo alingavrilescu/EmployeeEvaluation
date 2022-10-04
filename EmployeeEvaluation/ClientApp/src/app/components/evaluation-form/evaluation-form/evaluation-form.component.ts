@@ -5,7 +5,8 @@ import { EvaluationForm } from 'src/app/models/evaluation-form.model';
 import { EvaluationFormService } from 'src/app/services/evaluation-form.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormCriteria } from 'src/app/models/form-criteria.model';
-import { CriteriaComments } from 'src/app/models/criteria-comments.model';
+import { CriteriaReview } from 'src/app/models/criteria-review.model';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'app-evaluation-form',
@@ -15,6 +16,7 @@ import { CriteriaComments } from 'src/app/models/criteria-comments.model';
 export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   addCommForm = new FormGroup({
+    name: new FormControl(''),
     criteriaComment: new FormControl('', Validators.required),
     criteriaAttachment: new FormControl('')
   });
@@ -30,52 +32,69 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   displayAddRevModal: boolean = false;
   deleteSubscription!: Subscription;
   evaluationForm!: Observable<EvaluationForm>;
+  formCriteria!: FormCriteria;
+  formCriteriaSubscription!: Subscription;
   userId: any;
+  criteriaId: any;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.userId = params.get('id');
       this.refreshEvaluationFormList();
     });
-  
+
   }
 
   ngOnDestroy(): void {
     this.deleteSubscription?.unsubscribe();
   }
 
-  addComm(){
-    var newComment = new CriteriaComments();
-    newComment.comment = this.addCommForm.controls.criteriaComment.value!;
-    newComment.attachment = this.addCommForm.controls.criteriaAttachment.value!;
+  // DE MODIFICAT / NU MERGE
+  addComm() {
+    console.log(this.formCriteria.name)
+    var formCriteria = {
+      comment: this.addCommForm.controls.criteriaComment.value!,
+      attachment: this.addCommForm.controls.criteriaAttachment.value!,   
+    }
+    this.formCriteriaSubscription = this.evaluationFormService.createCriteriaComment(this.criteriaId, this.formCriteria).subscribe(() => { this.refreshEvaluationFormList(); });
+    this.hideAddCommDialog();
+  }
 
-    //NOT FINISHED YET
+  addReview() {
+    var newReview = new CriteriaReview();
+    newReview.review = this.addRevForm.controls.review.value!;
+    newReview.formCriteriaId = this.criteriaId;
+    this.evaluationFormService.createCriteriaReview(this.criteriaId, newReview).subscribe(() => {
+      this.refreshEvaluationFormList();
+    });
+    this.hideAddRevDialog();
   }
 
 
   refreshEvaluationFormList() {
-    this.evaluationForm=this.evaluationFormService.getEvaluationForms(this.userId);
-
+    this.evaluationForm = this.evaluationFormService.getEvaluationForms(this.userId);
   }
 
-  showAddCommDialog(){
+  showAddCommDialog(formCriteria: FormCriteria) {
     this.displayAddCommModal = true;
+    if (formCriteria.id) {
+      this.criteriaId = formCriteria.id
+    }
   }
-
-  hideAddCommDialog(){
+  hideAddCommDialog() {
     this.displayAddCommModal = false;
   }
 
-  showAddRevDialog(){
+  showAddRevDialog(id: Guid) {
+    this.criteriaId = id;
     this.displayAddRevModal = true;
   }
 
-  hideAddRevDialog(){
+  hideAddRevDialog() {
     this.displayAddRevModal = false;
   }
 
-  onCriteriaChange(event: any):void
-  {
+  onCriteriaChange(event: any): void {
     console.log("Updated criteria with id: " + event.target.name + "; selected value: " + event.target.value);
   }
 }
