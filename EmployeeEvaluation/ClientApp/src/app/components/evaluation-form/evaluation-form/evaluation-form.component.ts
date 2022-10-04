@@ -48,13 +48,14 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     var newComment = new CriteriaComments();
     newComment.comment = this.addCommForm.controls.criteriaComment.value!;
     newComment.attachment = this.addCommForm.controls.criteriaAttachment.value!;
+
+    //NOT FINISHED YET
   }
 
 
   refreshEvaluationFormList() {
     this.evaluationForm=this.evaluationFormService.getEvaluationForms(this.userId);
 
-    //NOT FINISHED YET  
   }
 
   showAddCommDialog(){
