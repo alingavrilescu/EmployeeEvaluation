@@ -67,6 +67,9 @@ export class DepartmentTableComponent implements OnInit {
     });
   }
   showAddDialog() {
+    this.addDepartmentFormGroup.controls.headOfDepartmentControl.setValue(
+      this.usersHOD[0].name
+    );
     this.displayAddModal = true;
   }
   hideAddDialog() {
@@ -95,7 +98,6 @@ export class DepartmentTableComponent implements OnInit {
     this.departmentsService.addDepartment(newDepartment).subscribe({
       next: (department) => {
         this.departments.push(department);
-        alert(department.headOfDepartmentId);
       },
       error: (response) => {
         console.log(response);
