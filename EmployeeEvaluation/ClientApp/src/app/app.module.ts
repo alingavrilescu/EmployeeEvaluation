@@ -41,7 +41,6 @@ import { DevelopersComponent } from './components/department-details/developers/
 import { FormTemplateDetailsComponent } from './components/form-template/form-template-details/form-template-details/form-template-details.component';
 import { CriteriaDetailsComponent } from './components/evaluation-form/evaluation-form/criteria-details/criteria-details/criteria-details.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -4,15 +4,16 @@
 
 <div class="add-button-container" *ngIf="(formCriteria | async); let formCrit">
     <h2>Comment Section</h2>
-    <button pButton pRipple icon="pi pi-plus" type="button" label="Add Comm" (click)="showAddCommDialog(formCrit)" class="p-button-help" [style]="{width: '155px', height: '40px'}"></button>
+    <button pButton pRipple icon="pi pi-plus" type="button" label="Add Comm" (click)="showAddCommDialog(formCrit)" class="p-button-help" [style]="{width: '160px', height: '40px'}"></button>
 </div>
+
 
 <div class="add-button-container">
-  <h2>Review</h2>
-  <button pButton pRipple icon="pi pi-plus" type="button" label="Add Review" (click)="showAddRevDialog()" class="p-button-help" [style]="{width: '155px', height: '40px'}"></button>
+  <h2>Review Section</h2>
+  <button pButton pRipple icon="pi pi-plus" type="button" label="Add Review" (click)="showAddRevDialog()" class="p-button-help" [style]="{width: '160px', height: '40px'}"></button>
 </div>
 
-<!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
+<!-- ==================================================MODAL FOR ADDING A COMMENT==================================================================== -->
 
 <p-dialog header="Add Comm" [(visible)]="displayAddCommModal" [modal]="true" [style]="{width: '550px'}" 
 [draggable]="false" [resizable]="false">
@@ -30,10 +31,7 @@
 </div>
 </p-dialog>
 
-
-
-<h2>Review Section</h2>
-
+<!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
 
 <p-dialog header="Add Rev" [(visible)]="displayAddRevModal" [modal]="true" [style]="{width: '550px'}" 
 [draggable]="false" [resizable]="false">
