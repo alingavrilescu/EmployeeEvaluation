@@ -97,6 +97,7 @@ namespace EmployeeEvaluation.Controllers
         public FormCriteria UpdateCriteriaComment(Guid criteriaId,[FromBody] FormCriteriaDTO formCriteria)
         {
             var criteriaToUpdate = this._evaluationFormService.GetFormCriteriaById(criteriaId);
+            criteriaToUpdate.Choice = formCriteria.Choice;
             criteriaToUpdate.Comment = formCriteria.Comment;
             criteriaToUpdate.Attachment = formCriteria.Attachment;
 

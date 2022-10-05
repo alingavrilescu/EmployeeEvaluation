@@ -28,6 +28,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   evaluationForm!: Observable<EvaluationForm>;
   userId: any;
   criteriaId: any;
+  formCriteriaSubscription!: Subscription;
+  formCriteria!: FormCriteria;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -38,26 +40,13 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.deleteSubscription?.unsubscribe();
+    this.formCriteriaSubscription?.unsubscribe();
   }
-
-  // DE MODIFICAT / NU MERGE
-  
-
-  addReview() {
-    var newReview = new CriteriaReview();
-    newReview.review = this.addRevForm.controls.review.value!;
-    newReview.formCriteriaId = this.criteriaId;
-    this.evaluationFormService.createCriteriaReview(this.criteriaId, newReview).subscribe(() => {
-      this.refreshEvaluationFormList();
-    });
-    this.hideAddRevDialog();
-  }
-
 
   refreshEvaluationFormList() {
     this.evaluationForm = this.evaluationFormService.getEvaluationForms(this.userId);
   }
+
 
   showAddRevDialog(id: Guid) {
     this.criteriaId = id;
@@ -68,7 +57,17 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     this.displayAddRevModal = false;
   }
 
+  // PRIMU GET NU MERGE, DUPA ACEEAS MERGE.
+
   onCriteriaChange(event: any): void {
     console.log("Updated criteria with id: " + event.target.name + "; selected value: " + event.target.value);
+    this.formCriteriaSubscription = this.evaluationFormService.getFormCriteriaById(this.userId, event.target.name).subscribe((res)=>{
+      this.formCriteria=res;
+    });
+    console.log(this.formCriteria);
+    console.log(this.formCriteria.choice);
+    this.formCriteria.choice = event.target.value;
+    this.formCriteriaSubscription = this.evaluationFormService.updateFormCriteria(event.target.name, this.formCriteria).subscribe(()=>{
+    })
   }
 }
