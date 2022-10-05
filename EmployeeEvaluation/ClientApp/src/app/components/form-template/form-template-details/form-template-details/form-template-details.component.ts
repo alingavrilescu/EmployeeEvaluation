@@ -154,20 +154,7 @@ export class FormTemplateDetailsComponent implements OnInit {
     }))
   }
   
-  onTabClose(event:any)
-  {
-    let tabIndex=event.index;
-    if(this.openSections.length>tabIndex){
-      this.openSections[tabIndex]=true;
-    }
-  }
-  onTabOpen(event:any)
-  {
-    let tabIndex=event.index;
-    if(this.openSections.length>tabIndex){
-      this.openSections[tabIndex]=false;
-    }
-  }
+  
 
   //===================SECTIONS=====================
 

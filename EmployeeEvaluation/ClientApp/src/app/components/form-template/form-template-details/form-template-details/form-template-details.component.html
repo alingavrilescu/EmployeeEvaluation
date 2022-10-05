@@ -184,10 +184,10 @@
     <h2 style="text-align:center;">{{formTemplate.name}}</h2>
     <br>
     <h6 class="indent" style="opacity:0.7">{{formTemplate.type}}</h6>
-    <p-accordion (onClose)="onTabClose($event)" (onOpen)="onTabOpen($event)">
+    <p-accordion>
       <ul>
         <li *ngFor="let section of formTemplate.templateSections; index as sectionIndex">
-          <p-accordionTab [selected]="openSections[sectionIndex]" header="{{section.name}}" data-sectionIndex="sectionIndex">
+          <p-accordionTab [(selected)]="openSections[sectionIndex]" header="{{section.name}}">
             <div><b> Description: </b>{{section.description}}
               <br>
 
