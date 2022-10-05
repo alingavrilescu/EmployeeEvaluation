@@ -5,6 +5,7 @@ import { Guid } from 'guid-typescript';
 import { Observable, Subscribable, Subscription } from 'rxjs';
 import { EvaluationFormService } from '../../../../../services/evaluation-form.service';
 import { FormCriteria } from '../../../../../models/form-criteria.model';
+import { subscribeOn } from 'rxjs/operators';
 
 
 @Component({
@@ -12,12 +13,12 @@ import { FormCriteria } from '../../../../../models/form-criteria.model';
   templateUrl: './criteria-details.component.html',
   styleUrls: ['./criteria-details.component.css']
 })
-export class CriteriaDetailsComponent implements OnInit {
+export class CriteriaDetailsComponent implements OnInit, OnDestroy {
 
   formCriteria!: Observable<FormCriteria>;
   formCriteriaId: any;
   formCriteriaSubscription!: Subscription;
-  evaluationFormId: any;
+  userId: any;
   displayAddCommModal: boolean = false;
 
   addCommForm = new FormGroup({
@@ -31,13 +32,16 @@ export class CriteriaDetailsComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private formEvalService: EvaluationFormService)
    { 
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.evaluationFormId = params.get('formId');
-      this.formCriteriaId = params.get('id');
+      this.userId = params.get('id');
+      this.formCriteriaId = params.get('criteriaId');
     });
    }
 
   ngOnInit(): void {
     this.getFormCriteriaById();
+  }
+  ngOnDestroy(): void {
+    this.formCriteriaSubscription?.unsubscribe();
   }
 
   addComm() {
@@ -45,15 +49,16 @@ export class CriteriaDetailsComponent implements OnInit {
       name: this.addCommForm.controls.name.value!,
       choice: this.addCommForm.controls.choice.value!,
       description: this.addCommForm.controls.description.value!,
-      criteriaComment: this.addCommForm.controls.criteriaComment.value!,
-      criteriaAttachment: this.addCommForm.controls.criteriaAttachment.value!
+      comment: this.addCommForm.controls.criteriaComment.value!,
+      attachment: this.addCommForm.controls.criteriaAttachment.value!
     }
     this.formCriteriaSubscription = this.formEvalService.updateFormCriteria(this.formCriteriaId, existingFormCriteria).subscribe(()=>{
     })
+    this.hideAddCommDialog();
   }
 
   getFormCriteriaById() {
-    this.formCriteria = this.formEvalService.getFormCriteriaById(this.evaluationFormId, this.formCriteriaId);
+    this.formCriteria = this.formEvalService.getFormCriteriaById(this.userId, this.formCriteriaId);
   }
 
   showAddCommDialog(formCriteria: FormCriteria) {
@@ -61,6 +66,10 @@ export class CriteriaDetailsComponent implements OnInit {
     if (formCriteria.id) {
       this.formCriteriaId = formCriteria.id
     }
+    this.addCommForm.controls.name.setValue(formCriteria.name);
+    this.addCommForm.controls.choice.setValue(formCriteria.choice);
+    this.addCommForm.controls.description.setValue(formCriteria.description);
+    console.log(formCriteria);
   }
 
   hideAddCommDialog() {

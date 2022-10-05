@@ -2,9 +2,9 @@
 
 <!-- ============================================ADD COMM BUTTON========================================= -->
 
-<div class="add-button-container">
+<div class="add-button-container" *ngIf="(formCriteria | async); let formCrit">
     <h2>Comment Section</h2>
-    <button pButton pRipple icon="pi pi-plus" type="button" label="Add Comm" class="p-button-help" [style]="{width: '155px', height: '40px'}"></button>
+    <button pButton pRipple icon="pi pi-plus" type="button" label="Add Comm" (click)="showAddCommDialog(formCrit)" class="p-button-help" [style]="{width: '155px', height: '40px'}"></button>
 </div>
 
 <!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
