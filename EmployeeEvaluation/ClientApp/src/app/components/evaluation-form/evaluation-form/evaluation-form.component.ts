@@ -26,8 +26,6 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   displayAddRevModal: boolean = false;
   deleteSubscription!: Subscription;
   evaluationForm!: Observable<EvaluationForm>;
-  formCriteria!: FormCriteria;
-  formCriteriaSubscription!: Subscription;
   userId: any;
   criteriaId: any;
 
@@ -44,23 +42,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   // DE MODIFICAT / NU MERGE
-  addComm() {
-    var existingFormCriteria = {
-      name: this.addCommForm.controls.name.value!,
-      choice: this.addCommForm.controls.choice.value!,
-      description: this.addCommForm.controls.description.value!,
-      criteriaComment: this.addCommForm.controls.criteriaComment.value!,
-      criteriaAttachment: this.addCommForm.controls.criteriaAttachment.value!
-    }
-    this.formCriteriaSubscription = this.evaluationFormService.updateFormCriteria(this.criteriaId, existingFormCriteria).subscribe(()=>{
-      this.refreshEvaluationFormList();
-    })
-
-    
-
-    
-    
-  }
+  
 
   addReview() {
     var newReview = new CriteriaReview();

@@ -17,10 +17,10 @@
   <input placeholder="Add Comment" id="float-input" type="text" pInputText formControlName="criteriaComment" [style]="{width: '100%'}"/>
 </form>
 <div class="buttons-container">
-  <button pButton pRipple type="submit" label="Close" (click) = "hideAddRevDialog()" 
+  <button pButton pRipple type="submit" label="Close" (click) = "hideAddCommDialog()" 
     class="modal-button btn-pos p-button-danger"></button>
 
-  <button pButton pRipple type="submit" label="Submit" (click)="addReview()" [disabled]="!addRevForm.valid"
+  <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addCommForm.valid"
     class="modal-button btn-pos p-button-success"></button>
 </div>
 </p-dialog>
