@@ -35,10 +35,10 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.GetEvaluationFormByUserId(id);
         }
 
-        [HttpGet("{id}")]
-        public FormCriteria GetFormCriteriaById(Guid id)
+        [HttpGet("{id}/{criteriaId}")]
+        public FormCriteria GetFormCriteriaById(Guid criteriaId)
         {
-            return this._evaluationFormService.GetFormCriteriaById(id);
+            return this._evaluationFormService.GetFormCriteriaById(criteriaId);
         }
 
 
