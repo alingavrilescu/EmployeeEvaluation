@@ -77,16 +77,6 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     this.evaluationForm = this.evaluationFormService.getEvaluationForms(this.userId);
   }
 
-  showAddCommDialog(formCriteria: FormCriteria) {
-    this.displayAddCommModal = true;
-    if (formCriteria.id) {
-      this.criteriaId = formCriteria.id
-    }
-  }
-  hideAddCommDialog() {
-    this.displayAddCommModal = false;
-  }
-
   showAddRevDialog(id: Guid) {
     this.criteriaId = id;
     this.displayAddRevModal = true;
