@@ -35,6 +35,12 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.GetEvaluationFormByUserId(id);
         }
 
+        [HttpGet("{id}")]
+        public FormCriteria GetFormCriteriaById(Guid id)
+        {
+            return this._evaluationFormService.GetFormCriteriaById(id);
+        }
+
 
         [HttpPost("{id}")]
         public EvaluationForm AddEvaluationForm(Guid id, Guid templateId)
@@ -76,7 +82,7 @@ namespace EmployeeEvaluation.Controllers
 
         //=========================================DE MODIFICAT AICI =========================================
         [HttpPost("{formId}/CriteriaReview")]
-        public CriteriaReviews AddCriteriaComments([FromBody] CriteriaReviewDTO criteriaReview)
+        public CriteriaReviews AddCriteriaReviews([FromBody] CriteriaReviewDTO criteriaReview)
         {
             var criteriaReviewToAdd = new CriteriaReviews
             {
