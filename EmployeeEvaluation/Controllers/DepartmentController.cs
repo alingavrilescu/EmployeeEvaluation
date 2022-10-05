@@ -92,7 +92,12 @@ namespace EmployeeEvaluation.Controllers
         {
             var departmentToEdit = this.departmentService.GetDepartmentById(id);
             departmentToEdit.Name = department.Name;
+            if (departmentToEdit.HeadOfDepartmentId != department.HeadOfDepartmentId)
+            {
+                this.RemoveUserFromDepartment(id, departmentToEdit.HeadOfDepartmentId);
+                this.AddUserInDepartment(id, department.HeadOfDepartmentId);
             departmentToEdit.HeadOfDepartmentId = department.HeadOfDepartmentId;
+            }
             return this.departmentService.UpdateDepartment(departmentToEdit);
         }
         [HttpDelete("{id}")]
