@@ -19,6 +19,7 @@ export class UserDetailsComponent implements OnInit {
   user!: UserDTO;
   project!: Project;
   department!: Department;
+
   sections: string[] = ['C#', 'JavaScript', 'Python'];
   constructor(
     private usersService: UsersService,
@@ -32,18 +33,17 @@ export class UserDetailsComponent implements OnInit {
       this.userId = params.get('id');
       this.usersService.getUserById(this.userId).subscribe((res) => {
         this.user = res;
+        this.departmentsService
+          .getDepartmentById(this.user.departmentId!)
+          .subscribe((res) => {
+            this.department = res;
+          });
+        this.projectsService
+          .getProjectById(this.user.projectId!)
+          .subscribe((res) => {
+            this.project = res;
+          });
       });
     });
-
-    this.projectsService
-      .getProjectById(this.user.projectId!)
-      .subscribe((res) => {
-        this.project = res;
-      });
-    this.departmentsService
-      .getDepartmentById(this.user.departmentId!)
-      .subscribe((res) => {
-        this.department = res;
-      });
   }
 }
