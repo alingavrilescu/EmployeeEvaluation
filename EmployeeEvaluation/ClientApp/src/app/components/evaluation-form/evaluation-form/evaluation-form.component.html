@@ -82,22 +82,3 @@
 </div>
 
 
-
-
-  <!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
-
-<p-dialog header="Add Review" [(visible)]="displayAddRevModal" [modal]="true" [style]="{width: '550px'}" 
-[draggable]="false" [resizable]="false">
-<form [formGroup]="addRevForm">
-  <label for="float-input">Review</label>
-  <br />
-  <input placeholder="Add review" id="float-input" type="text" pInputText formControlName="review" [style]="{width: '100%'}"/>
-</form>
-<div class="buttons-container">
-  <button pButton pRipple type="submit" label="Close" (click) = "hideAddRevDialog()" 
-    class="modal-button btn-pos p-button-danger"></button>
-
-  <button pButton pRipple type="submit" label="Submit" (click)="addReview()" [disabled]="!addRevForm.valid"
-    class="modal-button btn-pos p-button-success"></button>
-</div>
-</p-dialog>

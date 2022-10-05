@@ -1,9 +1,30 @@
-<h2>Comment Section</h2>
+
 
 <!-- ============================================ADD COMM BUTTON========================================= -->
 
 <div class="add-button-container">
-    <button pButton pRipple type="button" label="Help" class="p-button-help" [style]="{width: '150px', height: '40px'}"></button>
+    <h2>Comment Section</h2>
+    <button pButton pRipple icon="pi pi-plus" type="button" label="Add Comm" class="p-button-help" [style]="{width: '155px', height: '40px'}"></button>
 </div>
+
+<!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
+
+<p-dialog header="Add Comm" [(visible)]="displayAddCommModal" [modal]="true" [style]="{width: '550px'}" 
+[draggable]="false" [resizable]="false">
+<form [formGroup]="addCommForm">
+  <label for="float-input">Comment</label>
+  <br />
+  <input placeholder="Add Comment" id="float-input" type="text" pInputText formControlName="criteriaComment" [style]="{width: '100%'}"/>
+</form>
+<div class="buttons-container">
+  <button pButton pRipple type="submit" label="Close" (click) = "hideAddRevDialog()" 
+    class="modal-button btn-pos p-button-danger"></button>
+
+  <button pButton pRipple type="submit" label="Submit" (click)="addReview()" [disabled]="!addRevForm.valid"
+    class="modal-button btn-pos p-button-success"></button>
+</div>
+</p-dialog>
+
+
 
 <h2>Review Section</h2>

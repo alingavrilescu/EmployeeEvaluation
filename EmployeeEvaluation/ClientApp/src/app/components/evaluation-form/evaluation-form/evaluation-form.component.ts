@@ -15,14 +15,6 @@ import { Guid } from 'guid-typescript';
 })
 export class EvaluationFormComponent implements OnInit, OnDestroy {
 
-  addCommForm = new FormGroup({
-    name: new FormControl(''),
-    choice: new FormControl(''),
-    description: new FormControl(''),
-    criteriaComment: new FormControl(''),
-    criteriaAttachment: new FormControl('')
-  });
-
   addRevForm = new FormGroup({
     review: new FormControl('', Validators.required)
   })
@@ -30,7 +22,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   constructor(private evaluationFormService: EvaluationFormService, private activatedRoute: ActivatedRoute) { }
 
 
-  displayAddCommModal: boolean = false;
+  
   displayAddRevModal: boolean = false;
   deleteSubscription!: Subscription;
   evaluationForm!: Observable<EvaluationForm>;

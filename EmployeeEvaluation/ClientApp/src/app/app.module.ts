@@ -53,6 +53,7 @@ import { CriteriaDetailsComponent } from './components/evaluation-form/evaluatio
     FormTemplateComponent,
     ProjectDetailsComponent,
     UserDetailsComponent,
+    CriteriaDetailsComponent,
     EvaluationFormComponent,
     DepartmentDetailsComponent,
     HeadOfDepartmentPageComponent,
