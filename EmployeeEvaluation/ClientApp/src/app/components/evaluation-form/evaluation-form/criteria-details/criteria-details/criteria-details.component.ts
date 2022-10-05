@@ -6,6 +6,7 @@ import { Observable, Subscribable, Subscription } from 'rxjs';
 import { EvaluationFormService } from '../../../../../services/evaluation-form.service';
 import { FormCriteria } from '../../../../../models/form-criteria.model';
 import { subscribeOn } from 'rxjs/operators';
+import { CriteriaReview } from 'src/app/models/criteria-review.model';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   formCriteriaSubscription!: Subscription;
   userId: any;
   displayAddCommModal: boolean = false;
+  displayAddRevModal: boolean = false;
 
   addCommForm = new FormGroup({
     name: new FormControl(''),
@@ -28,6 +30,10 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
     criteriaComment: new FormControl(''),
     criteriaAttachment: new FormControl('')
   });
+
+  addRevForm = new FormGroup({
+    review: new FormControl('', Validators.required)
+  })
 
   constructor(private activatedRoute: ActivatedRoute, private formEvalService: EvaluationFormService)
    { 
@@ -57,6 +63,15 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
     this.hideAddCommDialog();
   }
 
+  addReview() {
+    var newReview = new CriteriaReview();
+    newReview.review = this.addRevForm.controls.review.value!;
+    newReview.formCriteriaId = this.formCriteriaId;
+    this.formEvalService.createCriteriaReview(this.formCriteriaId, newReview).subscribe(() => {
+    });
+    this.hideAddRevDialog();
+  }
+
   getFormCriteriaById() {
     this.formCriteria = this.formEvalService.getFormCriteriaById(this.userId, this.formCriteriaId);
   }
@@ -69,10 +84,17 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
     this.addCommForm.controls.name.setValue(formCriteria.name);
     this.addCommForm.controls.choice.setValue(formCriteria.choice);
     this.addCommForm.controls.description.setValue(formCriteria.description);
-    console.log(formCriteria);
   }
 
   hideAddCommDialog() {
     this.displayAddCommModal = false;
+  }
+  showAddRevDialog() {
+
+    this.displayAddRevModal = true;
+  }
+
+  hideAddRevDialog() {
+    this.displayAddRevModal = false;
   }
 }

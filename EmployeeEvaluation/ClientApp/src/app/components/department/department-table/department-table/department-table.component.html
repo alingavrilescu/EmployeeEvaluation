@@ -1,5 +1,3 @@
-<!---------------------------- BUTTONS ------------------------------>
-<!-- <app-department-buttons></app-department-buttons> -->
 <!---------------------------- CONTAINER OF CARDS ------------------------------>
 <div style="display: flex; flex-direction: column; margin-top: 50px">
   <button
@@ -16,9 +14,8 @@
 <div style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px">
   <p-card *ngFor="let department of departments" [style]="{ width: '360px' }">
     <h3>{{ department.name }}</h3>
-    <div style="border-bottom: 1px solid darkgrey">
-      <b>Head of department: </b>
-      {{ getNameOfHOD(department.headOfDepartmentId) }}
+    <div style="border-bottom: 1px solid darkgrey" *ngIf="getHODepForCards(HODepList |async, department.id); let HOD;">
+      <b>Head of department: </b>{{HOD.name}}
     </div>
     <div
       style="
@@ -29,25 +26,10 @@
         margin-top: 20px;
       "
     >
-      <!-- <i
-        class="pi pi-folder-open"
-        style="cursor: pointer"
-        routerLink="{{ this.department.id }}/projects"
-      ></i>
-      <i
-        class="pi pi-users"
-        style="cursor: pointer"
-        routerLink="details/{{ this.department.id }}"
-      ></i>
-      <i
-        class="pi pi-book"
-        style="cursor: pointer"
-        routerLink="{{ this.department.id }}/form-templates"
-      ></i> -->
       <i
         class="pi pi-pencil"
         style="cursor: pointer"
-        (click)="showEditDialog(department.id!, department.headOfDepartmentId!)"
+        (click)="showEditDialog(department)"
       ></i>
       <i
         class="pi pi-trash"
@@ -176,7 +158,7 @@
 >
   <div style="display: flex; flex-direction: column; margin-top: 10px">
     <form [formGroup]="addDepartmentFormGroup">
-      <span class="p-float-label" style="margin-top: 30px">
+      <span class="p-float-label" style="margin-top: 30px; margin-bottom: 30px;">
         <input
           id="float-input"
           type="text"
@@ -186,24 +168,13 @@
         />
         <label for="float-input">Name of Department</label>
       </span>
-      <span class="p-float-label" style="margin-top: 30px">
-        <p-dropdown
-          autoWidth="false"
-          [style]="{ width: '100%' }"
-          [options]="usersHODNames"
-          formControlName="headOfDepartmentControl"
-          placeholder="Select Head of Department"
-        ></p-dropdown>
-
-        <!-- <input
-          id="float-input"
-          type="text"
-          pInputText
-          formControlName="headOfDepartmentControl"
-          style="width: 100%"
-        />
-        <label for="float-input">Head of Department</label> -->
-      </span>
+      <p-dropdown
+        [style]="{ width: '100%' }"
+        [options]="HODepsWithoutDep"
+        optionLabel="name" optionValue="id"
+        formControlName="headOfDepartmentControl"
+        placeholder="Select Head of Department"
+      ></p-dropdown>
     </form>
   </div>
   <div
@@ -226,7 +197,7 @@
       type="button"
       label="Submit"
       class="p-button-success"
-      (click)="httpAddDepartment()"
+      (click)="addDepartment()"
       [disabled]="!addDepartmentFormGroup.valid"
     ></button>
   </div>
@@ -256,7 +227,8 @@
         <p-dropdown
           autoWidth="false"
           [style]="{ width: '100%' }"
-          [options]="usersHODNames"
+          [options]="HODeps"
+          optionLabel="name" optionValue="id"
           formControlName="headOfDepartmentControl"
         ></p-dropdown>
       </span>
@@ -282,9 +254,8 @@
       type="button"
       label="Submit"
       class="p-button-success"
-      style=""
-      (click)="httpEditDepartment()"
-      [disabled]="!addDepartmentFormGroup.valid"
+      (click)="editDepartment()"
+      [disabled]="!editDepartmentFormGroup.valid"
     ></button>
   </div>
 </p-dialog>
@@ -319,14 +290,13 @@
         label="Cancel"
         class="p-button-danger"
         (click)="hideDeleteDialog()"
-        style=""
       ></button>
       <button
         pButton
         type="button"
         label="Delete"
         class="p-button-success"
-        (click)="httpDeleteDepartment()"
+        (click)="deleteDepartment()"
       ></button>
     </div>
   </div>

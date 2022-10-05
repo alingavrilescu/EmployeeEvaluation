@@ -7,6 +7,11 @@
     <button pButton pRipple icon="pi pi-plus" type="button" label="Add Comm" (click)="showAddCommDialog(formCrit)" class="p-button-help" [style]="{width: '155px', height: '40px'}"></button>
 </div>
 
+<div class="add-button-container">
+  <h2>Review</h2>
+  <button pButton pRipple icon="pi pi-plus" type="button" label="Add Review" (click)="showAddRevDialog()" class="p-button-help" [style]="{width: '155px', height: '40px'}"></button>
+</div>
+
 <!-- ==================================================MODAL FOR ADDING A REVIEW==================================================================== -->
 
 <p-dialog header="Add Comm" [(visible)]="displayAddCommModal" [modal]="true" [style]="{width: '550px'}" 
@@ -28,3 +33,20 @@
 
 
 <h2>Review Section</h2>
+
+
+<p-dialog header="Add Rev" [(visible)]="displayAddRevModal" [modal]="true" [style]="{width: '550px'}" 
+[draggable]="false" [resizable]="false">
+<form [formGroup]="addRevForm">
+  <label for="float-input">Comment</label>
+  <br />
+  <input placeholder="Add Review" id="float-input" type="text" pInputText formControlName="review" [style]="{width: '100%'}"/>
+</form>
+<div class="buttons-container">
+  <button pButton pRipple type="submit" label="Close" (click) = "hideAddRevDialog()" 
+    class="modal-button btn-pos p-button-danger"></button>
+
+  <button pButton pRipple type="submit" label="Submit" (click)="addReview()" [disabled]="!addRevForm.valid"
+    class="modal-button btn-pos p-button-success"></button>
+</div>
+</p-dialog>
