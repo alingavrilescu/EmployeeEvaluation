@@ -45,7 +45,6 @@ export class DepartmentDetailsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.departmentId = params.get('id');
       this.getUsersOfDepartment();
-      // this.getNumberOfUsers();
     });
   }
   getUsersOfDepartment() {
@@ -58,16 +57,6 @@ export class DepartmentDetailsComponent implements OnInit {
       },
     });
   }
-  // getNumberOfUsers() {
-  //   this.numberOfMembers = this.users.length;
-  //   this.numberOfProjects = this.projects.length;
-  //   this.users.forEach((user) => {
-  //     if (user.role === 'Team Lead') this.numberOfProjectLeads += 1;
-  //     else if (user.role === 'Project Manager')
-  //       this.numberOfProjectManagers += 1;
-  //     else if (user.role === 'Development Member') this.numberOfDevelopers += 1;
-  //   });
-  // }
   getUsersWithoutDepartment() {
     this.usersService.getUsersWithoutDepartment().subscribe({
       next: (users) => {

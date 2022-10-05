@@ -86,21 +86,26 @@
 
 
 <!-- ================================CARD================================= -->
-
-<div class="card-container" *ngFor="let project of (projectsList | async)">
- <p-card class="card-content" header={{project.name}} [style]="{width: '360px'}" styleClass="p-card-shadow">
-  <ng-template pTemplate="subtitle">
-    <div *ngIf="getPMForProject((pmsList | async), project.id); let pm; else elseBlock"> <strong>Project Manager:</strong> {{pm?.name}}</div>
-    <ng-template #elseBlock><strong>Project Manager:</strong> No PM assigned</ng-template>
-    <p><strong>Team Lead:</strong> {{getTLForProject((tlsList |async), project.id)?.name}}</p>
-  </ng-template>
-    <div class="card-buttons">
-      <div title="More Details" class="card-button pi pi-bars" routerLink="{{project.id}}"></div>
-      <div title="Edit Project" class="card-button pi pi-pencil" (click)="showEditDialog(project)"></div>
-      <div title="Delete Project" class="card-button pi pi-trash" (click)="showDeleteDialog(project)"></div>
-    </div>
-    <ng-template pTemplate="content">
-      <textarea class="textbox" rows="5" cols="40" readonly>{{project.description}}</textarea>
+<div *ngIf="(projectsList|async); let listOfProjects;">
+  <div *ngIf="listOfProjects.length===0">
+    <h3>There are currently no projects in this department.</h3>
+    <h3>You can add projects using the button on the top right corner.</h3>
+  </div>
+  <div class="card-container" *ngFor="let project of listOfProjects">
+  <p-card class="card-content" header={{project.name}} [style]="{width: '360px'}" styleClass="p-card-shadow">
+    <ng-template pTemplate="subtitle">
+      <div *ngIf="getPMForProject((pmsList | async), project.id); let pm; else elseBlock"> <strong>Project Manager:</strong> {{pm?.name}}</div>
+      <ng-template #elseBlock><strong>Project Manager:</strong> No PM assigned</ng-template>
+      <p><strong>Team Lead:</strong> {{getTLForProject((tlsList |async), project.id)?.name}}</p>
     </ng-template>
-  </p-card> 
+      <div class="card-buttons">
+        <div title="More Details" class="card-button pi pi-bars" routerLink="{{project.id}}"></div>
+        <div title="Edit Project" class="card-button pi pi-pencil" (click)="showEditDialog(project)"></div>
+        <div title="Delete Project" class="card-button pi pi-trash" (click)="showDeleteDialog(project)"></div>
+      </div>
+      <ng-template pTemplate="content">
+        <textarea class="textbox" rows="5" cols="40" readonly>{{project.description}}</textarea>
+      </ng-template>
+    </p-card> 
+  </div>
 </div>
