@@ -15,14 +15,6 @@ import { Guid } from 'guid-typescript';
 })
 export class EvaluationFormComponent implements OnInit, OnDestroy {
 
-  addCommForm = new FormGroup({
-    name: new FormControl(''),
-    choice: new FormControl(''),
-    description: new FormControl(''),
-    criteriaComment: new FormControl(''),
-    criteriaAttachment: new FormControl('')
-  });
-
   addRevForm = new FormGroup({
     review: new FormControl('', Validators.required)
   })
@@ -30,12 +22,10 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   constructor(private evaluationFormService: EvaluationFormService, private activatedRoute: ActivatedRoute) { }
 
 
-  displayAddCommModal: boolean = false;
+  
   displayAddRevModal: boolean = false;
   deleteSubscription!: Subscription;
   evaluationForm!: Observable<EvaluationForm>;
-  formCriteria!: FormCriteria;
-  formCriteriaSubscription!: Subscription;
   userId: any;
   criteriaId: any;
 
@@ -52,23 +42,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   }
 
   // DE MODIFICAT / NU MERGE
-  addComm() {
-    var existingFormCriteria = {
-      name: this.addCommForm.controls.name.value!,
-      choice: this.addCommForm.controls.choice.value!,
-      description: this.addCommForm.controls.description.value!,
-      criteriaComment: this.addCommForm.controls.criteriaComment.value!,
-      criteriaAttachment: this.addCommForm.controls.criteriaAttachment.value!
-    }
-    this.formCriteriaSubscription = this.evaluationFormService.updateFormCriteria(this.criteriaId, existingFormCriteria).subscribe(()=>{
-      this.refreshEvaluationFormList();
-    })
-
-    
-
-    
-    
-  }
+  
 
   addReview() {
     var newReview = new CriteriaReview();
@@ -83,16 +57,6 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   refreshEvaluationFormList() {
     this.evaluationForm = this.evaluationFormService.getEvaluationForms(this.userId);
-  }
-
-  showAddCommDialog(formCriteria: FormCriteria) {
-    this.displayAddCommModal = true;
-    if (formCriteria.id) {
-      this.criteriaId = formCriteria.id
-    }
-  }
-  hideAddCommDialog() {
-    this.displayAddCommModal = false;
   }
 
   showAddRevDialog(id: Guid) {

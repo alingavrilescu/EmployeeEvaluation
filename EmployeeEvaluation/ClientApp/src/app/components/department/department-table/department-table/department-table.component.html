@@ -3,7 +3,8 @@
 <!---------------------------- CONTAINER OF CARDS ------------------------------>
 <div style="display: flex; flex-direction: column; margin-top: 50px">
   <button
-    pButton pRipple
+    pButton
+    pRipple
     label="Add Department"
     style="align-self: flex-end"
     type="button"
@@ -46,7 +47,7 @@
       <i
         class="pi pi-pencil"
         style="cursor: pointer"
-        (click)="showEditDialog(department.id!)"
+        (click)="showEditDialog(department.id!, department.headOfDepartmentId!)"
       ></i>
       <i
         class="pi pi-trash"

@@ -1,183 +1,173 @@
-  <!---------------------- Delete Form Template Modal ------------------------>
-  
-  <p-dialog [(visible)]="displayFormTemplateDeleteModal" [modal]="true">
-    <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
-      <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
-      <h3 style="margin-top: 10px; text-align: center">Are you sure you want to delete?</h3>
-      <p style="margin-top: 10px; text-align: center">
-        Do you realy want to delete this form template? This process cannot be undone.
-      </p>
-      <div style="
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin-top: 40px;
-        ">
-        <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="hideDeleteDialog()"></button>
-        <button pButton type="button" label="Delete" class="p-button-danger" (click)="deleteFormTemplate()"></button>
-      </div>
-    </div>
-  </p-dialog>
-  
-  <!-- ------------------ Edit Form Template Modal ------------------------ -->
-  
-  <p-dialog header="Edit Form Template" [(visible)]="displayFormTemplateEditModal"
-    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [style]="{ width: '30vw', height: '75vh' }" [modal]="true"
+<!---------------------- Delete Form Template Modal ------------------------>
+
+<p-dialog header="Header" [(visible)]="displayFormTemplateDeleteModal" [modal]="true" [style]="{width: '550px'}"
     [draggable]="false" [resizable]="false">
-    <form [formGroup]="editFormTemplateFormGroup">
-      <br />
-      <label for="float-input" class="required">Name</label>
-      <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText
-        formControlName="nameControl" [style]="{width: '100%'}" />
-      <br />
-      <br />
-      <label for="float-input" class="required">Software developer type</label>
-      <select formControlName="typeControl">
-        <option *ngFor="let t of types" [ngValue]="t">{{t}}</option>
-      </select>
-    </form>
-    <div class="buttons-container">
-      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialog()"></button>
-      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
-        (click)="updateFormTemplate()" [disabled]="!editFormTemplateFormGroup.valid"></button>
-    </div>
-  </p-dialog>
-  <!-- ================== SECTION MODALS ======================== -->
-  
-  <!-- --------------------- Add Section Modal ------------------------ -->
-  
-  <p-dialog header="Add Section" [(visible)]="displaySectionAddModal"
-    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
-    <div style="display: flex; flex-direction: column;">
-      <form [formGroup]="addSectionGroup">
-        <span class="p-float-label" style="margin-top: 30px">
-          <input id="float-input" type="text" pInputText formControlName="nameControl" />
-          <label for="float-input">Section's name</label>
-        </span>
-        <br>
-        <label class="required" for="descriptionControl">Section description</label>
-        <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
-          formControlName="descriptionControl" rows="5" cols="61"></textarea>
-      </form>
-    </div>
-    <div class="buttons-container">
-      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideAddDialogSection()"></button>
-      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
-        (click)="addFormTemplateSection()" [disabled]="!addSectionGroup.valid"></button>
-    </div>
-  </p-dialog>
-  
-  <!-- ----------------------------Delete Section Modal -------------------------- -->
-  
-  <p-dialog [(visible)]="displaySectionDeleteModal" [modal]="true">
-    <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
-      <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
-      <h3 style="margin-top: 10px; text-align: center">Are you sure you want to delete?</h3>
-      <p style="margin-top: 10px; text-align: center">
-        Do you realy want to delete this form template section? This process cannot be undone.
+    <div class="confirm-dialogue">
+      <i class="confirm-icon pi pi-times-circle"></i>
+      <h3 class="confirm-header">Are you sure?</h3>
+      <p class="confirm-text m-0">
+        Do you realy want to delete this form template? This process cannot be
+        undone.
       </p>
-      <div style="
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin-top: 40px;
-        ">
-        <button pButton type="button" label="Cancel" class="p-button-secondary"
-          (click)="hideDeleteDialogSection()"></button>
-        <button pButton type="button" label="Delete" class="p-button-danger" (click)="deleteSection()"></button>
+      <div class="confirm-buttons-dialogue">
+        <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialog()"></button>
+        <button pButton type="button" label="Delete" class="p-button-success" (click)="deleteFormTemplate()"></button>
       </div>
     </div>
-  </p-dialog>
-  <!-- -------------------- Edit Section Modal ------------------------------ -->
-  
-  <p-dialog header="Edit Form Template Section" [(visible)]="displaySectionEditModal"
-    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true" [draggable]="false" [resizable]="false">
-    <form [formGroup]="editSectionFormGroup">
-      <br />
-      <label for="float-input" class="required">Section's name</label>
-      <input [value]="editSectionFormGroup.controls.nameControl" id="float-input" type="text" pInputText
-        formControlName="nameControl" [style]="{width: '100%'}" />
-      <br />
-      <br />
-      <label class="required" for="typeControl">Section description</label>
+</p-dialog>
+
+<!-- ------------------ Edit Form Template Modal ------------------------ -->
+
+
+<p-dialog header="Edit Form Template" [(visible)]="displayFormTemplateEditModal"
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
+  <form [formGroup]="editFormTemplateFormGroup">
+    <br />
+    <label for="float-input" class="required">Name</label>
+    <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText
+      formControlName="nameControl" [style]="{width: '100%'}" />
+    <br />
+    <br />
+    <label for="float-input" class="required">Software developer type</label>
+    <select formControlName="typeControl">
+      <option *ngFor="let t of types" [ngValue]="t">{{t}}</option>
+    </select>
+  </form>
+  <div class="buttons-container">
+    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialog()"></button>
+    <button pButton type="button" label="Submit" class="p-button-success"
+      (click)="updateFormTemplate()" [disabled]="!editFormTemplateFormGroup.valid"></button>
+  </div>
+</p-dialog>
+<!-- ================== SECTION MODALS ======================== -->
+
+<!-- --------------------- Add Section Modal ------------------------ -->
+
+<p-dialog header="Add Section" [(visible)]="displaySectionAddModal"
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
+  <div style="display: flex; flex-direction: column;">
+    <form [formGroup]="addSectionGroup">
+      <span class="p-float-label" style="margin-top: 30px">
+        <input id="float-input" type="text" pInputText formControlName="nameControl" />
+        <label for="float-input">Section's name</label>
+      </span>
+      <br>
+      <label class="required" for="descriptionControl">Section description</label>
       <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
         formControlName="descriptionControl" rows="5" cols="61"></textarea>
     </form>
-    <div class="buttons-container">
-      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialogSection()"></button>
-      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
-        (click)="updateTemplateSection()" [disabled]="!editSectionFormGroup.valid"></button>
-    </div>
-  </p-dialog>
-  <!-- ====================== CRITERION ================================= -->
-  
-  <!-- --------------------- Add Criterion Modal  --------------------------- -->
-  
-  <p-dialog header="Add Criterion" [(visible)]="displayCriterionAddModal"
-    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true">
-    <div style="display: flex; flex-direction: column;">
-      <form [formGroup]="addCriterionFormGroup">
-        <span class="p-float-label" style="margin-top: 30px">
-          <input id="float-input" type="text" pInputText formControlName="nameControl" />
-          <label for="float-input">Criterion's name</label>
-        </span>
-        <br>
-        <label class="required" for="typeControl">Criterion description</label>
-        <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
-          formControlName="descriptionControl" rows="5" cols="61"></textarea>
-      </form>
-    </div>
-    <div class="buttons-container">
-      <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
-        class="modal-button btn-pos p-button-danger"></button>
-      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
-        (click)="addCriterion()" [disabled]="!addCriterionFormGroup.valid"></button>
-    </div>
-  </p-dialog>
-  
-  <!---------------------- Delete Criterion Modal ------------------------>
-  
-  <p-dialog [(visible)]="displayCriterionDeleteModal" [modal]="true">
-    <div style="display: flex; flex-direction: column; width: 100%; height: 100%">
-      <i class="pi pi-times-circle" style="font-size: 7rem; align-self: center"></i>
-      <h3 style="margin-top: 10px; text-align: center">Are you sure you want to delete?</h3>
-      <p style="margin-top: 10px; text-align: center">
-        Do you realy want to delete this form template criterion? This process cannot be undone.
+  </div>
+  <div class="buttons-container">
+    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideAddDialogSection()"></button>
+    <button pButton type="button" label="Submit" class="p-button-success"
+      (click)="addFormTemplateSection()" [disabled]="!addSectionGroup.valid"></button>
+  </div>
+</p-dialog>
+
+<!-- ----------------------------Delete Section Modal -------------------------- -->
+
+<p-dialog header="Header" [(visible)]="displaySectionDeleteModal" [modal]="true" [style]="{width: '550px'}"
+    [draggable]="false" [resizable]="false">
+    <div class="confirm-dialogue">
+      <i class="confirm-icon pi pi-times-circle"></i>
+      <h3 class="confirm-header">Are you sure?</h3>
+      <p class="confirm-text m-0">
+        Do you realy want to delete this section? This process cannot be
+        undone.
       </p>
-      <div style="
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          margin-top: 40px;
-        ">
-        <button pButton type="button" label="Cancel" class="p-button-secondary"
-          (click)="hideDeleteDialogCriterion()"></button>
-        <button pButton type="button" label="Delete" class="p-button-danger" (click)="deleteCriterion()"></button>
+      <div class="confirm-buttons-dialogue">
+        <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialogSection()"></button>
+        <button pButton type="button" label="Delete" class="p-button-success" (click)="deleteSection()"></button>
       </div>
     </div>
-  </p-dialog>
-  <!-- ------------------ Edit Criterion Modal ------------------------ -->
-  
-  
-  <p-dialog header="Edit Form Template Criterion" [(visible)]="displayCriterionEditModal"
-    [breakpoints]="{ '960px': '75vw', '640px': '100vw' }" [modal]="true" [draggable]="false" [resizable]="false">
-    <form [formGroup]="editCriterionFormGroup">
-      <br />
-      <label for="float-input" class="required">Crieterion's name</label>
-      <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText
-        formControlName="nameControl" [style]="{width: '100%'}" />
-      <br />
-      <br />
+</p-dialog>
+<!-- -------------------- Edit Section Modal ------------------------------ -->
+
+<p-dialog header="Edit Form Template Section" [(visible)]="displaySectionEditModal"
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
+  <form [formGroup]="editSectionFormGroup">
+    <br />
+    <label for="float-input" class="required">Section's name</label>
+    <input [value]="editSectionFormGroup.controls.nameControl" id="float-input" type="text" pInputText
+      formControlName="nameControl" [style]="{width: '100%'}" />
+    <br />
+    <br />
+    <label class="required" for="typeControl">Section description</label>
+    <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
+      formControlName="descriptionControl" rows="5" cols="61"></textarea>
+  </form>
+  <div class="buttons-container">
+    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialogSection()"></button>
+    <button pButton type="button" label="Submit" class="p-button-success"
+      (click)="updateTemplateSection()" [disabled]="!editSectionFormGroup.valid"></button>
+  </div>
+</p-dialog>
+<!-- ====================== CRITERION ================================= -->
+
+<!-- --------------------- Add Criterion Modal  --------------------------- -->
+
+<p-dialog header="Add Criterion" [(visible)]="displayCriterionAddModal"
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
+  <div style="display: flex; flex-direction: column;">
+    <form [formGroup]="addCriterionFormGroup">
+      <span class="p-float-label" style="margin-top: 30px">
+        <input id="float-input" type="text" pInputText formControlName="nameControl" />
+        <label for="float-input">Criterion's name</label>
+      </span>
+      <br>
       <label class="required" for="typeControl">Criterion description</label>
       <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
         formControlName="descriptionControl" rows="5" cols="61"></textarea>
     </form>
-    <div class="buttons-container">
-      <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialogCriterion()"></button>
-      <button pButton type="button" label="Submit" class="p-button-success" style="margin-left: 45%"
-        (click)="updateCriterion()" [disabled]="!editCriterionFormGroup.valid"></button>
+  </div>
+  <div class="buttons-container">
+    <button pButton pRipple type="submit" label="Close" (click) = "hideAddDialog()" 
+      class="modal-button btn-pos p-button-danger"></button>
+    <button pButton type="button" label="Submit" class="p-button-success" 
+      (click)="addCriterion()" [disabled]="!addCriterionFormGroup.valid"></button>
+  </div>
+</p-dialog>
+
+<!---------------------- Delete Criterion Modal ------------------------>
+
+<p-dialog header="Header" [(visible)]="displayCriterionDeleteModal" [modal]="true" [style]="{width: '550px'}"
+    [draggable]="false" [resizable]="false">
+    <div class="confirm-dialogue">
+      <i class="confirm-icon pi pi-times-circle"></i>
+      <h3 class="confirm-header">Are you sure?</h3>
+      <p class="confirm-text m-0">
+        Do you realy want to delete this section? This process cannot be
+        undone.
+      </p>
+      <div class="confirm-buttons-dialogue">
+        <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideDeleteDialogCriterion()"></button>
+        <button pButton type="button" label="Delete" class="p-button-success" (click)="deleteCriterion()"></button>
+      </div>
     </div>
-  </p-dialog>
+</p-dialog>
+<!-- ------------------ Edit Criterion Modal ------------------------ -->
+
+
+<p-dialog header="Edit Form Template Criterion" [(visible)]="displayCriterionEditModal"
+[modal]="true" [style]="{width: '550px'}" [draggable]="false" [resizable]="false">
+  <form [formGroup]="editCriterionFormGroup">
+    <br />
+    <label for="float-input" class="required">Crieterion's name</label>
+    <input [value]="editFormTemplateFormGroup.controls.nameControl" id="float-input" type="text" pInputText
+      formControlName="nameControl" [style]="{width: '100%'}" />
+    <br />
+    <br />
+    <label class="required" for="typeControl">Criterion description</label>
+    <textarea placeholder="Description" id="float-input" class="textbox form-control input-textarea"
+      formControlName="descriptionControl" rows="5" cols="61"></textarea>
+  </form>
+  <div class="buttons-container">
+    <button pButton type="button" label="Cancel" class="p-button-danger" (click)="hideEditDialogCriterion()"></button>
+    <button pButton type="button" label="Submit" class="p-button-success" 
+      (click)="updateCriterion()" [disabled]="!editCriterionFormGroup.valid"></button>
+  </div>
+</p-dialog>
+
   <!-- ------------------- ACCORDION NG PRIME --------------------- -->
 
   <div *ngIf="formTemplate|async; let formTemplate">
