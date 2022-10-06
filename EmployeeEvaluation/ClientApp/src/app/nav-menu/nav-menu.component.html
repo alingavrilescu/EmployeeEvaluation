@@ -18,30 +18,14 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li *ngIf="(shouldDisplayUsers$ | async) === true" class="nav-item" [routerLinkActive]="['link-active']">
+        class="navbar-collapse collapse d-sm-inline-flex justify-content-end" [ngClass]="{ show: isExpanded }">
+        <ul class="navbar-nav flex-grow" *ngIf="(shouldDisplayUsers$ | async) === true">
+          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/users']">Users</a>
           </li>
-          <li>
-            <a class="nav-link text-dark" [routerLink]="['/departments']"
-              >Departments</a
-            >
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/departments']">Departments</a>
           </li>
-          <!-- <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/projects']"
-              >Projects</a
-            >
-          </li> -->
         </ul>
         <app-login-menu></app-login-menu>
       </div>

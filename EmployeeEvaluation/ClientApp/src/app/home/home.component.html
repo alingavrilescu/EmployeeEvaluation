@@ -1,10 +1,2 @@
-
-
-<div *ngIf="(isHeadOfDept$ | async)">
-    <app-head-of-department-page></app-head-of-department-page>
-</div>
-<div *ngIf="(isTeamLead$ | async)">
-    TeamLead
-</div>
-
-
+<div class="d-none">{{(connectedUserId | async)}}</div>
+<div class="d-none">{{redirectUser((loggedUser | async))}}></div>

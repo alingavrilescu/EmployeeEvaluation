@@ -15,9 +15,7 @@ export class UsersService {
     return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}`);
   }
   public getUserById(id: Guid): Observable<UserDTO> {
-    return this.httpClient.get<UserDTO>(
-      `${environment.apiUrl}/${this.url}/${id}`
-    );
+    return this.httpClient.get<UserDTO>(`${environment.apiUrl}/${this.url}/${id}`);
   }
 
   public getUsersOfDepartment(depId: Guid): Observable<UserDTO[]> {

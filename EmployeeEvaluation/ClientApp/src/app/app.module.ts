@@ -87,28 +87,77 @@ import { CriteriaDetailsComponent } from './components/evaluation-form/evaluatio
     RadioButtonModule,
     TableModule,
     RouterModule.forRoot([
-      { path: 'departments/:depId/projects', component: ProjectsComponent },
-      { path: 'departments/details/project-leads/:id', component: ProjectLeadsComponent },
-      { path: 'departments/details/project-managers/:id', component: ProjectManagersComponent },
-      { path: 'departments/details/developers/:id', component: DevelopersComponent },
-      { path: 'departments/:depId/projects/:proId',component: ProjectDetailsComponent},
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      {
-        path: 'users',
-        component: UsersTableComponent,
-        canActivate: [AuthorizeGuard],
+      { path: 'departments', component: DepartmentTableComponent, canActivate:[AuthorizeGuard],
         data: {
-          roles: [DefaultRoles.Admin, DefaultRoles.HR],
-        },
+          roles: [DefaultRoles.Admin, DefaultRoles.DevelopmentManager]
+        }
       },
-      { path: 'departments', component: DepartmentTableComponent },
-      { path: 'departments/:id/form-templates',component: FormTemplateComponent },
-      { path: 'departments/:id/form-templates/:ftId',component: FormTemplateDetailsComponent },
-      { path: 'users/userDetails/:id', component: UserDetailsComponent },
-      { path: 'evaluation-form/user/:id', component: EvaluationFormComponent },
-      { path: 'evaluation-form/user/:id/criteria-details/:criteriaId', component: CriteriaDetailsComponent},
-      { path: 'departments/details/:id', component: DepartmentDetailsComponent },
-      { path: 'head-of-department', component: HeadOfDepartmentPageComponent },
+      { path: 'departments/details/project-leads/:id', component: ProjectLeadsComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.DevelopmentManager]
+        }
+      },
+      { path: 'departments/details/project-managers/:id', component: ProjectManagersComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.DevelopmentManager]
+        }
+      },
+      { path: 'departments/details/developers/:id', component: DevelopersComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.DevelopmentManager]
+        }
+      },
+      { path: 'departments/details/:id', component: DepartmentDetailsComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.DevelopmentManager]
+        }
+      },
+      { path: 'departments/:depId/projects', component: ProjectsComponent, canActivate:[AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager]
+        }
+      },
+      { path: 'departments/:depId/projects/:proId', component: ProjectDetailsComponent, canActivate:[AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.ProjectManager, DefaultRoles.TeamLead , DefaultRoles.DevelopmentManager, DefaultRoles.HeadOfDepartment],
+        }
+      },
+      { path: 'departments/:id/form-templates', component: FormTemplateComponent, canActivate:[AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager]
+        }
+      },
+      { path: 'departments/:id/form-templates/:ftId',component: FormTemplateDetailsComponent, canActivate:[AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager]
+        }
+      },
+      { path: 'users', component: UsersTableComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.HR]
+        }
+      },
+      { path: 'users/userDetails/:id', component: UserDetailsComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager, DefaultRoles.ProjectManager, DefaultRoles.TeamLead, DefaultRoles.Development]
+        }
+      },  
+      { path: 'evaluation-form/user/:id', component: EvaluationFormComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager, DefaultRoles.ProjectManager, DefaultRoles.TeamLead, DefaultRoles.Development]
+        }
+      }, 
+      { path: 'evaluation-form/user/:id/criteria-details/:criteriaId', component: CriteriaDetailsComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager, DefaultRoles.ProjectManager, DefaultRoles.TeamLead, DefaultRoles.Development]
+        }
+      }, 
+      { path: 'head-of-department', component: HeadOfDepartmentPageComponent, canActivate: [AuthorizeGuard],
+        data: {
+          roles: [DefaultRoles.HeadOfDepartment]
+        }
+      },
     ]),
   ],
   providers: [
