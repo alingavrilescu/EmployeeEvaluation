@@ -5,8 +5,9 @@ import { Guid } from 'guid-typescript';
 import { Observable, Subscribable, Subscription } from 'rxjs';
 import { EvaluationFormService } from '../../../../../services/evaluation-form.service';
 import { FormCriteria } from '../../../../../models/form-criteria.model';
-import { subscribeOn } from 'rxjs/operators';
+import { subscribeOn, tap } from 'rxjs/operators';
 import { CriteriaReview } from 'src/app/models/criteria-review.model';
+import { FormSection } from 'src/app/models/form-section.model';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   userId: any;
   displayAddCommModal: boolean = false;
   displayAddRevModal: boolean = false;
+  formSection!: Observable<FormSection>;
 
   addCommForm = new FormGroup({
     name: new FormControl(''),
@@ -46,8 +48,13 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getFormCriteriaById();
   }
+
   ngOnDestroy(): void {
     this.formCriteriaSubscription?.unsubscribe();
+  }
+
+  refresh(){
+    window.location.reload();
   }
 
   addComm() {
@@ -62,6 +69,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
     this.formCriteriaSubscription = this.formEvalService.updateFormCriteria(this.formCriteriaId, existingFormCriteria).subscribe(()=>{
     })
     this.hideAddCommDialog();
+    this.refresh();
   }
 
   addReview() {
@@ -71,10 +79,14 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
     this.formEvalService.createCriteriaReview(this.formCriteriaId, newReview).subscribe(() => {
     });
     this.hideAddRevDialog();
+    this.refresh();
   }
 
   getFormCriteriaById() {
-    this.formCriteria = this.formEvalService.getFormCriteriaById(this.userId, this.formCriteriaId);
+    this.formCriteria = this.formEvalService.getFormCriteriaById(this.userId, this.formCriteriaId).pipe(tap((fc)=>{
+      if(fc.comment)
+        this.addCommForm.controls.criteriaComment.setValue(fc.comment);
+    }));
   }
 
   showAddCommDialog(formCriteria: FormCriteria) {
