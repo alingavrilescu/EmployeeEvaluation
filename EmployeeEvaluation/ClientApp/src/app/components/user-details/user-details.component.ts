@@ -43,13 +43,16 @@ export class UserDetailsComponent implements OnInit {
       this.userId = params.get('id');
       this.usersService.getUserById(this.userId).subscribe((res) => {
         this.user = res;
-        this.departmentsService
-          .getDepartmentById(this.user.departmentId!)
+        if(this.user.departmentId){
+          this.departmentsService
+          .getDepartmentById(this.user.departmentId)
           .subscribe((res) => {
             this.department = res;
           });
-        this.projectsService
-          .getProjectById(this.user.projectId!)
+        }
+        if(this.user.projectId){
+          this.projectsService
+          .getProjectById(this.user.projectId)
           .subscribe((res) => {
             this.project = res;
           });

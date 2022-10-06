@@ -35,10 +35,10 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.GetEvaluationFormByUserId(id);
         }
 
-        [HttpGet("{id}")]
-        public FormCriteria GetFormCriteriaById(Guid id)
+        [HttpGet("{id}/criteria-details/{criteriaId}")]
+        public FormCriteria GetFormCriteriaById(Guid criteriaId)
         {
-            return this._evaluationFormService.GetFormCriteriaById(id);
+            return this._evaluationFormService.GetFormCriteriaById(criteriaId);
         }
 
 
@@ -93,12 +93,22 @@ namespace EmployeeEvaluation.Controllers
         }
 
         //=========================================DE MODIFICAT AICI =========================================
-        [HttpPut("{formId}/FormCriteria")]
+        [HttpPut("{criteriaId}/FormCriteria")]
         public FormCriteria UpdateCriteriaComment(Guid criteriaId,[FromBody] FormCriteriaDTO formCriteria)
         {
             var criteriaToUpdate = this._evaluationFormService.GetFormCriteriaById(criteriaId);
-            criteriaToUpdate.Comment = formCriteria.Comment;
-            criteriaToUpdate.Attachment = formCriteria.Attachment;
+            if (formCriteria.Choice != null)
+            {
+                criteriaToUpdate.Choice = formCriteria.Choice;
+            }
+            if (formCriteria.Comment != null)
+            {
+                criteriaToUpdate.Comment = formCriteria.Comment;
+            }
+            if (formCriteria.Attachment != null)
+            {
+                criteriaToUpdate.Attachment = formCriteria.Attachment;
+            }
 
             return this._evaluationFormService.UpdateFormCriteria(criteriaToUpdate);
         }

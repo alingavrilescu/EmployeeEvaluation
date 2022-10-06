@@ -64,6 +64,10 @@ export class UsersService {
     return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/head-of-dep`);
   }
 
+  public getHODep(depId:Guid): Observable<UserDTO[]> {
+    return this.httpClient.get<UserDTO[]>(`${environment.apiUrl}/${this.url}/${depId}/head-of-dep`);
+  }
+
   public addUser(newUser: UserDTO): Observable<UserDTO> {
     return this.httpClient.post<UserDTO>(`${environment.apiUrl}/${this.url}`,newUser);
   }

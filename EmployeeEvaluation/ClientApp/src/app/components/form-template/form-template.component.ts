@@ -16,7 +16,7 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./form-template.component.css'],
 })
 
-export class FormTemplateComponent implements OnInit, OnDestroy {
+export class FormTemplateComponent implements OnInit {
 
   
   selectedFormTemplate!: FormTemplate;
@@ -76,7 +76,8 @@ export class FormTemplateComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
+  getEventValue($event: any): string {
+    return $event.target.value;
   }
 
   // ================FORM TEMPLATES====================

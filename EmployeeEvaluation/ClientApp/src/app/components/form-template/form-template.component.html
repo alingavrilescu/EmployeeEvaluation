@@ -216,7 +216,7 @@
 
 <!-- ------------------- ACCORDION NG PRIME --------------------- -->
 
-  <br> <br>
+  <!-- <br> <br>
   <li *ngFor="let formTemplate of (formTemplateListObs | async)">
     <h3 style="text-align:center;">{{formTemplate.name}}</h3>
     <br>
@@ -269,7 +269,7 @@
       </ul>
     </p-accordion>
 
-    <!-- -------------- DELETE, EDIT FORM TEMPLATE | ADD SECTION BUTTONS ------------------  -->
+    -------------- DELETE, EDIT FORM TEMPLATE | ADD SECTION BUTTONS ------------------ 
 
     <div class="button-block">
       <button pButton pRipple type="button" label="Edit Form Template" class=" p-button-warning buttons-height" 
@@ -282,4 +282,46 @@
     <br>
     <br>
     <br>
-  </li>
+  </li> -->
+
+  <!-- ===========================DATAVIEW WITH FORM TEMPLATES====================== -->
+  <div id="userDetails" style="display: flex; flex-direction: column">
+    <div id="userInfo">
+      <div class="card">
+        <div *ngIf="(formTemplateListObs | async); let FTList">
+          <p-dataView #dv [value]="FTList" [paginator]="true" [rows]="9" filterBy="name" layout="list">
+            <ng-template pTemplate="header">
+              <div class="flex flex-column md:flex-row md:justify-content-between">
+                <span class="p-input-icon-left mb-2 md:mb-0">
+                  <i class="pi pi-search"></i>
+                  <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter(getEventValue($event))"/>
+                </span>
+              </div>
+            </ng-template>
+            <ng-template let-formTemplate pTemplate="listItem">
+              <div class="col-12">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-10" style="display: flex; padding-top: 20px; padding-bottom: 20px; cursor: pointer;"
+                      id="hover" routerLink="{{formTemplate.id}}">
+                      <div><i class="pi pi-book" style="font-size: 6rem"></i></div>
+                      <div style="display: flex; flex-direction: column; margin-left: 30px;">
+                        <div><b>Name: </b>{{ formTemplate.name }}</div>
+                        <div><b>Type: </b>{{ formTemplate.type }}</div>
+                      </div>
+                    </div>
+                    <div class="col"style="display: flex; justify-content: center; align-items: center;">
+                      <i class="pi pi-pencil" style="font-size: 2rem; cursor: pointer; margin-left: 50px"
+                      (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></i>
+                      <i class="pi pi-trash" style="font-size: 2rem; cursor: pointer; margin-left: 50px"
+                      (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </p-dataView>
+        </div>
+      </div>
+    </div>
+  </div>
