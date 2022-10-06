@@ -52,6 +52,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
 
   addComm() {
     var existingFormCriteria = {
+      id: this.formCriteriaId,
       name: this.addCommForm.controls.name.value!,
       choice: this.addCommForm.controls.choice.value!,
       description: this.addCommForm.controls.description.value!,
@@ -82,7 +83,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
       this.formCriteriaId = formCriteria.id
     }
     this.addCommForm.controls.name.setValue(formCriteria.name);
-    this.addCommForm.controls.choice.setValue(formCriteria.choice);
+    this.addCommForm.controls.choice.setValue(formCriteria.choice as string | null);
     this.addCommForm.controls.description.setValue(formCriteria.description);
   }
 

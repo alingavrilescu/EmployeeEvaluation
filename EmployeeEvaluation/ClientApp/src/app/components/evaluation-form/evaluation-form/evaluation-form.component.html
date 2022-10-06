@@ -6,34 +6,34 @@
     <p-accordionTab>
 
       <ng-template pTemplate="header">
-        
-          <div class="w-100 d-flex flex-column">
-            <div class="section-name-container">
-              {{formSection.name}}
-            </div>
-            <div class="section-desc-container">
-              {{formSection.description}}
-            </div>
+
+        <div class="w-100 d-flex flex-column">
+          <div class="section-name-container">
+            {{formSection.name}}
           </div>
-         
-        
-        
+          <div class="section-desc-container">
+            {{formSection.description}}
+          </div>
+        </div>
+
+
+
       </ng-template>
       <div class="row d-none d-lg-flex w-100 criteria-header">
-            <div class="col-8">              
-                <span> </span>             
-            </div>
-            <div class="col-3 d-flex justify-content-between ">              
-                  
-                      <div>Never</div>
-                      <div>Rarely</div>
-                      <div>Often</div>
-                                
-            </div>
-            <div class="col-1"></div>
-      </div>  
+        <div class="col-8">
+          <span> </span>
+        </div>
+        <div class="col-3 d-flex justify-content-between ">
 
-     
+          <div>Never</div>
+          <div>Rarely</div>
+          <div>Often</div>
+
+        </div>
+        <div class="col-1"></div>
+      </div>
+
+
 
       <div class="row w-100 criteria-entry" *ngFor="let formCriteria of formSection.formCriteria">
         <div class="col-12 col-lg-8 d-flex flex-column">
@@ -42,7 +42,8 @@
         </div>
         <div class="col-12 col-lg-1 d-flex justify-content-lg-center align-items-center">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="{{formCriteria.id}}" id="{{formCriteria.id}}_never" value="never" (change)="onCriteriaChange($event)">
+            <input class="form-check-input" type="radio" name="{{formCriteria.id}}" id="{{formCriteria.id}}_never"
+              value="never" [checked]="formCriteria.choice==='never'" (change)="onCriteriaChange($event)">
             <label class="form-check-label d-flex d-lg-none" for="{{formCriteria.id}}_never">
               Never
             </label>
@@ -50,7 +51,8 @@
         </div>
         <div class="col-12 col-lg-1 d-flex justify-content-lg-center align-items-center">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="{{formCriteria.id}}" id="{{formCriteria.id}}_rarely" value="rarely" (change)="onCriteriaChange($event)">
+            <input class="form-check-input" type="radio" name="{{formCriteria.id}}" id="{{formCriteria.id}}_rarely"
+              value="rarely" [checked]="formCriteria.choice==='rarely'" (change)="onCriteriaChange($event)">
             <label class="form-check-label d-flex d-lg-none" for="{{formCriteria.id}}_rarely">
               Rarely
             </label>
@@ -58,7 +60,8 @@
         </div>
         <div class="col-12 col-lg-1  d-flex justify-content-lg-center align-items-center">
           <div class="form-check">
-            <input class="form-check-input" type="radio" name="{{formCriteria.id}}" id="{{formCriteria.id}}_often" value="often" (change)="onCriteriaChange($event)">
+            <input class="form-check-input" type="radio" name="{{formCriteria.id}}" id="{{formCriteria.id}}_often"
+              value="often" [checked]="formCriteria.choice==='often'" (change)="onCriteriaChange($event)">
             <label class="form-check-label d-flex d-lg-none" for="{{formCriteria.id}}_often">
               Often
             </label>
@@ -69,14 +72,12 @@
             <button pButton title="Comments/Reviews" class="p-button-text p-button-help" icon="pi pi-comment" routerLink="criteria-details/{{formCriteria.id}}"></button>
          
         </div>
-     
-         
-        
+
+
+
       </div>
     </p-accordionTab>
-    
-    
+
+
   </p-accordion>
 </div>
-
-
