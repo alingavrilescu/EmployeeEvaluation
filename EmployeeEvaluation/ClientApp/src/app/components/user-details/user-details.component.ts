@@ -43,19 +43,20 @@ export class UserDetailsComponent implements OnInit {
       this.userId = params.get('id');
       this.usersService.getUserById(this.userId).subscribe((res) => {
         this.user = res;
-        if(this.user.departmentId){
+        if (this.user.departmentId) {
           this.departmentsService
-          .getDepartmentById(this.user.departmentId)
-          .subscribe((res) => {
-            this.department = res;
-          });
+            .getDepartmentById(this.user.departmentId)
+            .subscribe((res) => {
+              this.department = res;
+            });
         }
-        if(this.user.projectId){
+        if (this.user.projectId) {
           this.projectsService
-          .getProjectById(this.user.projectId)
-          .subscribe((res) => {
-            this.project = res;
-          });
+            .getProjectById(this.user.projectId)
+            .subscribe((res) => {
+              this.project = res;
+            });
+        }
         this.templateService
           .getFormTemplates(this.user.departmentId!)
           .subscribe((res) => {
