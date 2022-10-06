@@ -176,8 +176,8 @@
     <br>
     <p-accordion>
       <ul>
-        <li *ngFor="let section of formTemplate.templateSections">
-          <p-accordionTab header="{{section.name}}">
+        <li *ngFor="let section of formTemplate.templateSections; index as sectionIndex">
+          <p-accordionTab [(selected)]="openSections[sectionIndex]" header="{{section.name}}">
             <div><b> Description: </b>{{section.description}}
               <br>
 
@@ -226,10 +226,10 @@
 
     <div class="button-block">
       <button pButton pRipple type="button" label="Edit Form Template" class=" p-button-warning buttons-height" 
-        (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showEditDialog(formTemplate)"></button>
+      (click)="showEditDialog(formTemplate)"></button>
       <button pButton pRipple type="button" label="Delete Form Template" class=" p-button-danger buttons-height" 
-        (click)="setCurrentFormTemplateId(formTemplate.id!)" (click)="showDeleteDialog(formTemplate)"></button>
-      <button  type="button"  pButton pRipple label="Add Section" icon="pi pi-plus" (click)="setCurrentFormTemplateId(formTemplate.id!)" class=" p-button-help buttons-height"
+       (click)="showDeleteDialog(formTemplate)"></button>
+      <button  type="button"  pButton pRipple label="Add Section" icon="pi pi-plus" class=" p-button-help buttons-height"
         (click)="showAddDialogSection(formTemplate)"></button>
     </div>
   </div>

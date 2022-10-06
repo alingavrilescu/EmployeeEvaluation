@@ -22,8 +22,8 @@ export class EvaluationFormService {
   public getEvaluationForms(id: Guid): Observable<EvaluationForm> {
     return this.httpClient.get<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}`);
   }
-  public getFormCriteriaById(formId: Guid, id: Guid): Observable<FormCriteria> {
-    return this.httpClient.get<FormCriteria>(`${environment.apiUrl}/${this.url}/${formId}/criteria-details/${id}`)
+  public getFormCriteriaById(id: Guid, criteriaId: Guid): Observable<FormCriteria> {
+    return this.httpClient.get<FormCriteria>(`${environment.apiUrl}/${this.url}/${id}/criteria-details/${criteriaId}`)
   }
 
   public createEvaluationForm(id: Guid, evaluationForm: EvaluationForm): Observable<EvaluationForm> {

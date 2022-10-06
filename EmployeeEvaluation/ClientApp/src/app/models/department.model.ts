@@ -4,6 +4,6 @@ import { UserDTO } from './users.model';
 export class Department {
   id?: Guid;
   name: string = '';
-  headOfDepartmentId!: Guid;
+  headOfDepartmentId!: string;
   users?: UserDTO[];
 }

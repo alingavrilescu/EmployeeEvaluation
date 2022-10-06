@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { FormTemplateCriteria } from 'src/app/models/form-template-criteria.model';
 import { FormTemplateSection } from 'src/app/models/form-template-section.model';
 import { FormTemplate } from 'src/app/models/form-template.model';
@@ -24,7 +25,7 @@ export class FormTemplateDetailsComponent implements OnInit {
   currentTemplateCriteriaId: Guid =Guid.parse(Guid.EMPTY);
   types = SoftwareDeveloperType.AllTypes;
   formTemplateListObs!:Observable<FormTemplate[]>;
-  formTemplate!: FormTemplate;
+  formTemplate!: Observable<FormTemplate>;
   displayFormTemplateAddModal: boolean = false;
   displayFormTemplateEditModal: boolean = false;
   displayFormTemplateDeleteModal: boolean = false;
@@ -34,6 +35,7 @@ export class FormTemplateDetailsComponent implements OnInit {
   displayCriterionAddModal: boolean = false;
   displayCriterionEditModal: boolean = false;
   displayCriterionDeleteModal: boolean = false;
+  openSections:boolean[]=[];
   departmentId: any;
   formTemplateId: any;
 
@@ -79,14 +81,14 @@ export class FormTemplateDetailsComponent implements OnInit {
 
   // ================FORM TEMPLATES====================
 
-  setCurrentFormTemplateId(id: Guid) {
-    let selectedFormTemplate = this.formTemplate;
-    if (selectedFormTemplate) {
-      this.currentFormTemplateId = id;
-      this.editFormTemplateFormGroup.controls.nameControl.setValue(selectedFormTemplate.name);
-      this.editFormTemplateFormGroup.controls.typeControl.setValue(selectedFormTemplate.type);
-    }
-  }
+  // setCurrentFormTemplateId(id: Guid) {
+  //   let selectedFormTemplate = this.formTemplate;
+  //   if (selectedFormTemplate) {
+  //     this.currentFormTemplateId = id;
+  //     this.editFormTemplateFormGroup.controls.nameControl.setValue(selectedFormTemplate.name);
+  //     this.editFormTemplateFormGroup.controls.typeControl.setValue(selectedFormTemplate.type);
+  //   }
+  // }
   setSelectedFormTemplate(formTemplateToSet: FormTemplate) {
 
     this.selectedFormTemplate = formTemplateToSet;
@@ -143,13 +145,17 @@ export class FormTemplateDetailsComponent implements OnInit {
     this.displayFormTemplateDeleteModal = false;
   }
   refreshFormTemplate() {
-    this.formTemplateService.getFormTemplateById(this.departmentId, this.formTemplateId).subscribe(data => {
-      this.formTemplate = data;
-    });
-
-    this.formTemplateListObs=this.formTemplateService.getFormTemplates(this.departmentId);
+    this.formTemplate=this.formTemplateService.getFormTemplateById(this.departmentId, this.formTemplateId);
+    this.formTemplate.pipe(tap(template => {
+      if(this.openSections.length !== template.templateSections.length)
+      {
+        this.openSections=template.templateSections.map(ts=>true);
+      }
+    }))
   }
   
+  
+
   //===================SECTIONS=====================
 
   setCurrentSectionId(id: Guid) {

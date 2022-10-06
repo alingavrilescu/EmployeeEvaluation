@@ -2,12 +2,12 @@ import { Guid } from "guid-typescript";
 import { CriteriaReview } from "./criteria-review.model";
 
 export class FormCriteria {
-    id?: Guid;
+    id!: string;
     name: string = "";
-    choice: string = "";
+    choice?: string | null;
     description: string = "";
-    comment?: string = "";
-    attachment?: string = "";
+    comment?: string;
+    attachment?: string;
     formSectionId?: Guid;
-    criteriaReviews?: CriteriaReview[] = [];
+    criteriaReviews?: CriteriaReview[];
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
-import { Observable } from 'rxjs';
-import { elementAt } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { elementAt, map } from 'rxjs/operators';
+import { DefaultRoles } from 'src/api-authorization/role-defines';
 import { Department } from 'src/app/models/department.model';
 import { DepartmentStatistics } from 'src/app/models/departments-statistics';
 import { UserDTO } from 'src/app/models/users.model';
@@ -14,7 +15,7 @@ import { UsersService } from 'src/app/services/users.service';
   templateUrl: './department-table.component.html',
   styleUrls: ['./department-table.component.css'],
 })
-export class DepartmentTableComponent implements OnInit {
+export class DepartmentTableComponent implements OnInit, OnDestroy {
   addDepartmentFormGroup = new FormGroup({
     nameControl: new FormControl('', Validators.required),
     headOfDepartmentControl: new FormControl('', Validators.required),
@@ -28,101 +29,39 @@ export class DepartmentTableComponent implements OnInit {
   displayDeleteModal: boolean = false;
   departments: Department[] = [];
   currentDepartmentId!: Guid;
-  users: UserDTO[] = [];
-  usersHOD: UserDTO[] = [];
-  usersHODNames: string[] = [];
+  HODeps: UserDTO[] = [];
+  HODepsWithoutDep: UserDTO[] = [];
+  HODepList!:Observable<UserDTO[]>;
   statistics!: Map<Guid | undefined, Observable<DepartmentStatistics> | null>;
+  getDepartmentsSubscription!:Subscription;
+  addDepartmentSubscription!:Subscription;
+  editDepartmentSubscription!:Subscription;
+  deleteDepartmentSubscription!:Subscription;
 
-  constructor(
-    private departmentsService: DepartmentsService,
-    private usersService: UsersService
-  ) {}
+  constructor(private departmentsService: DepartmentsService, private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.httpGetDepartments();
-    this.httpGetUsers();
-    this.getHOD();
-  }
-  getHOD() {
-    this.usersService.getHODepWithoutDep().subscribe({
-      next: (usersHOD) => {
-        this.usersHOD = usersHOD;
-        usersHOD.forEach((element) => {
-          this.usersHODNames.push(element.name);
-        });
-      },
-    });
-  }
-  setCurrentDepartmentId(id: Guid) {
-    this.currentDepartmentId = id;
-    this.departments.forEach((department) => {
-      if (department.id === id) {
-        this.editDepartmentFormGroup.controls.nameControl.setValue(
-          'Softelligence'
-        );
-        this.editDepartmentFormGroup.controls.headOfDepartmentControl.setValue(
-          'Mark'
-        );
-      }
-    });
-  }
-  showAddDialog() {
-    // this.addDepartmentFormGroup.controls.headOfDepartmentControl.setValue(
-    //   this.usersHOD[0].name
-    // );
-    this.displayAddModal = true;
-  }
-  hideAddDialog() {
-    this.displayAddModal = false;
-  }
-  showEditDialog(id: Guid, hodId: Guid) {
-    this.setCurrentDepartmentId(id);
-    this.editDepartmentFormGroup.controls.headOfDepartmentControl.setValue(
-      this.getNameOfHOD(hodId)
-    );
-    this.displayEditModal = true;
-  }
-  hideEditDialog() {
-    this.displayEditModal = false;
-  }
-  showDeleteDialog(id: Guid) {
-    this.setCurrentDepartmentId(id);
-    this.displayDeleteModal = true;
-  }
-  hideDeleteDialog() {
-    this.displayDeleteModal = false;
-  }
-  httpAddDepartment() {
-    this.hideAddDialog();
-    var newDepartment = new Department();
-    newDepartment.name =
-      this.addDepartmentFormGroup.controls.nameControl.value!;
-    newDepartment.headOfDepartmentId = this.getHeadOfDepartmentByName()!;
-    this.departmentsService.addDepartment(newDepartment).subscribe({
-      next: (department) => {
-        this.departments.push(department);
-        window.location.reload(); 
-      },
-      error: (response) => {
-        console.log(response);
-      },
-    });
+    this.getDepartments();
   }
 
-  httpGetDepartments() {
+  ngOnDestroy(): void {
+    this.getDepartmentsSubscription?.unsubscribe();
+    this.addDepartmentSubscription?.unsubscribe();
+    this.editDepartmentSubscription?.unsubscribe();
+    this.deleteDepartmentSubscription?.unsubscribe();
+  }
+
+  getDepartments() {
     this.departmentsService.getDepartments().subscribe({
       next: (departments) => {
         this.departments = departments;
-        let stats: Map<
-          Guid | undefined,
-          Observable<DepartmentStatistics> | null
-        > = new Map();
+        let stats: Map<Guid | undefined, Observable<DepartmentStatistics> | null> = new Map();
         departments.forEach((department) => {
           if (department && department.id)
-            stats.set(
-              department.id,
-              this.getDepartmentStatistics(department.id)
-            );
+          {
+            stats.set(department.id, this.getDepartmentStatistics(department.id));
+            this.HODepList=this.getHODepList();
+          }
         });
         this.statistics = stats;
       },
@@ -131,61 +70,68 @@ export class DepartmentTableComponent implements OnInit {
       },
     });
   }
-  httpGetUsers() {
-    this.usersService.getUsers().subscribe({
-      next: (users) => {
-        this.users = users;
+
+  addDepartment() {
+    this.hideAddDialog();
+    var newDepartment = new Department();
+    newDepartment.name = this.addDepartmentFormGroup.controls.nameControl.value!;
+    newDepartment.headOfDepartmentId = this.addDepartmentFormGroup.controls.headOfDepartmentControl.value!;
+    this.departmentsService.addDepartment(newDepartment).subscribe({
+      next: (department) => {
+        this.departments.push(department);
+        this.getDepartments();
       },
       error: (response) => {
         console.log(response);
       },
     });
   }
-  httpDeleteDepartment() {
+  
+  editDepartment() {
+    this.hideEditDialog();
+    var departmentToEdit={
+      name:this.editDepartmentFormGroup.controls.nameControl.value!,
+      headOfDepartmentId:this.editDepartmentFormGroup.controls.headOfDepartmentControl.value!
+    }
+    this.editDepartmentSubscription=this.departmentsService.editDepartment(this.currentDepartmentId,departmentToEdit).subscribe(()=>{this.getDepartments();});
+  }
+
+  deleteDepartment() {
     this.hideDeleteDialog();
-    this.departmentsService
+    this.getDepartmentsSubscription=this.departmentsService
       .deleteDepartment(this.currentDepartmentId)
       .subscribe({
         next: (response) => {
-          this.httpGetDepartments();
-          this.httpGetUsers();
-          console.log(response);
+          this.getDepartments();
         },
       });
   }
 
-  httpEditDepartment() {
-    this.hideEditDialog();
-    this.departmentsService
-      .getDepartmentById(this.currentDepartmentId)
-      .subscribe({
-        next: (department) => {
-          department.name =
-            this.editDepartmentFormGroup.controls.nameControl.value!;
-          department.headOfDepartmentId = this.getHeadOfDepartmentByName()!;
-          this.departmentsService
-            .editDepartment(this.currentDepartmentId, department)
-            .subscribe(() => {
-              this.httpGetDepartments();
-              this.httpGetUsers();
-            });
-        },
-      });
+  getHODep(){
+    this.usersService.getHODep(this.currentDepartmentId).subscribe(data=>{
+      this.HODeps=data;
+    })
   }
-  getHeadOfDepartmentByName() {
-    var name =
-      this.addDepartmentFormGroup.controls.headOfDepartmentControl.value!;
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].name == name) return this.users[i].id;
-    }
-    return null;
+
+  getHODepWithoutDep(){
+    this.usersService.getHODepWithoutDep().subscribe(data=>{
+      this.HODepsWithoutDep=data;
+    })
   }
-  getNameOfHOD(id: Guid) {
-    for (let i = 0; i < this.usersHOD.length; i++) {
-      if (this.usersHOD[i].id === id) return this.usersHOD[i].name;
-    }
-    return 'No Head Of Department';
+
+  getHODepList(){
+    return this.usersService.getUsers()
+                            .pipe(
+                                map(userData => userData.filter(user => user.role === DefaultRoles.HeadOfDepartment))                             
+                                );
   }
+
+  getHODepForCards(allHODeps:UserDTO[] | null, departmentId?: Guid): UserDTO | undefined
+  {
+    let user = allHODeps?.find(user => user.departmentId===departmentId);
+    return user;
+  }
+
   getDepartmentStatistics(depId?: Guid) {
     if (depId) return this.departmentsService.getDepartmentStatistics(depId);
     return null;
@@ -193,5 +139,34 @@ export class DepartmentTableComponent implements OnInit {
   logStat(stat: any): number {
     console.log(stat);
     return 1;
+  }
+
+  // ===================== MODAL CONTROL METHODS===============
+  showAddDialog() {
+    this.getHODepWithoutDep();
+    this.displayAddModal = true;
+  }
+  hideAddDialog() {
+    this.displayAddModal = false;
+  }
+  showEditDialog(department:Department) {
+    this.displayEditModal = true;
+    if(department.id)
+    {
+      this.currentDepartmentId=department.id;
+    }
+    this.getHODep();
+    this.editDepartmentFormGroup.controls.nameControl.setValue(department.name);
+    this.editDepartmentFormGroup.controls.headOfDepartmentControl.setValue(department.headOfDepartmentId);
+  }
+  hideEditDialog() {
+    this.displayEditModal = false;
+  }
+  showDeleteDialog(id:Guid) {
+    this.currentDepartmentId=id;
+    this.displayDeleteModal = true;
+  }
+  hideDeleteDialog() {
+    this.displayDeleteModal = false;
   }
 }

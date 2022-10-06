@@ -5,6 +5,7 @@
     label="Add evaluation form"
     class="p-button-help"
     style="align-self: flex-end; margin-top: 50px"
+    icon="pi pi-plus"
   ></button>
 
   <div *ngIf="user" id="userInfo">
@@ -26,7 +27,7 @@
       </div>
     </p-card>
   </div>
-  <!-- <div id="evaluationInfo">
+  <div id="evaluationInfo">
     <p-card header="Evaluation Form Information">
       <div style="background-color: #f1f0f0; margin-bottom: 10px">
         <p><b>Evaluation form name: </b>Junior</p>
@@ -51,16 +52,12 @@
         <p><b>Criteria done: </b>3/10</p>
       </div>
       <p-button
+        *ngIf="user"
         label="Details"
         routerLink="/evaluation-form/user/{{ user.id }}"
       ></p-button>
-      <button
-        label="Add evaluation form"
-        routerLink="/evaluation-form/user/{{ user.id }}"
-        class=""
-      ></button>
     </p-card>
-  </div> -->
+  </div>
 </div>
 
 <!-- <p
