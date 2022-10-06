@@ -43,7 +43,7 @@ namespace EmployeeEvaluation.Controllers
 
 
         [HttpPost("{id}")]
-        public EvaluationForm AddEvaluationForm(Guid id, Guid templateId)
+        public EvaluationForm AddEvaluationForm(Guid id, [FromBody] Guid templateId)
         {
             var formTemplateToGet = _formTemplateService.GetFormTemplateById(templateId);
 

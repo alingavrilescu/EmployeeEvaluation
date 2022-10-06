@@ -34,3 +34,15 @@ p {
 .info:hover {
   filter: brightness(0.9);
 }
+
+@media (max-width: 767.98px) {
+  :host ::ng-deep .eval-dialog {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  :host ::ng-deep .eval-dialog {
+    width: 50%;
+  }
+}
