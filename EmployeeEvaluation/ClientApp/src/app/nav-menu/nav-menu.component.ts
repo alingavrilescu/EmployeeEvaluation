@@ -14,8 +14,7 @@ export class NavMenuComponent implements OnInit {
   shouldDisplayUsers$?: Observable<boolean>;
   constructor(private authorizeService: AuthorizeService){}
   ngOnInit(): void {
-    this.shouldDisplayUsers$ =combineLatest([this.authorizeService.isUserAdmin(), this.authorizeService.isUserHR()])
-      .pipe(map( ([isAdmin, isHr]) => {return isAdmin || isHr;})); 
+    this.shouldDisplayUsers$ =this.authorizeService.isUserAdmin();
   }
  
 
