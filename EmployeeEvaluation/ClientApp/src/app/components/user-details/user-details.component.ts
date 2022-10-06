@@ -24,6 +24,7 @@ export class UserDetailsComponent implements OnInit {
   project!: Project;
   department!: Department;
   templates!: FormTemplate[];
+  evalForm!: EvaluationForm;
   displayAddEvalModal: boolean = false;
   addEvalFormGroup = new FormGroup({
     templateControl: new FormControl('', [Validators.required]),
@@ -76,7 +77,7 @@ export class UserDetailsComponent implements OnInit {
       this.addEvalFormGroup.controls.templateControl.value!;
     console.log(formTemplateId);
     this.evaluationFormService
-      .createEvaluationForm(this.userId, formTemplateId)
+      .createEvaluationForm(this.userId, formTemplateId, this.evalForm)
       .subscribe();
     this.hideModal();
   }

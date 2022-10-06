@@ -15,7 +15,7 @@ import { Form } from '@angular/forms';
 export class EvaluationFormService {
   private readonly url = 'Users/EvaluationForm';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   public getEvaluationForms(id: Guid): Observable<EvaluationForm> {
     return this.httpClient.get<EvaluationForm>(
@@ -26,14 +26,8 @@ export class EvaluationFormService {
     return this.httpClient.get<FormCriteria>(`${environment.apiUrl}/${this.url}/${id}/criteria-details/${criteriaId}`)
   }
 
-  public createEvaluationForm(
-    id: Guid,
-    templateId: Guid
-  ): Observable<EvaluationForm> {
-    return this.httpClient.post<EvaluationForm>(
-      `${environment.apiUrl}/${this.url}/${id}`,
-      templateId
-    );
+  public createEvaluationForm(id: Guid,templateId: Guid, evalForm: EvaluationForm ): Observable<EvaluationForm> {
+    return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}/${templateId}`, evalForm)
   }
 
   public createCriteriaReview(

@@ -42,8 +42,8 @@ namespace EmployeeEvaluation.Controllers
         }
 
 
-        [HttpPost("{id}")]
-        public EvaluationForm AddEvaluationForm(Guid id, [FromBody] Guid templateId)
+        [HttpPost("{id}/{templateId}")]
+        public EvaluationForm AddEvaluationForm(Guid id, Guid templateId)
         {
             var formTemplateToGet = _formTemplateService.GetFormTemplateById(templateId);
 
