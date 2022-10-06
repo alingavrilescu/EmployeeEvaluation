@@ -48,7 +48,7 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   }
 
 
-  showAddRevDialog(id: Guid) {
+  showAddRevDialog(id: string) {
     this.criteriaId = id;
     this.displayAddRevModal = true;
   }
@@ -61,13 +61,11 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   onCriteriaChange(event: any): void {
     console.log("Updated criteria with id: " + event.target.name + "; selected value: " + event.target.value);
-    this.formCriteriaSubscription = this.evaluationFormService.getFormCriteriaById(this.userId, event.target.name).subscribe((res)=>{
-      this.formCriteria=res;
-    });
-    console.log(this.formCriteria);
-    console.log(this.formCriteria.choice);
-    this.formCriteria.choice = event.target.value;
-    this.formCriteriaSubscription = this.evaluationFormService.updateFormCriteria(event.target.name, this.formCriteria).subscribe(()=>{
+    let updatedCriteria = new FormCriteria();
+    updatedCriteria.choice = event.target.value;
+    updatedCriteria.id = event.target.name;
+    this.formCriteriaSubscription?.unsubscribe();
+    this.formCriteriaSubscription = this.evaluationFormService.updateFormCriteria(Guid.parse(updatedCriteria.id), updatedCriteria).subscribe(()=>{
     })
   }
 }
