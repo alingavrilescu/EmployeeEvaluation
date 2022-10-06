@@ -17,10 +17,6 @@
     height: 50px;
   }
   
-  .indent {
-    text-indent: 2em
-  }
-  
   input {
     display: block;
     box-sizing: border-box;

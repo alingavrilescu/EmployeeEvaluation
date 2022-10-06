@@ -171,9 +171,9 @@
   <!-- ------------------- ACCORDION NG PRIME --------------------- -->
 
   <div *ngIf="formTemplate">
-    <h2 style="text-align:center;">{{formTemplate.name}}</h2>
+    <h5 style="text-align:center;">{{formTemplate.name}} </h5>
+    <h4 style="text-align:center;font-size: 17px; opacity:0.7 ">{{formTemplate.type}}</h4>
     <br>
-    <h6 class="indent" style="opacity:0.7">{{formTemplate.type}}</h6>
     <p-accordion>
       <ul>
         <li *ngFor="let section of formTemplate.templateSections">
