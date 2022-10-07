@@ -3,16 +3,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90vh;
 }
-#userInfo {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  height: 100%;
-  padding-top: 50px;
-  padding-left: 25px;
-}
+
 #evaluationInfo {
   display: flex;
   flex-direction: column;

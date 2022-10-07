@@ -4,26 +4,101 @@
     type="button"
     label="Add evaluation form"
     class="p-button-help"
-    style="align-self: flex-end; margin-top: 50px"
+    style="align-self: flex-end; margin-top: 10px"
     (click)="showModal()"
     icon="pi pi-plus"
   ></button>
 
-  <div *ngIf="user" id="userInfo">
-    <p-card header="{{ user.name }}">
-      <div style="background-color: #f1f0f0; margin-bottom: 10px">
-        <b>Role: </b> {{ user.role }}
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    "
+  >
+    <div *ngIf="user" style="margin: 50px; width: 90%">
+      <p-card header="{{ user.name }}">
+        <div style="background-color: #f7f7f7; margin-bottom: 10px">
+          <b>Role: </b> {{ user.role }}
+        </div>
+        <div style="background-color: #f7f7f7; margin-bottom: 10px">
+          <b>Email:</b> {{ user.email }}
+        </div>
+        <div *ngIf="project" class="info" style="background-color: #f7f7f7">
+          <b>Project:</b> {{ project.name }}
+        </div>
+        <div *ngIf="department" class="info" style="background-color: #f7f7f7">
+          <b>Department:</b> {{ department.name }}
+        </div>
+      </p-card>
+    </div>
+    <!-- ===========================DATAVIEW WITH EVALUATION FORMS====================== -->
+    <div id="ua" style="display: flex; flex-direction: column; width: 90%">
+      <div id="b">
+        <div class="card">
+          <div *ngIf="evalFormListObS | async; let evalForm">
+            <p-dataView
+              #dv
+              [value]="evalForm"
+              [paginator]="true"
+              [rows]="2"
+              filterBy="name"
+              layout="list"
+            >
+              <ng-template pTemplate="header">
+                <div
+                  class="flex flex-column md:flex-row md:justify-content-between"
+                >
+                  <span class="p-input-icon-left mb-2 md:mb-0">
+                    <i class="pi pi-search"></i>
+                    <input
+                      type="search"
+                      pInputText
+                      placeholder="Search by Name"
+                      (input)="dv.filter(getEventValue($event))"
+                    />
+                  </span>
+                </div>
+              </ng-template>
+              <ng-template let-evaluationForm pTemplate="listItem">
+                <div class="col-12">
+                  <div class="container">
+                    <div class="row">
+                      <div
+                        class="col-10"
+                        style="
+                          display: flex;
+                          padding-top: 20px;
+                          padding-bottom: 20px;
+                          cursor: pointer;
+                        "
+                        id="hover"
+                        routerLink="evaluation-form/{{ evaluationForm.id }}"
+                      >
+                        <div>
+                          <i class="pi pi-book" style="font-size: 6rem"></i>
+                        </div>
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: column;
+                            margin-left: 30px;
+                          "
+                        >
+                          <div><b>Name: </b>{{ evaluationForm.name }}</div>
+                          <div><b>Type: </b>{{ evaluationForm.type }}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </p-dataView>
+          </div>
+        </div>
       </div>
-      <div style="background-color: #f7f7f7; margin-bottom: 10px">
-        <b>Email:</b> {{ user.email }}
-      </div>
-      <div *ngIf="project" class="info" style="background-color: #f1f0f0" routerLink="../../../departments/{{user.departmentId}}/projects/{{user.projectId}}">
-        <b>Project:</b> {{ project.name }}
-      </div>
-      <div *ngIf="department" style="background-color: #f7f7f7; margin-top: 10px;">
-        <b>Department:</b> {{ department.name }}
-      </div>
-    </p-card>
+    </div>
   </div>
 </div>
 
@@ -72,39 +147,3 @@
     ></button>
   </div>
 </p-dialog>
-
- <!-- ===========================DATAVIEW WITH EVALUATION FORMS====================== -->
- <div id="userDetails" style="display: flex; flex-direction: column">
-  <div id="userInfo">
-    <div class="card">
-      <div *ngIf="(evalFormListObS | async); let evalForm">
-        <p-dataView #dv [value]="evalForm" [paginator]="true" [rows]="9" filterBy="name" layout="list">
-          <ng-template pTemplate="header">
-            <div class="flex flex-column md:flex-row md:justify-content-between">
-              <span class="p-input-icon-left mb-2 md:mb-0">
-                <i class="pi pi-search"></i>
-                <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter(getEventValue($event))"/>
-              </span>
-            </div>
-          </ng-template>
-          <ng-template let-evaluationForm pTemplate="listItem">
-            <div class="col-12">
-              <div class="container">
-                <div class="row">
-                  <div class="col-10" style="display: flex; padding-top: 20px; padding-bottom: 20px; cursor: pointer;"
-                    id="hover" routerLink="evaluation-form/{{evaluationForm.id}}">
-                    <div><i class="pi pi-book" style="font-size: 6rem"></i></div>
-                    <div style="display: flex; flex-direction: column; margin-left: 30px;">
-                      <div><b>Name: </b>{{ evaluationForm.name }}</div>
-                      <div><b>Type: </b>{{ evaluationForm.type }}</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </p-dataView>
-      </div>
-    </div>
-  </div>
-</div>
