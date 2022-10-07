@@ -39,8 +39,8 @@ export class UserDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private templateService: FormTemplateService,
     private evaluationFormService: EvaluationFormService
-  ) {}
- 
+  ) { }
+
 
   getEventValue($event: any): string {
     return $event.target.value;
@@ -86,12 +86,13 @@ export class UserDetailsComponent implements OnInit {
     console.log(formTemplateId);
     this.evaluationFormService
       .createEvaluationForm(this.userId, formTemplateId, this.evalForm)
-      .subscribe();
+      .subscribe(() => this.refreshEvaluationForms());
+
     this.hideModal();
   }
 
-  refreshEvaluationForms(){
-    this.evalFormListObS=this.evaluationFormService.getEvaluationForms(this.userId);
+  refreshEvaluationForms() {
+    this.evalFormListObS = this.evaluationFormService.getEvaluationForms(this.userId);
     console.log(this.userId);
   }
 

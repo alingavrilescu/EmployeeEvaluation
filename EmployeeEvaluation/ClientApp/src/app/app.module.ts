@@ -142,12 +142,12 @@ import { CriteriaDetailsComponent } from './components/evaluation-form/evaluatio
           roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager, DefaultRoles.ProjectManager, DefaultRoles.TeamLead, DefaultRoles.Development]
         }
       },  
-      { path: 'evaluation-form/user/:id', component: EvaluationFormComponent, canActivate: [AuthorizeGuard],
+      { path: 'users/userDetails/:userId/evaluation-form/:id', component: EvaluationFormComponent, canActivate: [AuthorizeGuard],
         data: {
           roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager, DefaultRoles.ProjectManager, DefaultRoles.TeamLead, DefaultRoles.Development]
         }
       }, 
-      { path: 'evaluation-form/user/:id/criteria-details/:criteriaId', component: CriteriaDetailsComponent, canActivate: [AuthorizeGuard],
+      { path: 'users/userDetails/:userId/evaluation-form/:id/criteria-details/:criteriaId', component: CriteriaDetailsComponent, canActivate: [AuthorizeGuard],
         data: {
           roles: [DefaultRoles.Admin, DefaultRoles.HeadOfDepartment, DefaultRoles.DevelopmentManager, DefaultRoles.ProjectManager, DefaultRoles.TeamLead, DefaultRoles.Development]
         }
