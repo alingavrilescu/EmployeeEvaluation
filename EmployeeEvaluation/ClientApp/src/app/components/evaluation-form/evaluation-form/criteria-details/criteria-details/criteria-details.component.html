@@ -18,14 +18,25 @@
 
 <div class="add-button-container">
   <h2>Review Section</h2>
+  <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addCommForm.valid"
+      class="modal-button btn-pos p-button-success" icon="pi pi-plus"></button>
 </div>
 
 <!-- ==================================================TEXT AREA FOR REVIEWS==================================================================== -->
-<form [formGroup]="addRevForm">
+<!-- <form [formGroup]="addRevForm">
   <textarea name="addRevForm" class="comm-textarea form-control input-textarea" rows="12" cols="84" pInputTextarea id="float-input" 
     formControlName="review"></textarea>
   <div>
     <button pButton pRipple type="submit" label="Submit" (click)="addReview()" [disabled]="!addRevForm.valid"
       class="modal-button btn-pos p-button-success" icon="pi pi-plus"></button> 
   </div>
-</form>
+</form> -->
+
+<div class="review-container" *ngIf="(criteriaReview | async); let formCritRev">
+  <div *ngFor="let review of formCritRev">
+    <div class="review-section">
+      <p>{{review.review}}</p>
+    </div>
+  </div>
+</div>
+

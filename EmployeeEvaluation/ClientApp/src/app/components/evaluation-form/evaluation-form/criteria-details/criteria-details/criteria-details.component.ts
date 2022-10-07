@@ -24,6 +24,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   displayAddCommModal: boolean = false;
   displayAddRevModal: boolean = false;
   formSection!: Observable<FormSection>;
+  criteriaReview!: Observable<CriteriaReview[]>;
 
   addCommForm = new FormGroup({
     name: new FormControl(''),
