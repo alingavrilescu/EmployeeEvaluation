@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
     [DbContext(typeof(EmployeeEvaluationDbContext))]
-    [Migration("20221004072748_FinalMigrationIHope")]
-    partial class FinalMigrationIHope
+    [Migration("20221007105807_hopefullylastmigration")]
+    partial class hopefullylastmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 
                     b.HasIndex("FormCriteriaId");
 
-                    b.ToTable("CriteriaComments");
+                    b.ToTable("CriteriaReviews");
                 });
 
             modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.Department", b =>
