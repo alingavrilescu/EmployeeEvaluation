@@ -83,7 +83,6 @@ export class UserDetailsComponent implements OnInit {
   addEvalForm() {
     var formTemplateId: any =
       this.addEvalFormGroup.controls.templateControl.value!;
-    console.log(formTemplateId);
     this.evaluationFormService
       .createEvaluationForm(this.userId, formTemplateId, this.evalForm)
       .subscribe(() => this.refreshEvaluationForms());
