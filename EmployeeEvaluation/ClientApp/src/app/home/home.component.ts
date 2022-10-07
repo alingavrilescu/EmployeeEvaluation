@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Guid } from 'guid-typescript';
-import { from, of, Subscription } from 'rxjs';
+import { async, from, of, Subscription } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, tap } from 'rxjs/operators';
 import { AuthorizeService } from 'src/api-authorization/authorize.service';
@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   connectedUserId!:Observable<string|null>;
   projectId?:Guid;
   departmentId?:Guid;
+  loggedUserId!:string;
   loggedUser!:Observable<UserDTO>;
 
   getUserSubscription!:Subscription;
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
               this.projectId=user.projectId;
               this.departmentId=user.departmentId;
             }));
+            this.loggedUserId=userId;
            }
            console.log(userId);
          }));
@@ -81,7 +83,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.router.navigate([`departments/${this.departmentId}/projects/${this.projectId}`]);
           break;
         case DefaultRoles.Development:
-          this.router.navigate([`users/userDetails/${this.connectedUserId}`]);
+          this.router.navigate([`users/userDetails/${this.loggedUserId}`]);
           break;
         default:
           this.router.navigate([``]);
