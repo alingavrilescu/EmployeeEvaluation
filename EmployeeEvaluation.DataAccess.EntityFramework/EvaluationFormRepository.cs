@@ -76,7 +76,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
         public IEnumerable<CriteriaReviews> GetCriteriaReviews(Guid criteriaId)
         {
             var criteriaReview = _employeeEvaluationDbContext.Set<CriteriaReviews>()
-                                                             .Where(criteria => criteria.Id == criteriaId).ToList();
+                                                             .Where(criteria => criteria.FormCriteriaId == criteriaId).ToList();
 
             return criteriaReview;
 

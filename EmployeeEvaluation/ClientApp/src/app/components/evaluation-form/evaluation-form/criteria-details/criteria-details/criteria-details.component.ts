@@ -35,7 +35,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   });
 
   addRevForm = new FormGroup({
-    review: new FormControl('', Validators.required)
+    review: new FormControl('')
   })
 
   constructor(private activatedRoute: ActivatedRoute, private formEvalService: EvaluationFormService)
@@ -47,6 +47,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
+    this.getCriteriaReview();
     this.getFormCriteriaById();
   }
 
@@ -68,19 +69,22 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
       attachment: this.addCommForm.controls.criteriaAttachment.value!
     }
     this.formCriteriaSubscription = this.formEvalService.updateFormCriteria(this.formCriteriaId, existingFormCriteria).subscribe(()=>{
+      this.getFormCriteriaById();
     })
     this.hideAddCommDialog();
-    this.refresh();
   }
 
   addReview() {
     var newReview = new CriteriaReview();
     newReview.review = this.addRevForm.controls.review.value!;
-    newReview.formCriteriaId = this.formCriteriaId;
     this.formEvalService.createCriteriaReview(this.formCriteriaId, newReview).subscribe(() => {
+      this.getCriteriaReview();
     });
     this.hideAddRevDialog();
-    this.refresh();
+  }
+
+  getCriteriaReview(){
+    this.criteriaReview = this.formEvalService.getCriteriaReview(this.formCriteriaId);
   }
 
   getFormCriteriaById() {
@@ -105,7 +109,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   }
   showAddRevDialog() {
 
-    this.displayAddRevModal = true;
+    this.displayAddRevModal = !this.displayAddRevModal;
   }
 
   hideAddRevDialog() {
