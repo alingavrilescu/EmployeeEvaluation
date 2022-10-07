@@ -18,21 +18,21 @@ namespace EmployeeEvaluation.Controllers
             this._evaluationFormService = evaluationFormService;
             this._formTemplateService = formTemplateService;
         }
-        [HttpGet]
+        [HttpGet ("user/{userId}")]
         [SwaggerResponse(StatusCodes.Status200OK, "Action was successful")]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Server error ocurred and is logged")]
         [ProducesResponseType(typeof(EvaluationFormDTO), StatusCodes.Status200OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IEnumerable<EvaluationForm> GetEvaluationForms()
+        public IEnumerable<EvaluationForm> GetEvaluationForms(Guid userId)
         {
-            return this._evaluationFormService.GetEvaluationForm();
+            return this._evaluationFormService.GetEvaluationFormByUserId(userId);
         }
 
         [HttpGet("{id}")]
-        public EvaluationForm GetEvaluationFormByUserId(Guid id)
+        public EvaluationForm GetEvaluationFormById(Guid id)
         {
-            return this._evaluationFormService.GetEvaluationFormByUserId(id);
+            return this._evaluationFormService.GetEvaluationFormById(id);
         }
 
         [HttpGet("{id}/criteria-details/{criteriaId}")]

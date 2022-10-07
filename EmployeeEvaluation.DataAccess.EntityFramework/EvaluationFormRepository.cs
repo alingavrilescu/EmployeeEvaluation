@@ -47,13 +47,13 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return formCriteria;
 
         }
-        public EvaluationForm GetEvaluationFormByUserId(Guid id)
+        public  IEnumerable<EvaluationForm> GetEvaluationFormByUserId(Guid id)
         {
             var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>().Where(f => f.UserId == id)
                                                              .Include(f => f.FormSections)
                                                              .ThenInclude(s => s.FormCriteria)
                                                              .ThenInclude(c => c.CriteriaReviews)
-                                                             .FirstOrDefault();
+                                                             .ToList();
 
             return evaluationForm;
 

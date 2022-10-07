@@ -16,8 +16,12 @@ export class EvaluationFormService {
   private readonly url = 'Users/EvaluationForm';
 
   constructor(private httpClient: HttpClient) { }
+  
+  public getEvaluationForms(id: Guid): Observable<EvaluationForm[]> {
+    return this.httpClient.get<EvaluationForm[]>(`${environment.apiUrl}/${this.url}/user/${id}`);
+  }
 
-  public getEvaluationForms(id: Guid): Observable<EvaluationForm> {
+  public getEvaluationFormById(id: Guid): Observable<EvaluationForm> {
     return this.httpClient.get<EvaluationForm>(
       `${environment.apiUrl}/${this.url}/${id}`
     );

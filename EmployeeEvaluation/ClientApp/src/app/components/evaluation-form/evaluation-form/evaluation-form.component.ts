@@ -21,20 +21,19 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
 
   constructor(private evaluationFormService: EvaluationFormService, private activatedRoute: ActivatedRoute) { }
 
-
-  
   displayAddRevModal: boolean = false;
   deleteSubscription!: Subscription;
   evaluationForm!: Observable<EvaluationForm>;
-  userId: any;
+  evalFormId: any;
+  userId!: any;
   criteriaId: any;
   formCriteriaSubscription!: Subscription;
   formCriteria!: FormCriteria;
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.userId = params.get('id');
-      this.refreshEvaluationFormList();
+      this.evalFormId = params.get('id');
+      this.refreshEvaluationForm();
     });
 
   }
@@ -43,8 +42,8 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
     this.formCriteriaSubscription?.unsubscribe();
   }
 
-  refreshEvaluationFormList() {
-    this.evaluationForm = this.evaluationFormService.getEvaluationForms(this.userId);
+  refreshEvaluationForm() {
+    this.evaluationForm = this.evaluationFormService.getEvaluationFormById(this.evalFormId);
   }
 
 
@@ -56,8 +55,6 @@ export class EvaluationFormComponent implements OnInit, OnDestroy {
   hideAddRevDialog() {
     this.displayAddRevModal = false;
   }
-
-  // PRIMU GET NU MERGE, DUPA ACEEAS MERGE.
 
   onCriteriaChange(event: any): void {
     console.log("Updated criteria with id: " + event.target.name + "; selected value: " + event.target.value);
