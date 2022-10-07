@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 {
-    public partial class FinalMigrationIHope : Migration
+    public partial class hopefullylastmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -193,7 +193,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CriteriaComments",
+                name: "CriteriaReviews",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -202,9 +202,9 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CriteriaComments", x => x.Id);
+                    table.PrimaryKey("PK_CriteriaReviews", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CriteriaComments_FormCriteria_FormCriteriaId",
+                        name: "FK_CriteriaReviews_FormCriteria_FormCriteriaId",
                         column: x => x.FormCriteriaId,
                         principalTable: "FormCriteria",
                         principalColumn: "Id",
@@ -212,8 +212,8 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CriteriaComments_FormCriteriaId",
-                table: "CriteriaComments",
+                name: "IX_CriteriaReviews_FormCriteriaId",
+                table: "CriteriaReviews",
                 column: "FormCriteriaId");
 
             migrationBuilder.CreateIndex(
@@ -265,7 +265,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CriteriaComments");
+                name: "CriteriaReviews");
 
             migrationBuilder.DropTable(
                 name: "FormTemplateCriteria");

@@ -39,7 +39,7 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework.Migrations
 
                     b.HasIndex("FormCriteriaId");
 
-                    b.ToTable("CriteriaComments");
+                    b.ToTable("CriteriaReviews");
                 });
 
             modelBuilder.Entity("EmployeeEvaluation.DataAccess.Model.Department", b =>
