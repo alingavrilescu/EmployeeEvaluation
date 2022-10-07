@@ -17,14 +17,11 @@
       <div style="background-color: #f7f7f7; margin-bottom: 10px">
         <b>Email:</b> {{ user.email }}
       </div>
-      <div *ngIf="project" class="info" style="background-color: #f1f0f0">
+      <div *ngIf="project" class="info" style="background-color: #f1f0f0" routerLink="../../../departments/{{user.departmentId}}/projects/{{user.projectId}}">
         <b>Project:</b> {{ project.name }}
       </div>
-      <div *ngIf="department" class="info" style="background-color: #f7f7f7">
+      <div *ngIf="department" style="background-color: #f7f7f7; margin-top: 10px;">
         <b>Department:</b> {{ department.name }}
-      </div>
-      <div class="info" style="background-color: #f1f0f0">
-        <b>Evaluation forms:</b> 2
       </div>
     </p-card>
   </div>
