@@ -45,6 +45,11 @@ namespace EmployeeEvaluation.ApplicationLogic
             return _evaluationFormRepository.AddEvaluationForm(toAdd);
         }
 
+        public IEnumerable<CriteriaReviews> GetCriteriaReviews(Guid criteriaId)
+        {
+            return _evaluationFormRepository.GetCriteriaReviews(criteriaId);
+        }
+
         public CriteriaReviews AddCriteriaComments(CriteriaReviews toAdd)
         {
             return _evaluationFormRepository.AddCriteriaReviews(toAdd);

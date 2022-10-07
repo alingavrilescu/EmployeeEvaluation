@@ -18,14 +18,29 @@
 
 <div class="add-button-container">
   <h2>Review Section</h2>
+  <button pButton pRipple type="submit" label="Add Review" (click)="showAddRevDialog()" [disabled]="!addCommForm.valid"
+      class="modal-button btn-pos p-button-help" icon="pi pi-plus"></button>
 </div>
 
-<!-- ==================================================TEXT AREA FOR REVIEWS==================================================================== -->
-<form [formGroup]="addRevForm">
-  <textarea name="addRevForm" class="comm-textarea form-control input-textarea" rows="12" cols="84" pInputTextarea id="float-input" 
-    formControlName="review"></textarea>
-  <div>
-    <button pButton pRipple type="submit" label="Submit" (click)="addReview()" [disabled]="!addRevForm.valid"
-      class="modal-button btn-pos p-button-success" icon="pi pi-plus"></button> 
+
+<div class="review-container" *ngIf="(criteriaReview | async); let formCritRev">
+  <div *ngFor="let review of formCritRev">
+    <div class="review-section">
+      <p>{{review.review}}</p>
+    </div>
   </div>
-</form>
+</div>
+
+
+<!-- ==================================================TEXT AREA FOR REVIEWS==================================================================== -->
+<div *ngIf="displayAddRevModal">
+  <form [formGroup]="addRevForm">
+    <textarea name="addRevForm" class="comm-textarea form-control input-textarea" rows="12" cols="84" pInputTextarea id="float-input" 
+      formControlName="review"></textarea>
+    <div class="btn-container">
+      <button pButton type="button" label="Cancel" class="modal-button p-button-danger" (click)="hideAddRevDialog()"></button>
+      <button pButton pRipple type="submit" label="Submit" (click)="addReview()" [disabled]="!addRevForm.valid"
+        class="modal-button btn-pos p-button-success"></button> 
+    </div>
+  </form>
+</div>

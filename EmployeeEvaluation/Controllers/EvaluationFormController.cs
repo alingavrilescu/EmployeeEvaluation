@@ -80,14 +80,20 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.AddEvaluationForm(evaluationFormToAdd);
         }
 
+        [HttpGet("criteria/{criteriaId}")]
+        public IEnumerable<CriteriaReviews> GetCriteriaReviews(Guid criteriaId)
+        {
+            return this._evaluationFormService.GetCriteriaReviews(criteriaId);
+        }
+
         //=========================================DE MODIFICAT AICI =========================================
-        [HttpPost("{formId}/CriteriaReview")]
-        public CriteriaReviews AddCriteriaReviews([FromBody] CriteriaReviewDTO criteriaReview)
+        [HttpPost("criteria/{criteriaId}/add-review")]
+        public CriteriaReviews AddCriteriaReviews(Guid criteriaId, [FromBody] CriteriaReviewDTO criteriaReview)
         {
             var criteriaReviewToAdd = new CriteriaReviews
             {
                 Review = criteriaReview.Review,
-                FormCriteriaId = criteriaReview.FormCriteriaId
+                FormCriteriaId = criteriaId
             };
             return this._evaluationFormService.AddCriteriaComments(criteriaReviewToAdd);
         }
