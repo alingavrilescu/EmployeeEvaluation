@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
+import { Observable } from 'rxjs/internal/Observable';
 import { Department } from 'src/app/models/department.model';
 import { EvaluationForm } from 'src/app/models/evaluation-form.model';
 import { FormTemplate } from 'src/app/models/form-template.model';
@@ -24,6 +25,7 @@ export class UserDetailsComponent implements OnInit {
   project!: Project;
   department!: Department;
   templates!: FormTemplate[];
+  evalFormListObS!: Observable<EvaluationForm[]>;
   evalForm!: EvaluationForm;
   displayAddEvalModal: boolean = false;
   addEvalFormGroup = new FormGroup({
@@ -38,6 +40,11 @@ export class UserDetailsComponent implements OnInit {
     private templateService: FormTemplateService,
     private evaluationFormService: EvaluationFormService
   ) {}
+ 
+
+  getEventValue($event: any): string {
+    return $event.target.value;
+  }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params) => {
@@ -65,6 +72,7 @@ export class UserDetailsComponent implements OnInit {
           });
       });
     });
+    this.refreshEvaluationForms();
   }
   showModal() {
     this.displayAddEvalModal = true;
@@ -81,4 +89,10 @@ export class UserDetailsComponent implements OnInit {
       .subscribe();
     this.hideModal();
   }
+
+  refreshEvaluationForms(){
+    this.evalFormListObS=this.evaluationFormService.getEvaluationForms(this.userId);
+    console.log(this.userId);
+  }
+
 }

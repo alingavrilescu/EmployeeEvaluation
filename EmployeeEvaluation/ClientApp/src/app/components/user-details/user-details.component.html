@@ -75,3 +75,39 @@
     ></button>
   </div>
 </p-dialog>
+
+ <!-- ===========================DATAVIEW WITH EVALUATION FORMS====================== -->
+ <div id="userDetails" style="display: flex; flex-direction: column">
+  <div id="userInfo">
+    <div class="card">
+      <div *ngIf="(evalFormListObS | async); let evalForm">
+        <p-dataView #dv [value]="evalForm" [paginator]="true" [rows]="9" filterBy="name" layout="list">
+          <ng-template pTemplate="header">
+            <div class="flex flex-column md:flex-row md:justify-content-between">
+              <span class="p-input-icon-left mb-2 md:mb-0">
+                <i class="pi pi-search"></i>
+                <input type="search" pInputText placeholder="Search by Name" (input)="dv.filter(getEventValue($event))"/>
+              </span>
+            </div>
+          </ng-template>
+          <ng-template let-evaluationForm pTemplate="listItem">
+            <div class="col-12">
+              <div class="container">
+                <div class="row">
+                  <div class="col-10" style="display: flex; padding-top: 20px; padding-bottom: 20px; cursor: pointer;"
+                    id="hover" routerLink="evaluation-form/{{evaluationForm.id}}">
+                    <div><i class="pi pi-book" style="font-size: 6rem"></i></div>
+                    <div style="display: flex; flex-direction: column; margin-left: 30px;">
+                      <div><b>Name: </b>{{ evaluationForm.name }}</div>
+                      <div><b>Type: </b>{{ evaluationForm.type }}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dataView>
+      </div>
+    </div>
+  </div>
+</div>
