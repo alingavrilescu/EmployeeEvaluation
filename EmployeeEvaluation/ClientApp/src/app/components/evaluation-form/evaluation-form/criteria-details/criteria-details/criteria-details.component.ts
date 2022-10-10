@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Guid } from 'guid-typescript';
-import { Observable, Subscribable, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subscribable, Subscription } from 'rxjs';
 import { EvaluationFormService } from '../../../../../services/evaluation-form.service';
 import { FormCriteria } from '../../../../../models/form-criteria.model';
-import { subscribeOn, tap } from 'rxjs/operators';
+import { map, subscribeOn, tap } from 'rxjs/operators';
 import { CriteriaReview } from 'src/app/models/criteria-review.model';
 import { FormSection } from 'src/app/models/form-section.model';
+import { AuthorizeService } from 'src/api-authorization/authorize.service';
 
 
 @Component({
@@ -24,6 +25,9 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   displayAddCommModal: boolean = false;
   displayAddRevModal: boolean = false;
   formSection!: Observable<FormSection>;
+  criteriaReview!: Observable<CriteriaReview[]>;
+  shouldDisplayAddRevBtn$?: Observable<boolean>;
+  isUserDev$?: Observable<boolean>;
 
   addCommForm = new FormGroup({
     name: new FormControl(''),
@@ -34,10 +38,10 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   });
 
   addRevForm = new FormGroup({
-    review: new FormControl('', Validators.required)
+    review: new FormControl('')
   })
 
-  constructor(private activatedRoute: ActivatedRoute, private formEvalService: EvaluationFormService)
+  constructor(private activatedRoute: ActivatedRoute, private formEvalService: EvaluationFormService, private authorizeService: AuthorizeService)
    { 
     this.activatedRoute.paramMap.subscribe((params) => {
       this.userId = params.get('id');
@@ -46,7 +50,11 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
+    this.getCriteriaReview();
     this.getFormCriteriaById();
+    this.shouldDisplayAddRevBtn$ = combineLatest([this.authorizeService.isUserProjManager(), this.authorizeService.isUserTeamLead(), this.authorizeService.isUserAdmin()])
+      .pipe(map(([isPM,isTL,isAdmin]) => {return isPM || isTL || isAdmin}))
+    this.isUserDev$=this.authorizeService.isUserDevMember();
   }
 
   ngOnDestroy(): void {
@@ -61,25 +69,28 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
     var existingFormCriteria = {
       id: this.formCriteriaId,
       name: this.addCommForm.controls.name.value!,
-      choice: this.addCommForm.controls.choice.value!,
       description: this.addCommForm.controls.description.value!,
       comment: this.addCommForm.controls.criteriaComment.value!,
       attachment: this.addCommForm.controls.criteriaAttachment.value!
     }
     this.formCriteriaSubscription = this.formEvalService.updateFormCriteria(this.formCriteriaId, existingFormCriteria).subscribe(()=>{
+      this.getFormCriteriaById();
     })
     this.hideAddCommDialog();
-    this.refresh();
   }
 
   addReview() {
     var newReview = new CriteriaReview();
     newReview.review = this.addRevForm.controls.review.value!;
-    newReview.formCriteriaId = this.formCriteriaId;
     this.formEvalService.createCriteriaReview(this.formCriteriaId, newReview).subscribe(() => {
+      this.getCriteriaReview();
     });
     this.hideAddRevDialog();
-    this.refresh();
+    this.addRevForm.controls.review.setValue("");
+  }
+
+  getCriteriaReview(){
+    this.criteriaReview = this.formEvalService.getCriteriaReview(this.formCriteriaId);
   }
 
   getFormCriteriaById() {
@@ -104,7 +115,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
   }
   showAddRevDialog() {
 
-    this.displayAddRevModal = true;
+    this.displayAddRevModal = !this.displayAddRevModal;
   }
 
   hideAddRevDialog() {

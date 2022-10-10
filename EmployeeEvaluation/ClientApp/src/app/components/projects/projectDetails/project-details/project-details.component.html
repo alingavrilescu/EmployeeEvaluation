@@ -16,7 +16,7 @@
 </p-dialog>
 
 <!-- =====================================ADD USERS BTN AND EDIT BTN=============================== -->
-<div class="add-button-container">
+<div *ngIf="project!=null" class="add-button-container">
   <button type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
   pButton pRipple label="Edit project" icon="pi pi-pencil" (click)="showEditDialog()" ></button>
   <button type="button" class="btn-pos p-button-help" [style]="{width: '150px', height: '40px'}" 
@@ -42,15 +42,12 @@
 </p-dialog>
 
 <!-- ===============================TABLE WITH EMPLOYEES ASSIGNED TO THE PROJECT====================== -->
-<div *ngIf="usersList.length===0">
-  <h3>There are currently no users assigned to this project.</h3>
-  <h3>You can add users to this project using the button on the top right corner.</h3>
-</div>
+
 <div *ngIf="usersList.length" id="userDetails" style="display: flex; flex-direction: column">
   <div id="userInfo">
     <p *ngIf="project && project.name" style="font-size: 20px"><b>{{project.name}} members:</b></p>
     <div class="card">
-      <p-dataView #dv [value]="usersList" [paginator]="true" [rows]="9" filterBy="name" layout="list">
+      <p-dataView #dv [value]="usersList" [paginator]="true" [rows]="4" filterBy="name" layout="list" paginatorPosition="top">
         <ng-template pTemplate="header">
           <div class="flex flex-column md:flex-row md:justify-content-between">
             <span class="p-input-icon-left mb-2 md:mb-0">

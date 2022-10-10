@@ -18,21 +18,21 @@ namespace EmployeeEvaluation.Controllers
             this._evaluationFormService = evaluationFormService;
             this._formTemplateService = formTemplateService;
         }
-        [HttpGet]
+        [HttpGet ("user/{userId}")]
         [SwaggerResponse(StatusCodes.Status200OK, "Action was successful")]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Invalid")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Server error ocurred and is logged")]
         [ProducesResponseType(typeof(EvaluationFormDTO), StatusCodes.Status200OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IEnumerable<EvaluationForm> GetEvaluationForms()
+        public IEnumerable<EvaluationForm> GetEvaluationForms(Guid userId)
         {
-            return this._evaluationFormService.GetEvaluationForm();
+            return this._evaluationFormService.GetEvaluationFormByUserId(userId);
         }
 
         [HttpGet("{id}")]
-        public EvaluationForm GetEvaluationFormByUserId(Guid id)
+        public EvaluationForm GetEvaluationFormById(Guid id)
         {
-            return this._evaluationFormService.GetEvaluationFormByUserId(id);
+            return this._evaluationFormService.GetEvaluationFormById(id);
         }
 
         [HttpGet("{id}/criteria-details/{criteriaId}")]
@@ -70,7 +70,6 @@ namespace EmployeeEvaluation.Controllers
                         var formCriteria = new FormCriteria();
                         formCriteria.Name = formTemplateCriteria.Name;
                         formCriteria.Description = formTemplateCriteria.Description;
-                        //formCriteria.isChecked = false;
                         formSection.FormCriteria.Add(formCriteria);
                     }
                     evaluationFormToAdd.FormSections.Add(formSection);
@@ -80,19 +79,23 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.AddEvaluationForm(evaluationFormToAdd);
         }
 
-        //=========================================DE MODIFICAT AICI =========================================
-        [HttpPost("{formId}/CriteriaReview")]
-        public CriteriaReviews AddCriteriaReviews([FromBody] CriteriaReviewDTO criteriaReview)
+        [HttpGet("criteria/{criteriaId}")]
+        public IEnumerable<CriteriaReviews> GetCriteriaReviews(Guid criteriaId)
+        {
+            return this._evaluationFormService.GetCriteriaReviews(criteriaId);
+        }
+
+        [HttpPost("criteria/{criteriaId}/add-review")]
+        public CriteriaReviews AddCriteriaReviews(Guid criteriaId, [FromBody] CriteriaReviewDTO criteriaReview)
         {
             var criteriaReviewToAdd = new CriteriaReviews
             {
                 Review = criteriaReview.Review,
-                FormCriteriaId = criteriaReview.FormCriteriaId
+                FormCriteriaId = criteriaId
             };
             return this._evaluationFormService.AddCriteriaComments(criteriaReviewToAdd);
         }
 
-        //=========================================DE MODIFICAT AICI =========================================
         [HttpPut("{criteriaId}/FormCriteria")]
         public FormCriteria UpdateCriteriaComment(Guid criteriaId,[FromBody] FormCriteriaDTO formCriteria)
         {

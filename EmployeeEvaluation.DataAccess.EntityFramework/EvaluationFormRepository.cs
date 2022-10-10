@@ -47,13 +47,13 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return formCriteria;
 
         }
-        public EvaluationForm GetEvaluationFormByUserId(Guid id)
+        public  IEnumerable<EvaluationForm> GetEvaluationFormByUserId(Guid id)
         {
             var evaluationForm = _employeeEvaluationDbContext.Set<EvaluationForm>().Where(f => f.UserId == id)
                                                              .Include(f => f.FormSections)
                                                              .ThenInclude(s => s.FormCriteria)
                                                              .ThenInclude(c => c.CriteriaReviews)
-                                                             .FirstOrDefault();
+                                                             .ToList();
 
             return evaluationForm;
 
@@ -66,15 +66,6 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             _employeeEvaluationDbContext.SaveChanges();
             return evaluationForm.Entity;
         }
-
-
-        public CriteriaReviews AddCriteriaReviews (CriteriaReviews criteriaReviewsToAdd)
-        {
-            var criteriaReviews = _employeeEvaluationDbContext.Set<CriteriaReviews>().Add(criteriaReviewsToAdd);
-            _employeeEvaluationDbContext.SaveChanges();
-            return criteriaReviews.Entity;
-        }
-
         public FormCriteria UpdateFormCriteria(FormCriteria formCriteria)
         {
             _employeeEvaluationDbContext.Set<FormCriteria>().Update(formCriteria);
@@ -82,6 +73,21 @@ namespace EmployeeEvaluation.DataAccess.EntityFramework
             return formCriteria;
         }
 
+        public IEnumerable<CriteriaReviews> GetCriteriaReviews(Guid criteriaId)
+        {
+            var criteriaReview = _employeeEvaluationDbContext.Set<CriteriaReviews>()
+                                                             .Where(criteria => criteria.FormCriteriaId == criteriaId).ToList();
+
+            return criteriaReview;
+
+        }
+
+        public CriteriaReviews AddCriteriaReviews (CriteriaReviews criteriaReviewsToAdd)
+        {
+            var criteriaReviews = _employeeEvaluationDbContext.Set<CriteriaReviews>().Add(criteriaReviewsToAdd);
+            _employeeEvaluationDbContext.SaveChanges();
+            return criteriaReviews.Entity;
+        }
 
         public CriteriaReviews UpdateCriteriaReviews(CriteriaReviews criteriaReviewsToUpdate)
         {

@@ -25,7 +25,7 @@ namespace EmployeeEvaluation.ApplicationLogic
         {
             return this._evaluationFormRepository.GetEvaluationFormById(id);
         }
-        public EvaluationForm GetEvaluationFormByUserId(Guid id)
+        public IEnumerable<EvaluationForm> GetEvaluationFormByUserId(Guid id)
         {
             return this._evaluationFormRepository.GetEvaluationFormByUserId(id);
         }
@@ -43,6 +43,11 @@ namespace EmployeeEvaluation.ApplicationLogic
         public EvaluationForm AddEvaluationForm(EvaluationForm toAdd)
         {
             return _evaluationFormRepository.AddEvaluationForm(toAdd);
+        }
+
+        public IEnumerable<CriteriaReviews> GetCriteriaReviews(Guid criteriaId)
+        {
+            return _evaluationFormRepository.GetCriteriaReviews(criteriaId);
         }
 
         public CriteriaReviews AddCriteriaComments(CriteriaReviews toAdd)

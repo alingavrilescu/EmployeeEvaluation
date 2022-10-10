@@ -16,8 +16,12 @@ export class EvaluationFormService {
   private readonly url = 'Users/EvaluationForm';
 
   constructor(private httpClient: HttpClient) { }
+  
+  public getEvaluationForms(id: Guid): Observable<EvaluationForm[]> {
+    return this.httpClient.get<EvaluationForm[]>(`${environment.apiUrl}/${this.url}/user/${id}`);
+  }
 
-  public getEvaluationForms(id: Guid): Observable<EvaluationForm> {
+  public getEvaluationFormById(id: Guid): Observable<EvaluationForm> {
     return this.httpClient.get<EvaluationForm>(
       `${environment.apiUrl}/${this.url}/${id}`
     );
@@ -30,22 +34,14 @@ export class EvaluationFormService {
     return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}/${templateId}`, evalForm)
   }
 
-  public createCriteriaReview(
-    id: Guid,
-    criteriaReview: CriteriaReview
-  ): Observable<EvaluationForm> {
-    return this.httpClient.post<EvaluationForm>(
-      `${environment.apiUrl}/${this.url}/${id}/CriteriaReview`,
-      criteriaReview
-    );
+  public getCriteriaReview(criteriaId: Guid): Observable<CriteriaReview[]>{
+    return this.httpClient.get<CriteriaReview[]>(`${environment.apiUrl}/${this.url}/criteria/${criteriaId}`);
   }
-  public updateFormCriteria(
-    id: Guid,
-    formCriteria: FormCriteria
-  ): Observable<EvaluationForm> {
-    return this.httpClient.put<EvaluationForm>(
-      `${environment.apiUrl}/${this.url}/${id}/FormCriteria`,
-      formCriteria
-    );
+
+  public createCriteriaReview(criteriaId: Guid, criteriaReview: CriteriaReview): Observable<EvaluationForm> {
+    return this.httpClient.post<EvaluationForm>(`${environment.apiUrl}/${this.url}/criteria/${criteriaId}/add-review`,criteriaReview);
+  }
+  public updateFormCriteria(id: Guid, formCriteria: FormCriteria): Observable<EvaluationForm> {
+    return this.httpClient.put<EvaluationForm>(`${environment.apiUrl}/${this.url}/${id}/FormCriteria`,formCriteria);
   }
 }

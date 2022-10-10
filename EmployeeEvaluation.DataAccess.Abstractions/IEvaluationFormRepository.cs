@@ -12,13 +12,14 @@ namespace EmployeeEvaluation.DataAccess.Abstractions
 
         public IEnumerable<EvaluationForm> GetAll();
         public EvaluationForm GetEvaluationFormById(Guid id);
-        public EvaluationForm GetEvaluationFormByUserId(Guid id);
+        public IEnumerable<EvaluationForm> GetEvaluationFormByUserId(Guid id);
         public FormCriteria GetFormCriteriaById(Guid id);
         public EvaluationForm AddEvaluationForm (EvaluationForm evaluationFormToAdd);
         public CriteriaReviews AddCriteriaReviews(CriteriaReviews criteriaReviewsToAdd);
         public FormCriteria UpdateFormCriteria(FormCriteria formCriteria);
         public CriteriaReviews UpdateCriteriaReviews(CriteriaReviews criteriaReviewsToUpdate);
         public void DeleteEvaluationFormById(Guid id);
-     
+        public IEnumerable<CriteriaReviews> GetCriteriaReviews(Guid criteriaId);
+
     }
 }

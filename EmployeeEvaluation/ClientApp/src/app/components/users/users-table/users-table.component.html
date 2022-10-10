@@ -14,9 +14,10 @@
         #dv
         [value]="users"
         [paginator]="true"
-        [rows]="9"
+        [rows]="4"
         filterBy="name"
         layout="list"
+        paginatorPosition="top"
       >
         <ng-template pTemplate="header">
           <div class="flex flex-column md:flex-row md:justify-content-between">
@@ -57,7 +58,6 @@
                     <div><b>Name: </b>{{ user.name }}</div>
                     <div><b>Email: </b>{{ user.email }}</div>
                     <div><b>Role: </b>{{ user.role }}</div>
-                    <div><b>Evaluation Forms: </b>2</div>
                   </div>
                 </div>
                 <div
@@ -66,8 +66,7 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                  "
-                >
+                  ">
                   <i
                     class="pi pi-pencil"
                     style="font-size: 2rem; cursor: pointer; margin-left: 50px"
