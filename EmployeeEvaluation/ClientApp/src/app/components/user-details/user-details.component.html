@@ -1,5 +1,5 @@
 <div id="userDetails">
-  <button
+  <button *ngIf="(shouldDisplayAddEvalBtn$|async)"
     pButton
     type="button"
     label="Add evaluation form"
@@ -25,10 +25,10 @@
         <div style="background-color: #f7f7f7; margin-bottom: 10px">
           <b>Email:</b> {{ user.email }}
         </div>
-        <div *ngIf="project" class="info" style="background-color: #f7f7f7">
+        <div *ngIf="project" style="background-color: #f7f7f7; margin-top: 10px;">
           <b>Project:</b> {{ project.name }}
         </div>
-        <div *ngIf="department" class="info" style="background-color: #f7f7f7">
+        <div *ngIf="department" style="background-color: #f7f7f7; margin-top: 10px;">
           <b>Department:</b> {{ department.name }}
         </div>
       </p-card>
@@ -113,6 +113,7 @@
   <div style="display: flex; flex-direction: column; margin-top: 10px">
     <form [formGroup]="addEvalFormGroup">
       <p-dropdown
+        appendTo="body"
         [options]="templates"
         optionLabel="name"
         optionValue="id"
