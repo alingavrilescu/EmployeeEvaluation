@@ -2,7 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Guid } from 'guid-typescript';
+import { combineLatest } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { map } from 'rxjs/operators';
+import { AuthorizeService } from 'src/api-authorization/authorize.service';
 import { Department } from 'src/app/models/department.model';
 import { EvaluationForm } from 'src/app/models/evaluation-form.model';
 import { FormTemplate } from 'src/app/models/form-template.model';
@@ -28,17 +31,20 @@ export class UserDetailsComponent implements OnInit {
   evalFormListObS!: Observable<EvaluationForm[]>;
   evalForm!: EvaluationForm;
   displayAddEvalModal: boolean = false;
+  shouldDisplayAddEvalBtn$?: Observable<boolean>;
+
   addEvalFormGroup = new FormGroup({
     templateControl: new FormControl('', [Validators.required]),
   });
-  sections: string[] = ['C#', 'JavaScript', 'Python'];
+
   constructor(
     private usersService: UsersService,
     private projectsService: ProjectsService,
     private departmentsService: DepartmentsService,
     private activatedRoute: ActivatedRoute,
     private templateService: FormTemplateService,
-    private evaluationFormService: EvaluationFormService
+    private evaluationFormService: EvaluationFormService,
+    private authorizeService:AuthorizeService
   ) { }
 
 
@@ -72,6 +78,8 @@ export class UserDetailsComponent implements OnInit {
           });
       });
     });
+    this.shouldDisplayAddEvalBtn$ = combineLatest([this.authorizeService.isUserProjManager(), this.authorizeService.isUserTeamLead(), this.authorizeService.isUserAdmin()])
+    .pipe(map(([isPM,isTL,isAdmin]) => {return isPM || isTL || isAdmin}))
     this.refreshEvaluationForms();
   }
   showModal() {

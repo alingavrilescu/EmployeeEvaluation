@@ -6,20 +6,24 @@
 
 <!-- ==================================================TEXT AREA FOR COMMENTS==================================================================== -->
 <form [formGroup]="addCommForm">
-  <textarea name="addCommForm" class="comm-textarea form-control input-textarea" rows="12" cols="84" pInputTextarea id="float-input" 
+  <div *ngIf="(isUserDev$|async); else elseblock">
+    <textarea name="addCommForm" class="comm-textarea form-control input-textarea" rows="12" cols="84" pInputTextarea id="float-input" 
     formControlName="criteriaComment"></textarea>
-  <div>
     <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addCommForm.valid"
       class="modal-button btn-pos p-button-success" icon="pi pi-plus"></button> 
   </div>
+  <ng-template #elseblock><textarea  name="addCommForm" class="comm-textarea form-control input-textarea" rows="12" cols="84" pInputTextarea id="float-input" 
+    formControlName="criteriaComment" readonly></textarea></ng-template>
 </form>
 
 <!-- ==================================================REVIEWS SECTION==================================================================== -->
 
 <div class="add-button-container">
   <h2>Review Section</h2>
-  <button pButton pRipple type="submit" label="Add Review" (click)="showAddRevDialog()" [disabled]="!addCommForm.valid"
-      class="modal-button btn-pos p-button-help" icon="pi pi-plus"></button>
+  <div *ngIf="(shouldDisplayAddRevBtn$|async)===true">
+    <button pButton pRipple type="submit" label="Add Review" (click)="showAddRevDialog()" [disabled]="!addCommForm.valid"
+        class="modal-button btn-pos p-button-help" icon="pi pi-plus"></button>
+  </div>
 </div>
 
 

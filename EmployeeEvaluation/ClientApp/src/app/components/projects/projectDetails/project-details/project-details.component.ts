@@ -61,6 +61,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
       this.projectId=params.get('proId');
       this.departmentId=params.get('depId');
     })
+    console.log(this.projectId);
     this.getProject();
   }
 

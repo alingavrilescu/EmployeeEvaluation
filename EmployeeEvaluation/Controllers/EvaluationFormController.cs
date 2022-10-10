@@ -70,7 +70,6 @@ namespace EmployeeEvaluation.Controllers
                         var formCriteria = new FormCriteria();
                         formCriteria.Name = formTemplateCriteria.Name;
                         formCriteria.Description = formTemplateCriteria.Description;
-                        //formCriteria.isChecked = false;
                         formSection.FormCriteria.Add(formCriteria);
                     }
                     evaluationFormToAdd.FormSections.Add(formSection);
@@ -86,7 +85,6 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.GetCriteriaReviews(criteriaId);
         }
 
-        //=========================================DE MODIFICAT AICI =========================================
         [HttpPost("criteria/{criteriaId}/add-review")]
         public CriteriaReviews AddCriteriaReviews(Guid criteriaId, [FromBody] CriteriaReviewDTO criteriaReview)
         {
@@ -98,7 +96,6 @@ namespace EmployeeEvaluation.Controllers
             return this._evaluationFormService.AddCriteriaComments(criteriaReviewToAdd);
         }
 
-        //=========================================DE MODIFICAT AICI =========================================
         [HttpPut("{criteriaId}/FormCriteria")]
         public FormCriteria UpdateCriteriaComment(Guid criteriaId,[FromBody] FormCriteriaDTO formCriteria)
         {
