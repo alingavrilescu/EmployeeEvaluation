@@ -78,8 +78,8 @@ export class UserDetailsComponent implements OnInit {
           });
       });
     });
-    this.shouldDisplayAddEvalBtn$ = combineLatest([this.authorizeService.isUserProjManager(), this.authorizeService.isUserTeamLead(), this.authorizeService.isUserAdmin()])
-    .pipe(map(([isPM,isTL,isAdmin]) => {return isPM || isTL || isAdmin}))
+    this.shouldDisplayAddEvalBtn$ = combineLatest([this.authorizeService.isUserHR(), this.authorizeService.isUserDevMember()])
+    .pipe(map(([isHR,isDev]) => {return !(isHR || isDev)}))
     this.refreshEvaluationForms();
   }
   showModal() {
