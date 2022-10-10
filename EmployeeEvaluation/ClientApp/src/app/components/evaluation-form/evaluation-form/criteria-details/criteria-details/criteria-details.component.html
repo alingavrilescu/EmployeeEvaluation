@@ -26,16 +26,6 @@
   </div>
 </div>
 
-
-<div class="review-container" *ngIf="(criteriaReview | async); let formCritRev">
-  <div *ngFor="let review of formCritRev">
-    <div class="review-section">
-      <p>{{review.review}}</p>
-    </div>
-  </div>
-</div>
-
-
 <!-- ==================================================TEXT AREA FOR REVIEWS==================================================================== -->
 <div *ngIf="displayAddRevModal">
   <form [formGroup]="addRevForm">
@@ -47,4 +37,12 @@
         class="modal-button btn-pos p-button-success"></button> 
     </div>
   </form>
+</div>
+
+<div class="review-container" *ngIf="(criteriaReview | async); let formCritRev">
+  <div *ngFor="let review of formCritRev">
+    <div class="review-section">
+      <p>{{review.review}}</p>
+    </div>
+  </div>
 </div>
