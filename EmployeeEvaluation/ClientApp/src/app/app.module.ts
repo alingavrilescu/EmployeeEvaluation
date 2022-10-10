@@ -109,7 +109,7 @@ import { CriteriaDetailsComponent } from './components/evaluation-form/evaluatio
       },
       { path: 'departments/details/:id', component: DepartmentDetailsComponent, canActivate: [AuthorizeGuard],
         data: {
-          roles: [DefaultRoles.Admin, DefaultRoles.DevelopmentManager]
+          roles: [DefaultRoles.Admin, DefaultRoles.DevelopmentManager, DefaultRoles.HeadOfDepartment]
         }
       },
       { path: 'departments/:depId/projects', component: ProjectsComponent, canActivate:[AuthorizeGuard],
