@@ -1,6 +1,6 @@
 <!-- ==================================================COMMENTS SECTION==================================================================== -->
 
-<div class="add-button-container" *ngIf="(formCriteria | async); let formCrit">
+<div class="add-button-container" *ngIf="(formCriteria | async)">
     <h2>Comment Section</h2>
 </div>
 
@@ -8,9 +8,9 @@
 <form [formGroup]="addCommForm">
   <textarea name="addCommForm" class="comm-textarea form-control input-textarea" rows="12" cols="84" pInputTextarea id="float-input" 
     formControlName="criteriaComment"></textarea>
-  <div>
+  <div class="btn-container">
     <button pButton pRipple type="submit" label="Submit" (click)="addComm()" [disabled]="!addCommForm.valid"
-      class="modal-button btn-pos p-button-success" icon="pi pi-plus"></button> 
+      class="submit-btn modal-button btn-pos p-button-success" icon="pi pi-plus"></button> 
   </div>
 </form>
 
@@ -21,16 +21,6 @@
   <button pButton pRipple type="submit" label="Add Review" (click)="showAddRevDialog()" [disabled]="!addCommForm.valid"
       class="modal-button btn-pos p-button-help" icon="pi pi-plus"></button>
 </div>
-
-
-<div class="review-container" *ngIf="(criteriaReview | async); let formCritRev">
-  <div *ngFor="let review of formCritRev">
-    <div class="review-section">
-      <p>{{review.review}}</p>
-    </div>
-  </div>
-</div>
-
 
 <!-- ==================================================TEXT AREA FOR REVIEWS==================================================================== -->
 <div *ngIf="displayAddRevModal">
@@ -43,4 +33,12 @@
         class="modal-button btn-pos p-button-success"></button> 
     </div>
   </form>
+</div>
+
+<div class="review-container" *ngIf="(criteriaReview | async); let formCritRev">
+  <div *ngFor="let review of formCritRev">
+    <div class="review-section">
+      <p>{{review.review}}</p>
+    </div>
+  </div>
 </div>

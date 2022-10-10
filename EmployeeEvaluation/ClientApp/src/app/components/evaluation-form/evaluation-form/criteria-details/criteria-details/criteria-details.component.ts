@@ -81,6 +81,7 @@ export class CriteriaDetailsComponent implements OnInit, OnDestroy {
       this.getCriteriaReview();
     });
     this.hideAddRevDialog();
+    this.addRevForm.controls.review.setValue("");
   }
 
   getCriteriaReview(){
