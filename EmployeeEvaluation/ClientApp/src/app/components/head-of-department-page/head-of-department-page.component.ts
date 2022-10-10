@@ -93,7 +93,7 @@ export class HeadOfDepartmentPageComponent implements OnInit {
   onTemplateSelected(eventData: any):void
   {
       let template: FormTemplate = eventData.option;      
-    this.router.navigate([`departments/${this.departmentIdValue}/form-templates`]);
+    this.router.navigate([`departments/${this.departmentIdValue}/form-templates/${template.id}`]);
      ;
   }
   onProjectSelected(eventData: any):void
