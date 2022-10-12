@@ -351,3 +351,7 @@ MigrationBackup/
 
 EmployeeEvaluation/appsettings.Development.json
 EmployeeEvaluation/ClientApp/.angular
+/EmployeeEvaluation/ClientApp/dist
+/EmployeeEvaluation/Properties/serviceDependencies.softelligenceintern - Zip Deploy.json
+/EmployeeEvaluation/Properties/ServiceDependencies/softelligenceintern - Zip Deploy/profile.arm.json
+/EmployeeEvaluation/Properties/ServiceDependencies/softelligenceintern - Zip Deploy/mssql1.arm.json
