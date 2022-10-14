@@ -110,7 +110,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
 
   refreshProjectList()
   {
-    this.projectsList = this.projectService.getProjects()
+    this.projectsList = this.projectService.getProjectsFromDep(this.departmentId)
                                             .pipe(
                                                   tap((projects) => 
                                                       { 

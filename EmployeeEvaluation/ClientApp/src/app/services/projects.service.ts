@@ -18,6 +18,11 @@ export class ProjectsService {
       return this.httpClient.get<Project[]>(`${environment.apiUrl}/${this.url}`);
    }
 
+   public getProjectsFromDep(depId:Guid): Observable<Project[]>
+   {
+      return this.httpClient.get<Project[]>(`${environment.apiUrl}/${this.url}/department/${depId}`);
+   }
+
    public getProjectById(id: Guid): Observable<Project>
    {
       return this.httpClient.get<Project>(`${environment.apiUrl}/${this.url}/${id}`);
